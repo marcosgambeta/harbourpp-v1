@@ -19,7 +19,7 @@ PROCEDURE Main()
          READ
          @ 2, 0 TO MaxRow(), MaxCol()
 
-         IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn ) ) > 0
+         IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, TRUE,, nPrn ) ) > 0
 
             IF Empty(cFileName)
                Alert("win_PrintDataRaw() returned: " + ;

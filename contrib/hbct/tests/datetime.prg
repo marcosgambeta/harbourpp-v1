@@ -59,7 +59,7 @@ PROCEDURE Main( cLang )
 
    LOCAL cScr
    LOCAL nChoice := 1
-   LOCAL c    := .T.
+   LOCAL c    := TRUE
    LOCAL farr := { ;
       "AddMonth( dDate )   Add a month to dDate      ", ;
       "BoM()               Beginning of month        ", ;
@@ -74,7 +74,7 @@ PROCEDURE Main( cLang )
       "EoM( dDate )        Returns last day of month ", ;
       "EoQ( dDate )        Returns last date of qtr  ", ;
       "EoY( dDate )        Returns last day of year  ", ;
-      "IsLeap( dDate )     Returns .T. if leap year  ", ;
+      "IsLeap( dDate )     Returns TRUE if leap year  ", ;
       "LastDayOM( dDate )  Returns num days in month ", ;
       "MDY( dDate )        Returns stg Month DD, YY  ", ;
       "NToCDoW( nDay )     Returns name of day       ", ;
@@ -164,7 +164,7 @@ FUNCTION addmtest()
 
    LOCAL getlist := {}
    LOCAL dDate   := hb_SToD()
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL mnth    := 0
    LOCAL nKey
 
@@ -185,7 +185,7 @@ FUNCTION addmtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 11, 39 SAY "The returned date is " + DToC(AddMonth( dDate, mnth ))
@@ -212,7 +212,7 @@ FUNCTION bomtest()
 
    LOCAL getlist := {}
    LOCAL dDate   := hb_SToD()
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -230,7 +230,7 @@ FUNCTION bomtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
          @ 11, 10 SAY "The returned date is " + DToC(BoM( dDate ))
 
@@ -256,7 +256,7 @@ FUNCTION boqtest()
 
    LOCAL getlist := {}
    LOCAL dDate   := hb_SToD()
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -276,7 +276,7 @@ FUNCTION boqtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
          @ 11, 10 SAY "The returned date is " + DToC(BoQ( dDate ))
 
@@ -302,7 +302,7 @@ FUNCTION boytest()
 
    LOCAL getlist := {}
    LOCAL dDate   := hb_SToD()
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL nkey
 
    DO WHILE c
@@ -320,7 +320,7 @@ FUNCTION boytest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
          @ 11, 10 SAY "The returned date is " + DToC(BoY( dDate ))
 
@@ -352,7 +352,7 @@ FUNCTION ctodowtest()
    LOCAL getlist := {}
    LOCAL cDow    := Space(9)
    LOCAL nkey
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
 
    DO WHILE c
       @ 5, 10 SAY "CToDoW(dDate) receives the name of a day of the week and "
@@ -369,7 +369,7 @@ FUNCTION ctodowtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
          @ 11, 10 SAY "The day number is " + Str(CToDoW( Upper(AllTrim(cDow)) ))
 
@@ -399,7 +399,7 @@ FUNCTION ctomonthtest()
 
    LOCAL getlist := {}
    LOCAL cDom    := Space(9)
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -419,7 +419,7 @@ FUNCTION ctomonthtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
          @ 11, 10 SAY "The day number is " + Str(CToMonth( cDom ))
 
@@ -448,7 +448,7 @@ FUNCTION dInMonthtest()
 
    LOCAL getlist := {}
    LOCAL cMonth  := Space(9)
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL nMonth
    LOCAL nKey
    LOCAL cLeap   := Space(1)
@@ -483,7 +483,7 @@ FUNCTION dInMonthtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 10, 40 SAY "The day number is " + ;
@@ -512,13 +512,13 @@ FUNCTION d2month()
    // DaysToMonth()
    // =============
    // Total number days from first of Jan to beginning of nMonth.
-   // lLeap is .F. for a non-leap year but .T. if it is. If so and
+   // lLeap is FALSE for a non-leap year but TRUE if it is. If so and
    // nMonth is greater than 2, ndays is incremented.
 
    LOCAL getlist := {}
    LOCAL cMonth  := Space(2)
    LOCAL cLeap   := Space(1)
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL nMonth
    LOCAL nKey
 
@@ -542,7 +542,7 @@ FUNCTION d2month()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
          @ 11, 10 SAY "The day number is " +  ;
             hb_ntos(DaysToMonth( nMonth, IsAffirm( cLeap ) ))
@@ -570,14 +570,14 @@ FUNCTION dmytest()
    // DMY( dDate, lmode)
    // ===================
    // Returns the date as a string in DD Month YY format. If lmode
-   // is .T., a "." is inserted after the DD
+   // is TRUE, a "." is inserted after the DD
    // This version does not observe the Nations module. English
    // only.
 
    LOCAL getlist := {}
    LOCAL dDate   := hb_SToD()
    LOCAL cMode   := Space(1)
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -599,7 +599,7 @@ FUNCTION dmytest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
          @ 12, 10 SAY "The date string returned is " + ;
             LTrim(DMY( dDate, IsAffirm( cMode ) ))
@@ -631,7 +631,7 @@ FUNCTION doytest()
 
    LOCAL getlist := {}
    LOCAL dDate   := hb_SToD()
-   LOCAL c       := .T.
+   LOCAL c       := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -648,7 +648,7 @@ FUNCTION doytest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
          @ 11, 10 SAY "The day of the date entered is " + ;
             hb_ntos(DoY( dDate ))
@@ -679,7 +679,7 @@ FUNCTION eomtest()
 
    LOCAL getlist := {}
    LOCAL dDate := hb_SToD()
-   LOCAL c     := .T.
+   LOCAL c     := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -696,7 +696,7 @@ FUNCTION eomtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 11, 10 SAY "The last date in the month is " + ;
@@ -727,7 +727,7 @@ FUNCTION eoqtest()
 
    LOCAL getlist := {}
    LOCAL dDate := hb_SToD()
-   LOCAL c     := .T.
+   LOCAL c     := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -744,7 +744,7 @@ FUNCTION eoqtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 11, 10 SAY "The last date in the month is " + ;
@@ -776,7 +776,7 @@ FUNCTION eoytest()
 
    LOCAL getlist := {}
    LOCAL dDate := hb_SToD()
-   LOCAL c     := .T.
+   LOCAL c     := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -793,7 +793,7 @@ FUNCTION eoytest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 11, 10 SAY "The last date in the year is " + ;
@@ -820,12 +820,12 @@ FUNCTION isleaptest()
    //
    // lRet :=  IsLeap( dDate )
    // ========================
-   // if dDate is a leap year, lRet is .T., otherwise .F..
+   // if dDate is a leap year, lRet is TRUE, otherwise FALSE.
    // Leap years are exactly divisible by 4 and 1,000 but not 100.
 
    LOCAL getlist := {}
    LOCAL dDate := hb_SToD()
-   LOCAL c     := .T.
+   LOCAL c     := TRUE
    LOCAL cResult
    LOCAL nKey
 
@@ -843,7 +843,7 @@ FUNCTION isleaptest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          IF IsLeap( dDate )
@@ -882,7 +882,7 @@ FUNCTION lastdayomtest()
 
    LOCAL getlist := {}
    LOCAL dDate := hb_SToD()
-   LOCAL c     := .T.
+   LOCAL c     := TRUE
    LOCAL nKey
    LOCAL cMth  := "  "
 
@@ -905,7 +905,7 @@ FUNCTION lastdayomtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          IIf(Empty(dDate), dDate := Val(cMth), dDate)
@@ -941,7 +941,7 @@ FUNCTION mdytest()
 
    LOCAL getlist := {}
    LOCAL dDate := hb_SToD()
-   LOCAL c     := .T.
+   LOCAL c     := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -959,7 +959,7 @@ FUNCTION mdytest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 11, 10 SAY "The date string returned is " + ;
@@ -992,7 +992,7 @@ FUNCTION ntocdowtest()
 
    LOCAL getlist := {}
    LOCAL cDay := "  "
-   LOCAL c      := .T.
+   LOCAL c      := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -1009,7 +1009,7 @@ FUNCTION ntocdowtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 11, 10 SAY "The day selected is " + ;
@@ -1042,7 +1042,7 @@ FUNCTION ntocmthtest()
 
    LOCAL getlist := {}
    LOCAL cMonth := "  "
-   LOCAL c      := .T.
+   LOCAL c      := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -1059,7 +1059,7 @@ FUNCTION ntocmthtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 11, 10 SAY "The month selected is " + ;
@@ -1091,7 +1091,7 @@ FUNCTION qtrtest()
 
    LOCAL getlist := {}
    LOCAL dDate  := hb_SToD()
-   LOCAL c      := .T.
+   LOCAL c      := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -1108,7 +1108,7 @@ FUNCTION qtrtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @  8, 10 SAY "The quarter number is " + ;
@@ -1141,7 +1141,7 @@ FUNCTION stodtest()
    LOCAL getlist   := {}
    LOCAL dDate
    LOCAL cAnsidate := Space(8)
-   LOCAL c         := .T.
+   LOCAL c         := TRUE
    LOCAL nKey
 
    DO WHILE c
@@ -1159,7 +1159,7 @@ FUNCTION stodtest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          dDate := hb_SToD(cAnsidate)
@@ -1187,7 +1187,7 @@ FUNCTION chkansi( cAnsidate )
    LOCAL nYear
    LOCAL nMonth
    LOCAL nDay
-   LOCAL lretval := .T.
+   LOCAL lretval := TRUE
 
    nYear  := Val(Left(cAnsidate, 4))
    nMonth := Val(SubStr(cAnsidate, 5, 2))
@@ -1196,11 +1196,11 @@ FUNCTION chkansi( cAnsidate )
    DO CASE
 
    CASE nYear < 1
-      lretval := .F.
+      lretval := FALSE
    CASE nMonth < 1 .OR. nMonth > 12
-      lretval := .F.
+      lretval := FALSE
    CASE nday < 0 .OR. nday > 31
-      lretval := .F.
+      lretval := FALSE
    ENDCASE
 
    RETURN lretval
@@ -1218,14 +1218,14 @@ FUNCTION weektest()
 
    LOCAL getlist := {}
    LOCAL dDate  := hb_SToD()
-   LOCAL c      := .T.
+   LOCAL c      := TRUE
    LOCAL nKey
    LOCAL cMode := Space(1)
 
    DO WHILE c
       @  5, 10 SAY "Week(dDate, lSWN) returns the calendar number of the week"
-      @  6, 10 SAY "if lSWN == .T., the simple week number is returned"
-      @  7, 10 SAY "if lSWN == .F.(default), the ISO8601 week number is returned"
+      @  6, 10 SAY "if lSWN == TRUE, the simple week number is returned"
+      @  7, 10 SAY "if lSWN == FALSE(default), the ISO8601 week number is returned"
 
       @  8, 10 SAY "Test it, Insert a date and <lSWN>"
       @  9, 52 GET dDate
@@ -1240,7 +1240,7 @@ FUNCTION weektest()
       nKey := LastKey()
 
       IF nKey == K_ESC
-         c := .F.
+         c := FALSE
       ELSE
 
          @ 8, 10 SAY "The week number is " + ;

@@ -57,14 +57,14 @@ ENDCLASS
 
 METHOD GenerateAscii:NewDocument( cDir, cFilename, cTitle, cLang )
 
-   ::lContinuous := .T.
+   ::lContinuous := TRUE
    ::super:NewDocument( cDir, cFilename, cTitle,, cLang )
 
    RETURN Self
 
 METHOD GenerateAscii:NewIndex( cDir, cFilename, cTitle, cLang )
 
-   ::lContinuous := .T.
+   ::lContinuous := TRUE
    ::super:NewIndex( cDir, cFilename, cTitle,, cLang )
 
    RETURN Self
@@ -78,7 +78,7 @@ CREATE CLASS GenerateText INHERIT TPLGenerate
 
    PROTECTED:
 
-   VAR lContinuous AS LOGICAL INIT .F.
+   VAR lContinuous AS LOGICAL INIT FALSE
 
    EXPORTED:
 
@@ -96,23 +96,23 @@ ENDCLASS
 METHOD GenerateText:NewDocument( cDir, cFilename, cTitle, cLang )
 
    ::super:NewDocument( cDir, cFilename, cTitle, ".txt", cLang )
-   ::WriteEntry( "", cTitle + hb_eol(), .F. )
+   ::WriteEntry( "", cTitle + hb_eol(), FALSE )
 
    RETURN Self
 
 METHOD GenerateText:NewIndex( cDir, cFilename, cTitle, cLang )
 
    ::super:NewIndex( cDir, cFilename, cTitle, ".txt", cLang )
-   ::WriteEntry( "", cTitle + hb_eol(), .F. )
+   ::WriteEntry( "", cTitle + hb_eol(), FALSE )
 
    RETURN Self
 
 METHOD GenerateText:BeginSection( cSection, cFilename )
 
    IF ::Depth == 0
-      ::WriteEntry( "", cSection + " (see " + cFilename + ::cExtension + "):", .F. )
+      ::WriteEntry( "", cSection + " (see " + cFilename + ::cExtension + "):", FALSE )
    ELSE
-      ::WriteEntry( "", cSection + ":", .F. )
+      ::WriteEntry( "", cSection + ":", FALSE )
    ENDIF
    ::Depth++
 
@@ -120,7 +120,7 @@ METHOD GenerateText:BeginSection( cSection, cFilename )
 
 METHOD GenerateText:AddIndex( oEntry )
 
-   ::WriteEntry( FieldCaption( "NAME" ), oEntry:fld["NAME"] + " - " + oEntry:fld["ONELINER"], .F. )
+   ::WriteEntry( FieldCaption( "NAME" ), oEntry:fld["NAME"] + " - " + oEntry:fld["ONELINER"], FALSE )
 
    RETURN Self
 

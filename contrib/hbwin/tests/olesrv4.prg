@@ -37,7 +37,7 @@ METHOD OleObjServer:ref( p1, p2, p3, p4, p5, p6, p7 )
 
    p1 := Date()
    p2 := hb_DateTime()
-   p3 := .T.
+   p3 := TRUE
    p4 := { "A", "B", "C" }
    p5 := timerCls():new()
    p6 := 123.456

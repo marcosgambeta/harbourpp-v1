@@ -200,7 +200,7 @@ STATIC FUNCTION _ftColours(aOpt, aClrPal, lColour)
       hb_Scroll(nT, nL, nB, nR)
    ENDIF
 
-   DO WHILE .T.
+   DO WHILE TRUE
 
       // .... show sample window
       _ftShowIt(aOpt)
@@ -377,7 +377,7 @@ STATIC FUNCTION _ftClrSel(aClrPal, cClr, nElem, aOpt)
 
    LOCAL nR
    LOCAL nC     := 1
-   LOCAL lFound := .F.
+   LOCAL lFound := FALSE
    LOCAL nKey
    LOCAL nDim   := Len(aClrPal)
    LOCAL nTop    := 0
@@ -394,7 +394,7 @@ STATIC FUNCTION _ftClrSel(aClrPal, cClr, nElem, aOpt)
    FOR nR := 1 TO nDim
       FOR nC := 1 TO nDim
          IF aClrPal[nR, nC] == AllTrim(cClr)
-            lFound := .T.
+            lFound := TRUE
             EXIT
          ENDIF
       NEXT
@@ -408,7 +408,7 @@ STATIC FUNCTION _ftClrSel(aClrPal, cClr, nElem, aOpt)
       nC := IIf(nDim == 5, 3, 8)    // white foreground
    ENDIF
 
-   DO WHILE .T.
+   DO WHILE TRUE
 
       // .... make sure array boundary not exceeded
       nR := IIf(nR > nDim, 1, IIf(nR == 0, nDim, nR))
@@ -464,7 +464,7 @@ STATIC FUNCTION _ftDeskChar(aOpt)
    LOCAL aChar := {hb_UTF8ToStrBox(" "), hb_UTF8ToStrBox("░"), hb_UTF8ToStrBox("▒"), hb_UTF8ToStrBox("▓")}
    LOCAL cChar := aOpt[C_CHAR]
    LOCAL cClr  := aOpt[C_CLR]
-   LOCAL nElem := hb_AScan(aChar, cChar,,, .T.)
+   LOCAL nElem := hb_AScan(aChar, cChar,,, TRUE)
    LOCAL n
    LOCAL nKey
 
@@ -480,7 +480,7 @@ STATIC FUNCTION _ftDeskChar(aOpt)
    NEXT
 
    n := nElem + 18
-   DO WHILE .T.
+   DO WHILE TRUE
       // .... make sure boundary not exeeded
       n := IIf(n > Len(aChar) + 18, 19, IIf(n < 19, Len(aChar) + 18, n))
 
@@ -523,7 +523,7 @@ STATIC FUNCTION _ftChr2Arr(cString, cDelim)
 
    cString += cDelim
 
-   DO WHILE .T.
+   DO WHILE TRUE
       IF Empty(cString)
          EXIT
       ENDIF
@@ -605,7 +605,7 @@ STATIC FUNCTION _ftIdentArr(aArr1, aArr2)
       IF ValType(aArr1[n]) == ValType(aArr2[n])
          lIdentical := IIf(hb_IsArray(aArr1[n]), _ftIdentArr(aArr1[n], aArr2[n]), aArr1[n] == aArr2[n])
       ELSE
-         lIdentical := .F.
+         lIdentical := FALSE
       ENDIF
       n++
    ENDDO

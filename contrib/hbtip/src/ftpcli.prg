@@ -66,7 +66,7 @@ CREATE CLASS TIPClientFTP INHERIT TIPClient
 
    VAR nDataPort
    VAR cDataServer
-   VAR bUsePasv     INIT .T.
+   VAR bUsePasv     INIT TRUE
    VAR RegBytes
    VAR RegPasv
    // Socket opened in response to a port command
@@ -115,7 +115,7 @@ ENDCLASS
 
 METHOD TIPClientFTP:New( oUrl, xTrace, oCredentials )
 
-   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, .F. ), "ftp", xTrace), oCredentials )
+   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, FALSE ), "ftp", xTrace), oCredentials )
 
    ::nDefaultPort := 21
    ::nConnTimeout := 3000
@@ -144,14 +144,14 @@ METHOD TIPClientFTP:Open( cUrl )
             IF ::GetReply()
                ::inetSendAll( ::SocketCon, "PASS " + ::oUrl:cPassword + ::cCRLF )
                IF ::GetReply() .AND. ::TypeI()  // set binary by default
-                  RETURN .T.
+                  RETURN TRUE
                ENDIF
             ENDIF
          ENDIF
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientFTP:Close()
 
@@ -167,7 +167,7 @@ METHOD TIPClientFTP:GetReply()
    LOCAL cRep := ::cReply := ::inetRecvLine( ::SocketCon, @nLen, 128 )
 
    IF cRep == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // now, if the reply has a "-" as fourth character, we need to proceed...
@@ -183,7 +183,7 @@ METHOD TIPClientFTP:Commit()
    hb_inetClose( ::SocketCon )
 
    ::SocketCon := ::SocketControl
-   ::bInitialized := .F.
+   ::bInitialized := FALSE
 
    // error code?
    RETURN ::GetReply() .AND. !hb_LeftEq( ::cReply, "5" )
@@ -197,7 +197,7 @@ METHOD TIPClientFTP:ScanLength()
       ::nLength := Val(aBytes[2])
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPClientFTP:TransferStart()
 
@@ -211,22 +211,22 @@ METHOD TIPClientFTP:TransferStart()
          // Get the start message from the control connection
          IF !::GetReply()
             hb_inetClose( skt )
-            RETURN .F.
+            RETURN FALSE
          ENDIF
 
          ::InetTimeOut( skt )
 
          ::SocketCon := skt
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ELSE
       ::SocketCon := hb_inetAccept( ::SocketPortServer )
       IF Empty(::SocketCon)
-         ::bInitialized := .F.
+         ::bInitialized := FALSE
          ::SocketCon := ::SocketControl
          ::GetReply()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
@@ -239,7 +239,7 @@ METHOD TIPClientFTP:TransferStart()
       ::InetRcvBufSize( ::SocketCon, ::nDefaultRcvBuffSize )
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPClientFTP:Pasv()
 
@@ -248,17 +248,17 @@ METHOD TIPClientFTP:Pasv()
    ::inetSendAll( ::SocketCon, "PASV" + ::cCRLF )
 
    IF !::GetReply()
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF Empty(aRep := hb_regex( ::RegPasv, ::cReply ))
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::cDataServer := aRep[2] + "." + aRep[3] + "." + aRep[4] + "." + aRep[5]
    ::nDataPort := Val(aRep[6]) * 256 + Val(aRep[7])
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPClientFTP:Quit()
 
@@ -296,10 +296,10 @@ METHOD TIPClientFTP:PWD()
    IF ::GetReply()
       ::cReply := SubStr(::cReply, At( '"', ::cReply ) + 1, ;
          RAt( '"', ::cReply ) - At( '"', ::cReply ) - 1)
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientFTP:CWD( cPath )
 
@@ -317,13 +317,13 @@ METHOD TIPClientFTP:LS( cSpec )
 
    IF ::bUsePasv .AND. !::Pasv()
 #if 0
-      ::bUsePasv := .F.
+      ::bUsePasv := FALSE
 #endif
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF !::bUsePasv .AND. !::Port()
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::inetSendAll( ::SocketCon, "NLST " + hb_defaultValue( cSpec, "" ) + ::cCRLF )
@@ -338,7 +338,7 @@ METHOD TIPClientFTP:Rename( cFrom, cTo )
       RETURN ::GetReply()
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 // Create a new directory
 METHOD TIPClientFTP:MKD( cPath )
@@ -358,27 +358,27 @@ METHOD TIPClientFTP:Retr( cFile )
 
    IF ::bUsePasv .AND. !::Pasv()
 #if 0
-      ::bUsePasv := .F.
+      ::bUsePasv := FALSE
 #endif
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::inetSendAll( ::SocketCon, "RETR " + cFile + ::cCRLF )
 
    IF ::TransferStart()
       ::ScanLength()
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientFTP:Stor( cFile )
 
    IF ::bUsePasv .AND. !::Pasv()
 #if 0
-      ::bUsePasv := .F.
+      ::bUsePasv := FALSE
 #endif
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::inetSendAll( ::SocketCon, "STOR " + cFile + ::cCRLF )
@@ -397,7 +397,7 @@ METHOD TIPClientFTP:List( cSpec )
 
    IF ::bUsePasv .AND. !::Pasv()
 #if 0
-      ::bUsePasv := .F.
+      ::bUsePasv := FALSE
 #endif
       RETURN NIL
    ENDIF
@@ -413,27 +413,27 @@ METHOD TIPClientFTP:List( cSpec )
 
    ::inetSendAll( ::SocketCon, "LIST" + cSpec + ::cCRLF )
    cStr := ::ReadAuxPort()
-   ::bEof := .F.
+   ::bEof := FALSE
 
    RETURN cStr
 
 METHOD TIPClientFTP:UserCommand( cCommand, lPasv, lReadPort, lGetReply )
 
-   IF ::bUsePasv .AND. hb_defaultValue( lPasv, .T. ) .AND. !::Pasv()
-      RETURN .F.
+   IF ::bUsePasv .AND. hb_defaultValue( lPasv, TRUE ) .AND. !::Pasv()
+      RETURN FALSE
    ENDIF
 
    ::inetSendAll( ::SocketCon, hb_defaultValue( cCommand, "" ) )
 
-   IF hb_defaultValue( lReadPort, .T. )
+   IF hb_defaultValue( lReadPort, TRUE )
       lReadPort := ::ReadAuxPort()  /* QUESTION: is this assignment intentional? */
    ENDIF
 
-   IF hb_defaultValue( lGetReply, .F. )
+   IF hb_defaultValue( lGetReply, FALSE )
       lGetReply := ::GetReply()  /* QUESTION: is this assignment intentional? */
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPClientFTP:Port()
 
@@ -453,7 +453,7 @@ METHOD TIPClientFTP:Port()
 
    hb_mutexUnlock( s_mutexPort )
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientFTP:SendPort()
 
@@ -495,7 +495,7 @@ METHOD TIPClientFTP:Read( nLen )
    IF !::bInitialized
 
       IF !Empty(::oUrl:cPath) .AND. !::CWD( ::oUrl:cPath )
-         ::bEof := .T.  // no data for this transaction
+         ::bEof := TRUE  // no data for this transaction
          RETURN NIL
       ENDIF
 
@@ -504,17 +504,17 @@ METHOD TIPClientFTP:Read( nLen )
       ENDIF
 
       IF !::Retr( ::oUrl:cFile )
-         ::bEof := .T.  // no data for this transaction
+         ::bEof := TRUE  // no data for this transaction
          RETURN NIL
       ENDIF
 
       // now channel is open
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
    ENDIF
 
    IF ( cRet := ::super:Read( nLen ) ) == NIL
       ::Commit()
-      ::bEof := .T.
+      ::bEof := TRUE
    ENDIF
 
    RETURN cRet
@@ -537,10 +537,10 @@ METHOD TIPClientFTP:Write( cData, nLen )
       ENDIF
 
       // now channel is open
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
    ENDIF
 
-   RETURN ::super:Write( cData, nLen, .F. )
+   RETURN ::super:Write( cData, nLen, FALSE )
 
 METHOD TIPClientFTP:MGet( cSpec, cLocalPath )
 
@@ -548,7 +548,7 @@ METHOD TIPClientFTP:MGet( cSpec, cLocalPath )
 
    IF ::bUsePasv .AND. !::Pasv()
 #if 0
-      ::bUsePasv := .F.
+      ::bUsePasv := FALSE
 #endif
       RETURN NIL
    ENDIF
@@ -558,7 +558,7 @@ METHOD TIPClientFTP:MGet( cSpec, cLocalPath )
    ::inetSendAll( ::SocketCon, "NLST " + hb_defaultValue( cSpec, "" ) + ::cCRLF )
 
    IF ( cStr := ::ReadAuxPort() ) != NIL
-      FOR EACH cFile IN hb_ATokens( cStr, .T. )
+      FOR EACH cFile IN hb_ATokens( cStr, TRUE )
          cFile := RTrim(cFile)
          IF !cFile == ""
             ::Downloadfile( cLocalPath + cFile, cFile )
@@ -590,56 +590,56 @@ METHOD TIPClientFTP:MPut( cFileSpec, cAttr )
 
 METHOD TIPClientFTP:UploadFile( cLocalFile, cRemoteFile )
 
-   ::bEof := .F.
+   ::bEof := FALSE
    ::oUrl:cFile := hb_defaultValue( cRemoteFile, hb_FNameNameExt( cLocalFile ) )
 
    IF !::bInitialized
 
       IF Empty(::oUrl:cFile)
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       IF !Empty(::oUrl:cPath) .AND. !::CWD( ::oUrl:cPath )
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       IF !::bUsePasv .AND. !::Port()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       IF !::Stor( ::oUrl:cFile )
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       // now channel is open
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
    ENDIF
 
    RETURN ::WriteFromFile( cLocalFile )
 
 METHOD TIPClientFTP:DownloadFile( cLocalFile, cRemoteFile )
 
-   ::bEof := .F.
+   ::bEof := FALSE
    ::oUrl:cFile := hb_defaultValue( cRemoteFile, hb_FNameNameExt( cLocalFile ) )
 
    IF !::bInitialized
 
       IF !Empty(::oUrl:cPath) .AND. !::CWD( ::oUrl:cPath )
-         ::bEof := .T.  // no data for this transaction
-         RETURN .F.
+         ::bEof := TRUE  // no data for this transaction
+         RETURN FALSE
       ENDIF
 
       IF !::bUsePasv .AND. !::Port()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       IF !::Retr( ::oUrl:cFile )
-         ::bEof := .T.  // no data for this transaction
-         RETURN .F.
+         ::bEof := TRUE  // no data for this transaction
+         RETURN FALSE
       ENDIF
 
       // now channel is open
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
    ENDIF
 
    RETURN ::ReadToFile( cLocalFile, , ::nLength )
@@ -681,12 +681,12 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
       RETURN {}
    ENDIF
 
-   aList := hb_ATokens( cList, .T. )
+   aList := hb_ATokens( cList, TRUE )
 
    FOR EACH cEntry IN aList DESCEND
 
       IF Empty(cEntry)
-         hb_ADel( aList, cEntry:__enumIndex(), .T. )
+         hb_ADel( aList, cEntry:__enumIndex(), TRUE )
       ELSE
          aFile  := Array( F_LEN + 3 )
          nStart := 1
@@ -732,7 +732,7 @@ METHOD TIPClientFTP:ListFiles( cFileSpec )
             DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd          := hb_At( " ", cEntry, nStart )
-            cMonth        := StrZero( hb_AScan(aMonth, SubStr(cEntry, nStart, nEnd - nStart), , , .T.), 2 )
+            cMonth        := StrZero( hb_AScan(aMonth, SubStr(cEntry, nStart, nEnd - nStart), , , TRUE), 2 )
             nStart        := nEnd
 
             // Day

@@ -33,7 +33,7 @@ PROCEDURE Main()
    SetColor("N/W")
    wvw_SetTitle( NIL, "Quick Survey" )
    wvw_NoClose(NIL)
-   wvw_SetAltF4Close(.F.)
+   wvw_SetAltF4Close(FALSE)
    wvw_SetLineSpacing( NIL, 4 )
 #if 0
    wvw_SetLSpaceColor(NIL, 7)
@@ -88,8 +88,8 @@ PROCEDURE Main()
       ENDCASE
    ENDDO
 
-   wvw_cbEnable( NIL, nCBid, .F. )
-   wvw_pbEnable( NIL, nPBid, .F. )
+   wvw_cbEnable( NIL, nCBid, FALSE )
+   wvw_pbEnable( NIL, nPBid, FALSE )
    @ 6, 1 SAY "Your response is:"
    @ 7, 1 SAY wvw_cbGetCurText( NIL, nCBid )
    @ 9, 1 SAY s_cThankYou
@@ -106,17 +106,17 @@ STATIC FUNCTION CBhandler( nWinNum, nId, nEvent, nIndex, nPBid )
    CASE nEvent == CBN_KILLFOCUS
       // none
       IF nIndex == 0
-         wvw_pbEnable( nWinNum, nPBid, .T. )
+         wvw_pbEnable( nWinNum, nPBid, TRUE )
       ELSE
-         wvw_pbEnable( nWinNum, nPBid, .F. )
+         wvw_pbEnable( nWinNum, nPBid, FALSE )
       ENDIF
    CASE nEvent == CBN_SELCHANGE
       IF !wvw_cbIsDropped(nWinNum, nId)
          // nIndex is 0-based
          IF nIndex == 0
-            wvw_pbEnable( nWinNum, nPBid, .T. )
+            wvw_pbEnable( nWinNum, nPBid, TRUE )
          ELSE
-            wvw_pbEnable( nWinNum, nPBid, .F. )
+            wvw_pbEnable( nWinNum, nPBid, FALSE )
          ENDIF
          wvw_cbSetFocus( nWinNum, nId )
       ENDIF

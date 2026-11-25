@@ -58,7 +58,7 @@ STATIC s_aTables := {}
 
 /* NetWork Functions */
 STATIC s_nNetDelay    := 30
-STATIC s_lNetOk       := .F.
+STATIC s_lNetOk       := FALSE
 STATIC s_cNetMsgColor := "GR+/R"
 
 FUNCTION NetDbUse(cDataBase, cAlias, nSeconds, cDriver, lNew, lOpenMode, lReadOnly)
@@ -66,15 +66,15 @@ FUNCTION NetDbUse(cDataBase, cAlias, nSeconds, cDriver, lNew, lOpenMode, lReadOn
    LOCAL nKey
    LOCAL lForever
    LOCAL cOldScreen := SaveScreen(MaxRow(), 0, MaxRow(), MaxCol() + 1)
-   LOCAL lFirstPass := .T.
+   LOCAL lFirstPass := TRUE
 
    __defaultNIL(@cDriver, "DBFCDX")
-   __defaultNIL(@lNew, .T.)
+   __defaultNIL(@lNew, TRUE)
    __defaultNIL(@lOpenMode, NET_OPEN_MODE)
-   __defaultNIL(@lReadOnly, .F.)
+   __defaultNIL(@lReadOnly, FALSE)
    __defaultNIL(@nSeconds, s_nNetDelay)
 
-   s_lNetOk := .F.
+   s_lNetOk := FALSE
    nSeconds *= 1.00
    lForever := (nSeconds == 0)
 
@@ -88,16 +88,16 @@ FUNCTION NetDbUse(cDataBase, cAlias, nSeconds, cDriver, lNew, lOpenMode, lReadOn
             LTrim(Str(nSeconds, 4, 1)) + " | ESCape = Exit ", ;
             MaxCol() + 1), ;
             s_cNetMsgColor)
-         lFirstPass := .F.
+         lFirstPass := FALSE
       ENDIF
 
-      dbUseArea(lNew, cDriver, cDatabase, cAlias, lOpenMode, .F.)
+      dbUseArea(lNew, cDriver, cDatabase, cAlias, lOpenMode, FALSE)
 
       IF !NetErr()  // USE SUCCEEDS
          RestScreen(MaxRow(), 0, MaxRow(), MaxCol() + 1, cOldScreen)
-         s_lNetOk := .T.
+         s_lNetOk := TRUE
       ELSE
-         lFirstPass := .F.
+         lFirstPass := FALSE
       ENDIF
 
       IF !s_lNetOk
@@ -122,8 +122,8 @@ FUNCTION NetDbUse(cDataBase, cAlias, nSeconds, cDriver, lNew, lOpenMode, lReadOn
 FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
 
    LOCAL cSave       := SaveScreen(MaxRow(), 0, MaxRow(), MaxCol() + 1)
-   LOCAL lContinue   := .T.
-   LOCAL lSuccess    := .F.
+   LOCAL lContinue   := TRUE
+   LOCAL lSuccess    := FALSE
    LOCAL nWaitTime
    LOCAL bOperation
    LOCAL xIdentifier
@@ -139,7 +139,7 @@ FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
       RETURN lSuccess
    ENDIF
 
-   __defaultNIL(@lReleaseLocks, .F.)
+   __defaultNIL(@lReleaseLocks, FALSE)
    __defaultNIL(@nSeconds, s_nNetDelay)
 
    nWaitTime := nSeconds
@@ -158,7 +158,7 @@ FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
       EXIT
    ENDSWITCH
 
-   s_lNetOk := .F.
+   s_lNetOk := FALSE
 
    DO WHILE lContinue
 
@@ -172,9 +172,9 @@ FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
       DO WHILE nSeconds > 0 .AND. lContinue
          IF Eval(bOperation, xIdentifier)
             nSeconds  := 0
-            lSuccess  := .T.
-            lContinue := .F.
-            s_lNetOk  := .T.
+            lSuccess  := TRUE
+            lContinue := FALSE
+            s_lNetOk  := TRUE
             EXIT
          ELSE
             IF nType == 1
@@ -235,14 +235,14 @@ FUNCTION NetFunc(bBlock, nSeconds)
    DO WHILE lForever .OR. nSeconds > 0
 
       IF Eval(bBlock)
-         RETURN .T.                 // NOTE
+         RETURN TRUE                 // NOTE
       ENDIF
 
       Inkey(1)    // Wait 0.5 seconds
       nSeconds -= 0.5
    ENDDO
 
-   RETURN .F.      // Not locked
+   RETURN FALSE      // Not locked
 
 // {DBFName, Alias, {idx Names}}
 // Returns:   0   All Ok
@@ -285,18 +285,18 @@ FUNCTION NetOpenFiles(aFiles)
 
 FUNCTION NetDelete()
 
-   s_lNetOk := .F.
+   s_lNetOk := FALSE
 
    IF NetLock(NET_RECLOCK)
       dbDelete()
-      s_lNetOk := .T.
+      s_lNetOk := TRUE
    ENDIF
 
    IF !NetErr()
       dbSkip(0)
       dbCommit()
    ELSE
-      s_lNetOk := .T.
+      s_lNetOk := TRUE
       Alert(" Failed to DELETE Record -> " + Str(RecNo()))
    ENDIF
 
@@ -304,18 +304,18 @@ FUNCTION NetDelete()
 
 FUNCTION NetRecall()
 
-   s_lNetOk := .F.
+   s_lNetOk := FALSE
 
    IF NetLock(NET_RECLOCK)
       dbRecall()
-      s_lNetOk := .T.
+      s_lNetOk := TRUE
    ENDIF
 
    IF !NetErr()
       dbSkip(0)
       dbCommit()
    ELSE
-      s_lNetOk := .T.
+      s_lNetOk := TRUE
       Alert(" Failed to RECALL Record -> " + Str(RecNo()))
    ENDIF
 
@@ -325,21 +325,21 @@ FUNCTION NetRecLock(nSeconds)
 
    __defaultNIL(@nSeconds, s_nNetDelay)
 
-   s_lNetOk := .F.
+   s_lNetOk := FALSE
 
    IF NetLock(NET_RECLOCK, , nSeconds)                     // 1
-      s_lNetOk := .T.
+      s_lNetOk := TRUE
    ENDIF
 
    RETURN s_lNetOk
 
 FUNCTION NetFileLock(nSeconds)
 
-   s_lNetOk := .F.
+   s_lNetOk := FALSE
    __defaultNIL(@nSeconds, s_nNetDelay)
 
    IF NetLock(NET_FILELOCK, , nSeconds)
-      s_lNetOk := .T.
+      s_lNetOk := TRUE
    ENDIF
 
    RETURN s_lNetOk
@@ -348,14 +348,14 @@ FUNCTION NetAppend(nSeconds, lReleaseLocks)
 
    LOCAL nOrd
 
-   __defaultNIL(@lReleaseLocks, .T.)
+   __defaultNIL(@lReleaseLocks, TRUE)
    __defaultNIL(@nSeconds, s_nNetDelay)
-   s_lNetOk := .F.
+   s_lNetOk := FALSE
    nOrd := ordSetFocus(0)          // --> set order to 0 to append ???
 
    IF NetLock(NET_APPEND, , nSeconds)
       // dbGoBottom()
-      s_lNetOk := .T.
+      s_lNetOk := TRUE
    ENDIF
 
    ordSetFocus(nOrd)
@@ -428,15 +428,15 @@ FUNCTION TableNew(cDBF, cALIAS, cOrderBag, cDRIVER, lNET, cPATH, lNEW, lREADONLY
    LOCAL oDB
    LOCAL o
 
-   __defaultNIL(@lNET, .T.)
-   __defaultNIL(@lNEW, .T.)
-   __defaultNIL(@lREADONLY, .F.)
+   __defaultNIL(@lNET, TRUE)
+   __defaultNIL(@lNEW, TRUE)
+   __defaultNIL(@lREADONLY, FALSE)
    __defaultNIL(@cDRIVER, "DBFCDX")
    __defaultNIL(@cPATH, Set(_SET_DEFAULT))
    __defaultNIL(@cAlias, FixExt(cDbf))
    __defaultNIL(@cOrderBag, FixExt(cDbf))
 
-   lAuto := Set(_SET_AUTOPEN, .F.)
+   lAuto := Set(_SET_AUTOPEN, FALSE)
 
    IF (nPos := AScan(s_aTables, {|e|e[1] == Upper(cALIAS)})) > 0
 
@@ -600,11 +600,11 @@ CREATE CLASS HBTable
    VAR cOrderFile INIT ""
    VAR cPATH INIT ""
    VAR Driver INIT "DBFCDX"
-   VAR IsNew INIT .T.
-   VAR IsReadOnly INIT .F.
-   VAR IsNet INIT .T.
+   VAR IsNew INIT TRUE
+   VAR IsReadOnly INIT FALSE
+   VAR IsNet INIT TRUE
    VAR aSaveState INIT {}
-   VAR lMonitor INIT .F.
+   VAR lMonitor INIT FALSE
    VAR ReadBuffers INIT {}
    VAR WriteBuffers INIT {}
    VAR DeleteBuffers INIT {}
@@ -694,9 +694,9 @@ METHOD HBTable:New(cDBF, cALIAS, cOrderBag, cDRIVER, lNET, cPATH, lNEW, lREADONL
 
    LOCAL cOldRdd
 
-   __defaultNIL(@lNET, .F.)
-   __defaultNIL(@lNEW, .T.)
-   __defaultNIL(@lREADONLY, .F.)
+   __defaultNIL(@lNET, FALSE)
+   __defaultNIL(@lNEW, TRUE)
+   __defaultNIL(@lREADONLY, FALSE)
    __defaultNIL(@cDRIVER, "DBFCDX")
    __defaultNIL(@cPATH, Set(_SET_DEFAULT))
    __defaultNIL(@cAlias, FixExt(cDbf))
@@ -723,14 +723,14 @@ METHOD HBTable:New(cDBF, cALIAS, cOrderBag, cDRIVER, lNET, cPATH, lNEW, lREADONL
 
 METHOD HBTable:Open()
 
-   LOCAL lSuccess := .T.
+   LOCAL lSuccess := TRUE
 
    dbUseArea(::IsNew, ::Driver, ::cDBF, ::Alias, ::IsNET, ::IsREADONLY)
 
    IF ::IsNET
       IF NetErr()
          Alert(_NET_USE_FAIL_MSG)
-         lSuccess := .F.
+         lSuccess := FALSE
          RETURN lSuccess
       ENDIF
    ENDIF
@@ -850,7 +850,7 @@ METHOD PROCEDURE HBTable:Read(lKeepBuffer)
    LOCAL adata  := Array(1, 2)
    LOCAL Buffer
 
-   __defaultNIL(@lKeepBuffer, .F.)
+   __defaultNIL(@lKeepBuffer, FALSE)
 
    // ? Len(::Buffer)
 
@@ -881,7 +881,7 @@ METHOD PROCEDURE HBTable:ReadBlank(lKeepBuffer)
    LOCAL adata  := Array(1, 2)
    LOCAL Buffer
 
-   __defaultNIL(@lKeepBuffer, .F.)
+   __defaultNIL(@lKeepBuffer, FALSE)
 
    (::Alias)->(dbGoBottom())
    (::Alias)->(dbSkip(1))         // go EOF
@@ -915,7 +915,7 @@ METHOD HBTable:Write(lKeepBuffer)
    LOCAL xBuffer
    LOCAL n
 
-   __defaultNIL(@lKeepBuffer, .F.)
+   __defaultNIL(@lKeepBuffer, FALSE)
 
    IF lKeepBuffer .OR. ::lMonitor
 
@@ -930,7 +930,7 @@ METHOD HBTable:Write(lKeepBuffer)
 
    IF ::isNet
       IF !(::Alias)->(NetRecLock())
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
@@ -948,7 +948,7 @@ METHOD HBTable:Write(lKeepBuffer)
    (::Alias)->(ordSetFocus(nOrd))
    Select(nSel)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBTable:BUFWrite(aBuffer)
 
@@ -960,7 +960,7 @@ METHOD HBTable:BUFWrite(aBuffer)
 
    IF ::isNet
       IF !(::Alias)->(NetRecLock())
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
@@ -977,15 +977,15 @@ METHOD HBTable:BUFWrite(aBuffer)
    (::Alias)->(ordSetFocus(nOrd))
    Select(nSel)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBTable:__oTDelete(lKeepBuffer)        // ::Delete()
 
    LOCAL lRet
-   LOCAL lDeleted := Set(_SET_DELETED, .F.)                  // make deleted records visible
+   LOCAL lDeleted := Set(_SET_DELETED, FALSE)                  // make deleted records visible
 
    // temporarily...
-   __defaultNIL(@lKeepBuffer, .F.)
+   __defaultNIL(@lKeepBuffer, FALSE)
 
    ::Read()
 
@@ -993,7 +993,7 @@ METHOD HBTable:__oTDelete(lKeepBuffer)        // ::Delete()
       lRet := (::Alias)->(NetDelete())
    ELSE
       (::Alias)->(dbDelete())
-      lRet := .T.
+      lRet := TRUE
    ENDIF
 
    IF (lKeepBuffer .OR. ::lMonitor) .AND. lRet
@@ -1023,7 +1023,7 @@ METHOD HBTable:SetMonitor(l)
 METHOD HBTable:Undo(nBuffer, nLevel)
 
    LOCAL nLen
-   LOCAL lRet      := .F.
+   LOCAL lRet      := FALSE
    LOCAL lDelState := Set(_SET_DELETED)
    LOCAL nRec      := ::RecNo()
    LOCAL aBuffers
@@ -1040,7 +1040,7 @@ METHOD HBTable:Undo(nBuffer, nLevel)
 
       IF !Empty(::DeleteBuffers)
 
-         Set(_SET_DELETED, .F.)       // make deleted records visible temporarily...
+         Set(_SET_DELETED, FALSE)       // make deleted records visible temporarily...
 
          nLen := Len(::deleteBuffers)
 
@@ -1096,10 +1096,10 @@ METHOD HBTable:Undo(nBuffer, nLevel)
                (::Alias)->(dbGoto(aBuffers[1]))
 
                IF ::BufWrite(aBuffers[2])
-                  lRet := .T.
+                  lRet := TRUE
                ELSE
                   Alert("Rollback Failed...")
-                  lRet := .F.
+                  lRet := FALSE
                ENDIF
             NEXT
 
@@ -1116,10 +1116,10 @@ METHOD HBTable:Undo(nBuffer, nLevel)
                   (::Alias)->(dbGoto(aBuffers[1]))
 
                   IF ::BufWrite(aBuffers[2])
-                     lRet := .T.
+                     lRet := TRUE
                   ELSE
                      Alert("Rollback Failed...")
-                     lRet := .F.
+                     lRet := FALSE
                   ENDIF
                ENDIF
             NEXT
@@ -1174,7 +1174,7 @@ METHOD HBTable:Reindex()
          ::Kill()
       ENDIF
 
-      ::Isnet := .F.
+      ::Isnet := FALSE
 
       IF hb_dbExists(::cPath + ::cOrderFile)
          IF !hb_dbDrop(::cPath + ::cOrderFile)
@@ -1183,16 +1183,16 @@ METHOD HBTable:Reindex()
       ENDIF
 
       IF !::Open()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       AEval(::aOrders, {|o|o:Create()})
 
       ::Kill()
-      ::IsNet := .T.
+      ::IsNet := TRUE
 
       IF !::Open()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
    ENDIF
@@ -1203,7 +1203,7 @@ METHOD HBTable:Reindex()
    (::Alias)->(dbUnlock())
    Select(nSel)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBTable:FastReindex()
 
@@ -1214,7 +1214,7 @@ METHOD HBTable:FastReindex()
 
       ::Kill()
 
-      ::Isnet := .F.
+      ::Isnet := FALSE
       IF hb_dbExists(::cPath + ::cOrderFile)
          IF !hb_dbDrop(::cPath + ::cOrderFile)
             // --> Alert(".cdx *NOT* Deleted !!!" )
@@ -1222,16 +1222,16 @@ METHOD HBTable:FastReindex()
       ENDIF
 
       IF !::Open()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       (::Alias)->(ordListRebuild())
 
       ::Kill()
-      ::IsNet := .T.
+      ::IsNet := TRUE
 
       IF !::Open()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
    ENDIF
@@ -1242,7 +1242,7 @@ METHOD HBTable:FastReindex()
    (::Alias)->(dbUnlock())
    Select(nSel)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBTable:GetOrder(xOrder)
 
@@ -1359,9 +1359,9 @@ METHOD HBTable:OnError(uParam)
 
       oErr := ErrorNew()
       oErr:Args          := {Self, cMsg, uParam}
-      oErr:CanDefault    := .F.
-      oErr:CanRetry      := .F.
-      oErr:CanSubstitute := .T.
+      oErr:CanDefault    := FALSE
+      oErr:CanRetry      := FALSE
+      oErr:CanSubstitute := TRUE
       oErr:Description   := "Invalid class member"
       oErr:GenCode       := EG_NOVARMETHOD
       oErr:Operation     := "HBTable:" + cMsg
@@ -1382,7 +1382,7 @@ CREATE CLASS HBOrder
    VAR cKey, bKey
    VAR cFor, bFor
    VAR cWhile, bWhile
-   VAR UNIQUE INIT .F.
+   VAR UNIQUE INIT FALSE
    VAR bEval
    VAR nInterval
    METHOD Alias() INLINE ::oTable:Alias
@@ -1406,10 +1406,10 @@ ENDCLASS
 METHOD HBOrder:New(cTag, cKey, cLabel, cFor, cWhile, lUnique, bEval, nInterval, cOrderBag)
 
    __defaultNIL(@cKey, ".T.")
-   __defaultNIL(@lUnique, .F.)
+   __defaultNIL(@lUnique, FALSE)
    __defaultNIL(@cFor, ".T.")
    __defaultNIL(@cWhile, ".T.")
-   __defaultNIL(@bEval, {||.T.})
+   __defaultNIL(@bEval, {||TRUE})
    __defaultNIL(@nInterval, 1)
    __defaultNIL(@cLabel, cTag)
 
@@ -1433,7 +1433,7 @@ METHOD PROCEDURE HBOrder:CREATE()
 
    // ? "<<<", ::alias, ::cOrderBag
 
-   (::Alias)->(ordCondSet(::cFor, ::bFor, .T., ::bWhile, ::bEval, ::nInterval))
+   (::Alias)->(ordCondSet(::cFor, ::bFor, TRUE, ::bWhile, ::bEval, ::nInterval))
 
    (::Alias)->(ordCreate(::cOrderBag, ::Tag, ::cKey, ::bKey, ::Unique))
 

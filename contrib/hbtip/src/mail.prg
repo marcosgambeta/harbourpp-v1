@@ -95,7 +95,7 @@ CREATE CLASS TIPMail
    HIDDEN:
 
    VAR cBody
-   VAR lBodyEncoded INIT .F.
+   VAR lBodyEncoded INIT FALSE
    VAR oEncoder
    VAR aAttachments
    VAR nAttachPos   INIT 1
@@ -106,7 +106,7 @@ ENDCLASS
 METHOD TIPMail:New( cBody, xEncoder )
 
    ::hHeaders := { => }
-   hb_HCaseMatch( ::hHeaders, .F. )
+   hb_HCaseMatch( ::hHeaders, FALSE )
    ::aAttachments := {}
 
    ::setEncoder( xEncoder )
@@ -121,22 +121,22 @@ METHOD TIPMail:SetEncoder( xEncoder )
 
    IF hb_IsObject(::oEncoder)
       ::hHeaders["Content-Transfer-Encoding"] := ::oEncoder:cName
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPMail:SetBody( cBody )
 
    IF hb_IsObject(::oEncoder)
       ::cBody := ::oEncoder:Encode( cBody )
       ::hHeaders["Content-Transfer-Encoding"] := ::oEncoder:cName
-      ::lBodyEncoded := .T.  // needed to prevent an extra CRLF from being appended [GD]
+      ::lBodyEncoded := TRUE  // needed to prevent an extra CRLF from being appended [GD]
    ELSEIF hb_IsString(cBody) .OR. cBody == NIL
       ::cBody := cBody
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPMail:GetBody()
    RETURN IIf(hb_IsObject(::oEncoder), ::oEncoder:Decode( ::cBody ), ::cBody)
@@ -161,7 +161,7 @@ METHOD TIPMail:GetFieldOption( cPart, cOption )
    LOCAL cEnc
 
    IF hb_HGetRef( ::hHeaders, cPart, @cEnc ) .AND. ;
-      ! Empty(aMatch := hb_regex( ";\s*" + cOption + "\s*=\s*([^;]*)", cEnc, .F. /* Case insensitive */ ))
+      ! Empty(aMatch := hb_regex( ";\s*" + cOption + "\s*=\s*([^;]*)", cEnc, FALSE /* Case insensitive */ ))
       RETURN aMatch[2]
    ENDIF
 
@@ -181,7 +181,7 @@ METHOD TIPMail:SetFieldPart( cPart, cValue )
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
 
@@ -190,7 +190,7 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
    IF hb_IsString(cPart) .AND. cPart $ ::hHeaders .AND. ;
       hb_IsString(cOption) .AND. !Empty(cOption)
 
-      aMatch := hb_regex( "(.*?;\s*)" + cOption + "\s*=[^;]*(.*)?", ::hHeaders[cPart], .F. )
+      aMatch := hb_regex( "(.*?;\s*)" + cOption + "\s*=[^;]*(.*)?", ::hHeaders[cPart], FALSE )
 
       IF Empty(aMatch)
          ::hHeaders[cPart] += "; " + cOption + "=" + '"' + cValue + '"'
@@ -198,10 +198,10 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
          ::hHeaders[cPart] := aMatch[2] + cOption + "=" + '"' + cValue + '"' + aMatch[3]
       ENDIF
 
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPMail:Attach( oSubPart )
 
@@ -212,10 +212,10 @@ METHOD TIPMail:Attach( oSubPart )
       ENDIF
 
       AAdd( ::aAttachments, oSubPart )
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPMail:NextAttachment()
 
@@ -346,7 +346,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
 
    IF Len(::hHeaders) > 0
       ::hHeaders := { => }
-      hb_HCaseMatch( ::hHeaders, .F. )
+      hb_HCaseMatch( ::hHeaders, FALSE )
    ENDIF
 
    IF Len(::aReceived) > 0
@@ -486,7 +486,7 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
    LOCAL i
 
    IF !hb_IsString(cFrom) .OR. Empty(cFrom)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    DO CASE
@@ -497,7 +497,7 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
    ENDCASE
 
    IF Empty(aTO)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    DO CASE
@@ -524,7 +524,7 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
    NEXT
 
    IF Empty(cTo)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::setFieldPart( "To", cTo )
@@ -548,7 +548,7 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPMail:attachFile( cFileName )
 
@@ -558,7 +558,7 @@ METHOD TIPMail:attachFile( cFileName )
    LOCAL nAttr
 
    IF cContent == ""
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    oAttach   := TIPMail():new( cContent, "base64" )
@@ -580,7 +580,7 @@ METHOD TIPMail:detachFile( cPath )
    LOCAL cFileName := ::getFileName()
 
    IF cFileName == "" .OR. ::cBody == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF hb_IsString(cPath)
@@ -597,14 +597,14 @@ METHOD TIPMail:isMultiPart()
 
 METHOD TIPMail:getMultiParts( aParts )
 
-   LOCAL oSubPart, lReset := .F.
+   LOCAL oSubPart, lReset := FALSE
 
    ::resetAttachment()
 
    hb_default(@aParts, {})
 
    DO WHILE ( oSubPart := ::nextAttachment() ) != NIL
-      lReset := .T.
+      lReset := TRUE
       AAdd( aParts, oSubPart )
       IF oSubPart:countAttachments() > 0
          oSubPart:getMultiparts( aParts )
@@ -621,7 +621,7 @@ STATIC FUNCTION WordEncodeQ( cData, cCharset )
 
    LOCAL c
    LOCAL cString
-   LOCAL lToEncode := .F.
+   LOCAL lToEncode := FALSE
 
    IF !Empty(cCharset)
 
@@ -633,7 +633,7 @@ STATIC FUNCTION WordEncodeQ( cData, cCharset )
             c $ '=?!"#$@[\]^`{|}~_' .OR. ;
             hb_BCode( c ) <= 32
             cString += "=" + hb_NumToHex( hb_BCode( c ), 2 )
-            lToEncode := .T.
+            lToEncode := TRUE
          ELSE
             cString += c
          ENDIF

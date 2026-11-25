@@ -101,15 +101,15 @@ METHOD TFbServer:New( cServer, cUser, cPassword, nDialect )
 
    hb_default(@nDialect, 1)
 
-   ::lError := .F.
+   ::lError := FALSE
    ::nError := 0
-   ::StartedTrans := .F.
+   ::StartedTrans := FALSE
    ::Dialect := nDialect
 
    ::db := FBConnect( cServer, cUser, cPassword )
 
    IF hb_IsNumeric(::db)
-      ::lError := .T.
+      ::lError := TRUE
       ::nError := ::db
    ENDIF
 
@@ -117,36 +117,36 @@ METHOD TFbServer:New( cServer, cUser, cPassword, nDialect )
 
 METHOD TFbServer:StartTransaction()
 
-   LOCAL result := .F.
+   LOCAL result := FALSE
 
    ::trans := FBStartTransaction( ::db )
 
    IF hb_IsNumeric(::trans)
-      ::lError := .T.
+      ::lError := TRUE
       ::nError := ::trans
    ELSE
-      result := .T.
-      ::lError := .F.
+      result := TRUE
+      ::lError := FALSE
       ::lnError := 0
-      ::StartedTrans := .T.
+      ::StartedTrans := TRUE
    ENDIF
 
    RETURN result
 
 METHOD TFbServer:Rollback()
 
-   LOCAL result := .F.
+   LOCAL result := FALSE
    LOCAL n
 
    IF ::StartedTrans
       IF ( n := FBRollback( ::trans ) ) < 0
-         ::lError := .T.
+         ::lError := TRUE
          ::nError := n
       ELSE
-         ::lError := .F.
+         ::lError := FALSE
          ::nError := 0
-         result := .T.
-         ::StartedTrans := .F.
+         result := TRUE
+         ::StartedTrans := FALSE
       ENDIF
    ENDIF
 
@@ -154,18 +154,18 @@ METHOD TFbServer:Rollback()
 
 METHOD TFbServer:Commit()
 
-   LOCAL result := .F.
+   LOCAL result := FALSE
    LOCAL n
 
    IF ::StartedTrans
       IF ( n := FBCommit( ::trans ) ) < 0
-         ::lError := .T.
+         ::lError := TRUE
          ::nError := n
       ELSE
-         ::lError := .F.
+         ::lError := FALSE
          ::nError := 0
-         result := .T.
-         ::StartedTrans := .F.
+         result := TRUE
+         ::StartedTrans := FALSE
       ENDIF
    ENDIF
 
@@ -185,13 +185,13 @@ METHOD TFbServer:Execute( cQuery )
    ENDIF
 
    IF n < 0
-      ::lError := .T.
+      ::lError := TRUE
       ::nError := n
-      result := .F.
+      result := FALSE
    ELSE
-      ::lError := .F.
+      ::lError := FALSE
       ::nError := 0
-      result := .T.
+      result := TRUE
    ENDIF
 
    RETURN result
@@ -202,7 +202,7 @@ METHOD TFbServer:Query( cQuery )
 METHOD TFbServer:TableExists( cTable )
 
    LOCAL cQuery
-   LOCAL result := .F.
+   LOCAL result := FALSE
    LOCAL qry
 
    cQuery := 'select rdb$relation_name from rdb$relations where rdb$relation_name = "' + Upper(cTable) + '"'
@@ -351,7 +351,7 @@ METHOD TFbServer:TableStruct( cTable )
 
 METHOD TFbServer:Delete( oRow, cWhere )
 
-   LOCAL result := .F.
+   LOCAL result := FALSE
    LOCAL aKeys, i, nField, xField, cQuery, aTables
 
    aTables := oRow:GetTables()
@@ -386,7 +386,7 @@ METHOD TFbServer:Delete( oRow, cWhere )
 
 METHOD TFbServer:Append(oRow)
 
-   LOCAL result := .F.
+   LOCAL result := FALSE
    LOCAL cQuery, i, aTables
 
    aTables := oRow:GetTables()
@@ -419,7 +419,7 @@ METHOD TFbServer:Append(oRow)
 
 METHOD TFbServer:Update( oRow, cWhere )
 
-   LOCAL result := .F.
+   LOCAL result := FALSE
    LOCAL aKeys, cQuery, i, nField, xField, aTables
 
    aTables := oRow:GetTables()
@@ -513,7 +513,7 @@ METHOD TFbQuery:New( nDB, cQuery, nDialect )
    ::db := nDb
    ::query := RemoveSpaces( cQuery )
    ::dialect := nDialect
-   ::closed := .T.
+   ::closed := TRUE
    ::aKeys := NIL
 
    ::Refresh()
@@ -528,16 +528,16 @@ METHOD TFbQuery:Refresh()
       ::Destroy()
    ENDIF
 
-   ::lBof := .T.
-   ::lEof := .F.
+   ::lBof := TRUE
+   ::lEof := FALSE
    ::nRecno := 0
-   ::closed := .F.
+   ::closed := FALSE
    ::numcols := 0
    ::aStruct := {}
    ::nError := 0
-   ::lError := .F.
+   ::lError := FALSE
 
-   result := .T.
+   result := TRUE
 
    qry := FBQuery( ::db, ::query, ::dialect )
 
@@ -547,13 +547,13 @@ METHOD TFbQuery:Refresh()
       /* FIXME: This is faulty code. ::aStruct will become zero length, out of sync with ::numcols. */
       ::aStruct := StructConvert( qry[6], ::db, ::dialect )
 
-      ::lError := .F.
+      ::lError := FALSE
       ::nError := 0
       ::qry := qry
 
       /* Tables in query */
       FOR i := 1 TO Len(::aStruct)
-         IF hb_AScan(aTable, ::aStruct[i][5], , , .T.) == 0
+         IF hb_AScan(aTable, ::aStruct[i][5], , , TRUE) == 0
             AAdd(aTable, ::aStruct[i][5])
          ENDIF
       NEXT
@@ -561,7 +561,7 @@ METHOD TFbQuery:Refresh()
       ::aTables := aTable
 
    ELSE
-      ::lError := .T.
+      ::lError := TRUE
       ::nError := qry
    ENDIF
 
@@ -569,21 +569,21 @@ METHOD TFbQuery:Refresh()
 
 METHOD TFbQuery:Destroy()
 
-   LOCAL result := .T.
+   LOCAL result := TRUE
    LOCAL n
 
    IF !::lError .AND. ( n := FBFree( ::qry ) ) < 0
-      ::lError := .T.
+      ::lError := TRUE
       ::nError := n
    ENDIF
 
-   ::closed := .T.
+   ::closed := TRUE
 
    RETURN result
 
 METHOD TFbQuery:Fetch()
 
-   LOCAL result := .F.
+   LOCAL result := FALSE
    LOCAL fetch_stat
 
    IF !::lError .AND. !::lEof
@@ -594,10 +594,10 @@ METHOD TFbQuery:Fetch()
          ::nRecno++
 
          IF fetch_stat == 0
-            ::lBof := .F.
-            result := .T.
+            ::lBof := FALSE
+            result := TRUE
          ELSE
-            ::lEof := .T.
+            ::lEof := TRUE
          ENDIF
       ENDIF
    ENDIF
@@ -712,7 +712,7 @@ METHOD TFbQuery:FieldGet( nField )
          IF result != NIL
             result := ( Val(result) == 1 )
          ELSE
-            result := .F.
+            result := FALSE
          ENDIF
       ENDIF
    ENDIF
@@ -758,7 +758,7 @@ METHOD TFbQuery:GetBlankRow()
             aRow[i] := 0
             EXIT
          CASE "L"
-            aRow[i] := .F.
+            aRow[i] := FALSE
             EXIT
          CASE "D"
             aRow[i] := hb_SToD()
@@ -840,7 +840,7 @@ METHOD TFbRow:FieldPut( nField, Value )
    LOCAL result
 
    IF nField >= 1 .AND. nField <= Len(::aRow)
-      ::aChanged[nField] := .T.
+      ::aChanged[nField] := TRUE
       result := ::aRow[nField] := Value
    ENDIF
 

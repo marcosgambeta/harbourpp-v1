@@ -62,14 +62,14 @@ CREATE CLASS WvgStatusBarPanel
    VAR    alignment                             INIT WVGALIGN_LEFT
    VAR    autosize                              INIT WVGSTATUSBAR_AUTOSIZE_NONE
    VAR    bevel                                 INIT WVGSTATUSBAR_BEVEL_INSET
-   VAR    enabled                               INIT .T.
+   VAR    enabled                               INIT TRUE
    VAR    index                                 INIT 0
    VAR    key                                   INIT ""
    VAR    style                                 INIT WVGSTATUSBAR_PANEL_TEXT
    VAR    sl_caption                            INIT ""
    VAR    image
    VAR    tooltipText                           INIT ""
-   VAR    visible                               INIT .T.
+   VAR    visible                               INIT TRUE
    VAR    left                                  INIT 0
    VAR    width                                 INIT 0
    VAR    minWidth                              INIT 0

@@ -239,7 +239,7 @@ FUNCTION WvtSetObjects(aObject)
 FUNCTION SetMouseCheck(lYes)
 
    LOCAL lOYes
-   STATIC s_lSYes := .T.
+   STATIC s_lSYes := TRUE
 
    lOYes := s_lSYes
    IF lYes != NIL
@@ -256,7 +256,7 @@ FUNCTION WvtWindowExpand(nUnits)
 
    wvt_SetFont("Courier New", s_nUnits)
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION VouChoice(aChoices)
 
@@ -278,7 +278,7 @@ FUNCTION Hb_Clear()
 
    CLS
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION MyMenuProcedure(nID)
 
@@ -291,7 +291,7 @@ FUNCTION MyMenuProcedure(nID)
       EXIT
    ENDSWITCH
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION BuildWvgToolBar(oDA, nActiveX)
 
@@ -299,7 +299,7 @@ FUNCTION BuildWvgToolBar(oDA, nActiveX)
 
    hb_default(@nActiveX, 0)
 
-   oTBar := WvgToolBar():new(oDA, , {0, 0}, {oDA:currentSize()[1], 30}, , .T.)
+   oTBar := WvgToolBar():new(oDA, , {0, 0}, {oDA:currentSize()[1], 30}, , TRUE)
 
    oTBar:style := WVGTOOLBAR_STYLE_FLAT
    oTBar:borderStyle := WVGFRAME_RECT
@@ -310,7 +310,7 @@ FUNCTION BuildWvgToolBar(oDA, nActiveX)
    oTBar:imageWidth := 26
    oTBar:imageHeight := 24
 
-   oTBar:showToolTips := .T.
+   oTBar:showToolTips := TRUE
 
    // After setting properties, create toolbar.
    oTBar:create()
@@ -434,7 +434,7 @@ FUNCTION DispStatusMsg(cMsg)
 
    wvt_DrawLabel(MaxRow(), 60, cMsg, 6, , 0, RGB(198, 198, 198), "Arial", 18, , 900)
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION ClearStatusMsg()
 
@@ -445,7 +445,7 @@ FUNCTION ClearStatusMsg()
 
    SetPos(nRow, nCol)
 
-   RETURN .T.
+   RETURN TRUE
 
 PROCEDURE WvtPictures(nSlot, cFilePic)
 

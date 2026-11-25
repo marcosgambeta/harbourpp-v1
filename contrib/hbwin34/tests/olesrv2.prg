@@ -13,7 +13,7 @@ PROCEDURE DllMain()
 
    LOCAL hAction := { => }
 
-   hb_HCaseMatch( hAction, .F. )
+   hb_HCaseMatch( hAction, FALSE )
    hAction["DATE"]     := @Date()          // DISPID=1
    hAction["TIME"]     := @Time()          // DISPID=2
    hAction["DATETIME"] := @hb_DateTime()   // DISPID=3
@@ -23,7 +23,7 @@ PROCEDURE DllMain()
    /* Initialize OLE server ID and name.
     * win_oleServerInit() should be executed from DllMain()
     */
-   win_oleServerInit( CLS_ID, CLS_Name, hAction, .T. )
+   win_oleServerInit( CLS_ID, CLS_Name, hAction, TRUE )
 
    RETURN
 

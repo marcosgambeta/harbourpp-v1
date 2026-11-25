@@ -73,16 +73,16 @@ PROCEDURE Main()
    ?
 
    ? "  Multi-Pass tests"
-   ? "  Setting CSetAtMupa() to .T."
-   CSetAtMupa(.T.)
+   ? "  Setting CSetAtMupa() to TRUE"
+   CSetAtMupa(TRUE)
    ? '  AtNum( "..", cStr )       should be 18,'
    ? '                               and is ', AtNum( "..", cStr )
    ? '  AtNum( "..", cStr, 2 )    should be 2,'
    ? '                               and is ', AtNum( "..", cStr, 2 )
    ? '  AtNum( "..", cStr, 2, 2 ) should be 9,'
    ? '                               and is ', AtNum( "..", cStr, 2, 2 )
-   ? "  Setting CSetAtMupa() to .F."
-   CSetAtMupa(.F.)
+   ? "  Setting CSetAtMupa() to FALSE"
+   CSetAtMupa(FALSE)
    ?
 
    ? "  SetAtLike tests"

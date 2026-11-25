@@ -71,7 +71,7 @@ PROCEDURE hb_HashAddMember(aName, cType, uInit, oObj)
       CASE "L" // LOGICAL
 
          IF uInit == NIL
-            uInit := .F.
+            uInit := FALSE
          ENDIF
 
          EXIT

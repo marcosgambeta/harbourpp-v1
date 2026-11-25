@@ -6,8 +6,8 @@ PROCEDURE Main()
 
    LOCAL cSubject := "Test subject"
    LOCAL cBody := "Test body"
-   LOCAL lMailConf := .F.
-   LOCAL lFromUser := .T.
+   LOCAL lMailConf := FALSE
+   LOCAL lFromUser := TRUE
    LOCAL aSender := { "test from", "from@example.org" }
    LOCAL aDest := { { "test to", "to@example.org", WIN_MAPI_TO } }
    LOCAL aFiles := { { __FILE__, hb_FNameName( __FILE__ ) } }

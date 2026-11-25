@@ -30,7 +30,7 @@ FUNCTION ft_MAdd(dGivenDate, nAddMonths, lMakeEOM)
 
    hb_default(@dGivenDate, Date())
    hb_default(@nAddMonths, 0)
-   hb_default(@lMakeEOM, .F.)
+   hb_default(@lMakeEOM, FALSE)
 
    nAdjDay := Day(dGivenDate) - 1
 

@@ -80,8 +80,8 @@ STATIC FUNCTION __HB_DumpVar(xVar, lAssocAsObj, lRecursive, nIndent, nRecursionL
    LOCAL cString := "", cKey
    LOCAL nEolLen
 
-   __defaultNIL(@lAssocAsObj, .F.)
-   __defaultNIL(@lRecursive, .F.)
+   __defaultNIL(@lAssocAsObj, FALSE)
+   __defaultNIL(@lRecursive, FALSE)
 
    // TraceLog("Recursion: xVar, nRecursionLevel, nMaxRecursionLevel", xVar, nRecursionLevel, nMaxRecursionLevel)
 
@@ -165,9 +165,9 @@ STATIC FUNCTION DShowProperties(oVar, nScope, lRecursive, nIndent, nRecursionLev
 
    IF hb_IsObject(oVar)
 #if 0
-      lOldScope := __SetClassScope(.F.)
+      lOldScope := __SetClassScope(FALSE)
 #endif
-      aMethods  := __objGetMsgFullList(oVar, .F., HB_MSGLISTALL, nScope)
+      aMethods  := __objGetMsgFullList(oVar, FALSE, HB_MSGLISTALL, nScope)
       aProps    := __objGetValueFullList(oVar, NIL, nScope)
 #if 0
       __SetClassScope(lOldScope)
@@ -356,12 +356,12 @@ STATIC FUNCTION __objGetMsgFullList(oObject, lData, nRange, nScope, nNoScope)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName())
    ENDIF
 
-   hb_default(@lData, .T.)
+   hb_default(@lData, TRUE)
    hb_default(@nNoScope, 0)
 
    // nRange is already defaulted in ClassFullSel in classes.c
 
-   aMessages := ASort(oObject:ClassSel(nRange, nScope, .T.), , , {|x, y|x[HB_OO_DATA_SYMBOL] < y[HB_OO_DATA_SYMBOL]})
+   aMessages := ASort(oObject:ClassSel(nRange, nScope, TRUE), , , {|x, y|x[HB_OO_DATA_SYMBOL] < y[HB_OO_DATA_SYMBOL]})
    aReturn   := {}
 
    nFirstProperty := AScan(aMessages, {|aElement|Left(aElement[HB_OO_DATA_SYMBOL], 1) == "_"})
@@ -399,10 +399,10 @@ STATIC FUNCTION __objGetValueFullList(oObject, aExcept, nScope, nNoScope)
 
    hb_default(@aExcept, {})
 
-   aVars   := __objGetMsgFullList(oObject, .T., HB_MSGLISTALL, nScope, nNoScope)
+   aVars   := __objGetMsgFullList(oObject, TRUE, HB_MSGLISTALL, nScope, nNoScope)
    aReturn := {}
    FOR EACH aVar IN aVars
-      IF hb_AScan(aExcept, aVar[HB_OO_DATA_SYMBOL], , , .T.) == 0
+      IF hb_AScan(aExcept, aVar[HB_OO_DATA_SYMBOL], , , TRUE) == 0
          // TraceLog("__objGetValueFullList():  aVar[HB_OO_DATA_SYMBOL]",  aVar[HB_OO_DATA_SYMBOL])
          AAdd(aReturn, {aVar[HB_OO_DATA_SYMBOL], __SendRawMsg(oObject, aVar[HB_OO_DATA_SYMBOL]), aVar[HB_OO_DATA_TYPE], aVar[HB_OO_DATA_SCOPE]})
       ENDIF

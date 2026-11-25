@@ -12,7 +12,7 @@ REQUEST __HBEXTERN__HBSSL__
 PROCEDURE Main( cFrom, cPassword, cTo, cHost )
 
    LOCAL nPort
-   LOCAL lSTARTTLS := .F.
+   LOCAL lSTARTTLS := FALSE
 
    IF !tip_SSL()
       ? "Error: Requires SSL support"
@@ -33,11 +33,11 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
 
    DO CASE
    CASE cHost == "apple" .OR. "@icloud.com" $ cFrom .OR. "@mac.com" $ cFrom .OR. "@me.com" $ cFrom
-      cHost := "smtp.mail.me.com"; lSTARTTLS := .T.
+      cHost := "smtp.mail.me.com"; lSTARTTLS := TRUE
    CASE cHost == "fastmail" .OR. "@fastmail.com" $ cFrom .OR. "@fastmail.fm" $ cFrom
       cHost := "smtp.fastmail.com"
    CASE cHost == "gmx.net" .OR. "@gmx.net" $ cFrom .OR. "@gmx.ch" $ cFrom .OR. "@gmx.de" $ cFrom
-      cHost := "mail.gmx.net"; lSTARTTLS := .T.
+      cHost := "mail.gmx.net"; lSTARTTLS := TRUE
    CASE cHost == "google" .OR. "@gmail.com" $ cFrom .OR. "@googlemail.com" $ cFrom
       cHost := "smtp.gmail.com"
    CASE cHost == "mail.ru" .OR. "@mail.ru" $ cFrom
@@ -45,9 +45,9 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
    CASE cHost == "netease" .OR. "@163.com" $ cFrom
       cHost := "smtp.163.com"
    CASE cHost == "office365"
-      cHost := "smtp.office365.com"; lSTARTTLS := .T.
+      cHost := "smtp.office365.com"; lSTARTTLS := TRUE
    CASE cHost == "outlook" .OR. "@outlook.com" $ cFrom .OR. "@hotmail.com" $ cFrom
-      cHost := "smtp-mail.outlook.com"; lSTARTTLS := .T.
+      cHost := "smtp-mail.outlook.com"; lSTARTTLS := TRUE
    CASE cHost == "sina" .OR. "@sina.com" $ cFrom
       cHost := "smtp.vip.sina.com"
    CASE cHost == "uol" .OR. "@uol.com.br" $ cFrom
@@ -81,8 +81,8 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
       "", ;
       NIL /* nPriority */, ;
       NIL /* lRead */, ;
-      .T. /* lTrace */, ;
-      .F., ;
+      TRUE /* lTrace */, ;
+      FALSE, ;
       NIL /* lNoAuth */, ;
       NIL /* nTimeOut */, ;
       NIL /* cReplyTo */, ;

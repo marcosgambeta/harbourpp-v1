@@ -58,12 +58,12 @@
 
 CREATE CLASS WvgMLE INHERIT WvgWindow, WvgDataRef
 
-   VAR border INIT .T.
-   VAR editable INIT .T.
-   VAR horizScroll INIT .T.
-   VAR vertScroll INIT .T.
-   VAR wordWrap INIT .T.
-   VAR ignoreTab INIT .F.
+   VAR border INIT TRUE
+   VAR editable INIT TRUE
+   VAR horizScroll INIT TRUE
+   VAR vertScroll INIT TRUE
+   VAR wordWrap INIT TRUE
+   VAR ignoreTab INIT FALSE
 
    VAR bufferLength INIT 32000
 
@@ -88,7 +88,7 @@ CREATE CLASS WvgMLE INHERIT WvgWindow, WvgDataRef
    METHOD lineFromChar() VIRTUAL
    METHOD pos() VIRTUAL
 
-   VAR sl_undo INIT .T.
+   VAR sl_undo INIT TRUE
    ACCESS undo INLINE IIf(::sl_undo, NIL, NIL)
    ASSIGN undo(lUndo) INLINE ::sl_undo := lUndo
 

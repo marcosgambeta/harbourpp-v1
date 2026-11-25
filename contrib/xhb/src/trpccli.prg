@@ -110,11 +110,11 @@ CREATE CLASS TRPCClient
    METHOD HasError()                INLINE ::nErrorCode != 0 .OR. ::TcpHasError() .OR. ::UdpHasError()
    METHOD GetErrorCode()            INLINE ::nErrorCode
 
-   METHOD TcpHasError()             INLINE IIf(Empty(::skTCP), .F., hb_inetErrorCode(::skTCP) > 0)
+   METHOD TcpHasError()             INLINE IIf(Empty(::skTCP), FALSE, hb_inetErrorCode(::skTCP) > 0)
    METHOD GetTcpErrorCode()         INLINE IIf(Empty(::skTCP), 0, hb_inetErrorCode(::skTCP))
    METHOD GetTcpErrorDesc()         INLINE IIf(Empty(::skTCP), "", hb_inetErrorDesc(::skTCP))
 
-   METHOD UdpHasError()             INLINE IIf(Empty(::skUDP), .F., hb_inetErrorCode(::skUDP) > 0)
+   METHOD UdpHasError()             INLINE IIf(Empty(::skUDP), FALSE, hb_inetErrorCode(::skUDP) > 0)
    METHOD UdpGetErrorCode()         INLINE IIf(Empty(::skUDP), 0, hb_inetErrorCode(::skUDP))
    METHOD UdpGetErrorDesc()         INLINE IIf(Empty(::skUDP), "", hb_inetErrorDesc(::skUDP))
    /* Used to retreive data from scans */
@@ -201,12 +201,12 @@ METHOD TRPCClient:New(cNetwork, nTcpPort, nUdpPort)
    ::nTcpPort := IIf(nTcpPort == NIL, 1140, nTcpPort)
 
    ::skTcp := hb_inetCreate()
-   ::skUdp := hb_inetDGram(.T.)
-   ::lAsyncMode := .F.
+   ::skUdp := hb_inetDGram(TRUE)
+   ::lAsyncMode := FALSE
    ::aServers := {}
    ::aFunctions := {}
    ::cNetwork := cNetwork
-   ::bEncrypted := .F.
+   ::bEncrypted := FALSE
 
    ::nLoopMode := RPC_LOOP_NONE
 
@@ -227,24 +227,24 @@ METHOD TRPCClient:Destroy()
    ENDIF
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD SetEncryption(cKey)
 
    IF !Empty(cKey)
-      ::bEncrypted := .T.
+      ::bEncrypted := TRUE
       ::cCryptKey := cKey
    ELSE
-      ::bEncrypted := .F.
+      ::bEncrypted := FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:ScanServers(cName)
 
    // do not allow asynchronous mode without timeout
    IF !::lAsyncMode .AND. (::nTimeout == NIL .OR. ::nTimeOut <= 0)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_mutexLock(::mtxBusy)
@@ -254,7 +254,7 @@ METHOD TRPCClient:ScanServers(cName)
    hb_inetDGramSend(::skUDP, ::cNetwork, ::nUdpPort, "XHBR00" + hb_Serialize(cName))
    ::StartScan()
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD CheckServer(cRemote)
 
@@ -278,18 +278,18 @@ METHOD CheckServer(cRemote)
             cData := SubStr(cData + cData2, 7)
             cData2 := hb_Deserialize(cData)
             AAdd(::aServers, {hb_inetAddress(skRemote), cData2})
-            RETURN .T.
+            RETURN TRUE
          ENDIF
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TRPCClient:ScanFunctions(cFunc, cSerial)
 
    // do not allow asynchronous mode without timeout
    IF !::lAsyncMode .AND. (::nTimeOut == NIL .OR. ::nTimeOut <= 0)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF cSerial == NIL
@@ -304,7 +304,7 @@ METHOD TRPCClient:ScanFunctions(cFunc, cSerial)
       "XHBR01" + hb_Serialize(cFunc) + hb_Serialize(cSerial))
    ::StartScan()
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD StartScan()
 
@@ -326,7 +326,7 @@ METHOD StartScan()
       ::UDPAccept()
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:UDPAccept()
 
@@ -340,7 +340,7 @@ METHOD TRPCClient:UDPAccept()
       hb_inetClearTimeout(::skUdp)
    ENDIF
 
-   DO WHILE .T.
+   DO WHILE TRUE
       nDatalen := hb_inetDGramRecv(::skUDP, @cData, 1400)
 
       IF nDataLen > 0 .AND. ::UDPParse(cData, nDatalen)
@@ -364,7 +364,7 @@ METHOD TRPCClient:UDPAccept()
    ::thUdpAccept := NIL
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:UDPParse(cData, nLen)
 
@@ -372,7 +372,7 @@ METHOD TRPCClient:UDPParse(cData, nLen)
    LOCAL aLoc
 
    IF nLen < 12
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cCode := SubStr(cData, 1, 6)
@@ -388,7 +388,7 @@ METHOD TRPCClient:UDPParse(cData, nLen)
          AAdd(::aServers, aLoc)
          RETURN ::OnScanServersProgress(aLoc)
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
 
@@ -402,12 +402,12 @@ METHOD TRPCClient:UDPParse(cData, nLen)
          AAdd(::aFunctions, aLoc)
          RETURN ::OnScanFunctionsProgress(aLoc)
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
    ENDCASE
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TRPCClient:StopScan()
 
@@ -421,7 +421,7 @@ METHOD TRPCClient:StopScan()
       hb_mutexUnlock(::mtxBusy)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:Connect(cServer, cUserId, cPassword)
 
@@ -445,7 +445,7 @@ METHOD TRPCClient:Connect(cServer, cUserId, cPassword)
             hb_inetRecvAll(::skTcp, @cReply)
             IF hb_inetErrorCode(::skTcp) == 0 .AND. cReply == "XHBR91OK"
                ::nStatus := RPC_STATUS_LOGGED // Logged in
-               RETURN .T.
+               RETURN TRUE
             ENDIF
          ELSE
             RETURN ::ManageChallenge()
@@ -457,7 +457,7 @@ METHOD TRPCClient:Connect(cServer, cUserId, cPassword)
    ::skTcp := NIL
    ::nStatus := RPC_STATUS_NONE
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TRPCClient:BuildChallengePwd(cPassword)
 
@@ -487,22 +487,22 @@ METHOD TRPCClient:ManageChallenge()
 
    cCode := Space(6)
    IF hb_inetRecvAll(::skTCP, @cCode) != 6
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF !(cCode == "XHBR94")
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cLen := Space(8)
    IF hb_inetRecvAll(::skTCP, @cLen) != 8
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    nLen := hb_GetLen8(cLen)
    cData := Space(nLen)
    IF hb_inetRecvAll(::skTCP, @cData, nLen) != nLen
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cData := hb_Decrypt(cData, ::cCryptKey)
@@ -510,19 +510,19 @@ METHOD TRPCClient:ManageChallenge()
    hb_inetSendAll(::skTCP, "XHBR95" + hb_CreateLen8(nChallenge))
 #if 0
    IF hb_inetErrorCode(::skTCP) != 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 #endif
 
    cCode := Space(8)
    hb_inetRecvAll(::skTCP, @cCode)
    IF hb_inetErrorCode(::skTCP) != 0 .OR. !(cCode == "XHBR91OK")
-      RETURN .F.
+      RETURN FALSE
    ENDIF
    /* SUCCESS! */
    ::nStatus := RPC_STATUS_LOGGED
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:Disconnect()
 
@@ -532,17 +532,17 @@ METHOD TRPCClient:Disconnect()
       hb_inetSendAll(::skTcp, "XHBR92")
       hb_inetClose(::skTcp)
       hb_mutexUnlock(::mtxBusy)
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TRPCClient:SetLoopMode(nMethod, xData, nEnd, nStep)
 
    IF nMethod == RPC_LOOP_NONE
       ::nLoopMode := RPC_LOOP_NONE
       ::aLoopData := NIL
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    IF hb_IsArray(xData)
@@ -559,20 +559,20 @@ METHOD TRPCClient:SetLoopMode(nMethod, xData, nEnd, nStep)
             ::nLoopStep := 1
          ENDIF
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
    ::nLoopMode := nMethod
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:ClearTCPBuffer()
 
    LOCAL cDummy := Space(512)
 
    IF ::skTCP == NIL .OR. ::nStatus < RPC_STATUS_LOGGED
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    DO WHILE hb_inetDataReady(::skTCP) > 0
@@ -580,7 +580,7 @@ METHOD TRPCClient:ClearTCPBuffer()
       hb_inetRecv(::skTCP, @cDummy)
    ENDDO
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:Call(...)
 
@@ -602,7 +602,7 @@ METHOD TRPCClient:Call(...)
    oCalling := hb_PValue(1)
    IF hb_IsArray(oCalling)
       cFunction := oCalling[1]
-      hb_ADel(oCalling, 1, .T.)
+      hb_ADel(oCalling, 1, TRUE)
       aParams := oCalling
    ELSE
       cFunction := oCalling
@@ -628,7 +628,7 @@ METHOD TRPCClient:Call(...)
 
    // send the call through the socket
    IF !::SendCall(cFunction, aParams)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // in async mode, just launch the listener
@@ -649,7 +649,7 @@ METHOD TRPCClient:SetPeriodCallback(...)
 
    IF PCount() < 3
       // TODO set an error
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_mutexLock(::mtxBusy)
@@ -673,7 +673,7 @@ METHOD TRPCClient:SetPeriodCallback(...)
 
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:ClearPeriodCallback()
 
@@ -691,7 +691,7 @@ METHOD TRPCClient:ClearPeriodCallback()
 
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:SetTimeout(nTime)
 
@@ -702,7 +702,7 @@ METHOD TRPCClient:SetTimeout(nTime)
 
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD GetTimeout()
 
@@ -717,7 +717,7 @@ METHOD GetTimeout()
 METHOD TRPCClient:StopCall()
 
    IF ::nStatus != RPC_STATUS_WAITING
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // clear eventual pending data
@@ -738,7 +738,7 @@ METHOD TRPCClient:StopCall()
       hb_mutexUnlock(::mtxBusy)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:SendCall(cFunction, aParams)
 
@@ -814,7 +814,7 @@ METHOD TRPCClient:TCPAccept()
    nTimeLimit := Max(::nTimeout, ::nTimeLimit)
 
 
-   DO WHILE .T.
+   DO WHILE TRUE
       IF hb_inetRecvAll(::skTCP, @cCode, 6) <= 0
          EXIT
       ENDIF
@@ -848,14 +848,14 @@ METHOD TRPCClient:TCPAccept()
 
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:TCPParse(cCode)
 
    LOCAL nDataLen, cData, nOrigLen
    LOCAL cDataLen := Space(8), cOrigLen := Space(8)
    LOCAL cProgress := Space(10), nProgress
-   LOCAL lContinue := .F.
+   LOCAL lContinue := FALSE
 
    ::nErrorCode := 0
 
@@ -905,7 +905,7 @@ METHOD TRPCClient:TCPParse(cCode)
       IF hb_inetRecvAll(::skTCP, @cProgress, 10) == 10
          nProgress := hb_Deserialize(cProgress, 10)
          IF nProgress != NIL
-            lContinue := .T.
+            lContinue := TRUE
             ::OnFunctionProgress(nProgress)
          ENDIF
       ENDIF
@@ -920,7 +920,7 @@ METHOD TRPCClient:TCPParse(cCode)
             IF hb_inetRecvAll(::skTCP, @cData) == nDataLen
                ::oResult := hb_Deserialize(::Decrypt(cData), nDataLen)
                IF ::oResult != NIL
-                  lContinue := .T.
+                  lContinue := TRUE
                   ::OnFunctionProgress(nProgress, ::oResult )
                ENDIF
             ENDIF
@@ -941,7 +941,7 @@ METHOD TRPCClient:TCPParse(cCode)
                   IF !Empty(cData)
                      ::oResult := hb_Deserialize(::Decrypt(cData), nDataLen)
                      IF ::oResult != NIL
-                        lContinue := .T.
+                        lContinue := TRUE
                         ::OnFunctionProgress(nProgress, ::oResult)
                      ENDIF
                   ENDIF
@@ -1039,7 +1039,7 @@ METHOD TRPCClient:OnScanComplete()
       RETURN Eval(::bOnScanComplete)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:OnScanServersProgress(aLoc)
 
@@ -1047,7 +1047,7 @@ METHOD TRPCClient:OnScanServersProgress(aLoc)
       RETURN Eval(::bOnScanServersProgress, aLoc)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:OnScanFunctionsProgress(aLoc)
 
@@ -1055,7 +1055,7 @@ METHOD TRPCClient:OnScanFunctionsProgress(aLoc)
       RETURN Eval(::bOnScanFunctionsProgress, aLoc)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:OnFunctionFail(nReason, cReason)
 
@@ -1063,7 +1063,7 @@ METHOD TRPCClient:OnFunctionFail(nReason, cReason)
       RETURN Eval(::bOnFunctionFail, nReason, cReason)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:OnFunctionReturn(oReturn)
 
@@ -1071,7 +1071,7 @@ METHOD TRPCClient:OnFunctionReturn(oReturn)
       RETURN Eval(::bOnFunctionReturn, oReturn)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCClient:OnFunctionProgress(nProgress, oData)
 
@@ -1079,4 +1079,4 @@ METHOD TRPCClient:OnFunctionProgress(nProgress, oData)
       RETURN Eval(::bOnFunctionProgress, nProgress, oData)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE

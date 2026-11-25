@@ -74,7 +74,7 @@ PROCEDURE WinMain(...)
 
    OTHERWISE
 
-      netiosrv_Main(.T., ...)  /* Interactive */
+      netiosrv_Main(TRUE, ...)  /* Interactive */
       EXIT
 
    ENDSWITCH
@@ -87,7 +87,7 @@ STATIC PROCEDURE hbnetio_WinServiceEntry(...)
    LOCAL bSignal := {|| win_serviceGetStatus() != WIN_SERVICE_RUNNING }
 #endif
 
-   netiosrv_Main(.F., ...)  /* Non-interactive */
+   netiosrv_Main(FALSE, ...)  /* Non-interactive */
 
    win_serviceSetExitCode(0)
    win_serviceStop()

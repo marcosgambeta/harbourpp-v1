@@ -71,11 +71,11 @@ METHOD UHttpd:Run( hConfig )
 
    IF !hb_mtvm()
       ::cError := "Multithread support required"
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::hConfig := { ;
-      "SSL"                  => .F., ;
+      "SSL"                  => FALSE, ;
       "Port"                 => 80, ;
       "BindAddress"          => "0.0.0.0", ;
       "LogAccess"            => {|| NIL }, ;
@@ -90,7 +90,7 @@ METHOD UHttpd:Run( hConfig )
    FOR EACH xValue IN hConfig
       IF !hb_HHasKey(::hConfig, xValue:__enumKey) .OR. !( ValType(xValue) == ValType(::hConfig[xValue:__enumKey]) )
          ::cError := "Invalid config option '" + xValue:__enumKey + "'"
-         RETURN .F.
+         RETURN FALSE
       ENDIF
       ::hConfig[xValue:__enumKey] := xValue
    NEXT
@@ -106,28 +106,28 @@ METHOD UHttpd:Run( hConfig )
          SSL_CTX_set_options( ::hSSLCtx, HB_SSL_OP_NO_TLSv1 )
          IF SSL_CTX_use_PrivateKey_file( ::hSSLCtx, ::hConfig["PrivateKeyFilename"], HB_SSL_FILETYPE_PEM ) != 1
             ::cError := "Invalid private key file"
-            RETURN .F.
+            RETURN FALSE
          ENDIF
          IF SSL_CTX_use_certificate_file( ::hSSLCtx, ::hConfig["CertificateFilename"], HB_SSL_FILETYPE_PEM ) != 1
             ::cError := "Invalid certificate file"
-            RETURN .F.
+            RETURN FALSE
          ENDIF
       ELSE
          ::cError := "SSL not supported"
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
    IF ::hConfig["Port"] < 1 .OR. ::hConfig["Port"] > 65535
       ::cError := "Invalid port number"
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ParseFirewallFilter( ::hConfig["FirewallFilter"], @aI )
       ::aFirewallFilter := aI
    ELSE
       ::cError := "Invalid firewall filter"
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::hmtxQueue   := hb_mutexCreate()
@@ -136,19 +136,19 @@ METHOD UHttpd:Run( hConfig )
 
    IF Empty(::hListen := hb_socketOpen())
       ::cError := "Socket create error: " + hb_socketErrorString()
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF !hb_socketBind(::hListen, { HB_SOCKET_AF_INET, ::hConfig["BindAddress"], ::hConfig["Port"] })
       ::cError := "Bind error: " + hb_socketErrorString()
       hb_socketClose( ::hListen )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF !hb_socketListen( ::hListen )
       ::cError := "Listen error: " + hb_socketErrorString()
       hb_socketClose( ::hListen )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    aThreads := {}
@@ -156,10 +156,10 @@ METHOD UHttpd:Run( hConfig )
       AAdd(aThreads, hb_threadStart( HB_THREAD_INHERIT_PUBLIC, @ProcessConnection(), Self ))
    NEXT
 
-   ::lStop := .F.
+   ::lStop := FALSE
    ::hSession := { => }
 
-   DO WHILE .T.
+   DO WHILE TRUE
       IF Empty(hSocket := hb_socketAccept( ::hListen,, 1000 ))
          IF hb_socketGetError() == HB_SOCKET_ERR_TIMEOUT
             Eval(::hConfig["Idle"], Self)
@@ -185,12 +185,12 @@ METHOD UHttpd:Run( hConfig )
    AEval(aThreads, {|| hb_mutexNotify( ::hmtxQueue, NIL ) })
    AEval(aThreads, {| h | hb_threadJoin( h ) })
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD UHttpd:Stop()
 
    Eval(::hConfig["Trace"], "stopping")
-   ::lStop := .T.
+   ::lStop := TRUE
 
    RETURN NIL
 
@@ -235,7 +235,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
    LOCAL cExpr, nI, cI, nPrefix, nAddr, nAddr2, nPos, nPos2, lDeny, aDeny, aI
 
    aFilter := { => }
-   hb_HKeepOrder( aFilter, .F. )
+   hb_HKeepOrder( aFilter, FALSE )
    aDeny := {}
    FOR EACH cExpr IN hb_ATokens( cFilter, " " )
       IF !Empty(cExpr)
@@ -247,7 +247,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
             cExpr := Left(cExpr, nI - 1)
             IF "." $ cI
                IF ( nI := IPAddr2Num( cI ) ) == NIL
-                  RETURN .F.
+                  RETURN FALSE
                ENDIF
                nPrefix := 32
                DO WHILE hb_bitAnd(nI, 1) == 0
@@ -255,19 +255,19 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
                   nI := hb_bitShift( nI, -1 )
                ENDDO
                IF nI + 1 != hb_bitShift( 1, nPrefix )
-                  RETURN .F.
+                  RETURN FALSE
                ENDIF
             ELSE
                nPrefix := Val(cI)
                IF nPrefix < 0 .OR. nPrefix > 32 .OR. ! hb_ntos(nPrefix) == cI
-                  RETURN .F.
+                  RETURN FALSE
                ENDIF
             ENDIF
          ELSE
             nPrefix := 32
          ENDIF
          IF ( nAddr := IPAddr2Num( cExpr ) ) == NIL
-            RETURN .F.
+            RETURN FALSE
          ENDIF
          nPrefix := 0x100000000 - hb_bitShift( 1, 32 - nPrefix )
 
@@ -322,7 +322,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
       ENDDO
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC FUNCTION MY_SSL_READ(hConfig, hSSL, hSocket, cBuf, nTimeout, nError)
 
@@ -435,7 +435,7 @@ STATIC FUNCTION ProcessConnection( oServer )
    httpd := oServer
 
    /* main worker thread loop */
-   DO WHILE .T.
+   DO WHILE TRUE
       hb_mutexSubscribe( oServer:hmtxQueue,, @hSocket )
       IF hSocket == NIL
          EXIT
@@ -468,11 +468,11 @@ STATIC FUNCTION ProcessConnection( oServer )
       IF oServer:lHasSSL .AND. oServer:hConfig["SSL"]
          hSSL := SSL_new( oServer:hSSLCtx )
          SSL_set_mode( hSSL, hb_bitOr( SSL_get_mode( hSSL ), HB_SSL_MODE_ENABLE_PARTIAL_WRITE ) )
-         hb_socketSetBlockingIO( hSocket, .F. )
+         hb_socketSetBlockingIO( hSocket, FALSE )
          SSL_set_fd(hSSL, hb_socketGetFD( hSocket ))
 
          nTime := hb_MilliSeconds()
-         DO WHILE .T.
+         DO WHILE TRUE
             IF ( nErr := MY_SSL_ACCEPT( oServer:hConfig, hSSL, hSocket, 1000 ) ) == 0
                EXIT
             ELSE
@@ -931,12 +931,12 @@ STATIC FUNCTION HttpDateUnformat( cDate, tDate )
          tI := hb_SToT( SubStr(cDate, 13, 4) + PadL(nMonth, 2, "0") + SubStr(cDate, 6, 2) + StrTran(SubStr(cDate, 18, 8), ":") )
          IF !Empty(tI)
             tDate := tI + hb_UTCOffset() / ( 3600 * 24 )
-            RETURN .T.
+            RETURN TRUE
          ENDIF
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 STATIC FUNCTION UErrorHandler( oErr, oServer )
 
@@ -945,11 +945,11 @@ STATIC FUNCTION UErrorHandler( oErr, oServer )
    CASE oErr:genCode == EG_ZERODIV
       RETURN 0
    CASE oErr:genCode == EG_LOCK
-      RETURN .T.
+      RETURN TRUE
    CASE ( oErr:genCode == EG_OPEN .AND. oErr:osCode == 32 .OR. ;
          oErr:genCode == EG_APPENDLOCK ) .AND. oErr:canDefault
-      NetErr(.T.)
-      RETURN .F.
+      NetErr(TRUE)
+      RETURN FALSE
    ENDCASE
    oServer:LogError( GetErrorDesc(oErr) )
    IF oErr != NIL // Dummy check to avoid unreachable code warning for RETURN NIL
@@ -1356,7 +1356,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
    LOCAL aDir, aF, nI, cI, tDate, tHDate
 
    IF !hb_IsLogical(lIndex)
-      lIndex := .F.
+      lIndex := FALSE
    ENDIF
 
    cFileName := StrTran(cFileName, "//", "/")
@@ -1432,7 +1432,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
          RETURN
       ENDIF
       IF AScan({ "index.html", "index.htm" }, ;
-            {| x | IIf(hb_FileExists( UOsFileName( cFileName + X ) ), ( cFileName += X, .T. ), .F.) }) > 0
+            {| x | IIf(hb_FileExists( UOsFileName( cFileName + X ) ), ( cFileName += X, TRUE ), FALSE) }) > 0
          UAddHeader( "Content-Type", "text/html" )
          UWrite( hb_MemoRead(UOsFileName( cFileName )) )
          RETURN
@@ -1447,18 +1447,18 @@ PROCEDURE UProcFiles( cFileName, lIndex )
       aDir := Directory( UOsFileName( cFileName ), "D" )
       IF hb_HHasKey(get, "s")
          IF get["s"] == "s"
-            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], .T.), ;
-               IIf(Y[5] == "D", .F., X[2] < Y[2])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], TRUE), ;
+               IIf(Y[5] == "D", FALSE, X[2] < Y[2])) } )
          ELSEIF get["s"] == "m"
-            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], .T.), ;
-               IIf(Y[5] == "D", .F., DToS( X[3] ) + X[4] < DToS( Y[3] ) + Y[4])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], TRUE), ;
+               IIf(Y[5] == "D", FALSE, DToS( X[3] ) + X[4] < DToS( Y[3] ) + Y[4])) } )
          ELSE
-            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], .T.), ;
-               IIf(Y[5] == "D", .F., X[1] < Y[1])) } )
+            ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], TRUE), ;
+               IIf(Y[5] == "D", FALSE, X[1] < Y[1])) } )
          ENDIF
       ELSE
-         ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], .T.), ;
-            IIf(Y[5] == "D", .F., X[1] < Y[1])) } )
+         ASort( aDir,,, {| X, Y | IIf(X[5] == "D", IIf(Y[5] == "D", X[1] < Y[1], TRUE), ;
+            IIf(Y[5] == "D", FALSE, X[1] < Y[1])) } )
       ENDIF
 
       UWrite( '<html><body><h1>Index of ' + server["SCRIPT_NAME"] + '</h1><pre>' )

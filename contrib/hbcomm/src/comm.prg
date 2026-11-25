@@ -124,7 +124,7 @@ FUNCTION INCHR(nPort, nCount, /* @ */ cData)
 
    RETURN hb_comRecv( nPort, @cData, nCount )
 
-/* Send out characters. Returns .T. if successful. */
+/* Send out characters. Returns TRUE if successful. */
 FUNCTION OUTCHR(nPort, cData)
 
    LOCAL nLen
@@ -135,13 +135,13 @@ FUNCTION OUTCHR(nPort, cData)
       nLen := hb_comSend(nPort, cData,, 1000)
 
       IF nLen <= 0
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       cData := hb_BSubStr(cData, nLen + 1)
    ENDDO
 
-   RETURN .T.
+   RETURN TRUE
 
 /* Find out how many chars are in input buffer */
 FUNCTION INBUFSIZE( nPort )
@@ -154,7 +154,7 @@ FUNCTION OUTBUFSIZE( nPort )
 /* Close port and clear handle */
 FUNCTION UNINT_PORT( nPort )
 
-   LOCAL lRetVal := .F.
+   LOCAL lRetVal := FALSE
 
    hb_mutexLock( s_hbcomm_mutex )
 
@@ -165,7 +165,7 @@ FUNCTION UNINT_PORT( nPort )
             hb_comSetDevice( nPort, s_hPort[nPort] )
          ENDIF
          hb_HDel( s_hPort, nPort )
-         lRetVal := .T.
+         lRetVal := TRUE
       ENDIF
    ENDIF
 

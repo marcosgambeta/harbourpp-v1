@@ -18,7 +18,7 @@ PROCEDURE Main()
 
    rddSetDefault("SQLMIX")
    ? "Connect:", rddInfo(RDDI_CONNECT, {"ODBC", "DBQ=" + hb_DirBase() + "..\..\hbodbc\tests\test.mdb;Driver={Microsoft Access Driver (*.mdb)}"})
-   ? "Use:", dbUseArea(.T., , "select * from test", "test")
+   ? "Use:", dbUseArea(TRUE, , "select * from test", "test")
    ? "Alias:", Alias()
    ? "DB struct:", hb_ValToExp(dbStruct())
    Inkey(0)

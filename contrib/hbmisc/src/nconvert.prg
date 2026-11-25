@@ -52,11 +52,11 @@ FUNCTION IsBin( cString )
    cString := AllTrim(cString)
    FOR nX := 1 TO Len(cString)
       IF !SubStr(cString, nX, 1) $ "01"
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION IsOctal( cString )
 
@@ -65,11 +65,11 @@ FUNCTION IsOctal( cString )
    cString := AllTrim(cString)
    FOR nX := 1 TO Len(cString)
       IF !SubStr(cString, nX, 1) $ "01234567"
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION IsDec(cString)
 
@@ -78,11 +78,11 @@ FUNCTION IsDec(cString)
    cString := AllTrim(cString)
    FOR nX := 1 TO Len(cString)
       IF !SubStr(cString, nX, 1) $ "0123456789"
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION IsHexa(cString)
 
@@ -91,11 +91,11 @@ FUNCTION IsHexa(cString)
    cString := AllTrim(cString)
    FOR nX := 1 TO Len(cString)
       IF !SubStr(cString, nX, 1) $ "0123456789ABCDEF"
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION DecToBin( nNumber )
 

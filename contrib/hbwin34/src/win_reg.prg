@@ -125,7 +125,7 @@ FUNCTION win_regDelete(cRegPath, nRegSam)
       lRetVal := win_regDeleteValue(pKeyHandle, cEntry)
       win_regCloseKey(pKeyHandle)
    ELSE
-      lRetVal := .F.
+      lRetVal := FALSE
    ENDIF
 
    RETURN lRetVal
@@ -149,7 +149,7 @@ FUNCTION win_regQuery(nHKEY, cKeyName, cEntryName, xValue, lSetIt, nRegSam)
    ENDSWITCH
 
    lRetVal := (xKey != NIL .AND. xValue != NIL .AND. cValType == ValType(xKey) .AND. xValue == xKey)
-   IF !lRetVal .AND. hb_defaultValue(lSetIt, .F.)
+   IF !lRetVal .AND. hb_defaultValue(lSetIt, FALSE)
       lRetVal := win_regSet(nHKEY, cKeyName, cEntryName, xValue,, nRegSam)
    ENDIF
 
@@ -204,7 +204,7 @@ FUNCTION win_regGet(nHKEY, cKeyName, cEntryName, xDefault, nRegSam)
 FUNCTION win_regSet(nHKEY, cKeyName, cEntryName, xValue, nValueType, nRegSam)
 
    LOCAL xName
-   LOCAL lRetVal := .F.
+   LOCAL lRetVal := FALSE
    LOCAL pKeyHandle
 
    IF win_regCreateKeyEx(nHKEY, cKeyName, 0, 0, 0, hb_bitOr(KEY_SET_VALUE, hb_defaultValue(nRegSam, 0)), 0, @pKeyHandle)

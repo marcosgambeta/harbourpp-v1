@@ -91,7 +91,7 @@ THREAD STATIC t_cHtmlUnicChars
 THREAD STATIC t_aHtmlAnsiEntities  // HTML character entities (ANSI character set)
 THREAD STATIC t_cHtmlAnsiChars
 #endif
-THREAD STATIC t_lInit := .F.       // initialization flag for HTML data
+THREAD STATIC t_lInit := FALSE       // initialization flag for HTML data
 
 #ifdef _DEBUG_
 #xtranslate HIDDEN: => EXPORTED:   // debugger cannot see HIDDEN iVars
@@ -108,7 +108,7 @@ CREATE CLASS THtmlDocument MODULE FRIENDLY
    VAR root    READONLY
    VAR head    READONLY
    VAR body    READONLY
-   VAR changed INIT .T.
+   VAR changed INIT TRUE
 
    METHOD new( cHtmlString )
    METHOD readFile( cFileName )
@@ -167,7 +167,7 @@ METHOD THtmlDocument:new( cHtmlString )
 
       ::root    := THtmlNode():new( cEmptyHtmlDoc )
       ::root:document := Self
-      ::changed := .T.
+      ::changed := TRUE
       ::head    := ::getNode( "head" )
       ::body    := ::getNode( "body" )
 
@@ -224,13 +224,13 @@ METHOD THtmlDocument:toString()
 METHOD THtmlDocument:readFile( cFileName )
 
    IF hb_vfExists( cFileName )
-      ::changed := .T.
+      ::changed := TRUE
       ::new( MemoRead( cFileName ) )
 
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 // writes the entire tree of HTML objects into a file
 METHOD THtmlDocument:writeFile( cFileName )
@@ -238,7 +238,7 @@ METHOD THtmlDocument:writeFile( cFileName )
    LOCAL lSuccess := hb_MemoWrit( cFileName, ::toString() )
 
    IF lSuccess
-      ::changed := .F.
+      ::changed := FALSE
    ENDIF
 
    RETURN lSuccess
@@ -248,7 +248,7 @@ METHOD THtmlDocument:collect()
 
    IF ::changed
       ::nodes   := ::root:collect()
-      ::changed := .F.
+      ::changed := FALSE
    ENDIF
 
    RETURN ::nodes
@@ -400,17 +400,17 @@ METHOD THtmlIterator:Find( cName, cAttribute, cValue, cData )
 
 METHOD THtmlIterator:Next()
 
-   LOCAL oFound, lExit := .F.
+   LOCAL oFound, lExit := FALSE
 
    DO WHILE !lExit
       BEGIN SEQUENCE WITH __BreakBlock()
          oFound := ::aNodes[ ++::nCurrent ]
          IF ::MatchCriteria(oFound)
             ::oNode := oFound
-            lExit := .T.
+            lExit := TRUE
          ENDIF
       RECOVER
-         lExit      := .T.
+         lExit      := TRUE
          oFound     := NIL
          ::nCurrent := 0
       END SEQUENCE
@@ -419,7 +419,7 @@ METHOD THtmlIterator:Next()
    RETURN oFound
 
 METHOD THtmlIterator:MatchCriteria()
-   RETURN .T.
+   RETURN TRUE
 
 /* Iterator scan class */
 
@@ -444,17 +444,17 @@ METHOD THtmlIteratorScan:MatchCriteria(oFound)
    LOCAL xData
 
    IF ::cName != NIL .AND. ! Lower(::cName) == Lower(oFound:htmlTagName)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::cAttribute != NIL .AND. ! ::cAttribute $ oFound:getAttributes()
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::cValue != NIL
       xData := oFound:getAttributes()
       IF hb_HScan( xData, {| xKey, cValue | HB_SYMBOL_UNUSED(xKey), Lower(::cValue) == Lower(cValue) } ) == 0
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
@@ -462,11 +462,11 @@ METHOD THtmlIteratorScan:MatchCriteria(oFound)
       xData := oFound:getText( " " )
       /* NOTE: != changed to ! == */
       IF Empty(xData) .OR. ! AllTrim(::cData) == AllTrim(xData)
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 /* Iterator regex class */
 
@@ -489,27 +489,27 @@ METHOD THtmlIteratorRegex:MatchCriteria(oFound)
    LOCAL xData
 
    IF ::cName != NIL .AND. !hb_regexLike( Lower(oFound:htmlTagName), Lower(::cName) )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::cAttribute != NIL .AND. ;
       hb_HScan( oFound:getAttributes(), {| cKey | hb_regexLike( Lower(::cAttribute), cKey ) } ) == 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::cValue != NIL .AND. ;
       hb_HScan( oFound:getAttributes(), {| xKey, cValue | HB_SYMBOL_UNUSED(xKey), hb_regexLike( ::cValue, cValue ) } ) == 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::cData != NIL
       xData := oFound:getText( " " )
       IF Empty(xData) .OR. !hb_regexHas( AllTrim(::cData), AllTrim(xData) )
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 /* Class representing a HTML node tree.
    It parses a HTML formatted string */
@@ -603,7 +603,7 @@ ENDCLASS
 METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
 
    IF !t_lInit
-      THtmlInit(.T.)
+      THtmlInit(TRUE)
    ENDIF
 
    IF hb_IsString(oParent)
@@ -644,7 +644,7 @@ METHOD THtmlNode:isType( nType )
    BEGIN SEQUENCE WITH __BreakBlock()
       lRet := hb_bitAnd( ::htmlTagType[2], nType ) != 0
    RECOVER
-      lRet := .F.
+      lRet := FALSE
    END SEQUENCE
 
    RETURN lRet
@@ -677,7 +677,7 @@ METHOD THtmlNode:keepFormatting()
 METHOD THtmlNode:parseHtml( parser )
 
    LOCAL nLastPos := parser:p_pos
-   LOCAL lRewind  := .F.
+   LOCAL lRewind  := FALSE
    LOCAL oThisTag, oNextTag, oLastTag
    LOCAL cTagName, cAttr, nStart, nEnd, nPos, cText
 
@@ -757,7 +757,7 @@ METHOD THtmlNode:parseHtml( parser )
 
          ENDIF
 
-         lRewind := .T.
+         lRewind := TRUE
          EXIT
 
       OTHERWISE
@@ -769,16 +769,16 @@ METHOD THtmlNode:parseHtml( parser )
             CASE Lower(cTagName) == Lower(oThisTag:htmlTagName)
                // the next tag is the same like this tag
                // ( e.g. <p>|<tr>|<td>|<li>)
-               lRewind := .T.
+               lRewind := TRUE
             CASE Lower(cTagName) == Lower(oThisTag:parent:htmlTagName) .AND. !oThisTag:isType( CM_LIST )
                // the next tag is the same like the parent tag
                // ( e.g. this is <td> and the next tag is <tr> )
-               lRewind := .T.
+               lRewind := TRUE
             CASE Lower(::htmlTagName) $ "dd,dt"
                // <dl><dt><dd> is a unique special case
                IF Lower(cTagName) $ "dd,dt"
                   // next tag is <dt> or <dd>
-                  lRewind := .T.
+                  lRewind := TRUE
                ENDIF
             ENDCASE
 
@@ -817,7 +817,7 @@ METHOD THtmlNode:parseHtml( parser )
 
       IF lRewind
          oThisTag := oThisTag:parent
-         lRewind := .F.
+         lRewind := FALSE
 
          IF oThisTag == NIL
             oThisTag := Self
@@ -883,7 +883,7 @@ METHOD THtmlNode:addNode( oTHtmlNode )
    AAdd( ::htmlContent, oTHtmlNode )
 
    IF ::root != NIL .AND. ::root:_document != NIL
-      ::root:_document:changed := .T.
+      ::root:_document:changed := TRUE
    ENDIF
 
    RETURN oTHtmlNode
@@ -903,11 +903,11 @@ METHOD THtmlNode:insertBefore( oTHtmlNode )
    oTHtmlNode:root   := ::root
 
    IF ::root != NIL .AND. ::root:_document != NIL
-      ::root:_document:changed := .T.
+      ::root:_document:changed := TRUE
    ENDIF
 
    IF hb_IsArray(::parent:htmlContent)
-      hb_AIns( ::parent:htmlContent, 1, oTHtmlNode, .T. )
+      hb_AIns( ::parent:htmlContent, 1, oTHtmlNode, TRUE )
    ENDIF
 
    RETURN oTHtmlNode
@@ -925,13 +925,13 @@ METHOD THtmlNode:insertAfter( oTHtmlNode )
    oTHtmlNode:root   := ::root
 
    IF ::root != NIL .AND. ::root:_document != NIL
-      ::root:_document:changed := .T.
+      ::root:_document:changed := TRUE
    ENDIF
 
-   IF ( nPos := hb_AScan(::parent:htmlContent, Self,,, .T.) + 1 ) > Len(::parent:htmlContent)
+   IF ( nPos := hb_AScan(::parent:htmlContent, Self,,, TRUE) + 1 ) > Len(::parent:htmlContent)
       ::parent:addNode( oTHtmlNode )
    ELSE
-      hb_AIns( ::parent:htmlContent, nPos, oTHtmlNode, .T. )
+      hb_AIns( ::parent:htmlContent, nPos, oTHtmlNode, TRUE )
    ENDIF
 
    RETURN oTHtmlNode
@@ -944,11 +944,11 @@ METHOD THtmlNode:Delete()
    ENDIF
 
    IF ::root != NIL .AND. ::root:_document != NIL
-      ::root:_document:changed := .T.
+      ::root:_document:changed := TRUE
    ENDIF
 
    IF hb_IsArray(::parent:htmlContent)
-      hb_ADel( ::parent:htmlContent, hb_AScan(::parent:htmlContent, Self,,, .T.), .T. )
+      hb_ADel( ::parent:htmlContent, hb_AScan(::parent:htmlContent, Self,,, TRUE), TRUE )
    ENDIF
 
    ::parent := NIL
@@ -956,10 +956,10 @@ METHOD THtmlNode:Delete()
 
    RETURN Self
 
-// returns first node in subtree (.F.) or first node of entire tree (.T.)
+// returns first node in subtree (FALSE) or first node of entire tree (TRUE)
 METHOD THtmlNode:firstNode( lRoot )
 
-   IF hb_defaultValue( lRoot, .F. )
+   IF hb_defaultValue( lRoot, FALSE )
       RETURN ::root:htmlContent[1]
    ELSEIF ::htmlTagName == "_text_"
       RETURN ::parent:htmlContent[1]
@@ -967,10 +967,10 @@ METHOD THtmlNode:firstNode( lRoot )
 
    RETURN IIf(Empty(::htmlContent), NIL, ::htmlContent[1])
 
-// returns last node in subtree (.F.) or last node of entire tree (.T.)
+// returns last node in subtree (FALSE) or last node of entire tree (TRUE)
 METHOD THtmlNode:lastNode( lRoot )
 
-   hb_default(@lRoot, .F.)
+   hb_default(@lRoot, FALSE)
 
    IF ::htmlTagName == "_text_"
       RETURN ::parent:lastNode( lRoot )
@@ -992,12 +992,12 @@ METHOD THtmlNode:nextNode()
       RETURN ::htmlContent[1]
    ENDIF
 
-   IF ( nPos := hb_AScan(::parent:htmlContent, Self,,, .T.) ) < Len(::parent:htmlContent)
+   IF ( nPos := hb_AScan(::parent:htmlContent, Self,,, TRUE) ) < Len(::parent:htmlContent)
       RETURN ::parent:htmlContent[nPos + 1]
    ENDIF
 
    aNodes := ::parent:parent:collect()
-   nPos   := hb_AScan(aNodes, Self,,, .T.)
+   nPos   := hb_AScan(aNodes, Self,,, TRUE)
 
    RETURN IIf(nPos == Len(aNodes), NIL, aNodes[nPos + 1])
 
@@ -1011,7 +1011,7 @@ METHOD THtmlNode:prevNode()
    ENDIF
 
    aNodes := ::parent:collect( Self )
-   nPos   := hb_AScan(aNodes, Self,,, .T.)
+   nPos   := hb_AScan(aNodes, Self,,, TRUE)
 
    RETURN IIf(nPos == 1, ::parent, aNodes[nPos - 1])
 
@@ -1154,7 +1154,7 @@ METHOD THtmlNode:getText( cEOL )
 
    FOR EACH oNode IN ::htmlContent
       cText += oNode:getText( cEOL )
-      IF Lower(::htmlTagName) $ "td,th" .AND. hb_AScan(::parent:htmlContent, Self,,, .T.) < Len(::parent:htmlContent)
+      IF Lower(::htmlTagName) $ "td,th" .AND. hb_AScan(::parent:htmlContent, Self,,, TRUE) < Len(::parent:htmlContent)
          // leave table rows in one line, cells separated by Tab
          cText := hb_StrShrink( cText, Len(cEOL) ) + Chr(9)
       ENDIF
@@ -1193,12 +1193,12 @@ METHOD THtmlNode:getAttributes()
 
    ELSEIF ::htmlAttributes == NIL
       ::htmlAttributes := { => }
-      hb_HCaseMatch( ::htmlAttributes, .F. )
+      hb_HCaseMatch( ::htmlAttributes, FALSE )
 
    ELSEIF hb_IsString(::htmlAttributes)
       IF ::htmlAttributes == "/"
          ::htmlAttributes := { => }
-         hb_HCaseMatch( ::htmlAttributes, .F. )
+         hb_HCaseMatch( ::htmlAttributes, FALSE )
       ELSE
          ::htmlAttributes := __ParseAttr( P_PARSER( AllTrim(::htmlAttributes) ) )
       ENDIF
@@ -1213,15 +1213,15 @@ STATIC FUNCTION __ParseAttr( parser )
    LOCAL aAttr := { "", "" }
    LOCAL hHash := { => }
    LOCAL nStart, nEnd
-   LOCAL lIsQuoted := .F.
+   LOCAL lIsQuoted := FALSE
 
-   hb_HCaseMatch( hHash, .F. )
+   hb_HCaseMatch( hHash, FALSE )
 
    DO WHILE ! ( cChr := P_NEXT( parser ) ) == ""
 
       SWITCH cChr
       CASE "="
-         lIsQuoted := .F.
+         lIsQuoted := FALSE
 
          IF nMode == 2
             aAttr[2] += "="
@@ -1258,7 +1258,7 @@ STATIC FUNCTION __ParseAttr( parser )
 
       CASE '"'
       CASE "'"
-         lIsQuoted := .T.
+         lIsQuoted := TRUE
          parser:p_end := parser:p_pos
          parser:p_pos ++
 
@@ -1346,14 +1346,14 @@ METHOD THtmlNode:setAttributes( cHtml )
 METHOD THtmlNode:delAttribute( cName )
 
    LOCAL xVal := ::getAttribute( cName )
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
 
    IF xVal != NIL
       BEGIN SEQUENCE WITH __BreakBlock()
          hb_HDel( ::htmlAttributes, cName )
-         lRet := .T.
+         lRet := TRUE
       RECOVER
-         lRet := .F.
+         lRet := FALSE
       END SEQUENCE
    ENDIF
 
@@ -1364,7 +1364,7 @@ METHOD THtmlNode:delAttributes()
 
    ::htmlAttributes := NIL
 
-   RETURN .T.
+   RETURN TRUE
 
 // Checks for the existence of an attribute
 METHOD THtmlNode:isAttribute( cName )
@@ -1374,7 +1374,7 @@ METHOD THtmlNode:isAttribute( cName )
    BEGIN SEQUENCE WITH __BreakBlock()
       lRet := cName $ ::getAttributes()
    RECOVER
-      lRet := .F.
+      lRet := FALSE
    END SEQUENCE
 
    RETURN lRet
@@ -1537,7 +1537,7 @@ METHOD THtmlNode:popNode( cName )
       this allows to properly close the tags "tr,th,td" by simply using:
       node - ["tr","th","td"]
     */
-   IF hb_AScan({ "tr", "th", "td" }, cName,,, .T.) > 0
+   IF hb_AScan({ "tr", "th", "td" }, cName,,, TRUE) > 0
       endTag := "</" + cName + ">"
       IF !Right(::toString(), 3 + Len(cName)) == endTag
          ::addNode( THtmlNode():new( Self, "/" + cName, ,  ) )
@@ -1564,13 +1564,13 @@ STATIC FUNCTION CutStr(cCut, cString)
 
 FUNCTION THtmlInit( lInit )
 
-   IF !hb_defaultValue( lInit, .T. )
+   IF !hb_defaultValue( lInit, TRUE )
       t_aHA := NIL
       t_hHT := NIL
 #ifdef HB_LEGACY_LEVEL4
       t_aHtmlAnsiEntities := NIL
 #endif
-      t_lInit := .F.
+      t_lInit := FALSE
    ELSEIF !t_lInit
       t_aHA := Array( HTML_ATTR_COUNT )
 #ifdef HB_LEGACY_LEVEL4
@@ -1578,13 +1578,13 @@ FUNCTION THtmlInit( lInit )
 #endif
       _Init_Html_Attributes()
       _Init_Html_TagTypes()
-      t_lInit := .T.
+      t_lInit := TRUE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION THtmlCleanup()
-   RETURN THtmlInit(.F.)
+   RETURN THtmlInit(FALSE)
 
 FUNCTION THtmlTagType( cTagName )
 
@@ -1604,7 +1604,7 @@ FUNCTION THtmlTagType( cTagName )
 
 FUNCTION THtmlIsValid( cTagName, cAttrName )
 
-   LOCAL lRet := .T., aValue
+   LOCAL lRet := TRUE, aValue
 
    IF t_hHT == NIL
       THtmlInit()
@@ -1617,7 +1617,7 @@ FUNCTION THtmlIsValid( cTagName, cAttrName )
          lRet   := AScan(aValue, {| a | Lower(a[1]) == Lower(cAttrName) }) > 0
       ENDIF
    RECOVER
-      lRet := .F.
+      lRet := FALSE
    END SEQUENCE
 
    RETURN lRet
@@ -1629,7 +1629,7 @@ STATIC PROCEDURE _Init_Html_TagTypes
 
    t_hHT := { => }
 
-   hb_HCaseMatch( t_hHT, .F. )
+   hb_HCaseMatch( t_hHT, FALSE )
 
    t_hHT["_root_"    ] := {                             ,         ( CM_INLINE )                                       }
    t_hHT["_text_"    ] := {                             ,         ( CM_INLINE )                                       }

@@ -18,7 +18,7 @@ PROCEDURE DialogWvgClassesOne( nMode )
          MyDialogOne()
       ELSE
          bBlock := {| oCrt | ;
-            oCrt := WvgCrt():New( , , { -1, -1 }, { 54, 184 }, , .F. ), ;
+            oCrt := WvgCrt():New( , , { -1, -1 }, { 54, 184 }, , FALSE ), ;
             oCrt:fontName   := "Courier", ;
             oCrt:fontHeight := 13, ;
             oCrt:fontWidth  := 0, ;
@@ -48,8 +48,8 @@ STATIC PROCEDURE MyDialogOne( oCrt )
 
    HB_SYMBOL_UNUSED(oCrt)
 
-   WvtSetKeys(.F.)
-   lChkMouse := SetMouseCheck(.F.)
+   WvtSetKeys(FALSE)
+   lChkMouse := SetMouseCheck(FALSE)
 
    hPopup := wvt_SetPopupMenu()
    Popups()
@@ -105,9 +105,9 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oText:nBackColor        := WIN_RGB(0, 0, 255)
    oText:nTextColorHoverOn := WIN_RGB(255, 255, 0)
    oText:nBackColorHoverOn := WIN_RGB(255, 100, 12)
-   oText:lItalic           := .T.
+   oText:lItalic           := TRUE
    oText:ToolTip           := "Software that GROWS with you"
-   oText:bOnSelect         := {|| .T. }
+   oText:bOnSelect         := {|| TRUE }
    oDlg:AddObject( oText )
 
    oImg := WvtImage():New( oDlg, 102, 20, oDlg:MaxCol() - 40, 37, oDlg:MaxCol() - 2 )
@@ -116,7 +116,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oDlg:AddObject( oImg )
 
    oTBar := WvtToolBar():New( oDlg, 103, 0, 0, 2 )
-   oTBar:lFloating := .F.
+   oTBar:lFloating := FALSE
    oTBar:Tooltip   := "Toolbar"
    oTBar:AddButton( aImg_[1], {|| oImg:SetImage( aImg_[1] ) }, "Lock" )
    oTBar:AddButton( aImg_[2], {|| oImg:SetImage( aImg_[2] ), oText:SetText( "Harbour" ) }, "New" )
@@ -152,7 +152,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oPBar2 := WvtProgressBar():New( oDlg, , 14, 129, 25, 137 )
    oPBar2:nBarColor  := WIN_RGB(240, 240, 0)
    oPBar2:cBackColor := "W/N*"
-   oPBar2:lVertical  := .T.
+   oPBar2:lVertical  := TRUE
    oPBar2:nDirection := 0
    oPBar2:cImage     := GetResource( "vouch1.bmp" )
    oDlg:AddObject( oPBar2 )
@@ -160,7 +160,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oPBar3 := WvtProgressBar():New( oDlg, , 26, 129, 36, 137 )
    oPBar3:nBarColor  := WIN_RGB(240, 240, 0)
    oPBar3:cBackColor := "W/N*"
-   oPBar3:lVertical  := .T.
+   oPBar3:lVertical  := TRUE
    oPBar3:nDirection := 1
    oPBar3:cImage     := GetResource( "vouch1.bmp" )
    oDlg:AddObject( oPBar3 )
@@ -214,14 +214,14 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    oTBx:cText       := cTxt
    oTBx:Tooltip     := "WvtTextBox():New()"
    oTBx:nFontHeight := 16
-   oTBx:lItalic     := .T.
-   oTBx:lUnderline  := .T.
+   oTBx:lItalic     := TRUE
+   oTBx:lUnderline  := TRUE
    oTBx:nAlignHorz  := 2
    oTBx:nTextColor  := WIN_RGB(255, 255, 255)
    oTBx:nTextColorHoverOn := WIN_RGB(0, 0, 255)
    oTBx:aPopup      := {}
-   AAdd(oTBx:aPopup, { "Getsome", {|| .T. } })
-   AAdd(oTBx:aPopup, { "Getsome2", {|| .T. } })
+   AAdd(oTBx:aPopup, { "Getsome", {|| TRUE } })
+   AAdd(oTBx:aPopup, { "Getsome2", {|| TRUE } })
    oDlg:AddObject( oTBx )
 
    oGetArea := WvtStatic():New( oDlg, , 4, 2, 37, 62 )
@@ -253,7 +253,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
       "PB", ;
       PadR("141004", 10), ;
       hb_SToD("20040622"), ;
-      .T., ;
+      TRUE, ;
       48, ;
       17000, ;
       PadR("Wvtgui is a classical example of Harbour capabilities...", 65) }
@@ -309,7 +309,7 @@ STATIC PROCEDURE MyDialogOne( oCrt )
    ENDIF
 
    WvtSetBlocks( aObjects )
-   WvtSetKeys(.T.)
+   WvtSetKeys(TRUE)
    wvt_SetPopupMenu( hPopup )
    SetMouseCheck( lChkMouse )
 
@@ -348,7 +348,7 @@ PROCEDURE DialogWvgClassesTwo()
    oPBar2 := WvtProgressBar():New( oDlg, , 11, 10, 28, 19 )
    oPBar2:nBarColor  := WIN_RGB(240, 240, 0)
    oPBar2:cBackColor := "W/N*"
-   oPBar2:lVertical  := .T.
+   oPBar2:lVertical  := TRUE
    oPBar2:nDirection := 0
    oPBar2:cImage     := "v_notes.ico"
    oDlg:AddObject( oPBar2 )
@@ -356,14 +356,14 @@ PROCEDURE DialogWvgClassesTwo()
    oPBar3 := WvtProgressBar():New( oDlg, , 11, 77, 28, 80 )
    oPBar3:nBarColor  := WIN_RGB(0, 0, 255)
    oPBar3:cBackColor := "W/N*"
-   oPBar3:lVertical  := .T.
+   oPBar3:lVertical  := TRUE
    oPBar3:nDirection := 1
    oDlg:AddObject( oPBar3 )
 
    oPBar4 := WvtProgressBar():New( oDlg, , 22, 22, 28, 74 )
    oPBar4:nBarColor  := WIN_RGB(255, 255, 0)
    oPBar4:cBackColor := "W/N*"
-   oPBar4:lVertical  := .T.
+   oPBar4:lVertical  := TRUE
    oPBar4:nDirection := 0
    oDlg:AddObject( oPBar4 )
 

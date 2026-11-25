@@ -52,4 +52,4 @@ FUNCTION RestSetKey(aSavedTraps)
 
    hb_SetKeySave(aSavedTraps)
 
-   RETURN .T.
+   RETURN TRUE

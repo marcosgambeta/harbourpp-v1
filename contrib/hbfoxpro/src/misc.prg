@@ -109,7 +109,7 @@ STATIC FUNCTION AFillNested(aValue, xVal)
    RETURN aValue
 
 FUNCTION __fox_Array(...)
-   RETURN AFillNested(Array(...), .F.)
+   RETURN AFillNested(Array(...), FALSE)
 
 FUNCTION AElement(aValue, ...)
    RETURN aValue[...]

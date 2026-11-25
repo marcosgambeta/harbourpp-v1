@@ -64,10 +64,10 @@ PROCEDURE Main()
       ? Str(Sqrt( n ), 20, 15) + ": " + Str(Mantissa(Sqrt( n )), 20, 15) + " " + Str(Exponent( Sqrt( n ) ), 4)
    NEXT
 
-   ? Str(Infinity(.T.)) + Str(Mantissa(Infinity(.T.))) + Str(Exponent( Infinity(.T.) ))
+   ? Str(Infinity(TRUE)) + Str(Mantissa(Infinity(TRUE))) + Str(Exponent( Infinity(TRUE) ))
 
-   ? "       Infinity(.T.): " + Str(Mantissa(Infinity(.T.)), 20, 15) + " "
-   ?? Str(Exponent( Infinity(.T.) ), 4)
+   ? "       Infinity(TRUE): " + Str(Mantissa(Infinity(TRUE)), 20, 15) + " "
+   ?? Str(Exponent( Infinity(TRUE) ), 4)
 
    ctexit()
 

@@ -79,39 +79,39 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
    LOCAL cLangOld
 
    IF hb_IsString(cBlock)
-      lPPError := .F.
+      lPPError := FALSE
    ELSE
       cBlock := "[Preprocessor error]"
-      lPPError := .T.
+      lPPError := TRUE
    ENDIF
 
    cLangOld := hb_langSelect( "en" ) /* to always have RTEs in one language */
 
    BEGIN SEQUENCE WITH ErrorBlock( {| oError | Break( oError ) } )
       xResult := Eval(bBlock)
-      lRTE := .F.
+      lRTE := FALSE
    RECOVER USING oError
       xResult := ErrorMessage( oError )
-      lRTE := .T.
+      lRTE := TRUE
    END SEQUENCE
 
    hb_langSelect( cLangOld )
 
    IF lRTE
-      lFailed := !( XToStr(xResult, .F.) == XToStr(xResultExpected, .F.) )
+      lFailed := !( XToStr(xResult, FALSE) == XToStr(xResultExpected, FALSE) )
    ELSE
       IF !( ValType(xResult) == ValType(xResultExpected) )
          IF hb_IsString(xResultExpected) .AND. ValType(xResult) $ "ABOHPS"
-            lFailed := !( XToStr(xResult, .F.) == xResultExpected )
+            lFailed := !( XToStr(xResult, FALSE) == xResultExpected )
          ELSE
-            lFailed := .T.
+            lFailed := TRUE
          ENDIF
       ELSE
          lFailed := !( xResult == xResultExpected )
       ENDIF
    ENDIF
 
-   IF lFailed .OR. lPPError .OR. hb_HGetDef( t_hParams, "showall", .T. )
+   IF lFailed .OR. lPPError .OR. hb_HGetDef( t_hParams, "showall", TRUE )
       bOut := hb_HGetDef( t_hParams, "output", {| cMsg | OutStd( cMsg ) } )
       IF lFailed
          Eval(bOut, ;
@@ -119,17 +119,17 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
             PadR(ProcName(1) + "(" + hb_ntos(ProcLine(1)) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             RTrim(cBlock) + ;
             hb_eol() + ;
-            Space(5) + "  Result: " + XToStr(xResult, .F.) + ;
+            Space(5) + "  Result: " + XToStr(xResult, FALSE) + ;
             hb_eol() + ;
-            Space(5) + "Expected: " + XToStr(xResultExpected, .F.) + ;
+            Space(5) + "Expected: " + XToStr(xResultExpected, FALSE) + ;
             hb_eol())
       ELSE
          Eval(bOut, ;
             PadR(IIf(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH) + " " + ;
             PadR(ProcName(1) + "(" + hb_ntos(ProcLine(1)) + ")", TEST_RESULT_COL2_WIDTH) + " " + ;
             PadR(cBlock, TEST_RESULT_COL3_WIDTH) + " -> " + ;
-            PadR(XToStr(xResult, .F.), TEST_RESULT_COL4_WIDTH) + " | " + ;
-            XToStr(xResultExpected, .F.) + ;
+            PadR(XToStr(xResult, FALSE), TEST_RESULT_COL4_WIDTH) + " | " + ;
+            XToStr(xResultExpected, FALSE) + ;
             hb_eol())
       ENDIF
    ENDIF
@@ -177,7 +177,7 @@ STATIC FUNCTION ErrorMessage( oError )
    IF hb_IsArray(oError:Args)
       cMessage += "A:" + hb_ntos(Len(oError:Args)) + ":"
       FOR tmp := 1 TO Len(oError:Args)
-         cMessage += ValType(oError:Args[tmp]) + ":" + XToStr(oError:Args[tmp], .T.)
+         cMessage += ValType(oError:Args[tmp]) + ":" + XToStr(oError:Args[tmp], TRUE)
          IF tmp < Len(oError:Args)
             cMessage += ";"
          ENDIF
@@ -217,7 +217,7 @@ STATIC FUNCTION XToStr(xValue, lInString)
    CASE "H"
    CASE "O"
       IF !lInString
-         RETURN hb_ValToExp( xValue, .T. )
+         RETURN hb_ValToExp( xValue, TRUE )
       ENDIF
       EXIT
    ENDSWITCH

@@ -48,7 +48,7 @@
 FUNCTION sprintf(...)
 
    LOCAL aPar, cReturn, nPar, nPos, cTok
-   LOCAL nLen := 0, lUnsigned, l0 := .F., lSign := .F., nDec, xVal
+   LOCAL nLen := 0, lUnsigned, l0 := FALSE, lSign := FALSE, nDec, xVal
    LOCAL cString
 
    aPar    := hb_AParams()
@@ -97,7 +97,7 @@ FUNCTION sprintf(...)
          ENDSWITCH
 
       CASE cTok == "%"
-         lUnsigned := .F.
+         lUnsigned := FALSE
 
          SWITCH SubStr(cString, ++nPos, 1)
          CASE "%"
@@ -107,13 +107,13 @@ FUNCTION sprintf(...)
          CASE "+"
             cString := Left(cString, nPos - 1) + SubStr(cString, nPos + 1)
             nPos    := At("%", cString) - 1
-            lSign   := .T.
+            lSign   := TRUE
             EXIT
 
          CASE "0"
             cString := Left(cString, nPos - 1) + SubStr(cString, nPos + 1)
             nPos    := At("%", cString) - 1
-            l0      := .T.
+            l0      := TRUE
             EXIT
 
          CASE "1"
@@ -135,7 +135,7 @@ FUNCTION sprintf(...)
             EXIT
 
          CASE "u"
-            lUnsigned := .T.
+            lUnsigned := TRUE
             nPos++
 
          CASE "d"
@@ -164,7 +164,7 @@ FUNCTION sprintf(...)
                   cTok := "-" + SubStr(cTok, 2)
                ENDIF
                cTok := StrTran(cTok, " ", "0")
-               l0   := .F.
+               l0   := FALSE
             ENDIF
             IF lSign .AND. !(Left(cTok, 1) == "-")
                IF nLen == 0
@@ -172,7 +172,7 @@ FUNCTION sprintf(...)
                ELSE
                   cTok := "+" + SubStr(cTok, 2)
                ENDIF
-               lSign := .F.
+               lSign := FALSE
             ENDIF
             nLen := 0
             cReturn += cTok
@@ -185,8 +185,8 @@ FUNCTION sprintf(...)
             ENDIF
             cReturn += PadL(hb_CStr(aPar[nPar++]), nLen)
             nLen  := 0
-            l0    := .F.
-            lSign := .F.
+            l0    := FALSE
+            lSign := FALSE
             EXIT
 
          ENDSWITCH

@@ -61,7 +61,7 @@ PROCEDURE Main()
 #if 0
    Set( _SET_TRACESTACK, 0 )
 
-   wvw_SetMouseMove( , .T. )
+   wvw_SetMouseMove( , TRUE )
 #endif
 
    CLS
@@ -78,7 +78,7 @@ PROCEDURE Main()
    READ
 
    // disable all comboboxes:
-   AEval(s_aComboList, {| x | wvw_cbEnable( NIL, x[1], .F. ) })
+   AEval(s_aComboList, {| x | wvw_cbEnable( NIL, x[1], FALSE ) })
 
    DevPos(5, 0)
    ? "name: '" + mname + "'"
@@ -277,15 +277,15 @@ STATIC FUNCTION MoveToGet( GetList, nPos )
             oGet:updatebuffer()
          ELSE
             // oGet:undo()
-            RETURN .F.
+            RETURN FALSE
          ENDIF
       ENDIF
       oGet:exitstate := GE_MOUSEHIT
       oGetList:nNextGet := nPos
-      oGetList:settle( , .F. )
+      oGetList:settle( , FALSE )
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 #endif
 
 /* miscellaneous **********************************/

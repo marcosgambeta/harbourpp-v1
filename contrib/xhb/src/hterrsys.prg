@@ -78,24 +78,24 @@ STATIC FUNCTION xhb_cgi_DefError(e)
    IF e:genCode == EG_CORRUPTION
       IF hb_IsBlock(s_bFixCorrupt)
          Eval(s_bFixCorrupt, e)
-         RETURN .F.
+         RETURN FALSE
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
    // for network open error, set NetErr() and subsystem default
    IF e:genCode == EG_OPEN .AND. (e:osCode == 32 .OR. e:osCode == 5) .AND. e:canDefault
 
-      NetErr(.T.)
-      RETURN .F.
+      NetErr(TRUE)
+      RETURN FALSE
    ENDIF
 
    // for lock error during dbAppend(), set NetErr() and subsystem default
    IF e:genCode == EG_APPENDLOCK .AND. e:canDefault
 
-      NetErr(.T.)
-      RETURN .F.
+      NetErr(TRUE)
+      RETURN FALSE
    ENDIF
 
    // build error message
@@ -170,7 +170,7 @@ STATIC FUNCTION xhb_cgi_DefError(e)
    ErrorLevel(1)
    QUIT
 
-   RETURN .F.
+   RETURN FALSE
 
 #endif
 

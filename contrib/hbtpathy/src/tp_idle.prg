@@ -51,7 +51,7 @@
 FUNCTION tp_idle( lNewval )
 
    IF lNewval != NIL .AND. lNewval
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE

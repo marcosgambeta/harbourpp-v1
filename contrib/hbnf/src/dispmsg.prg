@@ -28,7 +28,7 @@
 
 FUNCTION ft_DispMsg(aInfo, cKey, nBoxTop, nBoxLeft, cnBoxString, lShadow)
 
-   LOCAL xRtnVal := .F.
+   LOCAL xRtnVal := FALSE
    LOCAL nWidest := 0
    LOCAL nBoxRight
    LOCAL nBoxBottom
@@ -95,7 +95,7 @@ FUNCTION ft_DispMsg(aInfo, cKey, nBoxTop, nBoxLeft, cnBoxString, lShadow)
       cnBoxString := hb_UTF8ToStrBox("┌─┐│┘─└│ ")
    ENDIF
 
-   __defaultNIL(@lShadow, .T.)
+   __defaultNIL(@lShadow, TRUE)
 
    cOldScreen := SaveScreen(nBoxTop, nBoxLeft, nBoxBottom + 1, nBoxRight + 2)
 
@@ -147,7 +147,7 @@ FUNCTION ft_DispMsg(aInfo, cKey, nBoxTop, nBoxLeft, cnBoxString, lShadow)
       IF Len(cKey) == 1
          nOption := ft_SInkey(0)
          IF Upper(Chr(nOption)) == cKey
-            xRtnVal := .T.
+            xRtnVal := TRUE
          ENDIF
       ELSE
          nOption := 0

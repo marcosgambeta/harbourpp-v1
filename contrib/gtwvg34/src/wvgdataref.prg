@@ -58,9 +58,9 @@
 
 CREATE CLASS WvgDataRef
 
-   VAR    changed                               INIT .F.
+   VAR    changed                               INIT FALSE
    VAR    dataLink
-   VAR    lastValid                             INIT .T.
+   VAR    lastValid                             INIT TRUE
    VAR    sl_undo
    VAR    undoBuffer
    VAR    sl_validate
@@ -161,7 +161,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
 
    CASE "SCROLLBAR"
       IF ::sl_editBuffer != NIL
-         wapi_SetScrollPos( ::hWnd, SB_CTL, ::sl_editBuffer, .T. )
+         wapi_SetScrollPos( ::hWnd, SB_CTL, ::sl_editBuffer, TRUE )
       ENDIF
       EXIT
 
@@ -180,7 +180,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
    RETURN ::sl_editBuffer
 
 METHOD WvgDataRef:undo()
-   RETURN .F.
+   RETURN FALSE
 
 METHOD WvgDataRef:validate( xParam )
 
@@ -190,4 +190,4 @@ METHOD WvgDataRef:validate( xParam )
       ::sl_validate := xParam
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE

@@ -58,10 +58,10 @@
 
 CREATE CLASS WvgCheckBox INHERIT WvgWindow, WvgDataRef
 
-   VAR autosize INIT .F.
+   VAR autosize INIT FALSE
    VAR caption INIT ""
-   VAR pointerFocus INIT .T.
-   VAR selection INIT .F.
+   VAR pointerFocus INIT TRUE
+   VAR selection INIT FALSE
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)

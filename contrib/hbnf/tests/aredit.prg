@@ -63,4 +63,4 @@ FUNCTION TestGet( b, ar, nDim, nElem )
    RestScreen(21, 0, 22, MaxCol(), cSaveScrn)
    @ nRow, nCol SAY ""
 
-   RETURN .T.
+   RETURN TRUE

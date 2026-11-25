@@ -11,8 +11,8 @@
 
 #define EDIT_HARD       13      // hard carriage
 
-#define EDIT_EDIT       .T.     // full edit mode
-#define EDIT_VIEW       .F.     // view only mode
+#define EDIT_EDIT       TRUE     // full edit mode
+#define EDIT_VIEW       FALSE     // view only mode
 
 // The editor structure
 //
@@ -206,14 +206,14 @@ FUNCTION EditorNextLine( oEdit )
 FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
       lConv, nEscape, lSave )
 
-   LOCAL nHandle, nLen, oEdit, lSaved, lClose := .F.
+   LOCAL nHandle, nLen, oEdit, lSaved, lClose := FALSE
    LOCAL nSize
 
-   hb_default(@lSave, .T.)
+   hb_default(@lSave, TRUE)
 
    IF hb_IsString(xInput)
       nHandle := FOpen( xInput )
-      lClose := .T.
+      lClose := TRUE
    ELSE
       nHandle := xInput
    ENDIF
@@ -230,7 +230,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
 
    IF nHandle != F_ERROR
       ed_ReadText( oEdit[E_EDIT], nHandle, 0, nLen, ;
-         IIf(lConv == NIL, .F., lConv) )
+         IIf(lConv == NIL, FALSE, lConv) )
       IF lClose
          FClose( nHandle )
       ENDIF
@@ -240,7 +240,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
 
    EditorCargo( oEdit, cOutput )
 
-   lSaved := EditorEdit( oEdit, EDIT_EDIT, .F. )
+   lSaved := EditorEdit( oEdit, EDIT_EDIT, FALSE )
    EditorKill( oEdit )
 
    RETURN lSaved
@@ -258,12 +258,12 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
 FUNCTION EditorRead(oEditor, nHandle, nOffset, nLen, lConv)
 
    RETURN ed_ReadText( oEditor[E_EDIT], nHandle, nOffset, nLen, ;
-      IIf(lConv == NIL, .T., lConv) )
+      IIf(lConv == NIL, TRUE, lConv) )
 
 // Start the editor
 //
 // oEdit - the editor object
-// lEdit - .T. = edit allowed, .F. = view only mode
+// lEdit - TRUE = edit allowed, FALSE = view only mode
 // lFrame - specifies if the frame around the editor should be displayed
 // nHelp - the help index into help subsystem
 //
@@ -271,7 +271,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
 
    LOCAL nRow, nCol := 0, nKey, bKey, oBox, nCursor, nState
    LOCAL nTop, nLeft, nBottom, nRight
-   LOCAL lSaveAllowed, lSaved := .F.
+   LOCAL lSaveAllowed, lSaved := FALSE
 
    oBox := SaveBox( oEdit[E_TOP], oEdit[E_LEFT], ;
       oEdit[E_BOTTOM], oEdit[E_RIGHT], ;
@@ -313,7 +313,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
       its full glory :) */
    ed_Config( oEdit[E_EDIT], nTop, nLeft, nBottom, nRight, 0, 0 )
 
-   DO WHILE .T.
+   DO WHILE TRUE
       nRow := ed_Stabilize( oEdit[E_EDIT] )    // displays all visible lines
       // It doesn't uses incremental stabilization for performance reasons
 
@@ -419,7 +419,7 @@ STATIC PROCEDURE EditorKeys( oEdit, nKey )
 
 STATIC FUNCTION EditorMove( pEdit, nKey )
 
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    DO CASE
    CASE nKey == K_PGDN       ; ed_PgDown( pEdit )
@@ -434,7 +434,7 @@ STATIC FUNCTION EditorMove( pEdit, nKey )
    CASE nKey == K_CTRL_END   ; ed_End(pEdit)
    CASE nKey == K_CTRL_RIGHT // ; ed_NWord(pEdit)   // there are some problems with it
    CASE nKey == K_CTRL_LEFT  ; ed_PWord(pEdit)
-   OTHERWISE                 ; lMoved := .F.
+   OTHERWISE                 ; lMoved := FALSE
    ENDCASE
 
    RETURN lMoved
@@ -449,7 +449,7 @@ STATIC FUNCTION EditorSave( oEdit )
    ENDIF
 
    IF Empty(cFile)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    nHandle := FCreate( cFile, FC_NORMAL )

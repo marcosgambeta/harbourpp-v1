@@ -7,13 +7,13 @@
 #require "hbcomm"
 
 STATIC s_nHandle
-STATIC s_lConnected := .F.
+STATIC s_lConnected := FALSE
 
 PROCEDURE Main()
 
    LOCAL nOption
 
-   DO WHILE .T.
+   DO WHILE TRUE
       ? ""
       ? "Select test:"
       ? "O) Open"
@@ -49,18 +49,18 @@ STATIC PROCEDURE FConnect()
    s_nHandle := INIT_PORT( cCom, nBaudeRate, nDatabits, nParity, nStopbit, nBuff )
    IF s_nHandle > 0
       ? "Connecting..."
-      s_lConnected := .T.
+      s_lConnected := TRUE
       OUTBUFCLR( s_nHandle )
    ELSE
       ? "Could not open connection"
-      s_lConnected := .F.
+      s_lConnected := FALSE
    ENDIF
 
    RETURN
 
 STATIC PROCEDURE FDisconnect()
 
-   s_lConnected := .F.
+   s_lConnected := FALSE
    UNINT_PORT( s_nHandle )
 
    RETURN

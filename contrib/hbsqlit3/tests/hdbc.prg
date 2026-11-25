@@ -11,7 +11,7 @@ PROCEDURE Main()
    LOCAL n
    LOCAL oRs
 
-   oConn := hdbcSQLTConnection():New("test.db", .T.)
+   oConn := hdbcSQLTConnection():New("test.db", TRUE)
 
    oMeta := oConn:getMetaData()
 
@@ -70,7 +70,7 @@ PROCEDURE Main()
       oStmt:SetNumber(1, n)
       oStmt:SetNumber(2, 2)
       oStmt:SetString(3, "TEST")
-      oStmt:SetBoolean(4, IIf(n % 2 != 0, .T., .F.))
+      oStmt:SetBoolean(4, IIf(n % 2 != 0, TRUE, FALSE))
       oStmt:SetNumber(5, 5)
       oStmt:SetNumber(6, 3000)
       oStmt:SetNumber(7, 1500)

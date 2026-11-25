@@ -64,7 +64,7 @@ CREATE CLASS TIPClientHTTP INHERIT TIPClient
    VAR cAuthMode    INIT ""
    VAR cBoundary
    VAR aAttachments INIT {}
-   VAR lPersistent  INIT .F.
+   VAR lPersistent  INIT FALSE
 
    METHOD New( oUrl, xTrace, oCredentials )
    METHOD Get( cQuery )
@@ -83,7 +83,7 @@ CREATE CLASS TIPClientHTTP INHERIT TIPClient
    METHOD PostMultiPart( xPostData, cQuery )
    METHOD WriteAll( cFile )
    METHOD StandardFields()
-   METHOD SetConnectionPersistent()     INLINE ::lPersistent := .T.
+   METHOD SetConnectionPersistent()     INLINE ::lPersistent := TRUE
    METHOD IsConnectionAlive()           INLINE ::inetErrorCode( ::SocketCon ) == 0
 
    PROTECTED:
@@ -94,13 +94,13 @@ ENDCLASS
 
 METHOD TIPClientHTTP:New( oUrl, xTrace, oCredentials )
 
-   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, .F. ), "http", xTrace), oCredentials )
+   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, FALSE ), "http", xTrace), oCredentials )
 
    ::nDefaultPort := IIf(::oUrl:cProto == "https", 443, 80)
    ::nConnTimeout := 5000
-   ::bChunked     := .F.
+   ::bChunked     := FALSE
 
-   hb_HCaseMatch( ::hHeaders, .F. )
+   hb_HCaseMatch( ::hHeaders, FALSE )
 
    RETURN Self
 
@@ -117,7 +117,7 @@ METHOD TIPClientHTTP:Get( cQuery )
       RETURN ::ReadHeaders()
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientHTTP:Post( xPostData, cQuery )
    RETURN ::postByVerb(xPostData, cQuery, "POST")
@@ -160,7 +160,7 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
    CASE hb_IsString(xPostData)
       cData := xPostData
    OTHERWISE
-      RETURN .F.
+      RETURN FALSE
    ENDCASE
 
    IF !hb_IsString(cQuery)
@@ -180,11 +180,11 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
 
    IF ::inetErrorCode( ::SocketCon ) == 0
       ::inetSendAll( ::SocketCon, cData )
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
       RETURN ::ReadHeaders()
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientHTTP:StandardFields()
 
@@ -200,7 +200,7 @@ METHOD TIPClientHTTP:StandardFields()
    // Perform a basic authentication request
    IF ::cAuthMode == "Basic" .AND. ! "Authorization" $ ::hFields
       oEncoder := TIPEncoderBase64():New()
-      oEncoder:bHttpExcept := .T.
+      oEncoder:bHttpExcept := TRUE
       ::inetSendAll( ::SocketCon, "Authorization: Basic " + ;
          oEncoder:Encode( ::oUrl:cUserID + ":" + ::oUrl:cPassword ) + ::cCRLF )
    ENDIF
@@ -216,7 +216,7 @@ METHOD TIPClientHTTP:StandardFields()
       ::inetSendAll( ::SocketCon, field:__enumKey() + ": " + field + ::cCRLF )
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPClientHTTP:ReadHeaders( lClear )
 
@@ -226,7 +226,7 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
    // Now reads the fields and set the content length
    IF ( cLine := hb_defaultValue( ::inetRecvLine( ::SocketCon, @nPos, 500 ), "" ) ) == ""
       // In case of timeout or error on receiving
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // Get Protocol version
@@ -246,8 +246,8 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
    ENDIF
 
    ::nLength := -1
-   ::bChunked := .F.
-   IF hb_defaultValue( lClear, .F. ) .AND. !Empty(::hHeaders)
+   ::bChunked := FALSE
+   IF hb_defaultValue( lClear, FALSE ) .AND. !Empty(::hHeaders)
       ::hHeaders := { => }
    ENDIF
    cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
@@ -269,7 +269,7 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
       // as above
       CASE Lower(aHead[1]) == "transfer-encoding"
          IF "chunked" $ Lower(cLine)
-            ::bChunked := .T.
+            ::bChunked := TRUE
             ::nLength := -1
          ENDIF
       CASE Lower(aHead[1]) == "set-cookie"
@@ -279,17 +279,17 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
       cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
    ENDDO
    IF ::inetErrorCode( ::SocketCon ) != 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TIPClientHTTP:Read( nLen )
 
    LOCAL cData, nPos, cLine, aHead
 
    IF !::bInitialized
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
       IF !::Get()
          RETURN NIL
       ENDIF
@@ -320,7 +320,7 @@ METHOD TIPClientHTTP:Read( nLen )
          ENDDO
 
          // we are done
-         ::bEof := .T.
+         ::bEof := TRUE
          RETURN NIL
       ENDIF
 
@@ -342,7 +342,7 @@ METHOD TIPClientHTTP:Read( nLen )
 
    // If bEof is set with chunked encoding, this means that the whole chunk has been read;
    IF ::bEof .AND. ::bChunked
-      ::bEof := .F.
+      ::bEof := FALSE
       ::nLength := -1
       // chunked data is followed by a blank line
       ::InetRecvLine( ::SocketCon, @nPos, 1024 )
@@ -355,7 +355,7 @@ METHOD TIPClientHTTP:ReadAll()
    LOCAL cOut := "", cChunk
 
    IF !::bInitialized
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
       IF !::Get()
          RETURN NIL
       ENDIF
@@ -573,11 +573,11 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
 
    IF ::inetErrorCode( ::SocketCon ) ==  0
       ::inetSendAll( ::SocketCon, cData )
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
       RETURN ::ReadHeaders()
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientHTTP:WriteAll( cFile )
 
@@ -590,7 +590,7 @@ METHOD TIPClientHTTP:WriteAll( cFile )
       lSuccess := ( hb_vfWrite( hFile, cStream ) == hb_BLen(cStream) )
       hb_vfClose( hFile )
    ELSE
-      lSuccess := .F.
+      lSuccess := FALSE
    ENDIF
 
    RETURN lSuccess

@@ -19,7 +19,7 @@ PROCEDURE Main( cDL, cUL )
    LOCAL f
    LOCAL a
 
-   LOCAL lVerbose := .F.
+   LOCAL lVerbose := FALSE
 
    ? curl_version()
    ? curl_getdate( "Sun, 1 Jun 2008 02:10:58 +0200" )

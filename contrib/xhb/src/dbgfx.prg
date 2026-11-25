@@ -47,9 +47,9 @@
 
 #include <fileio.ch>
 
-STATIC s_lToOutDebug   := .T.
-STATIC s_lToLogFile    := .T.
-STATIC s_lEmptyLogFile := .T.
+STATIC s_lToOutDebug   := TRUE
+STATIC s_lToLogFile    := TRUE
+STATIC s_lEmptyLogFile := TRUE
 
 FUNCTION hb_ToOutDebugOnOff(lOnOff)
 
@@ -105,7 +105,7 @@ PROCEDURE hb_ToLogFile(cLogFile, ...)
          nHandle := FOpen(cLogFile, FO_READWRITE + FO_SHARED)
       ELSE
          nHandle := FCreate(cLogFile)
-         s_lEmptyLogFile := .F.
+         s_lEmptyLogFile := FALSE
          // After I have create it I have to close and open in shared way
          IF FError() == 0 .AND. nHandle != F_ERROR
             FClose(nHandle)

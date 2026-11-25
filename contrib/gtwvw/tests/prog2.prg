@@ -37,7 +37,7 @@ PROCEDURE Main()
 #endif
 
 #ifdef __GTWVW__
-   lMainCoord := wvw_SetMainCoord(.T.)
+   lMainCoord := wvw_SetMainCoord(TRUE)
    nMaxRow := MaxRow()
    nMaxCol := MaxCol()
 
@@ -84,7 +84,7 @@ PROCEDURE xGet1()
    LOCAL cAddr := PadR("Address", 25)
    LOCAL cPhone := PadR("Phone", 15)
    LOCAL cFax  := PadR("Fax", 15)
-   LOCAL lDone := .F.
+   LOCAL lDone := FALSE
    LOCAL getlist := {}
    LOCAL oldCurs := SetCursor( SC_NORMAL )
 #ifdef __GTWVW__
@@ -128,7 +128,7 @@ PROCEDURE xGet1()
 FUNCTION xBrowse1()
 
    LOCAL nKey, bBlock, oBrowse, i
-   LOCAL lEnd    := .F.
+   LOCAL lEnd    := FALSE
    LOCAL info_
    LOCAL nTop    :=  6
    LOCAL nLeft   :=  3
@@ -260,14 +260,14 @@ STATIC FUNCTION DbSkipBlock( n, oTbr )
 STATIC FUNCTION TBNext( oTbr )
 
    LOCAL nSaveRecNum := RecNo()
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    IF Eof()
-      lMoved := .F.
+      lMoved := FALSE
    ELSE
       dbSkip(1)
       IF Eof()
-         lMoved := .F.
+         lMoved := FALSE
          dbGoto( nSaveRecNum )
       ENDIF
    ENDIF
@@ -279,12 +279,12 @@ STATIC FUNCTION TBNext( oTbr )
 STATIC FUNCTION TBPrev( oTbr )
 
    LOCAL nSaveRecNum := RecNo()
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    dbSkip( -1 )
    IF Bof()
       dbGoto( nSaveRecNum )
-      lMoved := .F.
+      lMoved := FALSE
    ENDIF
 
    RETURN lMoved
@@ -297,7 +297,7 @@ STATIC FUNCTION VouBlockField(i)
 
 // supporting functions ***************************
 
-// displays a message on MaxRow() and returns .T.
+// displays a message on MaxRow() and returns TRUE
 FUNCTION lMessage( cMsg )
 
 #ifndef __GTWVW__
@@ -309,16 +309,16 @@ FUNCTION lMessage( cMsg )
 
 #else
 
-   // displays a message on status bar of Main Window and returns .T.
+   // displays a message on status bar of Main Window and returns TRUE
    wvw_sbSetText( 0, 0, cMsg )
 
 #endif
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION lYesNo( cMsg )
 
-   // display cmsg with Yes/No option, returns .T. if Yes selected
+   // display cmsg with Yes/No option, returns TRUE if Yes selected
    LOCAL nTopLine, ;
       nLeft := 5, ;
       nBotLine := MaxRow() - 2, ;
@@ -397,7 +397,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
    SetCursor( oldCurs )
    SetColor(oldColor)
 
-   RETURN .T.
+   RETURN TRUE
 
 // Draw a new window on screen and register it in window list
 // wtype       : Window border type, eg. "┌─┐│┘─└│"
@@ -461,7 +461,7 @@ FUNCTION ZREVWINDOW()
    SetColor(s_zwin[i][10])
 
    // remove window from list
-   hb_ADel( s_zwin, i, .T. )
+   hb_ADel( s_zwin, i, TRUE )
 
    RETURN NIL
 
@@ -503,12 +503,12 @@ FUNCTION ResetMiscObjects( nWinNum )
    ENDDO
    s_amiscobjlist[nWinNum + 1] := {}
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION AddMiscObjects( nWinNum, bAction )
 
    AAdd(s_amiscobjlist[nWinNum + 1], bAction)
 
-   RETURN .T.
+   RETURN TRUE
 
 #endif

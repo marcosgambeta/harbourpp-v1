@@ -55,10 +55,10 @@ PROCEDURE Main()
    ctinit()
 
    ? "Begin test of CSetAtMupa()"
-   ? "  Default switch should be .F., is..................................", CSetAtMupa()
-   ? "  Setting switch to .T., return value should be .F., is.............", CSetAtMupa(.T.)
-   ? "  Switch setting should now be .T., is..............................", CSetAtMupa()
-   ? "  Setting switch to .F. again, return value should still be .T., is ", CSetAtMupa(.F.)
+   ? "  Default switch should be FALSE, is..................................", CSetAtMupa()
+   ? "  Setting switch to TRUE, return value should be FALSE, is.............", CSetAtMupa(TRUE)
+   ? "  Switch setting should now be TRUE, is..............................", CSetAtMupa()
+   ? "  Setting switch to FALSE again, return value should still be TRUE, is ", CSetAtMupa(FALSE)
    ? "End test of CSetAtMupa()"
    ?
 

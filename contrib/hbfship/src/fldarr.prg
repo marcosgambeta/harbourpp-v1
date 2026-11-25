@@ -92,4 +92,4 @@ FUNCTION FieldPutArr( aFields, xRecNo )
       dbGoto( xPrevRec )
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE

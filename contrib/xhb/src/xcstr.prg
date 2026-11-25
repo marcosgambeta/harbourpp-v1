@@ -119,8 +119,8 @@ FUNCTION CStrToVal(cExp, cType)
 
 FUNCTION StringToLiteral(cString)
 
-   LOCAL lDouble := .F.
-   LOCAL lSingle := .F.
+   LOCAL lDouble := FALSE
+   LOCAL lSingle := FALSE
 
    IF hb_regexHas("\n|\r", cString) .OR. ;
       ((lDouble := chr(34) $ cString) .AND. ;
@@ -158,7 +158,7 @@ FUNCTION ValToPrg(xVal, cName, nPad, hRefs)
       RETURN "hb_SToD( '" + DToS(xVal) + "' )"
 
    CASE "T"
-      RETURN 't"' + hb_TSToStr(xVal, .T.) + '"'
+      RETURN 't"' + hb_TSToStr(xVal, TRUE) + '"'
 
    CASE "L"
       RETURN IIf(xVal, ".T.", ".F.")
@@ -429,13 +429,13 @@ FUNCTION ValToLogical(xVal)
       RETURN xVal
 
    CASE "U"
-      RETURN .F.
+      RETURN FALSE
 
    OTHERWISE
       Throw(xhb_ErrorNew("VALTOLOGICAL", 0, 3103, ProcName(), "Unsupported type", {xVal}))
    ENDSWITCH
 
-   RETURN .F.
+   RETURN FALSE
 
 //
 

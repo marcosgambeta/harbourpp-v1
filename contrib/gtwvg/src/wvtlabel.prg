@@ -104,7 +104,7 @@ METHOD WvtLabel:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
 METHOD WvtLabel:Create(lConfg)
 
-   __defaultNIL(@lConfg, .F.)
+   __defaultNIL(@lConfg, FALSE)
 
    __defaultNIL(@::nBottom, ::nTop)
    __defaultNIL(@::nRight, ::nLeft + Len(::Text))
@@ -175,14 +175,14 @@ METHOD WvtLabel:Configure()
 
 METHOD WvtLabel:HoverOn()
 
-   LOCAL lOn := .F.
+   LOCAL lOn := FALSE
 
    IF ::nTextColorHoverOn != NIL
-      lOn := .T.
+      lOn := TRUE
       ::nTextColor := ::nTextColorHoverOn
    ENDIF
    IF ::nBackColorHoverOn != NIL
-      lOn := .T.
+      lOn := TRUE
       ::nBackColor := ::nBackColorHoverOn
    ENDIF
 
@@ -194,14 +194,14 @@ METHOD WvtLabel:HoverOn()
 
 METHOD WvtLabel:HoverOff()
 
-   LOCAL lOn := .F.
+   LOCAL lOn := FALSE
 
    IF ::nTextColorHoverOn != NIL
-      lOn := .T.
+      lOn := TRUE
       ::nTextColor := ::nTextColorHoverOff
    ENDIF
    IF ::nBackColorHoverOn != NIL
-      lOn := .T.
+      lOn := TRUE
       ::nBackColor := ::nBackColorHoverOff
    ENDIF
 

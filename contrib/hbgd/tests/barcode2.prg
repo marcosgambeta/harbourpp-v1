@@ -86,7 +86,7 @@ PROCEDURE Main()
    // BRAZIL-FEBRABAN
    bar := GDBarCode():New( 25 )
 
-   bar:Configure( 25, black, white, 1, 1,, .T. )
+   bar:Configure( 25, black, white, 1, 1,, TRUE )
 
    // output image
    // bar:out_img := "febraban/"

@@ -70,7 +70,7 @@ PROCEDURE Main()
 */
 PROCEDURE t1()
 
-   LOCAL lCreateIfNotExist := .F.
+   LOCAL lCreateIfNotExist := FALSE
    LOCAL db := sqlite3_open("new.s3db", lCreateIfNotExist)
 
    IF !Empty(db)
@@ -83,7 +83,7 @@ PROCEDURE t1()
 */
 PROCEDURE t2()
 
-   LOCAL lCreateIfNotExist := .T.
+   LOCAL lCreateIfNotExist := TRUE
    LOCAL db := sqlite3_open("new.s3db", lCreateIfNotExist)
    LOCAL stmt
    LOCAL nCCount, nCType, nI, nJ
@@ -97,8 +97,8 @@ PROCEDURE t2()
 
 #ifdef TRACE
       IF sqlite3_libversion_number() < 3014000
-         sqlite3_profile(db, .T.)
-         sqlite3_trace(db, .T.)
+         sqlite3_profile(db, TRUE)
+         sqlite3_trace(db, TRUE)
       ELSE
          hTraceFile := FOpen("hbsq3_tr.log", FO_READWRITE + HB_FO_CREAT)
          FSeek(hTraceFile, 0, FS_END)

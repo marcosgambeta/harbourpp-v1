@@ -94,7 +94,7 @@ METHOD TUrl:SetAddress( cUrl )
    LOCAL aMatch, cServer, cPath
 
    IF !hb_IsString(cUrl)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::cAddress := cUrl
@@ -108,12 +108,12 @@ METHOD TUrl:SetAddress( cUrl )
    ::nPort := -1
 
    IF cUrl == ""
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    // Top-level URL parsing. May fail.
    IF Empty(aMatch := hb_regex( ::cREuri, cUrl ))
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::cProto := Lower(aMatch[2])
@@ -136,7 +136,7 @@ METHOD TUrl:SetAddress( cUrl )
    ::cPath := aMatch[2]
    ::cFile := aMatch[3]
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TUrl:BuildAddress()
 

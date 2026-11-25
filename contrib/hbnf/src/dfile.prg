@@ -42,7 +42,7 @@ FUNCTION ft_DFSetup(cInFile, nTop, nLeft, nBottom, nRight, ;
       hb_default(@nCHighlight, 15)
       hb_default(@nStart     , 1)
       hb_default(@nColSkip   , 1)
-      hb_default(@lBrowse    , .F.)
+      hb_default(@lBrowse    , FALSE)
       hb_default(@nRMargin   , 255)
       hb_default(@nBuffSize  , 4096)
 

@@ -70,7 +70,7 @@ CREATE CLASS GenerateHTML INHERIT TPLGenerate
    METHOD Newline() INLINE ::cFile += "<br>" + hb_eol(), Self
    METHOD NewFile()
 
-   CLASS VAR lCreateStyleDocument AS LOGICAL INIT .T.
+   CLASS VAR lCreateStyleDocument AS LOGICAL INIT TRUE
    VAR TargetFilename AS STRING INIT ""
 
    EXPORTED:
@@ -108,7 +108,7 @@ METHOD GenerateHTML:NewFile()
    ::Spacer()
 
    IF ::lCreateStyleDocument
-      ::lCreateStyleDocument := .F.
+      ::lCreateStyleDocument := FALSE
       ::RecreateStyleDocument( STYLEFILE )
    ENDIF
 
@@ -276,20 +276,20 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
       CASE lPreformatted  /* EXAMPLES, TESTS */
 
          ::OpenTag( "pre", "class", cTagClass )
-         ::Append(cContent,, .T.)
+         ::Append(cContent,, TRUE)
          ::CloseTag( "pre" )
 
       CASE cField == "SEEALSO"
 
          ::OpenTagInline( "div", "class", cTagClass )
-         lFirst := .T.
+         lFirst := TRUE
          FOR EACH tmp IN hb_ATokens( cContent, "," )
             tmp := AllTrim(tmp)
             IF !hb_IsNull( tmp )
                // TOFIX: for multi-file output
                tmp1 := Parse( tmp, "(" )
                IF lFirst
-                  lFirst := .F.
+                  lFirst := FALSE
                ELSE
                   ::Space()
                ENDIF
@@ -303,7 +303,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
          ::OpenTagInline( "div", "class", cTagClass )
          DO WHILE !hb_IsNull( cContent )
             ::OpenTagInline( "code" )
-            ::AppendInline( Indent( Parse( @cContent, hb_eol() ), 0, -1,, .T. ),, .F. )
+            ::AppendInline( Indent( Parse( @cContent, hb_eol() ), 0, -1,, TRUE ),, FALSE )
             ::CloseTagInline( "code" )
          ENDDO
          ::CloseTag( "div" )
@@ -313,11 +313,11 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
          ::OpenTag( "div", "class", cTagClass )
          ::nIndent++
 
-         lTable := .F.
+         lTable := FALSE
 
          DO WHILE !hb_IsNull( cContent )
 
-            lCode := .F.
+            lCode := FALSE
             lTablePrev := lTable
 
             tmp1 := ""
@@ -330,23 +330,23 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
                   IF lCode
                      EXIT
                   ELSE
-                     lCode := .T.
+                     lCode := TRUE
                   ENDIF
                CASE cLine == "<fixed>"
-                  lCode := .T.
+                  lCode := TRUE
                CASE cLine == "</fixed>"
                   IF lCode
                      EXIT
                   ENDIF
                CASE hb_LeftEq( cLine, "<table" )
-                  lTable := .T.
+                  lTable := TRUE
                   DO CASE
                   CASE cLine == "<table-noheader>"     ; cHeaderClass := ""
                   CASE cLine == "<table-doubleheader>" ; cHeaderClass := "d-t1 d-t2"
                   OTHERWISE                            ; cHeaderClass := "d-t1"
                   ENDCASE
                CASE cLine == "</table>"
-                  lTable := .F.
+                  lTable := FALSE
                OTHERWISE
                   tmp1 += cLine + hb_eol()
                   IF !lCode
@@ -366,16 +366,16 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
             DO CASE
             CASE lCode
                ::OpenTag( "pre" )
-               ::Append(tmp1,, .T.)
+               ::Append(tmp1,, TRUE)
             CASE lTable
                ::OpenTagInline( "div" )
-               ::AppendInline( IIf(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, .T. )
+               ::AppendInline( IIf(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, TRUE )
             OTHERWISE
                ::OpenTagInline( "div" )
                IF cField $ "DESCRIPTION|"
                   ::OpenTagInline( "p" )
                ENDIF
-               ::AppendInline( IIf(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, .F. )
+               ::AppendInline( IIf(lTable, StrTran(tmp1, " ", hb_UChar( 160 )), tmp1),, FALSE )
             ENDCASE
             IF lCode
                ::CloseTag( "pre" )
@@ -463,14 +463,14 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
 
    IF !hb_IsNull( cText )
 
-      hb_default(@lCode, .F.)
+      hb_default(@lCode, FALSE)
 
       IF lCode
          cText := StrEsc(cText)
       ELSE
          cdp := hb_cdpSelect( "EN" )  /* make processing loop much faster */
 
-         lEM := lIT := lPR := .F.
+         lEM := lIT := lPR := FALSE
          cOut := ""
          nLen := Len(cText)
          FOR tmp := 1 TO nLen

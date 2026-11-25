@@ -73,16 +73,16 @@ PROCEDURE Main()
    ?
 
    ? "  Multi-Pass tests"
-   ? "  Setting CSetAtMupa() to .T."
-   CSetAtMupa(.T.)
+   ? "  Setting CSetAtMupa() to TRUE"
+   CSetAtMupa(TRUE)
    ? '  BeforAtNum( "..", cStr )       should be "...This...is...a.",'
    ? '                                    and is "' + BeforAtNum( "..", cStr ) + '"'
    ? '  BeforAtNum( "..", cStr, 2 )    should be ".",'
    ? '                                    and is "' + BeforAtNum( "..", cStr, 2 ) + '"'
    ? '  BeforAtNum( "..", cStr, 2, 2 ) should be "...This.",'
    ? '                                    and is "' + BeforAtNum( "..", cStr, 2, 2 ) + '"'
-   ? "  Setting CSetAtMupa() to .F."
-   CSetAtMupa(.F.)
+   ? "  Setting CSetAtMupa() to FALSE"
+   CSetAtMupa(FALSE)
    ?
 
    ? "  SetAtLike tests"

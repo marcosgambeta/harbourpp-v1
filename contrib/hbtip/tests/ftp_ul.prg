@@ -6,7 +6,7 @@
 
 PROCEDURE Main( cURL, cMask )
 
-   LOCAL lRetVal := .T.
+   LOCAL lRetVal := TRUE
 
    LOCAL aFiles, aFile
    LOCAL oFTP, oURL
@@ -18,15 +18,15 @@ PROCEDURE Main( cURL, cMask )
 
       oURL := TUrl():New( cURL )
 
-      oFTP := TIPClientFTP():New( oURL, .T. )
+      oFTP := TIPClientFTP():New( oURL, TRUE )
       oFTP:nConnTimeout := 20000
-      oFTP:bUsePasv := .T.
+      oFTP:bUsePasv := TRUE
 
       IF oFTP:Open( cURL )
          FOR EACH aFile IN aFiles
             ? "Filename:", aFile[F_NAME]
             IF !oFtp:UploadFile( aFile[F_NAME] )
-               lRetVal := .F.
+               lRetVal := FALSE
                EXIT
             ENDIF
          NEXT
@@ -40,7 +40,7 @@ PROCEDURE Main( cURL, cMask )
          ELSE
             ? "Error in connection:", hb_inetErrorDesc(oFTP:SocketCon)
          ENDIF
-         lRetVal := .F.
+         lRetVal := FALSE
       ENDIF
    ENDIF
 

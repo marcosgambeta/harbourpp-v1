@@ -68,7 +68,7 @@ PROCEDURE Main()
       "Maclean", ;
       "Exxon" }
 
-   Set( _SET_SCOREBOARD, .F. )
+   Set( _SET_SCOREBOARD, FALSE )
    SetColor("W/B")
    CLS
 

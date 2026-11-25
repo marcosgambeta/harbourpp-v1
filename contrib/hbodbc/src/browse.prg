@@ -60,13 +60,13 @@ FUNCTION BrowseODBC(nTop, nLeft, nBottom, nRight, oDataSource)
    LOCAL cOldScreen
    LOCAL n, nOldCursor
    LOCAL nKey := 0
-   LOCAL lExit := .F.
+   LOCAL lExit := FALSE
    LOCAL bAction
    LOCAL oColumn
 
    // TODO: Check if datasource is open
    // IF !Used()
-   //    RETURN .F.
+   //    RETURN FALSE
    // ENDIF
 
    IF PCount() < 4
@@ -101,7 +101,7 @@ FUNCTION BrowseODBC(nTop, nLeft, nBottom, nRight, oDataSource)
 
    DO WHILE !lExit
 
-      DO WHILE .T.
+      DO WHILE TRUE
          nKey := Inkey()
          IF oBrw:stabilize() .OR. nKey != 0
             EXIT
@@ -123,7 +123,7 @@ FUNCTION BrowseODBC(nTop, nLeft, nBottom, nRight, oDataSource)
 
       DO CASE
       CASE nKey == K_ESC
-         lExit := .T.
+         lExit := TRUE
 
       CASE nKey == K_UP
          oBrw:Up()
@@ -173,7 +173,7 @@ FUNCTION BrowseODBC(nTop, nLeft, nBottom, nRight, oDataSource)
    RestScreen(nTop, nLeft, nBottom, nRight, cOldScreen)
    SetCursor(nOldCursor)
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC PROCEDURE StatLine(oBrw, oDataSource)
 

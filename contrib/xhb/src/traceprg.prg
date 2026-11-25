@@ -50,7 +50,7 @@
 #define HB_SET_TRACESTACK_CURRENT 1
 #define HB_SET_TRACESTACK_ALL     2
 
-STATIC s_lSET_TRACE      := .T.
+STATIC s_lSET_TRACE      := TRUE
 STATIC s_cSET_TRACEFILE  := "trace.log"
 STATIC s_cSET_TRACEFILER := nil
 STATIC s_nSET_TRACESTACK := HB_SET_TRACESTACK_ALL
@@ -65,10 +65,10 @@ FUNCTION xhb_SetTrace(xTrace)
    CASE hb_IsString(xTrace)
       SWITCH Upper(xTrace)
       CASE "ON"
-         s_lSET_TRACE := .T.
+         s_lSET_TRACE := TRUE
          EXIT
       CASE "OFF"
-         s_lSET_TRACE := .F.
+         s_lSET_TRACE := FALSE
          EXIT
       ENDSWITCH
    ENDCASE
@@ -82,7 +82,7 @@ FUNCTION xhb_SetTraceFile(xFile, lAppend)
 
    IF hb_IsString(xFile) .AND. !Empty(xFile)
       s_cSET_TRACEFILER := s_cSET_TRACEFILE := s_RealPath(xFile)
-      IF !hb_defaultValue(lAppend, .F.) .AND. ;
+      IF !hb_defaultValue(lAppend, FALSE) .AND. ;
          (hFile := hb_vfOpen(@s_cSET_TRACEFILER, FO_CREAT + FO_TRUNC + FO_WRITE)) != NIL
          hb_vfClose(hFile)
       ENDIF
@@ -158,7 +158,7 @@ FUNCTION TraceLog(...)
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC FUNCTION s_RealPath(cFilename)
 

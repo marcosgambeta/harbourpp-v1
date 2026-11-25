@@ -12,7 +12,7 @@
 PROCEDURE Main(...)
 
    LOCAL oEncoder, cEncoder := "base64"
-   LOCAL lDecode := .F., lHelp := .F.
+   LOCAL lDecode := FALSE, lHelp := FALSE
    LOCAL cData, nLen, cBuffer
 
    LOCAL hFileInput, nFileInput := hb_GetStdIn()
@@ -23,10 +23,10 @@ PROCEDURE Main(...)
 
       SWITCH Lower(cData)
       CASE "-h"
-         lHelp := .T.
+         lHelp := TRUE
          EXIT
       CASE "-d"
-         lDecode := .T.
+         lDecode := TRUE
          EXIT
       CASE "-q"
          cEncoder := "quoted-printable"
@@ -46,7 +46,7 @@ PROCEDURE Main(...)
          ELSE
             ? "Wrong parameter", cData
             ?
-            lHelp := .T.
+            lHelp := TRUE
          ENDIF
       ENDSWITCH
    NEXT

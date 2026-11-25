@@ -58,9 +58,9 @@
 
 CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
 
-   VAR alwaysShowSelection INIT .F.
-   VAR hasButtons INIT .F.
-   VAR hasLines INIT .F.
+   VAR alwaysShowSelection INIT FALSE
+   VAR hasButtons INIT FALSE
+   VAR hasLines INIT FALSE
 
    VAR aItems INIT {}
 
@@ -97,7 +97,7 @@ CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
    METHOD setColorFG(nRGB) INLINE wvg_TreeView_SetTextColor(::hWnd, IIf(hb_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB))
    METHOD setColorBG(nRGB) INLINE wvg_TreeView_SetBkColor(::hWnd, IIf(hb_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 1), nRGB))
    METHOD setColorLines(nRGB) INLINE wvg_TreeView_SetLineColor(::hWnd, nRGB)
-   METHOD showExpanded(lExpanded, nLevels) INLINE wvg_TreeView_ShowExpanded(::hWnd, IIf(lExpanded == NIL, .F., lExpanded), nLevels)
+   METHOD showExpanded(lExpanded, nLevels) INLINE wvg_TreeView_ShowExpanded(::hWnd, IIf(lExpanded == NIL, FALSE, lExpanded), nLevels)
 
 ENDCLASS
 
@@ -186,7 +186,7 @@ METHOD WvgTreeView:handleEvent(nMessage, aNM)
          ELSE
             ::setFocus()
          ENDIF
-         RETURN .F.
+         RETURN FALSE
 
       CASE TVN_SELCHANGED
          ::getSelectionInfo(aNM[2])
@@ -203,10 +203,10 @@ METHOD WvgTreeView:handleEvent(nMessage, aNM)
          ELSE
             ::setFocus()
          ENDIF
-         RETURN .T.
+         RETURN TRUE
 
       OTHERWISE
-         RETURN .F.
+         RETURN FALSE
 
       ENDSWITCH
       EXIT
@@ -238,7 +238,7 @@ METHOD WvgTreeView:handleEvent(nMessage, aNM)
                ::setFocus()
             ENDIF
          ENDIF
-         RETURN .F.
+         RETURN FALSE
 
       ENDIF
       EXIT

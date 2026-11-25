@@ -55,10 +55,10 @@ PROCEDURE Main()
    ctinit()
 
    ? "Begin test of CSetRef()"
-   ? "  Default switch should be .F., is..................................", CSetRef()
-   ? "  Setting switch to .T., return value should be .F., is.............", CSetRef(.T.)
-   ? "  Switch setting should now be .T., is..............................", CSetRef()
-   ? "  Setting switch to .F. again, return value should still be .T., is ", CSetRef(.F.)
+   ? "  Default switch should be FALSE, is..................................", CSetRef()
+   ? "  Setting switch to TRUE, return value should be FALSE, is.............", CSetRef(TRUE)
+   ? "  Switch setting should now be TRUE, is..............................", CSetRef()
+   ? "  Setting switch to FALSE again, return value should still be TRUE, is ", CSetRef(FALSE)
    ? "End test of CSetRef()"
    ?
 

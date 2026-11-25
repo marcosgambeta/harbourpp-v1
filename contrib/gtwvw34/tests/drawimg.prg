@@ -67,7 +67,7 @@ PROCEDURE Main()
 
    LOCAL ntop, nleft, nbot, nrig, nmidver, nmidhor
    LOCAL cpict := hb_DirBase() + "vouch1.gif"
-   LOCAL ltransp := .F.
+   LOCAL ltransp := FALSE
    LOCAL nMaxCache
    LOCAL i, j, oWPaint
    LOCAL GetList := {}
@@ -88,7 +88,7 @@ PROCEDURE Main()
    SetColor("N/W,N/GR*,,,N/W*")
    wvw_SetCodepage( , 255 )
    wg_ResetWPaintObj(0)
-   DO WHILE .T.
+   DO WHILE TRUE
       CLS
       SetCursor( SC_NORMAL )
       cpict := PadR(cpict, 256)
@@ -187,7 +187,7 @@ ENDCLASS
 METHOD wPaintObj:New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR, lTransp )
 
    ::nWinNum := nWinNum
-   ::lVisible := .T.
+   ::lVisible := TRUE
 
    ::nType := nType
    ::cId := cId
@@ -198,7 +198,7 @@ METHOD wPaintObj:New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR,
 
    ::aOffTLBR := AClone( hb_defaultValue( aOffTLBR, { 0, 0, 0, 0 } ) )
 
-   ::lTransp := hb_defaultValue( lTransp, .F. )
+   ::lTransp := hb_defaultValue( lTransp, FALSE )
 
    RETURN Self
 
@@ -219,7 +219,7 @@ METHOD PROCEDURE wPaintObj:Draw()
    RETURN
 
 // undraw the object
-// normally this is called with ::lVisible == .F.,
+// normally this is called with ::lVisible == FALSE,
 // otherwise the object will be redrawn by WVW_PAINT()
 METHOD PROCEDURE wPaintObj:Undraw()
 
@@ -253,7 +253,7 @@ METHOD PROCEDURE wPaintObj:Undraw()
 METHOD PROCEDURE wPaintObj:Hide()
 
    // temporarily hides the object
-   ::lVisible := .F.
+   ::lVisible := FALSE
    ::Undraw()
 
    RETURN
@@ -261,7 +261,7 @@ METHOD PROCEDURE wPaintObj:Hide()
 METHOD PROCEDURE wPaintObj:Show()
 
    // show the object
-   ::lVisible := .T.
+   ::lVisible := TRUE
    ::draw()
 
    RETURN
@@ -291,10 +291,10 @@ STATIC PROCEDURE wg_AddWPaintObj( nWinNum, oWPaint, lStrict )
       // so we are about to overwrite now...
       // ::Hide() is ideal, but it can be slow
       // let's do it only of user want strict/perfect operation
-      IF hb_defaultValue( lStrict, .F. )
+      IF hb_defaultValue( lStrict, FALSE )
          s_aPObjList[nWinNum + 1][i]:Hide()
       ELSE
-         s_aPObjList[nWinNum + 1][i]:lVisible := .F.
+         s_aPObjList[nWinNum + 1][i]:lVisible := FALSE
       ENDIF
       s_aPObjList[nWinNum + 1][i] := oWPaint
    ELSE
@@ -326,12 +326,12 @@ STATIC PROCEDURE wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
       DO WHILE i <= nLen
          IF s_aPObjList[nWinNum + 1][i]:nType == nType .AND. ;
             ( lDelAll .OR. s_aPObjList[nWinNum + 1][i]:cId == cId )
-            IF hb_defaultValue( lStrict, .F. )
+            IF hb_defaultValue( lStrict, FALSE )
                s_aPObjList[nWinNum + 1][i]:Hide()
             ELSE
-               s_aPObjList[nWinNum + 1][i]:lVisible := .F.
+               s_aPObjList[nWinNum + 1][i]:lVisible := FALSE
             ENDIF
-            hb_ADel( s_aPObjList[nWinNum + 1], i, .T. )
+            hb_ADel( s_aPObjList[nWinNum + 1], i, TRUE )
             nLen--
          ELSE
             i++

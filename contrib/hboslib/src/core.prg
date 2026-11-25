@@ -55,7 +55,7 @@ FUNCTION OL_95VMTitle( cValue )
    RETURN hb_gtInfo( HB_GTI_WINTITLE, cValue )
 
 FUNCTION OL_AutoYield()
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION OL_IsMSWin()
    RETURN hb_osIsWinNT() .OR. hb_osIsWin9x()
@@ -66,10 +66,10 @@ FUNCTION OL_IsNT()
 FUNCTION OL_IsOS2()
 
 #if defined(__PLATFORM__OS2)
-   RETURN .T.
+   RETURN TRUE
 #else
 
-   RETURN .F. /* TODO: detect OS/2 in MS-DOS builds */
+   RETURN FALSE /* TODO: detect OS/2 in MS-DOS builds */
 #endif
 
 FUNCTION OL_IsOS2Win()
@@ -88,13 +88,13 @@ FUNCTION OL_WinCBPaste( cText )
 
    IF hb_IsString(cText)
       hb_gtInfo( HB_GTI_CLIPBOARDDATA, cText )
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION OL_WinFullScreen()
-   RETURN hb_gtInfo( HB_GTI_ISFULLSCREEN, .T. )
+   RETURN hb_gtInfo( HB_GTI_ISFULLSCREEN, TRUE )
 
 FUNCTION OL_Yield()
    RETURN hb_ReleaseCPU()

@@ -137,11 +137,11 @@ FUNCTION smsctx_New( xPort )
 FUNCTION smsctx_Close( smsctx )
 
    IF !hb_IsArray(smsctx) .OR. Len(smsctx) != _SMSCTX_MAX_
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF !hb_comClose( smsctx[_SMSCTX_xHnd] )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    /* Restore com port name */
@@ -149,7 +149,7 @@ FUNCTION smsctx_Close( smsctx )
       hb_comSetDevice( smsctx[_SMSCTX_xHnd], smsctx[_SMSCTX_cPrevName] )
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
 

@@ -32,7 +32,7 @@ PROCEDURE Main()
 
    ? "Let's browse table (press any key)"
    Inkey(0)
-   dbUseArea(.T., , "SELECT * FROM country", "country")
+   dbUseArea(TRUE, , "SELECT * FROM country", "country")
    Browse()
 
    ? "Let's browse table ordered by resident count (press any key)"

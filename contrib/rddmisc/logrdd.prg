@@ -75,7 +75,7 @@ STATIC FUNCTION LOGRDD_INIT( nRDD )
    /* Defaults */
 
    LOCAL cFileName := "changes.log"
-   LOCAL lActive   := .F.
+   LOCAL lActive   := FALSE
    LOCAL cTag      := NetName() + "\" + hb_UserName()
    LOCAL cRDDName  := hb_LogRddInherit()
 

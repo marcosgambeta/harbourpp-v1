@@ -20,8 +20,8 @@ PROCEDURE Main()
    ? PadR("ft_At2( cSearch, cTarget, 2 ) -> ", 40)
    ??var0
    ?
-   var0 := ft_At2( cSearch, cTarget, 2, .F. )
-   ? PadR("ft_At2( cSearch, cTarget, 2, .F. ) -> ", 40)
+   var0 := ft_At2( cSearch, cTarget, 2, FALSE )
+   ? PadR("ft_At2( cSearch, cTarget, 2, FALSE ) -> ", 40)
    ??var0
    ?
 

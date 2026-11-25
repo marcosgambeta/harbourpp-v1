@@ -83,7 +83,7 @@ FUNCTION IsValidThread(pThID)
    BEGIN SEQUENCE WITH {|| Break() }
       lValid := hb_threadID(pThID) != 0
    RECOVER
-      lValid := .F.
+      lValid := FALSE
    END SEQUENCE
 
    RETURN lValid

@@ -22,8 +22,8 @@
 // A function is detected by the left parenthesis, "(", and it begins
 // at the space, comma or start-of-string preceeding the "("
 
-// Returns: .T. if all functions are available,
-//          .F. if not
+// Returns: TRUE if all functions are available,
+//          FALSE if not
 
 FUNCTION ft_Linked(cFuncs)
 
@@ -31,7 +31,7 @@ FUNCTION ft_Linked(cFuncs)
    LOCAL nSpace
    LOCAL nComma
    LOCAL nFEnd
-   LOCAL lRetVal := .F.
+   LOCAL lRetVal := FALSE
 
    IF At("(", cFuncs) == 0
       // No functions in string

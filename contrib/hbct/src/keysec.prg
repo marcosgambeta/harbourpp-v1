@@ -66,14 +66,14 @@ FUNCTION KeySec(nKey, nTime, nCounter, lMode)
       nTime *= 1000
 
       hb_default(@nCounter, 1)
-      hb_default(@lMode, .F.)
+      hb_default(@lMode, FALSE)
 
       nSeconds := hb_MilliSeconds()
       t_hIdle := hb_idleAdd({||doKeySec(nKey, nTime, lMode, @nCounter, @nSeconds)})
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 STATIC PROCEDURE doKeySec(nKey, nTime, lMode, nCounter, nSeconds)
 

@@ -86,9 +86,9 @@ CREATE CLASS WvtObject
    VAR    xSettings
    VAR    cText
    VAR    cToolTip
-   VAR    lActive                                 INIT .T.
-   VAR    lAnimate                                INIT .F.
-   VAR    lTabStop                                INIT .T.
+   VAR    lActive                                 INIT TRUE
+   VAR    lAnimate                                INIT FALSE
+   VAR    lTabStop                                INIT TRUE
    VAR    hFont
 
    VAR    aPopup                                  INIT {}
@@ -129,7 +129,7 @@ CREATE CLASS WvtObject
    VAR    bOnFocus                                INIT {|| NIL }
    VAR    bOnRefresh                              INIT {|| NIL }
    VAR    bOnLeftUp                               INIT {|| NIL }
-   VAR    bOnLeftDown                             INIT {|| .F. }
+   VAR    bOnLeftDown                             INIT {|| FALSE }
    VAR    bOnMMLeftDown                           INIT {|| NIL }
    VAR    bOnLeftPressed                          INIT {|| NIL }
    VAR    bTooltip                                INIT {|| NIL }
@@ -156,11 +156,11 @@ CREATE CLASS WvtObject
    METHOD PaintBlock()                            INLINE NIL
    METHOD Hilite()                                INLINE NIL
    METHOD DeHilite()                              INLINE NIL
-   METHOD HandleEvent()                           INLINE .F.
-   METHOD LeftDown()                              INLINE .F.
-   METHOD LeftUp()                                INLINE .F.
-   METHOD MMLeftDown()                            INLINE .F.
-   METHOD LeftPressed()                           INLINE .F.
+   METHOD HandleEvent()                           INLINE FALSE
+   METHOD LeftDown()                              INLINE FALSE
+   METHOD LeftUp()                                INLINE FALSE
+   METHOD MMLeftDown()                            INLINE FALSE
+   METHOD LeftPressed()                           INLINE FALSE
    METHOD HoverOn()                               INLINE NIL
    METHOD HoverOff()                              INLINE NIL
    METHOD OnTimer()                               INLINE NIL
@@ -194,7 +194,7 @@ METHOD WvtObject:New( oParent, nType, nID, nTop, nLeft, nBottom, nRight )
 
    CASE DLG_OBJ_STATIC
       ::ClassName := "WVTSTATIC"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_GETS
@@ -203,7 +203,7 @@ METHOD WvtObject:New( oParent, nType, nID, nTop, nLeft, nBottom, nRight )
 
    CASE DLG_OBJ_IMAGE
       ::ClassName := "WVTIMAGE"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_PUSHBUTTON
@@ -212,42 +212,42 @@ METHOD WvtObject:New( oParent, nType, nID, nTop, nLeft, nBottom, nRight )
 
    CASE DLG_OBJ_BUTTON
       ::ClassName := "WVTBUTTON"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_TOOLBAR
       ::ClassName := "WVTTOOLBAR"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_LABEL
       ::ClassName := "WVTLABEL"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_SCROLLBAR
       ::ClassName := "WVTSCROLLBAR"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_STATUSBAR
       ::ClassName := "WVTSTATUSBAR"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_BANNER
       ::ClassName := "WVTBANNER"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_TEXTBOX
       ::ClassName := "WVTTEXTBOX"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    CASE DLG_OBJ_PROGRESSBAR
       ::ClassName := "WVTPROGRESSBAR"
-      ::lTabStop  := .F.
+      ::lTabStop  := FALSE
       EXIT
 
    ENDSWITCH
@@ -295,7 +295,7 @@ METHOD WvtObject:CreatePopup()
 
 METHOD WvtObject:ShowPopup()
 
-   LOCAL lRet := .F., nRet, n, aPos
+   LOCAL lRet := FALSE, nRet, n, aPos
 
    IF ::hPopup != NIL
       aPos := wvt_GetCursorPos()
@@ -304,7 +304,7 @@ METHOD WvtObject:ShowPopup()
          aPos[1], aPos[2], 0, hb_gtInfo( HB_GTI_WINHANDLE ) )
       IF nRet > 0
          IF ( n := AScan(::aPopup, {| e_ | e_[3] == nRet }) ) > 0
-            lRet := .T.
+            lRet := TRUE
 
             IF hb_IsEvalItem(::aPopup[n][2])
                Eval(::aPopup[n][2])

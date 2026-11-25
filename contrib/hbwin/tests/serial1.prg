@@ -58,10 +58,10 @@ PROCEDURE Main( cPortName )
    ELSE
       ? "Open() succeeded"
       ?
-      IF oWinPort:SetDTR(.T.)
-         ? "SetDTR(.T.) succeeded"
+      IF oWinPort:SetDTR(TRUE)
+         ? "SetDTR(TRUE) succeeded"
       ELSE
-         ? "SetDTR(.T.) failed :", oWinPort:ErrorText()
+         ? "SetDTR(TRUE) failed :", oWinPort:ErrorText()
       ENDIF
       IF ( nResult := oWinPort:Write( cString ) ) == Len(cString)
          ? "Write() succeeded"

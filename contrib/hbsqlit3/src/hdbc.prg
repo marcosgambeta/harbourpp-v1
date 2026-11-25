@@ -57,7 +57,7 @@ CREATE CLASS hdbcSQLTConnection
 
    VAR pDb
    VAR lTrans
-   VAR lTrace INIT .F.
+   VAR lTrace INIT FALSE
    VAR pTrace
 
    EXPORTED:
@@ -201,7 +201,7 @@ CREATE CLASS hdbcSQLTPreparedStatement
    VAR oRs
    VAR cName INIT "hdbcsqle"
 
-   VAR lPrepared INIT .F.
+   VAR lPrepared INIT FALSE
    VAR nParams INIT 0
    VAR aParams INIT Array(128)
 
@@ -284,8 +284,8 @@ CREATE CLASS hdbcSQLTResultSet
    VAR pStmt
    VAR pRes
 
-   VAR lBeforeFirst INIT .T.
-   VAR lAfterLast INIT .F.
+   VAR lBeforeFirst INIT TRUE
+   VAR lAfterLast INIT FALSE
 
    VAR nRow INIT 0
 
@@ -354,8 +354,8 @@ METHOD hdbcSQLTResultSet:new(pDB, pStmt)
 
    if ::nRows != 0
       ::nRow := 0
-      ::lBeforeFirst := .T.
-      ::lAfterLast := .F.
+      ::lBeforeFirst := TRUE
+      ::lAfterLast := FALSE
    ENDIF
 
    RETURN SELF
@@ -367,16 +367,16 @@ METHOD hdbcSQLTResultSet:close()
 METHOD hdbcSQLTResultSet:beforeFirst()
 
    ::nRow := 0
-   ::lBeforeFirst := .T.
-   ::lAfterLast := .F.
+   ::lBeforeFirst := TRUE
+   ::lAfterLast := FALSE
 
    RETURN NIL
 
 METHOD hdbcSQLTResultSet:afterLast()
 
    ::nRow := ::nRows + 1
-   ::lBeforeFirst := .F.
-   ::lAfterLast := .T.
+   ::lBeforeFirst := FALSE
+   ::lAfterLast := TRUE
 
    RETURN NIL
 
@@ -387,44 +387,44 @@ METHOD hdbcSQLTResultSet:relative(nMove)
    IF nRowNew >= 1 .AND. nRowNew <= ::nRows
 
       ::nRow := nRowNew
-      ::lBeforeFirst := .F.
-      ::lAfterLast := .F.
+      ::lBeforeFirst := FALSE
+      ::lAfterLast := FALSE
 
-      RETURN .T.
+      RETURN TRUE
 
    ELSE
 
       IF nRowNew < 1
          ::nRow := 0
-         ::lBeforeFirst := .T.
+         ::lBeforeFirst := TRUE
       ELSE
          ::nRow := ::nRows + 1
-         ::lAfterLast := .T.
+         ::lAfterLast := TRUE
       ENDIF
 
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD hdbcSQLTResultSet:absolute(nMove)
 
    IF nMove > 0
       IF nMove <= ::nRows
          ::nRow := nMove
-         ::lBeforeFirst := .F.
-         ::lAfterLast := .F.
-         RETURN .T.
+         ::lBeforeFirst := FALSE
+         ::lAfterLast := FALSE
+         RETURN TRUE
       ENDIF
    ELSEIF nMove < 0
       IF -nMove <= ::nRows
          ::nRow := ::nRows + nMove
-         ::lBeforeFirst := .F.
-         ::lAfterLast := .F.
-         RETURN .T.
+         ::lBeforeFirst := FALSE
+         ::lAfterLast := FALSE
+         RETURN TRUE
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD hdbcSQLTResultSet:findColumn(cField)
 

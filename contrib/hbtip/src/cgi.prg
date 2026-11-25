@@ -66,7 +66,7 @@ CREATE CLASS TIPCgi
    VAR cSessionSavePath
    VAR cSID
    VAR cDumpSavePath
-   VAR lDumpHtml    INIT .F.
+   VAR lDumpHtml    INIT FALSE
    VAR Cargo
 
    METHOD New()
@@ -374,7 +374,7 @@ STATIC FUNCTION HtmlOption( xVal, cKey, cPre, cPost, lScan )
          cVal := xVal
       ELSEIF cKey $ xVal
          cVal := xVal[cKey]
-         IF hb_defaultValue( lScan, .F. )
+         IF hb_defaultValue( lScan, FALSE )
             hb_HDel( xVal, cKey )
          ENDIF
          cVal := cKey + "=" + '"' + cVal + '"'
@@ -396,7 +396,7 @@ STATIC FUNCTION HtmlAllOption( hOptions, cSep )
    IF hb_IsHash(hOptions)
       hb_default(@cSep, " ")
 
-      hb_HEval(hOptions, {| k | cVal += HtmlOption( hOptions, k,,, .T. ) + cSep })
+      hb_HEval(hOptions, {| k | cVal += HtmlOption( hOptions, k,,, TRUE ) + cSep })
    ENDIF
 
    RETURN cVal

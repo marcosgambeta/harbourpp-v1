@@ -12,11 +12,11 @@
 
 PROCEDURE Main()
 
-   LOCAL aWin := Array(9), y, x, i, k, lFlag := .F., lBoard := .T.
+   LOCAL aWin := Array(9), y, x, i, k, lFlag := FALSE, lBoard := TRUE
 
-   SetBlink(.F.)
+   SetBlink(FALSE)
    WBoard(5, 5, 20, 75)
-   WMode( .T., .T., .T., .T. )
+   WMode( TRUE, TRUE, TRUE, TRUE )
    WSetShadow(7)
    SetClearA(10 * 16 + 14)
    SetClearB(35)
@@ -47,18 +47,18 @@ PROCEDURE Main()
 
       @ -1, 0 SAY "TITLE " + hb_ntos(aWin[i])
       ? hb_ntos(Row()) + ":" + hb_ntos(Col()), "/", hb_ntos(MaxRow()) + ":" + hb_ntos(MaxCol()), ""
-      ? hb_ntos(WRow()) + ":" + hb_ntos(WCol()), "/", hb_ntos(MaxRow(.T.)) + ":" + hb_ntos(MaxCol(.T.)), ""
+      ? hb_ntos(WRow()) + ":" + hb_ntos(WCol()), "/", hb_ntos(MaxRow(TRUE)) + ":" + hb_ntos(MaxCol(TRUE)), ""
       ? hb_ntos(WFRow()) + ":" + hb_ntos(WFCol()), "/", ;
          hb_ntos(WFLastRow()) + ":" + hb_ntos(WFLastCol()), ""
-      ? hb_ntos(WFRow(.T.)) + ":" + hb_ntos(WFCol(.T.)), "/", ;
-         hb_ntos(WFLastRow(.T.)) + ":" + hb_ntos(WFLastCol(.T.)), ""
+      ? hb_ntos(WFRow(TRUE)) + ":" + hb_ntos(WFCol(TRUE)), "/", ;
+         hb_ntos(WFLastRow(TRUE)) + ":" + hb_ntos(WFLastCol(TRUE)), ""
       ? "window:", hb_ntos(aWin[i]), ""
       SetCursor( Int(i % 5) )
 
    NEXT
 
    dspcord()
-   DO WHILE .T.
+   DO WHILE TRUE
       k := Inkey(0, INKEY_ALL)
       IF k == K_ESC
          EXIT
@@ -72,7 +72,7 @@ PROCEDURE Main()
          CLS
       ELSEIF k == hb_keyCode( "B" ) .OR. k == hb_keyCode( "b" )
          IF lBoard
-            WBoard(0, 0, MaxRow(.T.) - 1, MaxCol(.T.))
+            WBoard(0, 0, MaxRow(TRUE) - 1, MaxCol(TRUE))
          ELSE
             WBoard(5, 5, 20, 75)
          ENDIF

@@ -31,7 +31,7 @@ FUNCTION ft_At2(cSearch, cTarget, nOccurs, lCaseSens)
 
    // Set default parameters as necessary.
 
-   __defaultNIL(@lCaseSens, .T.)
+   __defaultNIL(@lCaseSens, TRUE)
    __defaultNIL(@nOccurs, 1)
 
    FOR nCount := 1 TO nOccurs
@@ -67,7 +67,7 @@ FUNCTION ft_RAt2(cSearch, cTarget, nOccurs, lCaseSens)
 
    // Set default parameters as necessary.
 
-   __defaultNIL(@lCaseSens, .T.)
+   __defaultNIL(@lCaseSens, TRUE)
    __defaultNIL(@nOccurs, 1)
 
    FOR nCount := 1 TO nOccurs

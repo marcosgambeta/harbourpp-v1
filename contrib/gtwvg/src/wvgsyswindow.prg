@@ -141,7 +141,7 @@ METHOD WvgSysWindow:show()
 
 METHOD WvgSysWindow:SetPos(aPos)
 
-   wvg_SetWindowPosition(::hWnd, aPos[1], aPos[2], .F.)
+   wvg_SetWindowPosition(::hWnd, aPos[1], aPos[2], FALSE)
 
    RETURN Self
 

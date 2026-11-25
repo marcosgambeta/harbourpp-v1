@@ -14,11 +14,11 @@ FUNCTION MyAlert(cMsg, aOpt)
 
    LOCAL nSel, oCrt
 
-   oCrt := WvgCrt():New( , , { -1, -1 }, { 9, MaxCol() - 6 }, , .T. )
-   oCrt:lModal := .T.
+   oCrt := WvgCrt():New( , , { -1, -1 }, { 9, MaxCol() - 6 }, , TRUE )
+   oCrt:lModal := TRUE
    oCrt:icon   := "dia_excl.ico"
    oCrt:create()
-   oCrt:resizable := .T.
+   oCrt:resizable := TRUE
 
    SetColor("N/W")
    CLS
@@ -174,7 +174,7 @@ STATIC FUNCTION DialogAlert(cCaption, aText_, aButtons_, sel, nTop, nTime)
 
    DispEnd()
 
-   lGo := .T.
+   lGo := TRUE
    DO WHILE lGo
 
       nKeyStd := hb_keyStd(nKey := Inkey(0, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )))
@@ -193,33 +193,33 @@ STATIC FUNCTION DialogAlert(cCaption, aText_, aButtons_, sel, nTop, nTime)
       DO CASE
       CASE nKeyStd == K_RIGHT_DOWN
          sel := 0
-         lGo := .F.
+         lGo := FALSE
       CASE nKeyStd == K_LEFT_DOWN
          IF nMRow == nTop
             IF nMCol >= nLeft .AND. nMCol <= nLeft + 3
                sel := 0
-               lGo := .F.
+               lGo := FALSE
             ENDIF
          ELSEIF nMRow == nBtnRow
             FOR i := 1 TO Len(nBtnCol_)
                IF nMCol >= nBtnCol_[i] .AND. nMCol <= nBtnCol_[i] + Len(aButtons_[i]) + 4
                   sel := i
-                  lGo := .F.
+                  lGo := FALSE
                ENDIF
             NEXT
          ENDIF
       CASE nKeyStd == K_ESC
          sel := 0
-         lGo := .F.
+         lGo := FALSE
       CASE nKeyStd == K_ENTER
-         lGo := .F.
+         lGo := FALSE
       CASE nKeyStd == K_LEFT .OR. nKeyStd == K_DOWN
          --sel
       CASE nKeyStd == K_RIGHT .OR. nKeyStd == K_UP
          ++sel
-      CASE ( nTrg := hb_AScan(aTrg_, Upper(hb_keyChar( nKey )), , , .T.) ) > 0
+      CASE ( nTrg := hb_AScan(aTrg_, Upper(hb_keyChar( nKey )), , , TRUE) ) > 0
          sel := nTrg
-         lGo := .F.
+         lGo := FALSE
       CASE SetKey(nKey) != NIL
          Eval(SetKey(nKey))
       CASE SetKey(nKeyStd) != NIL
@@ -256,11 +256,11 @@ STATIC FUNCTION DialogAlert(cCaption, aText_, aButtons_, sel, nTop, nTime)
 STATIC FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHidden, ;
       lCenter, nRow, nCol )
 
-   LOCAL aPos := IIf(hb_defaultValue( lCenter, .F. ), { -1, -1 }, IIf(hb_IsNumeric(nRow), { nRow, nCol }, { nT, nL }))
+   LOCAL aPos := IIf(hb_defaultValue( lCenter, FALSE ), { -1, -1 }, IIf(hb_IsNumeric(nRow), { nRow, nCol }, { nT, nL }))
 
-   LOCAL oCrt := WvgCrt():new( ,, aPos, { nB - nT, nR - nL },, ! hb_defaultValue( lHidden, .F. ) )
+   LOCAL oCrt := WvgCrt():new( ,, aPos, { nB - nT, nR - nL },, ! hb_defaultValue( lHidden, FALSE ) )
 
-   oCrt:lModal := hb_defaultValue( lModal, .T. )
+   oCrt:lModal := hb_defaultValue( lModal, TRUE )
    IF lRowCols
       oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS
    ENDIF
@@ -292,11 +292,11 @@ PROCEDURE DoModalWindow()
    // This part can be clubbed in a separate .prg for different dialogs
    // OR can be loaded from a data dictionary.
 
-   oCrt := WvgCrt():New( , , { 4, 8 }, { 12, 49 }, , .T. )
+   oCrt := WvgCrt():New( , , { 4, 8 }, { 12, 49 }, , TRUE )
 
-   oCrt:lModal      := .T.
-   oCrt:resizable   := .F.
-   oCrt:closable    := .F.
+   oCrt:lModal      := TRUE
+   oCrt:resizable   := FALSE
+   oCrt:closable    := FALSE
    oCrt:title       := "Information! [R:4 C:8]"
 
    oCrt:rbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC("rbUp", MaxCol() + 1), "W+/R*" ) }
@@ -312,7 +312,7 @@ PROCEDURE DoModalWindow()
    // Here goes the Cl*pper Code
    SetColor("N/W")
    CLS
-   DO WHILE .T.
+   DO WHILE TRUE
       nSel := Just_Alert("I am in modal window !;< Try: MMove LBUp RBUp >;Click Parent Window", { "OK" })
 
       IF nSel == 0 .OR. nSel == 1

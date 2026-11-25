@@ -138,7 +138,7 @@ CREATE CLASS WvtDialog
    VAR nKey
    VAR hFonts INIT {}
    VAR lEventHandled
-   VAR lTabStops INIT .F.
+   VAR lTabStops INIT FALSE
    VAR bOnCreate
 
    ACCESS nObjects INLINE Len(::aObjects)
@@ -214,7 +214,7 @@ METHOD WvtDialog:New(nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFont
    ::nKey := 0
    ::cColor := "N/W"
    ::nUseObj := 0
-   ::lGui := wvt_SetGUI(.F.)
+   ::lGui := wvt_SetGUI(FALSE)
 
    RETURN Self
 
@@ -224,7 +224,7 @@ METHOD WvtDialog:Create()
    LOCAL i
    LOCAL j
 
-   ::oldToolTipActive := wvt_SetToolTipActive(.T.)
+   ::oldToolTipActive := wvt_SetToolTipActive(TRUE)
    IF ::nTooltipWidth != NIL
       wvt_SetToolTipWidth(::nTooltipWidth)
    ENDIF
@@ -244,7 +244,7 @@ METHOD WvtDialog:Create()
    ::aOldPnt := WvtSetPaint({})
 
    SetMode(::nRows, ::nCols)
-   DO WHILE .T.
+   DO WHILE TRUE
       IF wvt_SetFont(::cFont, ::nFontHeight, ::nFontWidth, ::nFontBold, ::nFontQuality)
          EXIT
       ENDIF
@@ -277,7 +277,7 @@ METHOD WvtDialog:Create()
    WvtSetPaint(wvg_GetPaint(::cPaintBlockID))
 
    IF AScan(::aObjects, {|o|o:lTabStop}) > 0
-      ::lTabStops := .T.
+      ::lTabStops := TRUE
    ENDIF
 
    ::Update()
@@ -342,7 +342,7 @@ METHOD WvtDialog:Event()
 METHOD WvtDialog:Execute()
 
    IF ::nObjects == 0
-      DO WHILE .T.
+      DO WHILE TRUE
          IF Inkey(0.1, hb_bitOr(INKEY_ALL, HB_INKEY_GTEVENT)) == K_ESC
             EXIT
          ENDIF
@@ -361,7 +361,7 @@ METHOD WvtDialog:Inkey()
    LOCAL nID
    LOCAL i
 
-   ::lEventHandled := .F.
+   ::lEventHandled := FALSE
    ::nUseObj := 0
 
    ::nKey := ::Event()
@@ -376,7 +376,7 @@ METHOD WvtDialog:Inkey()
 
       CASE K_TAB
          IF ::lTabStops
-            DO WHILE .T.
+            DO WHILE TRUE
                ::nCurObj++
                IF ::nCurObj > ::nObjects
                   ::nCurObj := 1
@@ -387,13 +387,13 @@ METHOD WvtDialog:Inkey()
             ENDDO
          ENDIF
 
-         ::lEventHandled := .T.
+         ::lEventHandled := TRUE
          
          EXIT
 
       CASE K_SH_TAB
          IF ::lTabStops
-            DO WHILE .T.
+            DO WHILE TRUE
                ::nCurObj--
                IF ::nCurObj < 1
                   ::nCurObj := ::nObjects
@@ -404,7 +404,7 @@ METHOD WvtDialog:Inkey()
             ENDDO
          ENDIF
 
-         ::lEventHandled := .T.
+         ::lEventHandled := TRUE
          
          EXIT
 
@@ -418,7 +418,7 @@ METHOD WvtDialog:Inkey()
          ELSE
             wvt_SetPointer(WVT_IDC_ARROW)
          ENDIF
-         ::lEventHandled := .T.
+         ::lEventHandled := TRUE
 
       ENDSWITCH
 
@@ -449,7 +449,7 @@ METHOD WvtDialog:Inkey()
             ENDIF
             ::nUseObj := ::nObjOver
          ELSE
-            ::lEventHandled := .T.
+            ::lEventHandled := TRUE
          ENDIF
       ENDIF
 
@@ -497,7 +497,7 @@ METHOD WvtDialog:Inkey()
             IF !(::lEventHandled := ::aObjects[::nUseObj]:LeftDown())
                ::lEventHandled := ::Eval(::aObjects[::nUseObj]:bOnLeftDown)
                IF ::aObjects[::nUseObj]:className() == "WVTBROWSE"
-                  ::lEventHandled := .F.
+                  ::lEventHandled := FALSE
                ENDIF
             ENDIF
          ENDIF

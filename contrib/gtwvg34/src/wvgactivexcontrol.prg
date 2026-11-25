@@ -68,13 +68,13 @@ CREATE CLASS WvgActiveXControl INHERIT WvgWindow
    VAR    server
    VAR    license
    VAR    controlFlags                       INIT 0
-   VAR    default                            INIT .F.
-   VAR    cancel                             INIT .F.
+   VAR    default                            INIT FALSE
+   VAR    cancel                             INIT FALSE
 
    VAR    interface
    VAR    interfaceName
 
-   VAR    lSubStdEvents                      INIT .F.
+   VAR    lSubStdEvents                      INIT FALSE
 
    VAR    hEvents                            INIT { => }
    VAR    hContainer
@@ -243,7 +243,7 @@ METHOD WvgActiveXControl:mapEvent( nEvent, bBlock )
    RETURN Self
 
 METHOD WvgActiveXControl:inheritPresParams()
-   RETURN .T.
+   RETURN TRUE
 
 METHOD WvgActiveXControl:presParamsChanged()
    RETURN Self

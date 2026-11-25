@@ -50,7 +50,7 @@ FUNCTION ft_Menu1(aBar, aOptions, aColors, nTopRow, lShadow)
    LOCAL nTtlUsed
    LOCAL sMainScrn
    LOCAL lCancMode
-   LOCAL lLooping := .T.
+   LOCAL lLooping := TRUE
 
    // column position for each item on the menu bar
    LOCAL aBarCol[Len(aBar)]
@@ -116,7 +116,7 @@ FUNCTION ft_Menu1(aBar, aOptions, aColors, nTopRow, lShadow)
    AEval(aBarKeys, {|x, i|HB_SYMBOL_UNUSED(x), aBarKeys[i] := aKeyCodes[Asc(Upper(LTrim(aBar[i]))) - Asc("@")]})
 
    // disable Alt-C and Alt-D
-   lCancMode := SetCancel(.F.)
+   lCancMode := SetCancel(FALSE)
    AltD(DISABLE)
 
    // main menu loop
@@ -152,7 +152,7 @@ FUNCTION ft_Menu1(aBar, aOptions, aColors, nTopRow, lShadow)
             AltD(ENABLE)
             lLooping := Eval(t_aChoices[t_nHPos, 2, t_nVPos])
             AltD(DISABLE)
-            SetCancel(.F.)
+            SetCancel(FALSE)
          ENDIF
       CASE AScan(aBarKeys, LastKey()) > 0
          t_nHPos := AScan(aBarKeys, LastKey())

@@ -46,7 +46,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-STATIC s_bInitialized := .F.
+STATIC s_bInitialized := FALSE
 
 FUNCTION ctinit()
 
@@ -68,7 +68,7 @@ FUNCTION ctexit()
 
    IF s_bInitialized
       ctcexit()
-      s_bInitialized := .F.
+      s_bInitialized := FALSE
    ENDIF
 
    RETURN NIL
@@ -77,7 +77,7 @@ EXIT PROCEDURE _CTEXIT()
 
    IF s_bInitialized
       ctcexit()
-      s_bInitialized := .F.
+      s_bInitialized := FALSE
    ENDIF
 
    RETURN

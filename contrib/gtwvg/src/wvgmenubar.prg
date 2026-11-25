@@ -195,11 +195,11 @@ METHOD WvgMenuBar:destroy()
       ::hMenu := 0
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD WvgMenuBar:delAllItems()
 
-   LOCAL lResult := .T.
+   LOCAL lResult := TRUE
    LOCAL nItems
 
    nItems := ::numItems()
@@ -212,7 +212,7 @@ METHOD WvgMenuBar:delAllItems()
 
 METHOD WvgMenuBar:delItem(nItemNum)
 
-   LOCAL lResult := .F.
+   LOCAL lResult := FALSE
 
    IF nItemNum > 0 .AND. nItemNum <= ::numItems()
       IF ::aMenuItems[nItemNum][WVT_MENU_TYPE] == MF_POPUP
@@ -220,7 +220,7 @@ METHOD WvgMenuBar:delItem(nItemNum)
       ENDIF
 
       IF (lResult := wvg_DeleteMenu(::hMenu, nItemNum - 1, MF_BYPOSITION)) // Remember ZERO base
-         hb_ADel(::aMenuItems, nItemNum, .T.)
+         hb_ADel(::aMenuItems, nItemNum, TRUE)
       ELSE
 #if 0
          Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:DelItem()", "Delete menu item FAILED", {nItemNum}))
@@ -251,7 +251,7 @@ METHOD WvgMenuBar:addItem(aItem, p2, p3, p4)
       nAttrib := p4
    ENDIF
 
-   RETURN ::putItem({xCaption, bAction, nStyle, nAttrib}, -1, .T.)
+   RETURN ::putItem({xCaption, bAction, nStyle, nAttrib}, -1, TRUE)
 
 METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
 
@@ -262,7 +262,7 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
    LOCAL nStyle
    LOCAL nAttrib
 
-   __defaultNIL(@lInsert, .T.)
+   __defaultNIL(@lInsert, TRUE)
 
    ASize(aItem, 4)
 
@@ -302,7 +302,7 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
    ELSE
       nItemIndex := nPos
       IF lInsert
-         ::aMenuItems := hb_AIns(::aMenuItems, nPos, aItem, .T.)
+         ::aMenuItems := hb_AIns(::aMenuItems, nPos, aItem, TRUE)
          wvg_InsertMenu(::hMenu, nItemIndex - 1, aItem[1] + MF_BYPOSITION, aItem[2], IIf(hb_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
       ELSE
          IF hb_IsString(xCaption)
@@ -373,17 +373,17 @@ METHOD WvgMenuBar:checkItem(nItemNum, lCheck)
 
    LOCAL nRet := -1
 
-   __defaultNIL(@lCheck, .T.)
+   __defaultNIL(@lCheck, TRUE)
 
    IF !Empty(::hMenu) .AND. hb_IsNumeric(nItemNum)
       nRet := wvg_CheckMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + IIf(lCheck, MF_CHECKED, MF_UNCHECKED))
    ENDIF
 
-   RETURN IIf(nRet == -1, .F., .T.)
+   RETURN IIf(nRet == -1, FALSE, TRUE)
 
 METHOD WvgMenuBar:enableItem(nItemNum)
 
-   LOCAL lSuccess := .F.
+   LOCAL lSuccess := FALSE
 
    IF !Empty(::hMenu) .AND. hb_IsNumeric(nItemNum)
       lSuccess := wvg_EnableMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + MF_ENABLED)
@@ -393,7 +393,7 @@ METHOD WvgMenuBar:enableItem(nItemNum)
 
 METHOD WvgMenuBar:disableItem(nItemNum)
 
-   LOCAL lSuccess := .F.
+   LOCAL lSuccess := FALSE
 
    IF !Empty(::hMenu) .AND. !Empty(nItemNum)
       lSuccess := wvg_EnableMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + MF_GRAYED)
@@ -411,7 +411,7 @@ METHOD WvgMenuBar:getItem(nItemNum)
 
 METHOD WvgMenuBar:insItem(nItemNum, aItem)
 
-   ::putItem(aItem, nItemNum, .T.)
+   ::putItem(aItem, nItemNum, TRUE)
 
    RETURN Self
 
@@ -425,7 +425,7 @@ METHOD WvgMenuBar:selectItem(nItemNum)
    RETURN !hb_IsNumeric(nItemNum)
 
 METHOD WvgMenuBar:setItem(nItemNum, aItem)
-   RETURN ::putItem(aItem, nItemNum, .F.)
+   RETURN ::putItem(aItem, nItemNum, FALSE)
 
 METHOD WvgMenuBar:beginMenu(xParam)
 

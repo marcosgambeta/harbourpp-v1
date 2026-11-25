@@ -66,13 +66,13 @@ FUNCTION hb_SSL_connect_socket( pSocket, nTimeout, cInfo )
    ssl := hb_SSL_new()
    IF ! Empty( pSocket := hb_socketNewSSL_connect( @pSocket, ssl, nTimeout ) )
       cInfo := "SSL connected with " + SSL_get_cipher( ssl ) + " encryption."
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    nErr := ERR_get_error()
    cInfo := hb_StrFormat( "SSL connection error [%d] %s", ;
                           nErr, ERR_error_string( nErr ) )
-   RETURN .F.
+   RETURN FALSE
 
 // hb_SSL_connect_inet( <pSocket>, [ <nTimeOut> ], [ @<cInfo> ] ) --> <lConnected>
 FUNCTION hb_SSL_connect_inet( pInetSock, nTimeout, cInfo )
@@ -83,10 +83,10 @@ FUNCTION hb_SSL_connect_inet( pInetSock, nTimeout, cInfo )
    ssl := hb_SSL_new()
    IF ( nResult := hb_inetSSL_CONNECT( pInetSock, ssl, nTimeout ) ) == 1
       cInfo := "SSL connected with " + SSL_get_cipher( ssl ) + " encryption."
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    nErr := ERR_get_error()
    cInfo := hb_StrFormat( "SSL connection error [%d:%d] %s", ;
                           nResult, nErr, ERR_error_string( nErr ) )
-   RETURN .F.
+   RETURN FALSE

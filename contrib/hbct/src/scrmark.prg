@@ -50,13 +50,13 @@
 
 FUNCTION ScreenMark(cSearch, xAttr, lUpperLower, lAll, cForward, cTrailing)
 
-   LOCAL lFound := .F.
+   LOCAL lFound := FALSE
    LOCAL nCount := 1
    LOCAL nAt, nLen, nLast, nRow, nCol, nEnd, nCols
    LOCAL cScreen
 
-   hb_default(@lUpperLower, .F.)
-   hb_default(@lAll, .F.)
+   hb_default(@lUpperLower, FALSE)
+   hb_default(@lAll, FALSE)
 
    IF !hb_IsString(cForward) .OR. cForward == ""
       cForward := NIL
@@ -82,7 +82,7 @@ FUNCTION ScreenMark(cSearch, xAttr, lUpperLower, lAll, cForward, cTrailing)
          (nAt == nLast .OR. cTrailing == NIL .OR. ;
            SubStr(cScreen, nAt + nLen) $ cTrailing)
 
-         lFound := .T.
+         lFound := TRUE
          --nAt
          nRow := Int(nAt / nCols)
          nCol := Int(nAt % nCols)

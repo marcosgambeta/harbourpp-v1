@@ -79,7 +79,7 @@ FUNCTION WvtPaintObjects()
       tlbr_ := wvt_GetPaintRect()
 
       FOR i := 1 TO nBlocks
-         lExe := .T.
+         lExe := TRUE
 
          IF aBlocks[i][3] != NIL .AND. !Empty(aBlocks[i][3])
             // Check parameters against tlbr_ depending upon the
@@ -88,7 +88,7 @@ FUNCTION WvtPaintObjects()
             CASE WVT_BLOCK_GRID_V
                b := aBlocks[i][3][6]
                IF Len(b:aColumnsSep) == 0
-                  lExe := .F.
+                  lExe := FALSE
                ELSE
                   nLeft := b:aColumnsSep[1]
                   nRight := b:aColumnsSep[Len(b:aColumnsSep)]
@@ -96,7 +96,7 @@ FUNCTION WvtPaintObjects()
                      .OR. tlbr_[3] < aBlocks[i][3][2] ; // bottom < top
                      .OR. tlbr_[2] > nRight + 1       ; // left   > right
                      .OR. tlbr_[4] < nLeft - 2          // right  < left
-                     lExe := .F.
+                     lExe := FALSE
                   ENDIF
                ENDIF
                EXIT
@@ -105,7 +105,7 @@ FUNCTION WvtPaintObjects()
                   .OR. tlbr_[3] < aBlocks[i][3][2] ;  // bottom < top
                   .OR. tlbr_[2] > aBlocks[i][3][5] ;  // left   > right
                   .OR. tlbr_[4] < aBlocks[i][3][3]    // right  < left
-                  lExe := .F.
+                  lExe := FALSE
                ENDIF
                EXIT
             OTHERWISE
@@ -115,7 +115,7 @@ FUNCTION WvtPaintObjects()
                   .OR. tlbr_[3] < aBlocks[i][3][2] ; // bottom < top
                   .OR. tlbr_[2] > aBlocks[i][3][5] ; // left   > right
                   .OR. tlbr_[4] < aBlocks[i][3][3]   // right  < left
-                  lExe := .F.
+                  lExe := FALSE
                ENDIF
             ENDSWITCH
          ENDIF
@@ -189,7 +189,7 @@ FUNCTION wvg_DelPaint(cID, nAction)
    IF (n := AScan(t_paint_, {|e_|e_[1] == cID})) > 0
       IF (n1 := AScan(t_paint_[n][2], {|e_|e_[1] == nAction})) > 0
          xData := t_paint_[n][2][n1][2]
-         t_paint_[n][2][n1][2] := {||.T.}
+         t_paint_[n][2][n1][2] := {||TRUE}
       ENDIF
    ENDIF
 
@@ -200,11 +200,11 @@ FUNCTION wvg_PurgePaint(cID, lDummy)
    LOCAL n
    LOCAL aPaint
 
-   __defaultNIL(@lDummy, .F.)
+   __defaultNIL(@lDummy, FALSE)
 
    IF (n := AScan(t_paint_, {|e_|e_[1] == cID})) > 0
       aPaint := t_paint_[n]
-      hb_ADel(t_paint_, n, .T.)
+      hb_ADel(t_paint_, n, TRUE)
    ENDIF
 
    IF lDummy
@@ -217,7 +217,7 @@ PROCEDURE wvg_InsertPaint(cID, aPaint, lSet)
 
    LOCAL n
 
-   __defaultNIL(@lSet, .F.)
+   __defaultNIL(@lSet, FALSE)
 
    IF (n := AScan(t_paint_, {|e_|e_[1] == cID})) > 0
       t_paint_[n] := aPaint
@@ -324,7 +324,7 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
    IF hb_bitAnd(nStyle, DS_SETFONT) == DS_SETFONT
       AAdd(aDlg[1], IIf(hb_IsNumeric(nPointSize), nPointSize, 8))
       AAdd(aDlg[1], IIf(hb_IsNumeric(nWeight), nWeight, 400))
-      AAdd(aDlg[1], IIf(hb_IsLogical(lItalic), lItalic, .F.))
+      AAdd(aDlg[1], IIf(hb_IsLogical(lItalic), lItalic, FALSE))
       AAdd(aDlg[1], IIf(hb_IsString(cFaceName), cFaceName, "MS Sans Serif"))
    ENDIF
 
@@ -459,7 +459,7 @@ FUNCTION wvt_DialogBox(acnDlg, cbDlgProc, hWndParent)
       xTemplate := acnDlg
    ENDIF
 
-   nResult := wvt_CreateDialogModal(xTemplate, .F., cbDlgProc, nDlgMode, hWndParent)
+   nResult := wvt_CreateDialogModal(xTemplate, FALSE, cbDlgProc, nDlgMode, hWndParent)
 
    wvg_SetFocus(hWndParent)
 
@@ -671,15 +671,15 @@ FUNCTION wvt_GetWindowHandle()
 
 FUNCTION wvt_CenterWindow(lCenter, lRePaint)
 
-   __defaultNIL(@lCenter, .T.)
-   __defaultNIL(@lRePaint, .F.)
+   __defaultNIL(@lCenter, TRUE)
+   __defaultNIL(@lRePaint, FALSE)
 
    RETURN hb_gtInfo(HB_GTI_SPEC, HB_GTS_CENTERWINDOW, {lCenter, lRePaint})
 
 FUNCTION wvt_WindowCentre(lCenter, lRePaint)
 
-   __defaultNIL(@lCenter, .T.)
-   __defaultNIL(@lRePaint, .F.)
+   __defaultNIL(@lCenter, TRUE)
+   __defaultNIL(@lRePaint, FALSE)
 
    RETURN hb_gtInfo(HB_GTI_SPEC, HB_GTS_CENTERWINDOW, {lCenter, lRePaint})
 
@@ -687,7 +687,7 @@ FUNCTION wvt_ProcessMessages()
 
    hb_gtInfo(HB_GTI_SPEC, HB_GTS_PROCESSMESSAGES)
 
-   RETURN .T.
+   RETURN TRUE
 
 PROCEDURE wvt_Keyboard(nKey)
 

@@ -387,11 +387,11 @@ FUNCTION GetKXTab()
 
 FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
 
-   LOCAL lAccepted := .F.
+   LOCAL lAccepted := FALSE
 
    IF PCount() == 0
       IF hb_mutexLock(s_hMutex)
-         lAccepted := .T.
+         lAccepted := TRUE
          IF !Empty(s_hTrs)
             hb_HClear(s_hTrs)
             hb_gtInfo(HB_GTI_INKEYFILTER, NIL)
@@ -403,7 +403,7 @@ FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
          IF hb_mutexLock(s_hMutex)
             IF PCount() == 1
                IF nOrgKeyValue $ s_hTrs
-                  lAccepted := .T.
+                  lAccepted := TRUE
                   hb_HDel(s_hTrs, nOrgKeyValue)
                   IF Empty(s_hTrs)
                      hb_gtInfo(HB_GTI_INKEYFILTER, NIL)
@@ -412,7 +412,7 @@ FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
             ELSEIF hb_IsNumeric(nNewKeyValue)
                // refuse overwriting custom HB_GTI_INKEYFILTER
                IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
-                  lAccepted := .T.
+                  lAccepted := TRUE
                   IF Empty(s_hTrs)
                      hb_gtInfo(HB_GTI_INKEYFILTER, {|nKey|__hbct_kxlat(nKey)})
                   ENDIF
@@ -446,12 +446,12 @@ FUNCTION hbct_GetKXLat(nKeyValue)
 
 FUNCTION hbct_SetKXTab(hTrs)
 
-   LOCAL lAccepted := .F.
+   LOCAL lAccepted := FALSE
 
    IF hb_IsHash(hTrs)
       IF hb_mutexLock(s_hMutex)
          IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
-            lAccepted := .T.
+            lAccepted := TRUE
             IF Empty(s_hTrs) .AND. !Empty(hTrs)
                hb_gtInfo(HB_GTI_INKEYFILTER, {|nKey|__hbct_kxlat(nKey)})
             ELSEIF !Empty(s_hTrs) .AND. Empty(hTrs)

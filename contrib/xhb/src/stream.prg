@@ -61,9 +61,9 @@ FUNCTION FileWriter(cFile, nMode)
 
 CREATE CLASS TStream
 
-   VAR lCanRead  INIT .F.
-   VAR lCanWrite INIT .F.
-   VAR lCanSeek  INIT .F.
+   VAR lCanRead  INIT FALSE
+   VAR lCanWrite INIT FALSE
+   VAR lCanSeek  INIT FALSE
 
    VAR nLength   INIT 0
    VAR nPosition INIT 0
@@ -140,7 +140,7 @@ ENDCLASS
 
 METHOD TStreamFileReader:New(cFile, nMode)
 
-   ::lCanRead := .T.
+   ::lCanRead := TRUE
 
    ::cFile := cFile
 
@@ -212,7 +212,7 @@ ENDCLASS
 
 METHOD TStreamFileWriter:New(cFile, nMode)
 
-   ::lCanWrite := .T.
+   ::lCanWrite := TRUE
 
    ::cFile := cFile
 

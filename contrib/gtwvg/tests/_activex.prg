@@ -25,15 +25,15 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
 
    // --- Dialog ---
 #if 1
-   oCrt := WvgDialog():new(, , {30, 30}, {800, 600}, , .T.)
-   oCrt:closable := .T.
+   oCrt := WvgDialog():new(, , {30, 30}, {800, 600}, , TRUE)
+   oCrt:closable := TRUE
    oCrt:create()
 #else
-   oCrt := WvgCrt():new(, , {5, 5}, {30, 60}, , .T.)
+   oCrt := WvgCrt():new(, , {5, 5}, {30, 60}, , TRUE)
    oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS
-   oCrt:closable := .T.
+   oCrt:closable := TRUE
    oCrt:create()
-   SetCursor(.F.)
+   SetCursor(FALSE)
 #endif
 
    oDA := oCrt:drawingArea
@@ -45,7 +45,7 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
    oTBar := BuildWvgToolBar(oDA)
 
    // --- StatusBar ---
-   oSBar := WvgStatusBar():new(oDA):create(, , , , , .T.)
+   oSBar := WvgStatusBar():new(oDA):create(, , , , , TRUE)
    oSBar:panelClick := {|oPanel|Wvg_MessageBox(, oPanel:caption)}
    oPanel := oSBar:getItem(1)
    oPanel:caption := "My Root Panel"
@@ -60,12 +60,12 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
    oStatic:options := WVGSTATIC_TEXT_CENTER
    oStatic:caption := Chr(13) + "Implemented Xbase++ Parts"
    oStatic:create(, , {0, oTBar:currentSize()[2] + 3}, {120, oCrt:currentSize()[2] - ;
-      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4}, , .T.)
+      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4}, , TRUE)
    oStatic:setColorBG(RGB(198, 198, 198))
 
 #if 0  // panel
    // --- Static + Radio + Checkbox ---
-   oStatic2 := WvgStatic():New(oCrt, , {150, 150}, {500, 310}, , .F.)
+   oStatic2 := WvgStatic():New(oCrt, , {150, 150}, {500, 310}, , FALSE)
 // oStatic2:type := WVGSTATIC_TYPE_RAISEDBOX //BGNDFRAME
    oStatic2:exStyle += WS_EX_WINDOWEDGE
 // oStatic2:options := WVGSTATIC_FRAMETHICK
@@ -79,7 +79,7 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
 
    oRadio := WvgRadioButton():new(oStatic2, , {10, 10}, {100, 15})
    oRadio:caption := "Com 1"
-   oRadio:selection := .T.
+   oRadio:selection := TRUE
    oRadio:selected := {|m1, m2, obj|m1 := m1, m2 := m2, Wvg_MessageBox(, obj:caption + IIf(obj:selection, "< S >", "< N >"))}
    oRadio:create()
 
@@ -87,7 +87,7 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
    oRadio:caption := "Com 2"
    oRadio:create()
 
-   oCheck := WvgCheckBox():New(oStatic2, , {10, 70}, {100, 15}, , .T.)
+   oCheck := WvgCheckBox():New(oStatic2, , {10, 70}, {100, 15}, , TRUE)
    oCheck:caption := "Checkbox A"
    oCheck:create()
    oCheck:selected := {|m1, m2, o|m1 := m1, m2 := m2, Wvg_MessageBox(, IIf(o:getData(), "I am selected", "I am not selected"))}
@@ -109,7 +109,7 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
    // Create first SLE, specify position using :create()
    // On :typeOut set the focus to the second SLE
    oXbp := WvgSLE():new(oStatic2)
-   oXbp:autoTab := .T.
+   oXbp:autoTab := TRUE
    oXbp:bufferLength := 20
    // Data code block containing assignment to LOCAL variable
    oXbp:dataLink := {|x|IIf(x == NIL, cVarA, cVarA := x)}
@@ -120,7 +120,7 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
 
    // Create second SLE, specify position using :new()
    oXbp := WvgSLE():new(oStatic2, , {10, 200}, {150, 20})
-   oXbp:tabStop := .T.
+   oXbp:tabStop := TRUE
    oXbp:bufferLength := 15
    oXbp:dataLink := {|x|IIf(x == NIL, cVarB, cVarB := x)}
    oXbp:create()
@@ -132,8 +132,8 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
    // Create MLE, specify position using :create() and
    // assign data code block accessing LOCAL variable
    oMLE := WvgMLE():new(oStatic2)
-   oMLE:wordWrap := .F.
-   oMLE:border := .T.
+   oMLE:wordWrap := FALSE
+   oMLE:border := TRUE
    oMLE:dataLink := {|x|IIf(x == NIL, cText, cText := x)}
    oMLE:create(oStatic2, , {180, 10}, {310, 250})
    // Copy text from LOCAL variable into edit buffer via :dataLink
@@ -175,10 +175,10 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
    // --- TreeView ---
    oTree := WvgTreeView():new(oDA, , {oCrt:currentSize()[1] - 160, oTBar:currentSize()[2] + 3}, ;
       {160, oCrt:currentSize()[2] - ;
-      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4}, , .T.)
-   oTree:hasLines := .T.
-   oTree:hasButtons := .T.
-   oTree:alwaysShowSelection := .T.
+      oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4}, , TRUE)
+   oTree:hasLines := TRUE
+   oTree:hasButtons := TRUE
+   oTree:alwaysShowSelection := TRUE
    oTree:create()
    oTree:setColorBG(RGB(120, 15, 240))
    oTree:setColorFG(RGB(15, 240, 120))
@@ -196,9 +196,9 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
    oItem2:addItem("Third level C")
 
 #if 0
-   oItem1:expand(.T.)
+   oItem1:expand(TRUE)
 #else
-   oTree:showExpanded(.T., 2)
+   oTree:showExpanded(TRUE, 2)
 #endif
 
    oTree:setData(oItem2)
@@ -221,7 +221,7 @@ FUNCTION ExecuteActiveX(nActiveX, xParam)
    ENDIF
 #else
    oCrt:show()
-   DO WHILE .T.
+   DO WHILE TRUE
       IF Inkey() == K_ESC
          EXIT
       ENDIF
@@ -250,12 +250,12 @@ STATIC FUNCTION ResizeDialog(oCrt, oTBar, oSBar, oStatic, oCom, oTree)
    nH := aCrt[2] - aTBar[2] - aSBar[2]
 
    IF oStatic:isVisible
-      oStatic:setPosAndSize({0, nT + 3}, {120, nH - 4}, .T.)
-      oCom:setPosAndSize({120, nT}, {aCrt[1] - 120 - 150, nH}, .T.)
-      oTree:setPosAndSize({aCrt[1] - 150, nT}, {150, nH}, .T.)
+      oStatic:setPosAndSize({0, nT + 3}, {120, nH - 4}, TRUE)
+      oCom:setPosAndSize({120, nT}, {aCrt[1] - 120 - 150, nH}, TRUE)
+      oTree:setPosAndSize({aCrt[1] - 150, nT}, {150, nH}, TRUE)
    ELSE
-      oCom:setPosAndSize({0, nT}, {aCrt[1] - 150, nH}, .T.)
-      oTree:setPosAndSize({aCrt[1] - 150, nT}, {150, nH}, .T.)
+      oCom:setPosAndSize({0, nT}, {aCrt[1] - 150, nH}, TRUE)
+      oTree:setPosAndSize({aCrt[1] - 150, nT}, {150, nH}, TRUE)
    ENDIF
 
    RETURN 1
@@ -303,7 +303,7 @@ STATIC FUNCTION BuildActiveXControl(nActiveX, oDA)
 
    hb_default(@nActiveX, 2)
 
-   oCom := WvgActiveXControl():New(oDA, , {0, 0}, {100, 100}, , .T.)
+   oCom := WvgActiveXControl():New(oDA, , {0, 0}, {100, 100}, , TRUE)
 
    DO CASE
    CASE nActiveX == 1
@@ -331,8 +331,8 @@ STATIC FUNCTION BuildActiveXControl(nActiveX, oDA)
       oCom:mapEvent(evDblClk, {||oCom:Value := Seconds() / 86400, ;
          oCom:BackColor := RGB(0, 140, 210), ;
          oCom:Refresh(), ;
-         oCom:ShowSecondsHand := .T., ;
-         oCom:Hands3D := .T., ;
+         oCom:ShowSecondsHand := TRUE, ;
+         oCom:Hands3D := TRUE, ;
          oCom:Refresh(), ;
          oCom:showAboutBox() ;
         })
@@ -371,12 +371,12 @@ STATIC FUNCTION ExeActiveX(nActiveX, oCom, xParam)
    // After :CREATE() Messages
    IF nActiveX == 1
       hb_gtInfo(HB_GTI_WINTITLE, IIf(Empty(xParam), hb_Version(HB_VERSION_URL_BASE), xParam))
-      oCom:AddressBar := .T.
+      oCom:AddressBar := TRUE
       oCom:Navigate(IIf(Empty(xParam), hb_Version(HB_VERSION_URL_BASE), xParam))
 
    ELSEIF nActiveX == 4
       ConfigureRMChart(oCom)
-      oCom:Draw(.T.)
+      oCom:Draw(TRUE)
       oCom:Draw2Clipboard()
 
    ELSEIF nActiveX == 5
@@ -391,7 +391,7 @@ STATIC FUNCTION ExeActiveX(nActiveX, oCom, xParam)
 
    ENDIF
 
-   DO WHILE .T.
+   DO WHILE TRUE
       nKey := Inkey()
 
       IF nActiveX == 2
@@ -412,7 +412,7 @@ STATIC FUNCTION ExeActiveX(nActiveX, oCom, xParam)
 
             oCom:Region(1):SetProperties(5, 5, -5, -5)
 
-            oCom:Draw(.T.)
+            oCom:Draw(TRUE)
          ENDIF
 
       ELSEIF nKey == K_F11
@@ -571,7 +571,7 @@ STATIC FUNCTION ExeActiveX(nActiveX, oCom, xParam)
 
             oCom:Reset()
             oCom:RMCFile := sData
-            oCom:Draw(.T.)
+            oCom:Draw(TRUE)
          ENDIF
 
       ENDIF
@@ -610,7 +610,7 @@ STATIC PROCEDURE ConfigureRMChart(RMChart)
    oCaption := oRegion:Caption()
    oCaption:Titel := "GTWVG Active-X Demo"
    oCaption:FontSize := 10
-   oCaption:Bold := .T.
+   oCaption:Bold := TRUE
 
    oRegion:AddGridlessSeries()
 
@@ -618,7 +618,7 @@ STATIC PROCEDURE ConfigureRMChart(RMChart)
    oChart:SeriesStyle := RMC_PIE_GRADIENT
    oChart:Alignment := RMC_FULL
    oChart:Explodemode := RMC_EXPLODE_NONE
-   oChart:Lucent := .F.
+   oChart:Lucent := FALSE
    oChart:ValueLabelOn := RMC_VLABEL_ABSOLUTE
    oChart:HatchMode := RMC_HATCHBRUSH_OFF
    oChart:StartAngle := 0

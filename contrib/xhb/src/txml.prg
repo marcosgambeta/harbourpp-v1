@@ -256,7 +256,7 @@ METHOD TXmlIterator:MatchCriteria(oNode)
 
    HB_SYMBOL_UNUSED(oNode)
 
-   RETURN .T.
+   RETURN TRUE
 
 
 /********************************************
@@ -280,23 +280,23 @@ METHOD TXmlIteratorScan:New(oNodeTop)
 METHOD TXmlIteratorScan:MatchCriteria(oFound)
 
    IF ::cName != NIL .AND. ( oFound:cName == NIL .OR. !( ::cName == oFound:cName ) )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::cAttribute != NIL .AND. !::cAttribute $ oFound:aAttributes
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::cValue != NIL .AND. ;
          hb_HScan(oFound:aAttributes, {|xKey, cValue|HB_SYMBOL_UNUSED(xKey), ::cValue == cValue}) == 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::cData != NIL .AND. ( oFound:cData == NIL .OR. !( ::cData == oFound:cData ) )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 /********************************************
    Iterator regex class
@@ -318,23 +318,23 @@ METHOD TXmlIteratorRegex:New(oNodeTop)
 
 METHOD TXmlIteratorRegex:MatchCriteria(oFound)
 
-   IF ::cName != NIL .AND. (oFound:cName == NIL .OR. !hb_regexLike(::cName, oFound:cName, .T.))
-      RETURN .F.
+   IF ::cName != NIL .AND. (oFound:cName == NIL .OR. !hb_regexLike(::cName, oFound:cName, TRUE))
+      RETURN FALSE
    ENDIF
 
-   IF ::cAttribute != NIL .AND. hb_HScan(oFound:aAttributes, {|cKey|hb_regexLike(::cAttribute, cKey, .T.)}) == 0
-      RETURN .F.
+   IF ::cAttribute != NIL .AND. hb_HScan(oFound:aAttributes, {|cKey|hb_regexLike(::cAttribute, cKey, TRUE)}) == 0
+      RETURN FALSE
    ENDIF
 
-   IF ::cValue != NIL .AND. hb_HScan(oFound:aAttributes, {|xKey, cValue|HB_SYMBOL_UNUSED(xKey), hb_regexLike(::cValue, cValue, .T.)}) == 0
-      RETURN .F.
+   IF ::cValue != NIL .AND. hb_HScan(oFound:aAttributes, {|xKey, cValue|HB_SYMBOL_UNUSED(xKey), hb_regexLike(::cValue, cValue, TRUE)}) == 0
+      RETURN FALSE
    ENDIF
 
-   IF ::cData != NIL .AND. (oFound:cData == NIL .OR. !hb_regexHas(::cData, oFound:cData, .F.))
-      RETURN .F.
+   IF ::cData != NIL .AND. (oFound:cData == NIL .OR. !hb_regexHas(::cData, oFound:cData, FALSE))
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 
 /********************************************

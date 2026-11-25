@@ -22,11 +22,11 @@ PROCEDURE Main( cVidMode )
    IF "EGA" $ Upper(cVidMode)
       SetMode(43, 80)
    ENDIF
-   lColour := IIf("MONO" $ Upper(cVidMode), .F., IsColor())
+   lColour := IIf("MONO" $ Upper(cVidMode), FALSE, IsColor())
 
    SET SCOREBOARD OFF
    SetCursor( SC_NONE )
-   SetBlink(.F.)
+   SetBlink(FALSE)
 
    // .... a typical application might have the following different settings
    //     normally these would be stored in a .dbf/.dbv
@@ -50,6 +50,6 @@ PROCEDURE Main( cVidMode )
    ft_RestSets( aEnvOri )
    RestScreen(0, 0, MaxRow(), MaxCol(), cScrOri)
    SetPos(nRowOri, nColOri)
-   SetBlink(.F.)  // doesn't appear to be reset from FT_RestSets
+   SetBlink(FALSE)  // doesn't appear to be reset from FT_RestSets
 
    RETURN

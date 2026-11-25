@@ -106,7 +106,7 @@ METHOD wvtMenu:Destroy()
       ::hMenu := 0
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD wvtMenu:AddItem( cCaption, bAction )
 
@@ -134,14 +134,14 @@ METHOD wvtMenu:AddItem( cCaption, bAction )
 
       AAdd(::aItems, aItem)
 
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD wvtMenu:DelAllItems()
 
-   LOCAL lResult := .T., nItems
+   LOCAL lResult := TRUE, nItems
 
    nItems := ::NumItems()
    DO WHILE nItems > 0 .AND. lResult
@@ -153,7 +153,7 @@ METHOD wvtMenu:DelAllItems()
 
 METHOD wvtMenu:DelItem( nItemNum )
 
-   LOCAL lResult := .F.
+   LOCAL lResult := FALSE
 
    IF nItemNum >= 1 .AND. nItemNum <= ::NumItems()
       IF ::aItems[nItemNum][WVT_MENU_TYPE] == WIN_MF_POPUP
@@ -161,7 +161,7 @@ METHOD wvtMenu:DelItem( nItemNum )
       ENDIF
 
       IF ( lResult := wapi_DeleteMenu( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION ) ) // Remember ZERO base
-         hb_ADel( ::aItems, nItemNum, .T. )
+         hb_ADel( ::aItems, nItemNum, TRUE )
       ELSE
 #if 0
          Throw( ErrorNew( "wvtMenu", 1000, "wvtMenu:DelItem()", "Delete menu item FAILED", { nItemNum } ) )

@@ -19,9 +19,9 @@ PROCEDURE Main(cHost, cDatabase, cUser, cPass)
 
    ? "Conection status", PQerrorMessage(conn), PQstatus(conn)
 
-   Query(conn, "SELECT codigo, descri FROM client limit 100", .F.)
-   Query(conn, "SELECT codigo, descri FROM fornec limit 100", .F.)
-   Query(conn, "SELECT pedido, vlrped FROM pedido", .T.)
+   Query(conn, "SELECT codigo, descri FROM client limit 100", FALSE)
+   Query(conn, "SELECT codigo, descri FROM fornec limit 100", FALSE)
+   Query(conn, "SELECT pedido, vlrped FROM pedido", TRUE)
 
    RETURN
 

@@ -53,7 +53,7 @@ FUNCTION GetInput(xVar, nRow, nCol, lSay, xPrompt)
 
    hb_default(@nRow, nCursorRow)
    hb_default(@nCol, nCursorCol)
-   hb_default(@lSay, .F.)
+   hb_default(@lSay, FALSE)
 
    SetPos(nRow, nCol)
    IF xPrompt != NIL

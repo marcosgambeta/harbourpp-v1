@@ -57,7 +57,7 @@ PROCEDURE Main(...)
    LOCAL cPassWord := ""
    LOCAL cDataBase, cTable, cFile
    LOCAL aDbfStruct, i
-   LOCAL lCreateTable := .F.
+   LOCAL lCreateTable := FALSE
    LOCAL oServer, oTable, oRecord
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
@@ -97,7 +97,7 @@ PROCEDURE Main(...)
          cPassWord := hb_PValue( i++ )
 
       CASE cTok == "-c"
-         lCreateTable := .T.
+         lCreateTable := TRUE
 
       OTHERWISE
          help()
@@ -105,7 +105,7 @@ PROCEDURE Main(...)
       ENDCASE
    ENDDO
 
-   dbUseArea(.T.,, cFile, "dbffile",, .T.)
+   dbUseArea(TRUE,, cFile, "dbffile",, TRUE)
    aDbfStruct := dbffile->( dbStruct() )
 
    oServer := TMariaDBServer():New( cHostName, cUser, cPassWord )
@@ -121,7 +121,7 @@ PROCEDURE Main(...)
    ENDIF
 
    IF lCreateTable
-      IF hb_AScan(oServer:ListTables(), cTable,,, .T.) > 0
+      IF hb_AScan(oServer:ListTables(), cTable,,, TRUE) > 0
          oServer:DeleteTable( cTable )
          IF oServer:NetErr()
             ? oServer:Error()

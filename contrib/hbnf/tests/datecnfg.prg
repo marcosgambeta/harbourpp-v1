@@ -127,11 +127,11 @@ PROCEDURE Main()
    aTestData := ft_AcctWeek( dDate, nNum )
    ? "ACCTWeek " + Str(nNum, 2), aTestData[1], aTestData[2], aTestData[3]
 
-   aTestData := ft_DayOfYr( dDate, , .T. )
+   aTestData := ft_DayOfYr( dDate, , TRUE )
    ? "ACCTDay   ", aTestData[1], aTestData[2], aTestData[3]
 
    nNum      := Val(SubStr(aTestData[1], 5, 3))
-   aTestData := ft_DayOfYr( dDate, nNum, .T. )
+   aTestData := ft_DayOfYr( dDate, nNum, TRUE )
    ? "ACCTDay " + Str(nNum, 3), aTestData[1], aTestData[2], aTestData[3]
 
    WAIT

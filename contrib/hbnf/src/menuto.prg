@@ -124,7 +124,7 @@ FUNCTION ft_MenuTo(bGetSet, cReadVar, lCold)
    LOCAL nMenu   := t_nLevel++
    LOCAL nActive
    LOCAL nCount  := Len(t_aRow[nMenu])
-   LOCAL lChoice := .F.
+   LOCAL lChoice := FALSE
    LOCAL nCursor := Set(_SET_CURSOR, SC_NONE)
    LOCAL nKey
    LOCAL bKey
@@ -134,7 +134,7 @@ FUNCTION ft_MenuTo(bGetSet, cReadVar, lCold)
    LOCAL nPrev
 
    IF !hb_IsLogical(lCold)
-      lCold := .F.
+      lCold := FALSE
    ENDIF
 
    // Validate the incoming parameters and assign some reasonable defaults
@@ -248,13 +248,13 @@ FUNCTION ft_MenuTo(bGetSet, cReadVar, lCold)
          IF t_aExecute[nMenu, nActive] != NIL
             Eval(t_aExecute[nMenu, nActive])
          ELSE
-            lChoice := .T.
+            lChoice := TRUE
          ENDIF
 
          // If ESC was pressed, set the selected item to zero and exit.
 
       CASE nKey == K_ESC
-         lChoice := .T.
+         lChoice := TRUE
          nActive := 0
 
          // If Home was pressed, go to the designated menu item.

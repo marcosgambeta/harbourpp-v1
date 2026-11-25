@@ -8,7 +8,7 @@
 //                    [<sSrvFunc>] )
 //                                           --> <pListenSocket> | NIL
 // and can be stopped by:
-//    netio_ServerStop( <pListenSocket>, .T. )
+//    netio_ServerStop( <pListenSocket>, TRUE )
 //
 // Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
 //
@@ -72,7 +72,7 @@ FUNCTION netio_MTServer( nPort, cIfAddr, cRootDir, xRPC, ;
       SWITCH ValType(xRPC)
       CASE "S"
       CASE "H"
-         lRPC := .T.
+         lRPC := TRUE
          EXIT
       CASE "L"
          lRPC := xRPC
@@ -95,8 +95,8 @@ FUNCTION netio_MTServer( nPort, cIfAddr, cRootDir, xRPC, ;
       oError:subSystem   := "HBNETIO"
       oError:subCode     := 0
       oError:description := hb_langErrMsg( EG_UNSUPPORTED )
-      oError:canRetry    := .F.
-      oError:canDefault  := .F.
+      oError:canRetry    := FALSE
+      oError:canDefault  := FALSE
       oError:fileName    := ""
       oError:osCode      := 0
 
@@ -110,7 +110,7 @@ STATIC FUNCTION NETIO_SRVLOOP(pListenSocket, xRPC, sSrvFunc, ...)
 
    LOCAL pConnectionSocket
 
-   DO WHILE .T.
+   DO WHILE TRUE
       pConnectionSocket := netio_Accept(pListenSocket,, ...)
       IF Empty(pConnectionSocket)
          EXIT

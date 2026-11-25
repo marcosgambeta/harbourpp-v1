@@ -59,7 +59,7 @@
 // WvgToolBarButton() Class compatible with XbpToolbarButton()
 CREATE CLASS WvgToolBarButton
 
-   VAR    enabled                               INIT .T.
+   VAR    enabled                               INIT TRUE
    VAR    index                                 INIT 0
    VAR    key                                   INIT ""
    VAR    style                                 INIT WVGTOOLBAR_BUTTON_DEFAULT
@@ -67,9 +67,9 @@ CREATE CLASS WvgToolBarButton
    VAR    image
    VAR    disabledImage
    VAR    hotImage
-   VAR    mixedState                            INIT .F.
-   VAR    pressed                               INIT .F.
-   VAR    visible                               INIT .T.
+   VAR    mixedState                            INIT FALSE
+   VAR    pressed                               INIT FALSE
+   VAR    visible                               INIT TRUE
    VAR    left                                  INIT 0
    VAR    bottom                                INIT 0
    VAR    top                                   INIT 0

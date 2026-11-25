@@ -30,13 +30,13 @@ FUNCTION ft_Calendar(nRow, nCol, cColor, lShadow, lShowHelp)
    LOCAL aRetVal[8]
    LOCAL nHelpRow
    LOCAL cSaveHelp
-   LOCAL lHelpIsDisplayed := .F.
+   LOCAL lHelpIsDisplayed := FALSE
 
    __defaultNIL(@nRow, 1)         // check display row
    __defaultNIL(@nCol, 63)        // check display col
    __defaultNIL(@cColor, "W+/G")  // check display color
-   __defaultNIL(@lShadow, .F.)    // check shadow switch
-   __defaultNIL(@lShowHelp, .F.)  // check help switch
+   __defaultNIL(@lShadow, FALSE)    // check shadow switch
+   __defaultNIL(@lShowHelp, FALSE)  // check help switch
 
    nRow := IIf(nRow < 1 .OR. nRow > 21,  1, nRow)     // check row bounds
    nCol := IIf(nCol < 1 .OR. nCol > 63, 63, nCol)     // check col bounds
@@ -86,7 +86,7 @@ FUNCTION ft_Calendar(nRow, nCol, cColor, lShadow, lShowHelp)
 
       CASE nKey == K_F1
          IF lShowHelp .AND. !lHelpIsDisplayed
-            lHelpIsDisplayed := .T.
+            lHelpIsDisplayed := TRUE
             cSaveHelp := SaveScreen(nHelpRow - 1, 1, nHelpRow + 7, 80)
             ft_XBox("L",,, cColor, cColor, nHelpRow, 1, ;
                "Home, Up_Arrow or PgUp keys page by day, month or year to a past date.", ;

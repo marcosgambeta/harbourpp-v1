@@ -71,9 +71,9 @@ PROCEDURE Main(...)
       hb_cdpSelect("UTF8EX")
       hb_SetTermCP(hb_cdpTerm())
       Set(_SET_OSCODEPAGE, hb_cdpOS())
-      lUnicode := .T.
+      lUnicode := TRUE
    ELSE
-      lUnicode := .F.
+      lUnicode := FALSE
    ENDIF
 
    aWild := {...}
@@ -88,7 +88,7 @@ PROCEDURE Main(...)
    ENDIF
    cZipName := hb_FNameMerge(cPath, cFileName, cExt)
 
-   hb_ADel(aWild, 1, .T.)
+   hb_ADel(aWild, 1, TRUE)
 
    FOR tmp := Len(aWild) - 1 TO 1 STEP -1
       IF Lower(aWild[tmp]) == "--pass"

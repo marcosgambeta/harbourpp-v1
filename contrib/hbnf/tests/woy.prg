@@ -7,7 +7,7 @@ PROCEDURE Main()
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
 
-   DO WHILE .T.
+   DO WHILE TRUE
 
       @ 2, 10 SAY "Date to Test"
 

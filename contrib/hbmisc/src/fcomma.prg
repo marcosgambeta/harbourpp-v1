@@ -87,7 +87,7 @@ STATIC FUNCTION FCM_INIT( nRDD )
  */
 STATIC FUNCTION FCM_NEW( pWA )
 
-   LOCAL aWData := { -1, .F., .F. }
+   LOCAL aWData := { -1, FALSE, FALSE }
 
    /*
     * Set in our private AREA item the array with slot number and
@@ -109,7 +109,7 @@ STATIC FUNCTION FCM_CREATE( nWA, aOpenInfo )
    oError:Description := hb_langErrMsg( EG_CREATE ) + " (" + ;
       hb_langErrMsg( EG_UNSUPPORTED ) + ")"
    oError:FileName    := aOpenInfo[UR_OI_NAME]
-   oError:CanDefault  := .T.
+   oError:CanDefault  := TRUE
    UR_SUPER_ERROR( nWA, oError )
 
    RETURN HB_FAILURE
@@ -138,7 +138,7 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
       oError:SubCode     := 1000
       oError:Description := hb_langErrMsg( EG_OPEN ) + ", no free slots"
       oError:FileName    := aOpenInfo[UR_OI_NAME]
-      oError:CanDefault  := .T.
+      oError:CanDefault  := TRUE
       UR_SUPER_ERROR( nWA, oError )
       RETURN HB_FAILURE
    ENDIF
@@ -152,14 +152,14 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
       oError:Description := hb_langErrMsg( EG_OPEN )
       oError:FileName    := aOpenInfo[UR_OI_NAME]
       oError:OsCode      := FError()
-      oError:CanDefault  := .T.
+      oError:CanDefault  := TRUE
 
       UR_SUPER_ERROR( nWA, oError )
       RETURN HB_FAILURE
    ENDIF
    aRData[nSlot] := nHandle
    aWData[1] := nSlot
-   aWData[2] := aWData[3] := .F.
+   aWData[2] := aWData[3] := FALSE
 
    /* Set one field called LINE to access current record buffer */
    UR_SUPER_SETFIELDEXTENT( nWA, 1 )
@@ -216,7 +216,7 @@ STATIC FUNCTION FCM_GOTO( nWA, nRecord )
 
    hb_FSelect( aWData[1] )
    IF nRecord <= 0
-      aWData[2] := aWData[3] := .T.
+      aWData[2] := aWData[3] := TRUE
    ELSEIF nRecord == 1
       hb_FGoTop()
       aWData[2] := aWData[3] := hb_FAtEof()
@@ -249,12 +249,12 @@ STATIC FUNCTION FCM_GOBOTTOM( nWA )
 
    hb_FSelect( aWData[1] )
    IF hb_FLastRec() == 0
-      aWData[2] := aWData[3] := .T.
+      aWData[2] := aWData[3] := TRUE
    ELSE
       hb_FSkip(0) /* Clear the EOF flag inside hb_F* engin
                      - it's not done automatically in hb_FGoBottom() :-( */
       hb_FGoBottom()
-      aWData[2] := aWData[3] := .F.
+      aWData[2] := aWData[3] := FALSE
    ENDIF
 
    RETURN HB_SUCCESS
@@ -275,11 +275,11 @@ STATIC FUNCTION FCM_SKIPRAW( nWA, nRecords )
       ENDIF
       IF nRecords < 0 .AND. hb_FRecNo() <= -nRecords
          hb_FGoTop()
-         aWData[2] := .T.
+         aWData[2] := TRUE
          aWData[3] := hb_FAtEof()
       ELSEIF nRecords != 0
          hb_FSkip( nRecords )
-         aWData[2] := .F.
+         aWData[2] := FALSE
          aWData[3] := hb_FAtEof()
       ENDIF
    ENDIF
@@ -305,7 +305,7 @@ STATIC FUNCTION FCM_EOF( nWA, lEof )
 STATIC FUNCTION FCM_DELETED(nWA, lDeleted)
 
    HB_SYMBOL_UNUSED(nWA)
-   lDeleted := .F.
+   lDeleted := FALSE
 
    RETURN HB_SUCCESS
 

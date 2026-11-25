@@ -134,23 +134,23 @@ METHOD WvtToolButton:PaintButton()
 
 METHOD WvtToolButton:LeftDown()
 
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
 
    IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
       wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 2)
-      lRet := .T.
+      lRet := TRUE
    ENDIF
 
    RETURN lRet
 
 METHOD WvtToolButton:LeftUp()
 
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
 
    IF ::lActive .AND. ::nBtnType == TLB_BUTTON_TYPE_IMAGE
       wvt_DrawToolButtonState(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, 1)
       Eval(::bOnLeftUp)
-      lRet := .T.
+      lRet := TRUE
    ENDIF
 
    RETURN lRet

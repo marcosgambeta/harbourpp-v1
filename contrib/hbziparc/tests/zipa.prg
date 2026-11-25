@@ -8,7 +8,7 @@ PROCEDURE Main(cZip, ...)
 
    ? hb_ZipFile( cZip, hb_AParams() )
 
-   a := hb_GetFilesInZip( cZip, .T. )
+   a := hb_GetFilesInZip( cZip, TRUE )
 
    FOR EACH b IN a
       ?

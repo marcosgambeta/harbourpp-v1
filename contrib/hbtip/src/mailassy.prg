@@ -59,7 +59,7 @@ FUNCTION tip_MailAssemble( ;
       cSubject, ;    /* Optional. Subject of the sending email */
       aFiles, ;      /* Optional. Array of attachments to the email to send */
       nPriority, ;   /* Optional. Email priority: 1=High, 3=Normal (Standard), 5=Low */
-      lRead, ;       /* Optional. If set to .T., a confirmation request is send. Standard setting is .F. */
+      lRead, ;       /* Optional. If set to TRUE, a confirmation request is send. Standard setting is FALSE */
       cReplyTo, ;    /* Optional. */
       cCharset, ;    /* Optional. */
       cEncoding, ;   /* Optional. */
@@ -89,11 +89,11 @@ FUNCTION tip_MailAssemble( ;
    hb_default(@cSubject, "")
    hb_default(@aFiles, {})
    nPriority := Int(hb_defaultValue( nPriority, 3 ))
-   hb_default(@lRead, .F.)
+   hb_default(@lRead, FALSE)
    hb_default(@cReplyTo, "")
    hb_default(@cCharset, "UTF-8")
    hb_default(@cEncoding, "quoted-printable")
-   hb_default(@lBodyHTML, .F.)
+   hb_default(@lBodyHTML, FALSE)
 
    /* Attempt to convert to selected charset if it's supported
       by Harbour (and linked to app). */

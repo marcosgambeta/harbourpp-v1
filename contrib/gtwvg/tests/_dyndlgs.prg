@@ -95,7 +95,7 @@ FUNCTION DynWinDialog(nInfo)
    Wvt_AppendMenu(hMenu, MF_STRING + MF_ENABLED, ID_MNU_FILE   , "File")
    Wvt_AppendMenu(hMenu, MF_STRING + MF_ENABLED, ID_MNU_CONTROL, "Controls")
 
-   lOnTop := .F.
+   lOnTop := FALSE
    cDlgProc := "DynDlgProc"
 // bDlgProc := {|a, b, c, d|DYNDLGPROC(a, b, c, d)}
    cDlgIcon := "resources\v_notes.ico"
@@ -214,7 +214,7 @@ FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       ENDIF
 #endif
       wvg_SetDlgItemText(hDlg, ID_MLE, GetEditText())
-      wvg_CheckDlgButton(hDlg, ID_CHK_SATIS, .T.)
+      wvg_CheckDlgButton(hDlg, ID_CHK_SATIS, TRUE)
 
       wvg_CheckRadioButton(hDlg, ID_RDO_XH, ID_RDO_XBASE, ID_RDO_XH)
 
@@ -288,7 +288,7 @@ FUNCTION DlgSlideShow()
 
    aDlg := wvt_MakeDlgTemplate(0, 0, 20, 40, {}, "Slide Show", nStyle)
 
-   hDlg := wvt_CreateDialog(aDlg, .F., "DlgSlideShowProc", "resources\vr_1.ico", 5000)
+   hDlg := wvt_CreateDialog(aDlg, FALSE, "DlgSlideShowProc", "resources\vr_1.ico", 5000)
 
    RETURN hDlg
 

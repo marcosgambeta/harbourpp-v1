@@ -36,7 +36,7 @@ PROCEDURE Main( cFileName )
    XML_SetElementHandler( p, {| x, e, a | cb_start( x, e, a ) }, {| x, e | cb_end(x, e) } )
    XML_SetCharacterDataHandler( p, {| x, d | cb_data(x, d) } )
 
-   IF XML_Parse( p, MemoRead(hb_defaultValue( cFileName, hb_DirBase() + "test.xml" )), .T. ) == HB_XML_STATUS_ERROR
+   IF XML_Parse( p, MemoRead(hb_defaultValue( cFileName, hb_DirBase() + "test.xml" )), TRUE ) == HB_XML_STATUS_ERROR
       ? hb_StrFormat( e"Parse error at line %1$d:\n%2$s", ;
          XML_GetCurrentLineNumber( p ), ;
          XML_ErrorString( XML_GetErrorCode( p ) ) )

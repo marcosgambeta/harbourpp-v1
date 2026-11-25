@@ -59,13 +59,13 @@
 CREATE CLASS WvgSLE INHERIT WvgWindow, WvgDataRef
 
    VAR align INIT WVGSLE_LEFT
-   VAR autoKeyboard INIT .T.
-   VAR autoSize INIT .F.
-   VAR autoTab INIT .F.
-   VAR border INIT .T.
+   VAR autoKeyboard INIT TRUE
+   VAR autoSize INIT FALSE
+   VAR autoTab INIT FALSE
+   VAR border INIT TRUE
    VAR bufferLength INIT 32
-   VAR editable INIT .T.
-   VAR unReadable INIT .F.
+   VAR editable INIT TRUE
+   VAR unReadable INIT FALSE
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)

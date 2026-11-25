@@ -43,7 +43,7 @@ FUNCTION ft_TempFil(cPath, lHide, /* @ */ nHandle)
    LOCAL cFile
 
    hb_default(@cPath, "." + hb_ps())
-   hb_default(@lHide, .F.)
+   hb_default(@lHide, FALSE)
 
    cPath := AllTrim(cPath)
 

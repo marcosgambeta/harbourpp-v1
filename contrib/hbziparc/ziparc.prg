@@ -54,11 +54,11 @@
 
 THREAD STATIC t_nReadBuffer := 32768
 THREAD STATIC t_cComment
-THREAD STATIC t_lReadOnly := .F.
+THREAD STATIC t_lReadOnly := FALSE
 
 PROCEDURE SetZipReadOnly( lReadOnly )
 
-   t_lReadOnly := hb_defaultValue( lReadOnly, .F. )
+   t_lReadOnly := hb_defaultValue( lReadOnly, FALSE )
 
    /* TODO: Implement. */
 
@@ -110,7 +110,7 @@ FUNCTION hb_GetFileCount( cFileName )
 
 FUNCTION hb_ZipWithPassword( cFileName )
 
-   LOCAL lCrypted := .F.
+   LOCAL lCrypted := FALSE
    LOCAL hUnzip
 
    IF Set( _SET_DEFEXTENSIONS )
@@ -152,7 +152,7 @@ FUNCTION hb_GetFilesInZip( cFileName, lVerbose )
 
    IF !Empty(hUnzip := hb_unzipOpen( cFileName ))
 
-      hb_default(@lVerbose, .F.)
+      hb_default(@lVerbose, FALSE)
 
       nErr := hb_unzipFileFirst( hUnzip )
       DO WHILE nErr == 0
@@ -199,7 +199,7 @@ FUNCTION hb_SetDiskZip( bBlock )
 
    /* NOTE: Spanning not supported. */
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION TransferFromZip( cZipSrc, cZipDst, aFiles )
 
@@ -209,7 +209,7 @@ FUNCTION TransferFromZip( cZipSrc, cZipDst, aFiles )
 
    /* TODO: Implement. */
 
-   RETURN .F.
+   RETURN FALSE
 
 PROCEDURE hb_SetBuffer( nWriteBuffer, nExtractBuffer, nReadBuffer )
 
@@ -263,8 +263,8 @@ FUNCTION hb_ZipFile( ;
    LOCAL cFN
    LOCAL aFile
 
-   hb_default(@lOverwrite, .F.)
-   hb_default(@lFullPath, .F.)
+   hb_default(@lOverwrite, FALSE)
+   hb_default(@lFullPath, FALSE)
 
    IF Set( _SET_DEFEXTENSIONS )
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
@@ -322,8 +322,8 @@ FUNCTION hb_ZipFile( ;
 
       aExclFile := NIL
 
-      hb_default(@lWithPath, .F.)
-      hb_default(@lWithDrive, .F.)
+      hb_default(@lWithPath, FALSE)
+      hb_default(@lWithDrive, FALSE)
 
       //
 
@@ -379,14 +379,14 @@ FUNCTION hb_ZipFile( ;
 
       hb_zipClose( hZip, t_cComment )
 
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles, bProgress )
 
-   LOCAL lRetVal := .T.
+   LOCAL lRetVal := TRUE
 
    LOCAL hUnzip
    LOCAL nErr
@@ -402,8 +402,8 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
    LOCAL cTime
    LOCAL cBuffer := Space(t_nReadBuffer)
 
-   IF hb_defaultValue( lWithPath, .F. ) .AND. !hb_DirExists( cPath ) .AND. hb_DirCreate( cPath ) != 0
-      lRetVal := .F.
+   IF hb_defaultValue( lWithPath, FALSE ) .AND. !hb_DirExists( cPath ) .AND. hb_DirCreate( cPath ) != 0
+      lRetVal := FALSE
    ENDIF
 
    IF Empty(cPassword)
@@ -415,7 +415,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
    ENDIF
 
    IF Empty(hUnzip := hb_unzipOpen( cFileName ))
-      lRetVal := .F.
+      lRetVal := FALSE
    ELSE
       IF hb_IsNumeric(acFiles) .OR. ;
          hb_IsString(acFiles)
@@ -444,7 +444,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
             IF lExtract .AND. ( hHandle := FCreate( cPath + cZipName ) ) != F_ERROR
 
                IF hb_unzipFileOpen( hUnzip, cPassword ) != UNZ_OK
-                  lRetVal := .F.
+                  lRetVal := FALSE
                   EXIT
                ENDIF
 
@@ -485,7 +485,7 @@ FUNCTION hb_UnzipAllFile(...)
 /* NOTE: Numeric file positions are not supported. */
 FUNCTION hb_ZipDeleteFiles( cFileName, acFiles )
 
-   LOCAL lRetVal := .T.
+   LOCAL lRetVal := TRUE
    LOCAL cFileToProc
 
    IF Set( _SET_DEFEXTENSIONS )

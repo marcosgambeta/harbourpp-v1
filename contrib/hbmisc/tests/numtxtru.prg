@@ -27,8 +27,8 @@ PROCEDURE Test( cLang )
 
    FOR nTemp := 1 TO 1000000000
       OutStd(PadR(MnyToTxtRU( nTemp + ( nTemp % 100 ) * 0.01, cLang, , 3 ), 100) + " " + ;
-             PadR(NumToTxtRU( nTemp, cLang, , .T. ), 100) + " " + ;
-             PadR(DateToTxtRU( Date() + nTemp, cLang, .T. ), 50) + hb_eol())
+             PadR(NumToTxtRU( nTemp, cLang, , TRUE ), 100) + " " + ;
+             PadR(DateToTxtRU( Date() + nTemp, cLang, TRUE ), 50) + hb_eol())
       IF nTemp % 1000 == 0
          ? nTemp
       ENDIF

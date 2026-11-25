@@ -65,7 +65,7 @@ CREATE CLASS THtmlControl
    VAR oHtm
 
    VAR Caption
-   VAR lBreak INIT .F.
+   VAR lBreak INIT FALSE
 
    VAR TYPE INIT "TEXT"
    VAR Name
@@ -80,17 +80,17 @@ CREATE CLASS THtmlControl
    VAR aOptions INIT {} // SELECT options
 
    VAR TabIndex INIT 0
-   VAR disabled INIT .F.
-   VAR READONLY INIT .F.
-   VAR Multiple INIT .F.
+   VAR disabled INIT FALSE
+   VAR READONLY INIT FALSE
+   VAR Multiple INIT FALSE
    VAR style
    VAR ID
 
    VAR MaxLength // length in chars
    VAR MaxChars // length on screen
 
-   VAR Checked INIT .F. // checkboxes...
-   VAR lLabel INIT .F.
+   VAR Checked INIT FALSE // checkboxes...
+   VAR lLabel INIT FALSE
 
    VAR Source, Align // images...
    VAR WRAP // textarea
@@ -400,7 +400,7 @@ CREATE CLASS THtmlForm
    VAR onSubmit
    VAR onReset
    VAR Target
-   VAR Frame INIT .F.
+   VAR Frame INIT FALSE
    VAR Caption INIT ""
    VAR CaptionColor INIT "black"
    VAR CapFontColor INIT "white"
@@ -469,7 +469,7 @@ METHOD THtmlForm:New(cName, cAction, cMethod, lFrame, cCaption, nWidth)
 
    __defaultNIL(@cName, "Form1")
    __defaultNIL(@cMethod, "POST")
-   __defaultNIL(@lFrame, .F.)
+   __defaultNIL(@lFrame, FALSE)
    __defaultNIL(@cCaption, "")
    __defaultNIL(@nWidth, 90)
 
@@ -497,7 +497,7 @@ METHOD THtmlForm:New(cName, cAction, cMethod, lFrame, cCaption, nWidth)
 
 METHOD THtmlForm:Put(lPutControls)
 
-   hb_default(@lPutControls, .F.)
+   hb_default(@lPutControls, FALSE)
 
    hb_default(@::width, 90)
    hb_default(@::Color, "#9196A0")

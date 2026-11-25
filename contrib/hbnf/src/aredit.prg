@@ -99,7 +99,7 @@ FUNCTION ft_ArEdit(nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGe
       b:addcolumn(column)
    NEXT
 
-   exit_requested := .F.
+   exit_requested := FALSE
    DO WHILE !exit_requested
 
       DO WHILE (nKey := Inkey()) == 0 .AND. !b:stabilize()
@@ -116,7 +116,7 @@ FUNCTION ft_ArEdit(nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGe
          DO CASE
          CASE nKey == K_F7
             FOR nDim := 1 TO Len(ar)
-               hb_ADel(ar[nDim], nElem, .T.)
+               hb_ADel(ar[nDim], nElem, TRUE)
             NEXT
             b:refreshAll()
 
@@ -125,13 +125,13 @@ FUNCTION ft_ArEdit(nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGe
                // check valtype of current element before AIns()
                cType := ValType(ar[nDim, nElem])
                cVal  := ar[nDim, nElem]
-               hb_AIns(ar[nDim], nElem,, .T.)
+               hb_AIns(ar[nDim], nElem,, TRUE)
                IF cType == "C"
                   ar[nDim, nElem] := Space(Len(cVal))
                ELSEIF cType == "N"
                   ar[nDim, nElem] := 0
                ELSEIF cType == "L"
-                  ar[nDim, nElem] := .F.
+                  ar[nDim, nElem] := FALSE
                ELSEIF cType == "D"
                   ar[nDim, nElem] := hb_SToD()
                ENDIF
@@ -139,7 +139,7 @@ FUNCTION ft_ArEdit(nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGe
             b:refreshAll()
 
          CASE nKey == K_ESC
-            exit_requested := .T.
+            exit_requested := TRUE
 
             // Other exception handling ...
          CASE hb_IsBlock(bGetFunc)
@@ -155,7 +155,7 @@ FUNCTION ft_ArEdit(nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGe
             // defaults K_ENTER to Edit when bGetFunc Is Present
             // BUT if no bGetFunc, then K_ENTER selects element to return
          CASE nKey == K_ENTER
-            exit_requested := .T.
+            exit_requested := TRUE
 
          ENDCASE
       ENDIF

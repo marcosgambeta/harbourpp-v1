@@ -28,7 +28,7 @@ PROCEDURE Main()
       ? "Unable connect to the server"
    ENDIF
    ? "-2-"
-   ? "Use:", dbUseArea(.T., , "select * from t1", "t1")
+   ? "Use:", dbUseArea(TRUE, , "select * from t1", "t1")
    ? "-3-"
    ? "Alias:", Alias()
    ? "-4-"

@@ -105,7 +105,7 @@ PROCEDURE Main()
    ? cErrorMsg(sqlite3_set_authorizer(pDb, @Authorizer3() /*"Authorizer3"*/))
 
    ? cSQLTEXT := "SELECT * FROM main.person WHERE age BETWEEN 20 AND 40"
-   ? cErrorMsg(sqlite3_exec(pDb, cSQLTEXT, cb), .F.)
+   ? cErrorMsg(sqlite3_exec(pDb, cSQLTEXT, cb), FALSE)
 
    sqlite3_sleep(3000)
 
@@ -172,7 +172,7 @@ FUNCTION CallBack(nColCount, aValue, aColName)
 
 STATIC FUNCTION cErrorMsg(nError, lShortMsg)
 
-   hb_default(@lShortMsg, .T.)
+   hb_default(@lShortMsg, TRUE)
 
    RETURN IIf(lShortMsg, hb_sqlite3_errstr_short(nError), sqlite3_errstr(nError))
 
@@ -193,7 +193,7 @@ STATIC FUNCTION PrepareDB(cFile)
       }
    LOCAL enum
 
-   pDb := sqlite3_open(cFile, .T.)
+   pDb := sqlite3_open(cFile, TRUE)
    IF Empty(pDb)
       ? "Can't open/create database : ", cFile
 

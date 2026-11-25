@@ -435,11 +435,11 @@ METHOD TCgiFile:PrevLine(nBytes)
 
    IF nOrigPos == 0
 
-      lMoved := .F.
+      lMoved := FALSE
 
    ELSE
 
-      lMoved := .T.
+      lMoved := TRUE
 
       //  Check preceeding 2 chars for CR+LF
       FSeek(fHandle, -2, FS_RELATIVE)

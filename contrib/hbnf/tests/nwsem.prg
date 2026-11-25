@@ -27,7 +27,7 @@ PROCEDURE Main()
    @ 0,  0 SAY "Handle: " + Str(nHandle)
 
    ft_NWSemEx( nHandle, @nValue, @nOpenCnt )
-   DO WHILE .T.
+   DO WHILE TRUE
       @ 23, 0 SAY "Semaphore test -> Open at [" + ;
          hb_ntos(nOpenCnt)           + ;
          "] stations, value is ["      + ;

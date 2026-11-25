@@ -482,13 +482,13 @@ PROCEDURE UProcWidgets( cURL, aMap )
       ENDDO
       aFrame := NIL
 
-      lRet := .T.
+      lRet := TRUE
       // Enter procedures
       DO WHILE nI <= Len(aURL)
          cI := uhttpd_join( "/", ASize( AClone( aURL ), nI ) )
          IF hb_HHasKey(aMap, cI)
             session["_uthis"] := { "idhash" => { => } }
-            IF ( lRet := Eval(aMap[cI], "INIT") ) == .T.
+            IF ( lRet := Eval(aMap[cI], "INIT") ) == TRUE
                AAdd(aStack, { aURL[nI], aMap[cI], session["_uthis"] })
                session["_uthis"] := NIL
             ELSE

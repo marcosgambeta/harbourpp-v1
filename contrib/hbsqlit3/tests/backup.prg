@@ -69,7 +69,7 @@ PROCEDURE init_trace(pDb, cPrefix)
    LOCAL hFile
 
    IF sqlite3_libversion_number() < 3014000
-      sqlite3_trace(pDb, .T., cPrefix + ".log")
+      sqlite3_trace(pDb, TRUE, cPrefix + ".log")
    ELSE
       hFile := FOpen(cPrefix + ".log", FO_READWRITE + HB_FO_CREAT)
       FSeek(hFile, 0, FS_END)
@@ -173,7 +173,7 @@ FUNCTION CallBack(nColCount, aValue, aColName)
 
 STATIC FUNCTION cErrorMsg(nError, lShortMsg)
 
-   hb_default(@lShortMsg, .T.)
+   hb_default(@lShortMsg, TRUE)
 
    RETURN IIf(lShortMsg, hb_sqlite3_errstr_short(nError), sqlite3_errstr(nError))
 
@@ -194,7 +194,7 @@ STATIC FUNCTION PrepareDB(cFile)
       }
    LOCAL enum
 
-   pDb := sqlite3_open(cFile, .T.)
+   pDb := sqlite3_open(cFile, TRUE)
    IF Empty(pDb)
       ? "Can't open/create database : ", cFile
 

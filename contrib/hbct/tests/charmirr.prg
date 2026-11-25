@@ -59,8 +59,8 @@ PROCEDURE Main()
 
    ? "Simple tests:"
    ? '  CharMirr( "racecar" ) == "racecar" ? ----------> "' + CharMirr( "racecar" ) + '"'
-   ? '  CharMirr( "racecar  ", .T. ) == "racecar  " ? -> "' + CharMirr( "racecar  ", .T. ) + '"'
-   ? '  CharMirr( "racecar  ", .F. ) == "  racecar" ? -> "' + CharMirr( "racecar  ", .F. ) + '"'
+   ? '  CharMirr( "racecar  ", TRUE ) == "racecar  " ? -> "' + CharMirr( "racecar  ", TRUE ) + '"'
+   ? '  CharMirr( "racecar  ", FALSE ) == "  racecar" ? -> "' + CharMirr( "racecar  ", FALSE ) + '"'
 
    ? "End test of CharMirr()"
    ?

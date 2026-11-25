@@ -8,7 +8,7 @@
 STATIC s_nNormalMaxrow := 24
 STATIC s_nNormalMaxcol := 79
 
-STATIC s_lSizeReady := .F.
+STATIC s_lSizeReady := FALSE
 
 PROCEDURE Main()
 
@@ -17,14 +17,14 @@ PROCEDURE Main()
 #endif
 
    // activate WVW_SIZE()
-   s_lSizeReady := .T.
+   s_lSizeReady := TRUE
 
    // the biggest possible window
    SetColor("N/W")
    SetMode(wvw_MaxMaxRow() + 1, wvw_MaxMaxCol() + 1)
 
    // enable MAXIMIZE button
-   wvw_EnableMaximize( 0, .T. )
+   wvw_EnableMaximize( 0, TRUE )
 
    // set the window to MAXIMIZED state
    wvw_Maximize(0)
@@ -95,7 +95,7 @@ PROCEDURE WVW_SIZE( nWinNum, hWnd, message, wParam, lParam )  /* must be a publi
    ENDIF
 
    // avoid reentrance
-   s_lSizeReady := .F.
+   s_lSizeReady := FALSE
 
    DO CASE
    CASE wParam == 2 // SIZE_MAXIMIZED
@@ -131,6 +131,6 @@ PROCEDURE WVW_SIZE( nWinNum, hWnd, message, wParam, lParam )  /* must be a publi
    ENDCASE
 
    // allow next call
-   s_lSizeReady := .T.
+   s_lSizeReady := TRUE
 
    RETURN

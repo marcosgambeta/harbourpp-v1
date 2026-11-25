@@ -71,8 +71,8 @@ PROCEDURE Main()
    ?
 
    ? '  Uppercase the tokens in the string "' + cStr + '"'
-   ? '            with CSetRef(.T.) and "@"'
-   CSetRef(.T.)
+   ? '            with CSetRef(TRUE) and "@"'
+   CSetRef(TRUE)
    ?
    ? '    --> return value of TokenUpper(@cStr): ', TokenUpper(@cStr)
    ? '    --> cStr is now: "' + cStr + '"'

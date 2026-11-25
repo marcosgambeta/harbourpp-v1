@@ -93,7 +93,7 @@ PROCEDURE Main( nRow, nCol )
    DevOut("FT_MBUTREL  :")
 
    nX := nY := 1
-   DO WHILE .T.
+   DO WHILE TRUE
 
       // If we are not moving then wait for movement.
       // This whole demo is a bit artificial in its requirements when compared

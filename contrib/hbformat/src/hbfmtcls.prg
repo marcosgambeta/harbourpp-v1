@@ -66,21 +66,21 @@ CREATE CLASS HBFormatCode
    VAR nLineErr, nErr, cLineErr
 
    VAR nEol           INIT  0       // Eol: -1 - no change, 0 - OS default, 1 - DOS, 2 - UNIX
-   VAR lFCaseLow      INIT .F.      // If true, convert file name to lower case
-   VAR lIndent        INIT .T.      // If true, indent code
-   VAR lCase          INIT .T.      // If true, make case conversion
-   VAR lSpaces        INIT .T.      // If true, reformat spaces
-   VAR lIndFunc       INIT .F.      // If true, indent "Function", "Procedure", "Class", "Method"
-   VAR lIndVar        INIT .T.      // If true, indent "Local", "Private", etc. in a function beginning
-   VAR lIndDrt        INIT .F.      // If true, indent  directives
-   VAR lIndRet        INIT .T.      // If true, indent  "Return"
+   VAR lFCaseLow      INIT FALSE      // If true, convert file name to lower case
+   VAR lIndent        INIT TRUE      // If true, indent code
+   VAR lCase          INIT TRUE      // If true, make case conversion
+   VAR lSpaces        INIT TRUE      // If true, reformat spaces
+   VAR lIndFunc       INIT FALSE      // If true, indent "Function", "Procedure", "Class", "Method"
+   VAR lIndVar        INIT TRUE      // If true, indent "Local", "Private", etc. in a function beginning
+   VAR lIndDrt        INIT FALSE      // If true, indent  directives
+   VAR lIndRet        INIT TRUE      // If true, indent  "Return"
    VAR nIndLeft       INIT   3      // Leftmost indent - amount of spaces
    VAR nIndNext       INIT   3      // indent - amount of spaces
    VAR nIndCont       INIT   3      // Indent for continuation ( after ';' ) lines - amount of spaces
-   VAR lCnvAst        INIT .T.      // If true, convert asterisk '*' to '//'
-   VAR lCnvAmp        INIT .T.      // If true, convert '&&' to '//'
+   VAR lCnvAst        INIT TRUE      // If true, convert asterisk '*' to '//'
+   VAR lCnvAmp        INIT TRUE      // If true, convert '&&' to '//'
    VAR nSpaceComment  INIT   1      // Number of spaces after '//' and '/*' comments ( -1 - no change )
-   VAR lCnvNot        INIT .T.      // If true, convert .NOT. TO !
+   VAR lCnvNot        INIT TRUE      // If true, convert .NOT. TO !
    VAR nCaseCmd       INIT   1      // Case of commands ( -1 - no change, 1 - upper, 2 - lower, 3 - title )
    VAR nCaseBoo       INIT   1      // Case of boolean operators ( -1 - no change, 1 - upper, 2 - lower, 3 - title )
    VAR nCaseFnc       INIT   4      // Case of functions ( -1 - no change, 1 - upper, 2 - lower, 3 - title, 4 - as in pattern )
@@ -200,7 +200,7 @@ METHOD HBFormatCode:Reformat( aFile )
    LOCAL i, iDelta := 0, nLen := Len(aFile), cToken1, cToken2, nLenToken, nPos
    LOCAL nPosSep, cLine, cLineAll, nLineSegment
    LOCAL nContrState, nIndent, nDeep := 0, aDeep := {}
-   LOCAL lPragmaDump := .F., lClass := .F., lComment := .F., nPosComment, lContinue := .F.
+   LOCAL lPragmaDump := FALSE, lClass := FALSE, lComment := FALSE, nPosComment, lContinue := FALSE
    LOCAL nStatePrev, nState := 0, lToBeContinued, lSpaceFirst
 
    ::nErr := 0
@@ -223,12 +223,12 @@ METHOD HBFormatCode:Reformat( aFile )
 
       IF Empty(aFile[i])
          aFile[i] := ""
-         lContinue  := .F.
+         lContinue  := FALSE
          LOOP
       ENDIF
       IF lComment
          IF ( nPos := hb_At( "*/", aFile[i] ) ) > 0
-            lComment := .F.
+            lComment := FALSE
             IF !Empty(cToken1 := SubStr(aFile[i], nPos + 2))
                aFile[i] := Left(aFile[i], nPos + 1)
                nLen := rf_AINS( aFile, i + 1, cToken1 )
@@ -246,9 +246,9 @@ METHOD HBFormatCode:Reformat( aFile )
             ENDIF
             IF cToken1 == "#pragma"
                IF cToken2 == "begindump"
-                  lPragmaDump := .T.
+                  lPragmaDump := TRUE
                ELSEIF cToken2 == "enddump"
-                  lPragmaDump := .F.
+                  lPragmaDump := FALSE
                ENDIF
             ENDIF
          ENDIF
@@ -272,7 +272,7 @@ METHOD HBFormatCode:Reformat( aFile )
          IF ( nPos := FindNotQuoted("/*", cLineAll) ) > 0 .AND. ( nPosComment == 0 .OR. nPosComment > nPos )
             nPosComment := nPos
             IF hb_At( "*/", cLineAll, nPos + 2 ) == 0
-               lComment := .T.
+               lComment := TRUE
 /*            ELSE
                nPosComment := 0  */
             ENDIF
@@ -287,7 +287,7 @@ METHOD HBFormatCode:Reformat( aFile )
             IF !lContinue
                nPosSep := 1
                nLineSegment := 1
-               DO WHILE .T.
+               DO WHILE TRUE
                   nPos := nPosSep
                   IF !hb_LeftEq( aFile[i], "#" ) .AND. ;
                         ( nPosSep := FindNotQuoted(";", aFile[i], nPosSep) ) > 0 .AND. ;
@@ -323,13 +323,13 @@ METHOD HBFormatCode:Reformat( aFile )
                      IF nDeep == 0
                         nState := RF_STATE_FUNC
                         IF "class" == cToken1 .OR. ( "create" == cToken1 .AND. "class" == cToken2 )
-                           lClass := .T.
+                           lClass := TRUE
                         ENDIF
                      ELSE
                         ::nLineErr := i - iDelta
                         ::nErr := 1
                         ::cLineErr := cLine
-                        RETURN .F.
+                        RETURN FALSE
                      ENDIF
                   ELSEIF nLenToken >= 4 .AND. ( ;
                         hb_LeftEq( "request", cToken1 ) .OR. ;
@@ -378,7 +378,7 @@ METHOD HBFormatCode:Reformat( aFile )
                               ::nLineErr := i - iDelta
                               ::nErr := 3
                               ::cLineErr := cLine
-                              RETURN .F.
+                              RETURN FALSE
                            ENDIF
                         ENDIF
                      ENDIF
@@ -431,7 +431,7 @@ METHOD HBFormatCode:Reformat( aFile )
                   ENDIF
                   IF nState == RF_STATE_RET
                      IF lClass
-                        lClass := .F.
+                        lClass := FALSE
                      ENDIF
                      nState := 0
                   ENDIF
@@ -444,7 +444,7 @@ METHOD HBFormatCode:Reformat( aFile )
                aFile[i] := cLineAll
             ELSE
                // This line is a continuation of previous
-               aFile[i] := Space(::nIndLeft + ::nIndNext * nDeep + ::nIndCont) + ::FormatLine( aFile[i], .T. )
+               aFile[i] := Space(::nIndLeft + ::nIndNext * nDeep + ::nIndCont) + ::FormatLine( aFile[i], TRUE )
             ENDIF
             lContinue := lToBeContinued
          ELSEIF !lPragmaDump
@@ -453,7 +453,7 @@ METHOD HBFormatCode:Reformat( aFile )
       ENDIF
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 #define FL_STATE_DIGIT   1
 #define FL_STATE_ANY     2
@@ -473,7 +473,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
       RETURN cLine
    ENDIF
 
-   hb_default(@lContinued, .F.)
+   hb_default(@lContinued, FALSE)
    lFirst := ! lContinued
 
    nLen := Len(cLine)
@@ -571,7 +571,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                   IF nEnd == nBegin
                      nEnd := i
                   ENDIF
-                  IF ( !lFirst .OR. !::ConvertCmd(@cLine, nBegin, nEnd, .T.) ) .AND. c == "(" .AND. SubStr(cLine, i - 1, 1) != " "
+                  IF ( !lFirst .OR. !::ConvertCmd(@cLine, nBegin, nEnd, TRUE) ) .AND. c == "(" .AND. SubStr(cLine, i - 1, 1) != " "
                      ::ConvertFnc(@cLine, nBegin, nEnd)
                   ENDIF
                ENDIF
@@ -656,7 +656,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                nState := FL_STATE_ANY
             ENDIF
             IF lFirst .AND. nState != FL_STATE_STRING
-               lFirst := .F.
+               lFirst := FALSE
             ENDIF
             IF !( "|" + SubStr(cLine, nB, 2) + "|" $ "|--|++|->|" )
                IF nA != 0 .AND. ::lSpaces .AND. nA < nLen .AND. !( SubStr(cLine, nA + 1, 1) $ " ," )
@@ -693,15 +693,15 @@ METHOD HBFormatCode:ConvertCmd(cLine, nBegin, nEnd, lFirstOnly)
       IF !hb_IsNumeric(nBegin) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
          ::nErr := 1
          ::cLineErr := cLine
-         RETURN .F.
+         RETURN FALSE
       ELSE
          IF SubStr(cLine, nEnd, 1) == "("
-            RETURN .F.
+            RETURN FALSE
          ELSEIF SubStr(cLine, nBegin - 1) == ":"
-            RETURN .T.
+            RETURN TRUE
          ENDIF
 
-         hb_default(@lFirstOnly, .F.)
+         hb_default(@lFirstOnly, FALSE)
 
          cToken := Upper(SubStr(cLine, nBegin, nEnd - nBegin))
 
@@ -720,12 +720,12 @@ METHOD HBFormatCode:ConvertCmd(cLine, nBegin, nEnd, lFirstOnly)
                   Left(cLine, nBegin - 1) + cToken + SubStr(cLine, nEnd))
             ENDIF
          ELSE
-            RETURN .F.
+            RETURN FALSE
          ENDIF
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBFormatCode:ConvertFnc(cLine, nBegin, nEnd)
 
@@ -755,7 +755,7 @@ METHOD HBFormatCode:ConvertFnc(cLine, nBegin, nEnd)
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBFormatCode:ConvertBool( cLine, nBegin, nEnd )
 
@@ -780,11 +780,11 @@ METHOD HBFormatCode:ConvertBool( cLine, nBegin, nEnd )
             ENDIF
          ENDIF
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBFormatCode:SetOption( cLine, i, aIni )
 
@@ -801,9 +801,9 @@ METHOD HBFormatCode:SetOption( cLine, i, aIni )
          ELSE
             cTemp := Upper(cToken2)
             IF cTemp == "ON" .OR. cTemp == "YES"
-               xRes := .T.
+               xRes := TRUE
             ELSEIF cTemp == "OFF" .OR. cTemp == "NO"
-               xRes := .F.
+               xRes := FALSE
             ELSE
                IF Right(cToken2, 1) == ";" .AND. aIni != NIL
                   xRes := RTrim(hb_StrShrink( cToken2 ))
@@ -843,7 +843,7 @@ METHOD HBFormatCode:ReadIni( cIniName )
    LOCAL i, nLen, aIni, c
 
    IF hb_vfExists( cIniName )
-      aIni := hb_ATokens( MemoRead(cIniName), .T. )
+      aIni := hb_ATokens( MemoRead(cIniName), TRUE )
       nLen := Len(aIni)
       FOR i := 1 TO nLen
          IF !hb_IsNull( aIni[i] := AllTrim(aIni[i]) ) .AND. ;
@@ -867,7 +867,7 @@ METHOD HBFormatCode:Source2Array( cSource )
       ENDIF
    ENDIF
 
-   RETURN hb_ATokens( cSource, .T. )
+   RETURN hb_ATokens( cSource, TRUE )
 
 METHOD HBFormatCode:Array2Source( aSource )
 
@@ -903,7 +903,7 @@ METHOD HBFormatCode:Array2File( cFileName, aSource )
 
    IF hb_IsNull( ::cExtSave ) .AND. ;
       hb_vfCopyFile( cFileName, hb_FNameExtSet( cFileName, ::cExtBack ) ) == F_ERROR
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF !hb_IsNull( ::cExtSave )
@@ -938,7 +938,7 @@ STATIC FUNCTION FindNotQuoted(subs, stroka, nPos2)
 
    hb_default(@nPos2, 1)
 
-   DO WHILE .T.
+   DO WHILE TRUE
       IF ( nPos1 := hb_At( subs, stroka, nPos2 ) ) == 0
          EXIT
       ENDIF

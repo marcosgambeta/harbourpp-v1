@@ -62,13 +62,13 @@ PROCEDURE Main()
 STATIC FUNCTION CreateToolbar( nWinNum )
 
    LOCAL nSysBitmap := 1      // 0:none 1:small 2:large
-   LOCAL lDisplayText := .F.  // text will be displayed as tooltip instead
+   LOCAL lDisplayText := FALSE  // text will be displayed as tooltip instead
 
    wvw_tbDestroy( nWinNum )   // just in case
 
    IF Empty(wvw_tbCreate( nWinNum, lDisplayText, , nSysBitmap ))
       wvw_MessageBox( nWinNum, "FAILED to create toolbar", "Error", WIN_MB_OK + WIN_MB_ICONEXCLAMATION )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    /* using system std & view bitmaps */
@@ -76,7 +76,7 @@ STATIC FUNCTION CreateToolbar( nWinNum )
    wvw_tbAddButton( nWinNum, IDM_CLOSEWIN, STD_DELETE, "Close last window", 1 /*system std bitmap*/ )
    wvw_tbAddButton( nWinNum, IDM_ARRANGEWIN, VIEW_PARENTFOLDER, "Reposition all windows", 2 /*system view bitmap*/ )
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC FUNCTION CreateStatusbar( nWinNum )
 
@@ -84,10 +84,10 @@ STATIC FUNCTION CreateStatusbar( nWinNum )
 
    IF Empty(wvw_sbCreate( nWinNum ))
       wvw_MessageBox( nWinNum, "FAILED to create statusbar", "Error", WIN_MB_OK + WIN_MB_ICONEXCLAMATION )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 // Handle Menu/Toolbar actions
 STATIC PROCEDURE MenuAction( nWinNum, nCommand )
@@ -115,7 +115,7 @@ STATIC FUNCTION OpenNewWindow()
    IF nWinNum > _MAX_WINNUM
       wvw_MessageBox( nWinNum - 1, "Sorry, I don't think you can handle that many of windows :-)", ;
          "Sorry", WIN_MB_OK + WIN_MB_ICONASTERISK )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // prepare titles and coordinates
@@ -156,7 +156,7 @@ STATIC FUNCTION OpenNewWindow()
       SetCursor( SC_NONE )
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 // closes the last window. If no window left, Main Window will be closed too.
 // Closing is done indirectly by stuffing K_ESC into kbd buffer of the
@@ -202,8 +202,8 @@ STATIC PROCEDURE typing( ch )
  * Parameter passed to this function is somewhat 'raw', so their handling
  * is a bit tricky.
  *
- * This function should return .T. if it has handled the event,
- * otherwise return .F. to sign GTWVW that the input is considered invalid.
+ * This function should return TRUE if it has handled the event,
+ * otherwise return FALSE to sign GTWVW that the input is considered invalid.
  */
 FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a public function */
 
@@ -217,12 +217,12 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a 
    IF message == WIN_WM_COMMAND .AND. nWinNum == 0  // menu,toolbar,pushbutton
       nCommand := wParamLow
       MenuAction( 0, nCommand )
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    // other types of input on main window is not handled here
    IF nWinNum == 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // now we handle input on other non-topmost windows
@@ -234,10 +234,10 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a 
    CASE message == WIN_WM_CHAR
       ch := wParam
       Eval(s_akeyhandlers[nWinNum], nWinNum, ch)
-      RETURN .T.
+      RETURN TRUE
    OTHERWISE
       // let it be ignored
-      RETURN .T.
+      RETURN TRUE
    ENDCASE
 
 #if 0
@@ -249,7 +249,7 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )  /* must be a 
       "wParamHi == " + hb_ntos(wParamHi), "Debug", WIN_MB_OK )
 #endif
 
-   RETURN .F.
+   RETURN FALSE
 
 // SUPPORTING FUNCTIONS
 

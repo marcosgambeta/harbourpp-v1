@@ -73,10 +73,10 @@ CREATE CLASS THtml
    VAR FontSize INIT 1
    VAR FontColor INIT "black"
    VAR aImages
-   VAR lCgi  INIT .F.
+   VAR lCgi  INIT FALSE
    VAR cStr    Init ""
    VAR BaseURL, BaseTarget
-   VAR lFont INIT .F.
+   VAR lFont INIT FALSE
 
 #if 0
    METHOD New(cFile, cTitle, cLinkTitle, cCharSet, cScriptSRC, ;
@@ -108,11 +108,11 @@ CREATE CLASS THtml
 
    METHOD CGIClose()
 
-   METHOD SetPageColor(cColor, lBody) INLINE hb_default(@lBody, .T.), ::cStr += IIf(lBody, '<body bgcolor="' + cColor + '">', ' bgcolor="' + cColor + '" ')
+   METHOD SetPageColor(cColor, lBody) INLINE hb_default(@lBody, TRUE), ::cStr += IIf(lBody, '<body bgcolor="' + cColor + '">', ' bgcolor="' + cColor + '" ')
 
-   METHOD SetTextColor(cColor, lBody) INLINE hb_default(@lBody, .T.), ::cStr += IIf(lBody, '<body text="' + cColor + '">', ' text="' + cColor + '" ')
+   METHOD SetTextColor(cColor, lBody) INLINE hb_default(@lBody, TRUE), ::cStr += IIf(lBody, '<body text="' + cColor + '">', ' text="' + cColor + '" ')
 
-   METHOD SetBgImage(cImage, lBody) INLINE hb_default(@lBody, .T.), ::cStr += IIf(lBody, '<body background="' + cImage + '">', ' background="' + cImage + '" ')
+   METHOD SetBgImage(cImage, lBody) INLINE hb_default(@lBody, TRUE), ::cStr += IIf(lBody, '<body background="' + cImage + '">', ' background="' + cImage + '" ')
 
    METHOD Close()
 
@@ -144,7 +144,7 @@ CREATE CLASS THtml
    METHOD PutImage(cImage, nBorder, nHeight, cOnclick, cOnMsOver, cOnMsOut, ;
       cName, cAlt, cTarget, nWidth, lBreak, ID, MAP, ALING, HSPACE)
 
-   METHOD Text(cText, nCols, lWrap) INLINE hb_default(@lWrap, .T.), hb_default(@nCols, 80), ;
+   METHOD Text(cText, nCols, lWrap) INLINE hb_default(@lWrap, TRUE), hb_default(@nCols, 80), ;
       ::cStr += "<pre" + IIf(nCols != NIL, ' cols="' + hb_ntos(nCols) + "'", "") + IIf(lWrap, " WRAP>", ">") + CRLF() + cText + CRLF() + "</pre>" + CRLF()
 
    METHOD MultiCol(txt, cols, gutter, width) INLINE hb_default(@txt, ""), ;
@@ -295,7 +295,7 @@ METHOD THtml:cgiNew(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
       cBaseURL, cBaseTarget, ;
       nRefresh, cRefreshURL, cStyleScr, ;
       lNocache, NOF, nMarginTop, nMarginHeight, ;
-      nMarginWidth, nMarginLeft, .T., cFile)
+      nMarginWidth, nMarginLeft, TRUE, cFile)
 
 METHOD THtml:New(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
       BGIMAGE, BGCOLOR, txtColor, aJsCode, ;
@@ -309,21 +309,21 @@ METHOD THtml:New(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
 
    LOCAL i
 
-   __defaultNIL(@lCgi, .F.)
+   __defaultNIL(@lCgi, FALSE)
    ::lCgi := lCgi
    IF lCgi
       __defaultNIL(@cTitle, "New CGI-HTML page")
       __defaultNIL(@cLinkTitle, cTitle)
       __defaultNIL(@cRefreshURL, "")
       __defaultNIL(@cCharset, "windows-1251")
-      __defaultNIL(@lNocache, .F.)
+      __defaultNIL(@lNocache, FALSE)
    ELSE
       __defaultNIL(@cFile, "file1.htm")
       __defaultNIL(@cTitle, "New HTML page")
       __defaultNIL(@cLinkTitle, cTitle)
       __defaultNIL(@cRefreshURL, "")
       __defaultNIL(@cCharset, "windows-1251")
-      __defaultNIL(@lNocache, .F.)
+      __defaultNIL(@lNocache, FALSE)
    ENDIF
 
 
@@ -471,15 +471,15 @@ METHOD THtml:New(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
    ENDIF
 
    IF BGIMAGE != NIL
-      ::SetBgImage(bgImage, .F.)
+      ::SetBgImage(bgImage, FALSE)
    ENDIF
 
    IF BGCOLOR != NIL
-      ::SetPageColor(bgColor, .F.)
+      ::SetPageColor(bgColor, FALSE)
    ENDIF
 
    IF txtColor != NIL
-      ::SetTextColor(txtColor, .F.)
+      ::SetTextColor(txtColor, FALSE)
    ENDIF
 
    IF nMarginTop != NIL
@@ -533,7 +533,7 @@ METHOD THtml:SetFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet)
    __defaultNIL(@cFont, ::fontFace)
    __defaultNIL(@nSize, ::fontSize)
    __defaultNIL(@cColor, ::fontColor)
-   __defaultNIL(@lset, IIf(cFont != NIL, .T., .F.))
+   __defaultNIL(@lset, IIf(cFont != NIL, TRUE, FALSE))
 
    IF cFont != NIL
       cStr += ' face="' + cFont + '"'
@@ -593,8 +593,8 @@ METHOD THtml:StartFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet, lPut)
 
    LOCAL cStr := "<font "
 
-   __defaultNIL(@lSet, .T.)
-   __defaultNIL(@lPut, .F.)
+   __defaultNIL(@lSet, TRUE)
+   __defaultNIL(@lPut, FALSE)
    __defaultNIL(@cFont, ::fontFace)
    __defaultNIL(@nSize, ::fontSize)
    __defaultNIL(@cColor, ::fontColor)
@@ -665,7 +665,7 @@ METHOD THtml:DefineFont(cFont, cType, nSize, cColor, lSet)
    __defaultNIL(@cFont, ::fontFace)
    __defaultNIL(@nSize, ::fontSize)
    __defaultNIL(@cColor, ::fontColor)
-   __defaultNIL(@lset, IIf(cFont != NIL, .T., .F.))
+   __defaultNIL(@lset, IIf(cFont != NIL, TRUE, FALSE))
 
    IF cFont != NIL
       cStr += ' face="' + cFont + '"'
@@ -728,11 +728,11 @@ METHOD THtml:EndFont()
 METHOD THtml:Say(str, font, size, type, color, style)
 
    LOCAL cOut    := ""
-   LOCAL lBold   := .F.
-   LOCAL lItalic := .F.
-   LOCAL lULine  := .F.
-   LOCAL lEm     := .F.
-   LOCAL lStrong := .F.
+   LOCAL lBold   := FALSE
+   LOCAL lItalic := FALSE
+   LOCAL lULine  := FALSE
+   LOCAL lEm     := FALSE
+   LOCAL lStrong := FALSE
    LOCAL nSize   := Size
 
    __defaultNIL(@str, "")
@@ -756,27 +756,27 @@ METHOD THtml:Say(str, font, size, type, color, style)
       IF "<" $ type
 
          IF "<b>" $ type
-            lBold := .T.
+            lBold := TRUE
             cOut  += "<b>"
          ENDIF
 
          IF "<i>" $ type
-            lItalic := .T.
+            lItalic := TRUE
             cOut    += "<i>"
          ENDIF
 
          IF "<u>" $ type
-            lULine := .T.
+            lULine := TRUE
             cOut   += "<u>"
          ENDIF
 
          IF "<em>" $ type
-            lEm  := .T.
+            lEm  := TRUE
             cOut += "<em>"
          ENDIF
 
          IF "<strong>" $ type
-            lStrong := .T.
+            lStrong := TRUE
             cOut    += "<strong>"
          ENDIF
 
@@ -826,7 +826,7 @@ METHOD THtml:Paragraph(lStart, cAlign, cStyle)
 
    LOCAL cStr := "<p"
 
-   __defaultNIL(@lStart, .T.)
+   __defaultNIL(@lStart, TRUE)
    __defaultNIL(@cAlign, "LEFT")
 
    IF lStart
@@ -857,7 +857,7 @@ METHOD THtml:HLine(nSize, nWidth, lShade, cColor)
 
    __defaultNIL(@nSize, 3)
    __defaultNIL(@nWidth, 100)
-   __defaultNIL(@lShade, .T.)
+   __defaultNIL(@lShade, TRUE)
 
    IF lShade
       ::cStr += CRLF() + ;
@@ -881,7 +881,7 @@ METHOD THtml:HLine(nSize, nWidth, lShade, cColor)
 METHOD THtml:PutHeading(cText, nWeight, lCentered)
 
    __defaultNIL(@nWeight, 3)
-   __defaultNIL(@lCentered, .F.)
+   __defaultNIL(@lCentered, FALSE)
 
    IF lCentered
       ::cStr += "<center>"
@@ -907,8 +907,8 @@ METHOD THtml:PutTextUrl(cText, cUrl, cOnClick, cOnMsOver, cOnMsout, cTarget, fon
    LOCAL cStr := ""
 
    __defaultNIL(@cUrl, "")
-   __defaultNIL(@bld, .F.)
-   __defaultNIL(@lBreak, .F.)
+   __defaultNIL(@bld, FALSE)
+   __defaultNIL(@lBreak, FALSE)
 
    ::cStr += ;
       '<a href="' + cUrl + '"' + CRLF()
@@ -1000,7 +1000,7 @@ METHOD THtml:PutImageUrl(cImage, nBorder, nHeight, cUrl, ;
 
    LOCAL cStr := ""
 
-   __defaultNIL(@lbreak, .F.)
+   __defaultNIL(@lbreak, FALSE)
 
    IF cName != NIL
       cStr += ' name= "' + cName + '"' + CRLF()
@@ -1065,7 +1065,7 @@ METHOD THtml:PutTextImageUrl(cImage, nBorder, nHeight, cUrl, ;
 
    LOCAL cStr := ""
 
-   __defaultNIL(@lbreak, .F.)
+   __defaultNIL(@lbreak, FALSE)
    IF cName != NIL
       cStr += ' name= "' + cName + '"'
    ENDIF
@@ -1125,7 +1125,7 @@ METHOD THtml:PutImage(cImage, nBorder, nHeight, ;
 
    LOCAL cStr := ""
 
-   __defaultNIL(@lbreak, .F.)
+   __defaultNIL(@lbreak, FALSE)
 
    IF cName != NIL
       cStr += ' name= "' + cName + '"'
@@ -1250,9 +1250,9 @@ METHOD THtml:DefineTable(nCols, nBorder, nWidth, nHeight, ColorFore, ColorBG, ;
    LOCAL cStr  := CRLF() + CRLF() + "<table "
    LOCAL xCols := nCols
 
-   __defaultNIL(@l3d, .T.)
-   __defaultNIL(@lRuleCols, .F.)
-   __defaultNIL(@lRuleRows, .F.)
+   __defaultNIL(@l3d, TRUE)
+   __defaultNIL(@lRuleCols, FALSE)
+   __defaultNIL(@lRuleRows, FALSE)
 
    IF ColorFore != NIL
       cStr += " bordercolor=" + ColorFore + " "
@@ -1449,12 +1449,12 @@ METHOD THtml:NewTableCell(cAlign, cColor, ;
    LOCAL cStr := Space(10) + "<td"
    LOCAL cAli := cAlign
 
-   __defaultNIL(@lNoFont, .T.)
+   __defaultNIL(@lNoFont, TRUE)
    __defaultNIL(@cFont, ::fontFace)
    __defaultNIL(@nSize, ::fontSize)
    __defaultNIL(@cFntColor, ::fontColor)
    __defaultNIL(@cAlign, "LEFT")
-   __defaultNIL(@lWrap, .T.)
+   __defaultNIL(@lWrap, TRUE)
 
    IF cBdrClr != NIL
       cStr += " bordercolor=" + cBdrClr
@@ -1535,7 +1535,7 @@ METHOD THtml:NewTableCell(cAlign, cColor, ;
          cStr += ">"
       ENDIF
 
-      ::lFont := .T.
+      ::lFont := TRUE
    ENDIF
 
    ::cStr += cStr
@@ -1558,7 +1558,7 @@ METHOD THtml:EndTableCell()
       ::cStr += "</td>" + CRLF()
    ENDIF
 
-   ::lFont := .F.
+   ::lFont := FALSE
 
    RETURN Self
 
@@ -1934,7 +1934,7 @@ METHOD THtml:iFrame(name, src, border, marginwidth, marginheight, scrolling, ali
 
    LOCAL cStr := "<iframe " + CRLF()
 
-   __defaultNIL(@BORDER, .T.)
+   __defaultNIL(@BORDER, TRUE)
    __defaultNIL(@name, "Frame01")
 // __defaultNIL(@align, "vertical")
 

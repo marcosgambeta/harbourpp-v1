@@ -60,11 +60,11 @@ CREATE CLASS WvgToolBar INHERIT WvgWindow //WvgActiveXControl
 
    VAR    appearance
    VAR    style                                 INIT WVGTOOLBAR_STYLE_STANDARD
-   VAR    allowCustomize                        INIT .T.
-   VAR    enabled                               INIT .T.
-   VAR    showToolTips                          INIT .T.
+   VAR    allowCustomize                        INIT TRUE
+   VAR    enabled                               INIT TRUE
+   VAR    showToolTips                          INIT TRUE
    VAR    borderStyle                           INIT WVGFRAME_NONE
-   VAR    wrappable                             INIT .T.
+   VAR    wrappable                             INIT TRUE
    VAR    buttonWidth                           INIT 0
    VAR    buttonHeight                          INIT 0
    VAR    textAlign                             INIT WVGALIGN_BOTTOM
@@ -74,7 +74,7 @@ CREATE CLASS WvgToolBar INHERIT WvgWindow //WvgActiveXControl
 
    VAR    aItems                                INIT {}
    VAR    hImageList
-   VAR    lSized                                INIT .F.
+   VAR    lSized                                INIT FALSE
 
    VAR    sl_change
    VAR    sl_buttonMenuClick
@@ -266,7 +266,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
 #if 0
       ::SendToolbarMessage( TB_SETBUTTONWIDTH, ::buttonWidth, ::buttonWidth )
 #endif
-      ::lSized := .T.
+      ::lSized := TRUE
    ENDIF
 
    oBtn := WvgToolBarButton():new( cCaption, nStyle, cKey )
@@ -281,14 +281,14 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
          "\" $ xImage .OR. ;
          ":" $ xImage .OR. ;
          hb_vfExists( xImage )
-         pBitmap := wvg_PrepareBitmapFromFile( xImage, ::imageWidth, ::imageHeight, .T., ::hWnd )
+         pBitmap := wvg_PrepareBitmapFromFile( xImage, ::imageWidth, ::imageHeight, TRUE, ::hWnd )
       ELSE
-         pBitmap := wvg_PrepareBitmapFromResource( xImage, ::imageWidth, ::imageHeight, .T. )
+         pBitmap := wvg_PrepareBitmapFromResource( xImage, ::imageWidth, ::imageHeight, TRUE )
       ENDIF
       EXIT
 
    CASE "N"
-      pBitmap := wvg_PrepareBitmapFromResource( xImage, ::imageWidth, ::imageHeight, .T. )
+      pBitmap := wvg_PrepareBitmapFromResource( xImage, ::imageWidth, ::imageHeight, TRUE )
       EXIT
 
    CASE "P"
@@ -319,7 +319,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
 #endif
       ::sendMessage( TB_AUTOSIZE, 0, 0 )
    ELSE
-      wvg_AddToolBarButton( ::hWnd, , , oBtn:command, 3, .F. )
+      wvg_AddToolBarButton( ::hWnd, , , oBtn:command, 3, FALSE )
 
    ENDIF
 

@@ -86,7 +86,7 @@ METHOD TJSList:New(name, lOpen, width, height, bgColor, FONT, fntColor, fntSize,
    LOCAL cStr
 
    __defaultNIL(@name, "l")
-   __defaultNIL(@lOpen, .F.)
+   __defaultNIL(@lOpen, FALSE)
    __defaultNIL(@WIDTH, 200)
    __defaultNIL(@HEIGHT, 22)
    __defaultNIL(@BGCOLOR, "white")
@@ -144,7 +144,7 @@ METHOD TJSList:NewNode(name, lOpen, width, height, bgColor)
 
    LOCAL cStr := ""
 
-   __defaultNIL(@lOpen, .F.)
+   __defaultNIL(@lOpen, FALSE)
    __defaultNIL(@WIDTH, 200)
    __defaultNIL(@HEIGHT, 22)
    __defaultNIL(@BGCOLOR, "white")

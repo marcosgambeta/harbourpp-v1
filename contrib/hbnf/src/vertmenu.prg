@@ -27,8 +27,8 @@ FUNCTION ft_Menu2(aMenuInfo, cColors)
    LOCAL x
    LOCAL cOldscreen
    LOCAL nTop
-   LOCAL lOldwrap    := Set(_SET_WRAP, .T.)
-   LOCAL lOldcenter  := Set(_SET_MCENTER, .T.)
+   LOCAL lOldwrap    := Set(_SET_WRAP, TRUE)
+   LOCAL lOldcenter  := Set(_SET_MCENTER, TRUE)
    LOCAL lOldmessrow := Set(_SET_MESSAGE)
    LOCAL cOldcolor   := SetColor(cColors)
 

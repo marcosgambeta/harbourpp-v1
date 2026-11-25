@@ -94,7 +94,7 @@ METHOD TIPLog:Add( cMsg )
       RETURN hb_vfWrite( ::hFile, cMsg ) == hb_BLen(cMsg)
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPLog:Close()
 
@@ -106,7 +106,7 @@ METHOD TIPLog:Close()
       RETURN lRetVal
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPLog:Clear()
    RETURN ::Close() .AND. hb_vfErase( ::cFileName ) != F_ERROR

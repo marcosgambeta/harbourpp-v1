@@ -128,7 +128,7 @@ FUNCTION tp_close( nPort, nTimeout )
       /* Port parameters should stay the same for the case the port
          gets reopened
       */
-      t_aPorts[nPort, TPFP_OC] := .F.
+      t_aPorts[nPort, TPFP_OC] := FALSE
       t_aPorts[nPort, TPFP_INBUF] := ""
       t_aPorts[nPort, TPFP_HANDLE] := -1
    ENDIF
@@ -173,7 +173,7 @@ FUNCTION tp_open( nPort, nInSize, nOutSize, nBaud, nData, cParity, nStop, cPortn
    t_aPorts[nPort, TPFP_DBITS] := nData
    t_aPorts[nPort, TPFP_PARITY] := cParity
    t_aPorts[nPort, TPFP_SBITS] := nStop
-   t_aPorts[nPort, TPFP_OC] := .F.
+   t_aPorts[nPort, TPFP_OC] := FALSE
    t_aPorts[nPort, TPFP_INBUF] := ""
    t_aPorts[nPort, TPFP_INBUF_SIZE] := nInSize
    t_aPorts[nPort, TPFP_HANDLE] := -1
@@ -183,7 +183,7 @@ FUNCTION tp_open( nPort, nInSize, nOutSize, nBaud, nData, cParity, nStop, cPortn
       t_aPorts[nPort, TPFP_HANDLE] := nPort
 
       IF hb_comInit( t_aPorts[nPort, TPFP_HANDLE], t_aPorts[nPort, TPFP_BAUD], t_aPorts[nPort, TPFP_PARITY], t_aPorts[nPort, TPFP_DBITS], t_aPorts[nPort, TPFP_SBITS] )
-         t_aPorts[nPort, TPFP_OC] := .T.
+         t_aPorts[nPort, TPFP_OC] := TRUE
          RETURN 0
       ELSE
          tp_close( t_aPorts[nPort, TPFP_HANDLE] )
@@ -197,7 +197,7 @@ FUNCTION tp_open( nPort, nInSize, nOutSize, nBaud, nData, cParity, nStop, cPortn
    t_aPorts[nPort, TPFP_DBITS] := 8
    t_aPorts[nPort, TPFP_PARITY] := "N"
    t_aPorts[nPort, TPFP_SBITS] := 1
-   t_aPorts[nPort, TPFP_OC] := .F.
+   t_aPorts[nPort, TPFP_OC] := FALSE
    t_aPorts[nPort, TPFP_INBUF] := ""
    t_aPorts[nPort, TPFP_INBUF_SIZE] := 0
 
@@ -296,7 +296,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
 
          nAt := hb_At( cDelim, t_aPorts[nPort, TPFP_INBUF], nStartPos )
 
-         IF nAt > 0 .AND. IIf(nFirst > 0, nAt < nFirst, .T.)
+         IF nAt > 0 .AND. IIf(nFirst > 0, nAt < nFirst, TRUE)
             nFirst := nAt
          ENDIF
 
@@ -306,7 +306,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
 
             nAt := hb_At( cChar, t_aPorts[nPort, TPFP_INBUF], nStartPos )
 
-            IF nAt > 0 .AND. IIf(nFirst > 0, nAt < nFirst, .T.)
+            IF nAt > 0 .AND. IIf(nFirst > 0, nAt < nFirst, TRUE)
                nFirst := nAt
             ENDIF
 
@@ -424,7 +424,7 @@ FUNCTION tp_waitfor(...) /* nPort, nTimeout, acList|cString..., lIgnorecase */
    ENDIF
 
    // hb_default(@nTimeout, -1)
-   // hb_default(@lIgnorecase, .F.)
+   // hb_default(@lIgnorecase, FALSE)
 
 #if 0
 
@@ -541,7 +541,7 @@ FUNCTION tp_isdcd( nPort )
    LOCAL nValue
 
    IF !isopenport( nPort )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_comMSR( nPort, @nValue )
@@ -553,7 +553,7 @@ FUNCTION tp_isri( nPort )
    LOCAL nValue
 
    IF !isopenport( nPort )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_comMSR( nPort, @nValue )
@@ -565,7 +565,7 @@ FUNCTION tp_isdsr( nPort )
    LOCAL nValue
 
    IF !isopenport( nPort )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_comMSR( nPort, @nValue )
@@ -577,7 +577,7 @@ FUNCTION tp_iscts( nPort )
    LOCAL nValue
 
    IF !isopenport( nPort )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_comMSR( nPort, @nValue )
@@ -628,7 +628,7 @@ FUNCTION tp_setport()
 STATIC FUNCTION isopenport( nPort )
 
    IF !isport( nPort )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    RETURN t_aPorts[nPort, TPFP_OC]
@@ -636,10 +636,10 @@ STATIC FUNCTION isopenport( nPort )
 STATIC FUNCTION isport( nPort )
 
    IF !hb_IsNumeric(nPort) .OR. nPort < 1 .OR. nPort > TP_MAXPORTS
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC FUNCTION FetchChars( nPort )
 
@@ -664,7 +664,7 @@ INIT PROCEDURE _tpinit()
       t_aPorts := Array( TP_MAXPORTS )
       FOR x := 1 TO Len(t_aPorts)
          // / port name, file handle, baud, data bits, parity, stop bits, Open?, input buffer, input buff.size
-         t_aPorts[x] := { "", -1, 1200, 8, "N", 1, .F., "", 0 }
+         t_aPorts[x] := { "", -1, 1200, 8, "N", 1, FALSE, "", 0 }
       NEXT
    ENDIF
 

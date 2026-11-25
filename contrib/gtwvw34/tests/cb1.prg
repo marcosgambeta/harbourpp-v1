@@ -33,7 +33,7 @@ PROCEDURE Main()
    SetColor("N/W")
    wvw_SetTitle( , "Quick Survey" )
    wvw_NoClose()
-   wvw_SetAltF4Close(.F.)
+   wvw_SetAltF4Close(FALSE)
    wvw_SetLineSpacing( , 4 )
 #if 0
    wvw_SetLSpaceColor(, 7)
@@ -91,8 +91,8 @@ PROCEDURE Main()
       ENDCASE
    ENDDO
 
-   wvw_cbEnable( , nCBid, .F. )
-   wvw_pbEnable( , nPBid, .F. )
+   wvw_cbEnable( , nCBid, FALSE )
+   wvw_pbEnable( , nPBid, FALSE )
    @ 6, 1 SAY "Your response is:"
    @ 7, 1 SAY wvw_cbGetCurText( , nCBid )
    @ 9, 1 SAY s_cThankYou

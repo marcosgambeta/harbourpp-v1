@@ -11,7 +11,7 @@ PROCEDURE Main()
    SET COLOR TO "W+/B"
    CLS
 
-   DO WHILE .T.
+   DO WHILE TRUE
 
       @  0,  0 SAY PadC("- TODBC Demonstration -", MaxCol() + 1) COLOR "B/W"
 

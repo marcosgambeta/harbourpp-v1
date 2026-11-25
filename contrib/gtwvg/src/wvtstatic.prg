@@ -116,12 +116,12 @@ METHOD WvtStatic:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
 METHOD WvtStatic:Create()
 
-   LOCAL lInside := .F.
+   LOCAL lInside := FALSE
 
    SWITCH ::nStatic
 
    CASE WVT_STATIC_LINE
-      lInside := .T.
+      lInside := TRUE
       ::bPaint := {||wvt_DrawLine(::nTop, ::nLeft, ::nBottom, ::nRight, ::nOrient, ::nFormat, ::nAlign, ::nStyle, ::nThick, ::nColor)}
       EXIT
 
@@ -146,27 +146,27 @@ METHOD WvtStatic:Create()
       EXIT
 
    CASE WVT_STATIC_RECTANGLE
-      lInside := .T.
+      lInside := TRUE
       ::bPaint := {||wvt_DrawRectangle(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet)}
       EXIT
 
    CASE WVT_STATIC_ROUNDRECT
-      lInside := .T.
+      lInside := TRUE
       ::bPaint := {||wvt_DrawRoundRect(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet)}
       EXIT
 
    CASE WVT_STATIC_FOCUSRECT
-      lInside := .T.
+      lInside := TRUE
       ::bPaint := {||wvt_DrawFocusRect(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet)}
       EXIT
 
    CASE WVT_STATIC_ELLIPSE
-      lInside := .T.
+      lInside := TRUE
       ::bPaint := {||wvt_DrawEllipse(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet)}
       EXIT
 
    CASE WVT_STATIC_SHADEDRECT
-      lInside := .T.
+      lInside := TRUE
       ::bPaint := {||wvt_DrawShadedRect(::nTop, ::nLeft, ::nBottom, ::nRight, ::aPxlOffSet, ::nHorzVert, ::aRGBb, ::aRGBe)}
       EXIT
 

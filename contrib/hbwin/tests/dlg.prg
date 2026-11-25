@@ -49,19 +49,19 @@ FUNCTION DialogFunc(hWnd, nMessage, wParam, lParam, wPHigh, wPLow)
       wapi_ComboBox_AddString( wapi_GetDlgItem( hWnd, IDC_COMBO1 ), "Other" )
 
       wapi_SetFocus( hWnd, wapi_GetDlgItem( hWnd, IDC_EDIT1 ) )
-      RETURN .T.
+      RETURN TRUE
 
    CASE WM_CLOSE
       wapi_EndDialog( hWnd, 3 )
-      RETURN .T.
+      RETURN TRUE
 
    CASE WM_COMMAND
       SWITCH wPLow
       CASE IDC_BUTTON1
          cText := wapi_GetDlgItemText( hWnd, IDC_EDIT1 )
          wapi_MessageBox( 0, "Hello [" + cText + "]!" + Chr(13) + "How are you?", "Hi!", MB_ICONASTERISK )
-         RETURN .T.
+         RETURN TRUE
       ENDSWITCH
    ENDSWITCH
 
-   RETURN .F.
+   RETURN FALSE

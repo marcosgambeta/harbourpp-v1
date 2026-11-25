@@ -120,9 +120,9 @@ FUNCTION dbModifyStructure(cFile)
                oErr:severity     := ES_ERROR
                oErr:genCode      := EG_RENAME
                oErr:subSystem    := "DBCMD"
-               oErr:canDefault   := .F.
-               oErr:canRetry     := .F.
-               oErr:canSubtitute := .F.
+               oErr:canDefault   := FALSE
+               oErr:canRetry     := FALSE
+               oErr:canSubtitute := FALSE
                oErr:operation    := cFile
                oErr:subCode      := 1101
                oErr:args         := {cNewFile, cBakFile}
@@ -138,10 +138,10 @@ FUNCTION dbModifyStructure(cFile)
             // This kind of error must be reported
             lRet := Throw(oErr)
          ELSE
-            lRet := .F.
+            lRet := FALSE
          ENDIF
       ELSE
-         lRet := .F.
+         lRet := FALSE
       ENDIF
    END SEQUENCE
 
@@ -165,7 +165,7 @@ FUNCTION dbMerge(xSource, lAppend)
    // Safety
    IF LastRec() > 0
       IF !lAppend
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
@@ -180,7 +180,7 @@ FUNCTION dbMerge(xSource, lAppend)
    ELSEIF hb_IsNumeric(xSource)
       nSource := xSource
    ELSE
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // Temp working record
@@ -256,4 +256,4 @@ FUNCTION dbMerge(xSource, lAppend)
       SELECT ( nArea )
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE

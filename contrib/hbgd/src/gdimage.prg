@@ -252,8 +252,8 @@ CREATE CLASS GDImage
    METHOD SetTransparent( pColor )         INLINE gdImageColorTransparent( ::pImage, pColor )
    METHOD SetSharpen( nPerc )              INLINE gdImageSharpen( ::pImage, nPerc )
    METHOD SetInterlace( lOnOff )           INLINE gdImageInterlace( ::pImage, lOnOff )
-   METHOD SetInterlaceOn()                 INLINE gdImageInterlace( ::pImage, .T. )
-   METHOD SetInterlaceOff()                INLINE gdImageInterlace( ::pImage, .F. )
+   METHOD SetInterlaceOn()                 INLINE gdImageInterlace( ::pImage, TRUE )
+   METHOD SetInterlaceOff()                INLINE gdImageInterlace( ::pImage, FALSE )
 
    /* COPY AND RESIZING FUNCTIONS */
 
@@ -271,7 +271,7 @@ CREATE CLASS GDImage
    METHOD Zoom( nPerc )
    METHOD Resize( nWidth, nHeight )
    METHOD Rotate( nAngle, lInside )
-   METHOD RotateInside( nAngle )           INLINE ::Rotate( nAngle, .T. )
+   METHOD RotateInside( nAngle )           INLINE ::Rotate( nAngle, TRUE )
 
    METHOD PaletteCopy( oDestImage )        INLINE gdImagePaletteCopy( oDestImage:pImage, ::pImage )
    METHOD SquareToCircle( nRadius )        INLINE gdImageSquareToCircle( ::pImage, nRadius )
@@ -305,7 +305,7 @@ METHOD PROCEDURE GDImage:Destruct()
 METHOD GDImage:Polygon( aPoints, lFilled, color )
 
    hb_default(@aPoints, ::aPoints)
-   hb_default(@lFilled, .F.)
+   hb_default(@lFilled, FALSE)
    hb_default(@color, ::pColor)
 
    IF lFilled
@@ -327,7 +327,7 @@ METHOD GDImage:OpenPolygon( aPoints, color )
 
 METHOD GDImage:Rectangle( x1, y1, x2, y2, lFilled, color )
 
-   hb_default(@lFilled, .F.)
+   hb_default(@lFilled, FALSE)
    hb_default(@color, ::pColor)
 
    IF lFilled
@@ -340,7 +340,7 @@ METHOD GDImage:Rectangle( x1, y1, x2, y2, lFilled, color )
 
 METHOD GDImage:Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle)
 
-   hb_default(@lFilled, .F.)
+   hb_default(@lFilled, FALSE)
    hb_default(@color, ::pColor)
    hb_default(@nStyle, gdArc)
 
@@ -354,7 +354,7 @@ METHOD GDImage:Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, col
 
 METHOD GDImage:Ellipse( x, y, nWidth, nHeight, lFilled, color )
 
-   hb_default(@lFilled, .F.)
+   hb_default(@lFilled, FALSE)
    hb_default(@color, ::pColor)
 
    IF lFilled
@@ -558,7 +558,7 @@ METHOD GDImage:Rotate( nAngle, lInside )
    LOCAL nWidth, nHeight
    LOCAL nAngRad := nAngle * Pi() / 180
 
-   hb_default(@lInside, .F.)
+   hb_default(@lInside, FALSE)
 
    IF !lInside
       nWidth  := ::Width * Cos( nAngRad ) + ::Height * Sin( nAngRad )

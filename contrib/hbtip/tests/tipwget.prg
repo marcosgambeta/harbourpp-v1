@@ -52,7 +52,7 @@ REQUEST __HBEXTERN__HBSSL__
 
 PROCEDURE Main( cURL, cFile )
 
-   LOCAL bWrite := .F.
+   LOCAL bWrite := FALSE
    LOCAL oURL, oClient
    LOCAL cData
 
@@ -100,7 +100,7 @@ PROCEDURE Main( cURL, cFile )
 
       IF hb_IsString(cFile) .AND. hb_LeftEq( cFile, "+" )
          cFile := SubStr(cFile, 2)
-         bWrite := .T.
+         bWrite := TRUE
       ENDIF
 
       ?

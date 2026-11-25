@@ -291,7 +291,7 @@ METHOD TRPCFunction:SetCallable(oExec, oMeth)
 
    ::aCall[1] := oExec
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCFunction:Run(aParams, oClient)
 
@@ -321,28 +321,28 @@ METHOD TRPCFunction:CheckParam(cParam)
       QUIT
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCFunction:CheckTypes(aParams)
 
    LOCAL oElem, i := 0
 
    IF !hb_IsArray(aParams)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF Len(aParams) != Len(::aParameters)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    FOR EACH oElem in ::aParameters
       i++
       IF !(ValType(aParams[i]) == oElem[1])
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCFunction:Describe()
 
@@ -410,7 +410,7 @@ CREATE CLASS TRPCServeCon
 
    /* Function execution data */
    VAR thFunction   INIT NIL
-   VAR lCanceled    INIT  .F.
+   VAR lCanceled    INIT FALSE
 
    METHOD RecvAuth(lEncrypt)
    METHOD RecvChallenge()
@@ -433,7 +433,7 @@ METHOD TRPCServeCon:New(oParent, skIn)
    ::oServer := oParent
    ::skRemote := skIn
    ::mtxBusy := hb_mutexCreate()
-   ::bEncrypted := .F.
+   ::bEncrypted := FALSE
    ::nAuthLevel := 0
    ::nChallengeCRC := -1
 
@@ -444,7 +444,7 @@ METHOD TRPCServeCon:Destroy()
    hb_mutexLock(::mtxBusy)
    // Eventually wait for the function to terminate
    IF ::thFunction != NIL
-      ::lCanceled := .T.
+      ::lCanceled := TRUE
       hb_mutexUnlock(::mtxBusy)
       hb_threadJoin(::thFunction)
       hb_mutexLock(::mtxBusy)
@@ -453,16 +453,16 @@ METHOD TRPCServeCon:Destroy()
    ::skRemote := NIL
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCServeCon:Start()
 
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
 
    hb_mutexLock(::mtxBusy)
    IF ::thSelf == NIL
       ::thSelf := StartThread(Self, "RUN")
-      lRet := .T.
+      lRet := TRUE
    ENDIF
    hb_mutexUnlock(::mtxBusy)
 
@@ -470,12 +470,12 @@ METHOD TRPCServeCon:Start()
 
 METHOD TRPCServeCon:Stop()
 
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
 
    hb_mutexLock(::mtxBusy)
    IF hb_threadID(::thSelf) != 0
       hb_threadQuitRequest(::thSelf)
-      lRet := .T.
+      lRet := TRUE
       hb_mutexUnlock(::mtxBusy)
       hb_threadJoin(::thSelf)
       ::thSelf := NIL
@@ -488,7 +488,7 @@ METHOD TRPCServeCon:Stop()
 METHOD TRPCServeCon:Run()
 
    LOCAL cCode := Space(6)
-   LOCAL lBreak := .F.
+   LOCAL lBreak := FALSE
    LOCAL aData
    LOCAL nSafeStatus
 
@@ -513,7 +513,7 @@ METHOD TRPCServeCon:Run()
          /* Read autorization request */
       CASE cCode == "XHBR90"
          IF nSafeStatus == RPCS_STATUS_NONE
-            lBreak := !::RecvAuth(.F.)
+            lBreak := !::RecvAuth(FALSE)
             IF !lBreak
                nSafeStatus := RPCS_STATUS_LOGGED
             ENDIF
@@ -524,7 +524,7 @@ METHOD TRPCServeCon:Run()
          /* Read encrypted autorization request */
       CASE cCode == "XHBR93"
          IF nSafeStatus == RPCS_STATUS_NONE
-            lBreak := !::RecvAuth(.T.)
+            lBreak := !::RecvAuth(TRUE)
             IF !lBreak
                nSafeStatus := RPCS_STATUS_CHALLENGE
             ENDIF
@@ -546,16 +546,16 @@ METHOD TRPCServeCon:Run()
          /* Close connection */
       CASE cCode == "XHBR92"
          ::oServer:OnClientLogout(Self)
-         lBreak := .T.
+         lBreak := TRUE
 
          /* Execute function */
       CASE cCode == "XHBR20"
          IF nSafeStatus == RPCS_STATUS_LOGGED
-            aData := ::RecvFunction(.F., .F.)
+            aData := ::RecvFunction(FALSE, FALSE)
             IF aData != NIL
                lBreak := !::FuncCall(aData[2])
             ELSE
-               lBreak := .T.
+               lBreak := TRUE
             ENDIF
          ELSEIF nSafeStatus == RPCS_STATUS_RUNNING
             nSafeStatus := RPCS_STATUS_BUSY
@@ -567,11 +567,11 @@ METHOD TRPCServeCon:Run()
          /* Execute function */
       CASE cCode == "XHBR21"
          IF nSafeStatus == RPCS_STATUS_LOGGED
-            aData := ::RecvFunction(.T., .F.)
+            aData := ::RecvFunction(TRUE, FALSE)
             IF aData != NIL
                lBreak := !::FuncCall(aData[2])
             ELSE
-               lBreak := .T.
+               lBreak := TRUE
             ENDIF
          ELSEIF nSafeStatus == RPCS_STATUS_RUNNING
             nSafeStatus := RPCS_STATUS_BUSY
@@ -582,11 +582,11 @@ METHOD TRPCServeCon:Run()
          /* Loop function */
       CASE cCode == "XHBR22"
          IF nSafeStatus == RPCS_STATUS_LOGGED
-            aData := ::RecvFunction(.F., .T.)
+            aData := ::RecvFunction(FALSE, TRUE)
             IF aData != NIL
                lBreak := !::FuncLoopCall(aData[1], aData[2])
             ELSE
-               lBreak := .T.
+               lBreak := TRUE
             ENDIF
          ELSEIF nSafeStatus == RPCS_STATUS_RUNNING
             nSafeStatus := RPCS_STATUS_BUSY
@@ -597,11 +597,11 @@ METHOD TRPCServeCon:Run()
          /* Loop function - compressed */
       CASE cCode == "XHBR23"
          IF nSafeStatus == RPCS_STATUS_LOGGED
-            aData := ::RecvFunction(.T., .T.)
+            aData := ::RecvFunction(TRUE, TRUE)
             IF aData != NIL
                lBreak := !::FuncLoopCall(aData[1], aData[2])
             ELSE
-               lBreak := .T.
+               lBreak := TRUE
             ENDIF
          ELSEIF nSafeStatus == RPCS_STATUS_RUNNING
             nSafeStatus := RPCS_STATUS_BUSY
@@ -612,11 +612,11 @@ METHOD TRPCServeCon:Run()
          /* Foreach function */
       CASE cCode == "XHBR24"
          IF nSafeStatus == RPCS_STATUS_LOGGED
-            aData := ::RecvFunction(.F., .T.)
+            aData := ::RecvFunction(FALSE, TRUE)
             IF aData != NIL
                lBreak := !::FuncForeachCall(aData[1], aData[2])
             ELSE
-               lBreak := .T.
+               lBreak := TRUE
             ENDIF
          ELSEIF nSafeStatus == RPCS_STATUS_RUNNING
             nSafeStatus := RPCS_STATUS_BUSY
@@ -627,11 +627,11 @@ METHOD TRPCServeCon:Run()
          /* Foreach function - compressed*/
       CASE cCode == "XHBR25"
          IF nSafeStatus == RPCS_STATUS_LOGGED
-            aData := ::RecvFunction(.T., .T.)
+            aData := ::RecvFunction(TRUE, TRUE)
             IF aData  != NIL
                lBreak := !::FuncForeachCall(aData[1], aData[2])
             ELSE
-               lBreak := .T.
+               lBreak := TRUE
             ENDIF
          ELSEIF nSafeStatus == RPCS_STATUS_RUNNING
             nSafeStatus := RPCS_STATUS_BUSY
@@ -650,13 +650,13 @@ METHOD TRPCServeCon:Run()
             nSafeStatus := RPCS_STATUS_ERROR
          ELSE
             hb_mutexLock(::mtxBusy)
-            ::lCanceled := .T.
+            ::lCanceled := TRUE
             hb_mutexUnlock(::mtxBusy)
             hb_inetSendAll(::skRemote, "XHBR34")
          ENDIF
 
       OTHERWISE
-         lBreak := .T.
+         lBreak := TRUE
       ENDCASE
 
       /* Analisys of the nSafeStatus code */
@@ -685,7 +685,7 @@ METHOD TRPCServeCon:Run()
    // Destroy resources just before termination
    ::Destroy()
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCServeCon:RecvAuth(lEncrypt)
 
@@ -694,23 +694,23 @@ METHOD TRPCServeCon:RecvAuth(lEncrypt)
    LOCAL cReadIn
 
    IF hb_inetRecvAll(::skRemote, @cLength, 8) != 8
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    nLen := hb_GetLen8(cLength)
 
    IF (lEncrypt .AND. nLen > 128) .OR. (!lEncrypt .AND. nLen > 37)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cReadIn := Space(nLen)
    IF hb_inetRecvAll(::skRemote, @cReadin, nLen) != nLen
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    nPos := hb_BAt(":", cReadin)
    IF nPos == 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cUserID := hb_BSubStr(cReadin, 1, nPos - 1)
@@ -720,16 +720,16 @@ METHOD TRPCServeCon:RecvAuth(lEncrypt)
       ::nAuthLevel := ::oServer:Authorize(cUserid, cPassword)
       IF ::nAuthLevel == 0
          hb_inetSendAll(::skRemote, "XHBR91NO")
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       hb_inetSendAll(::skRemote, "XHBR91OK")
       IF hb_inetErrorCode(::skRemote) != 0
-         RETURN .F.
+         RETURN FALSE
       ENDIF
       ::cUserId := cUserId
       ::oServer:OnClientLogin(Self)
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    RETURN ::LaunchChallenge(cUserid, cPassword)
@@ -740,7 +740,7 @@ METHOD TRPCServeCon:LaunchChallenge(cUserid, cPassword)
 
    ::cCryptKey := ::oServer:AuthorizeChallenge(cUserid, cPassword)
    IF Empty(::cCryptKey)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::cChallengeUserid := cUserid
@@ -757,10 +757,10 @@ METHOD TRPCServeCon:LaunchChallenge(cUserid, cPassword)
    hb_inetSendAll(::skRemote, "XHBR94" + hb_CreateLen8(hb_BLen(cChallenge)) + cChallenge)
 
    IF hb_inetErrorCode(::skRemote) != 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 
 METHOD TRPCServeCon:RecvChallenge()
@@ -768,29 +768,29 @@ METHOD TRPCServeCon:RecvChallenge()
    LOCAL cNumber := Space(8)
 
    IF hb_inetRecvAll(::skRemote, @cNumber) != 8
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::nChallengeCRC != hb_GetLen8(cNumber)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_inetSendAll(::skRemote, "XHBR91OK")
    IF hb_inetErrorCode(::skRemote) != 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::nAuthLevel := ::oServer:Authorize(::cChallengeUserid)
    /* It is always possible that the user has been deleted in the meanwhile */
    IF ::nAuthLevel == 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::cUserId := ::cChallengeUserid
-   ::bEncrypted := .T.
+   ::bEncrypted := TRUE
    ::oServer:OnClientLogin(Self)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCServeCon:RecvFunction(bComp, bMode)
 
@@ -851,13 +851,13 @@ METHOD TRPCServeCon:FuncCall(cData)
    /* Deserialize all elements */
    cSer := hb_DeserialBegin(cData)
    IF cSer == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
    cFuncName := hb_DeserialNext(@cSer)
    aParams := hb_DeserialNext(@cSer)
 
    IF aParams == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::oServer:OnClientRequest(Self, 20, {cFuncName, aParams})
@@ -873,7 +873,7 @@ METHOD TRPCServeCon:FuncLoopCall(cMode, cData)
    /* Deserialize all elements */
    cSer := hb_DeserialBegin(cData)
    IF Empty(cSer)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
    nBegin := hb_DeserialNext(@cSer)
    nEnd := hb_DeserialNext(@cSer)
@@ -882,7 +882,7 @@ METHOD TRPCServeCon:FuncLoopCall(cMode, cData)
    aParams := hb_DeserialNext(@cSer)
 
    IF aParams == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::oServer:OnClientRequest(Self, 22, {cFuncName, aParams, cMode, nBegin, nEnd, nStep})
@@ -898,7 +898,7 @@ METHOD TRPCServeCon:FuncForeachCall(cMode, cData)
    /* Deserialize all elements */
    cSer := hb_DeserialBegin(cData)
    IF Empty(cSer)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cFuncName := hb_DeserialNext(@cSer)
@@ -906,7 +906,7 @@ METHOD TRPCServeCon:FuncForeachCall(cMode, cData)
    aItems := hb_DeserialNext(@cSer)
 
    IF aItems  == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::oServer:OnClientRequest(Self, 24, {cFuncName, aParams, aItems})
@@ -923,7 +923,7 @@ METHOD TRPCServeCon:LaunchFunction(cFuncName, aParams, nMode, aDesc)
       // signal error
       ::oServer:OnFunctionError(Self, cFuncName, 0)
       hb_inetSendAll(::skRemote, "XHBR4000")
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    // check for level
@@ -931,7 +931,7 @@ METHOD TRPCServeCon:LaunchFunction(cFuncName, aParams, nMode, aDesc)
       // signal error
       ::oServer:OnFunctionError(Self, cFuncName, 1)
       hb_inetSendAll(::skRemote, "XHBR4001")
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    // check for parameters
@@ -939,20 +939,20 @@ METHOD TRPCServeCon:LaunchFunction(cFuncName, aParams, nMode, aDesc)
       // signal error
       ::oServer:OnFunctionError(Self, cFuncName, 2)
       hb_inetSendAll(::skRemote, "XHBR4002")
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    hb_mutexLock(::mtxBusy)
    // allow progress indicator by default
-   ::lAllowProgress := .T.
+   ::lAllowProgress := TRUE
    // setting the cancel indicator as false
-   ::lCanceled := .F.
+   ::lCanceled := FALSE
    // Set the running status
    ::nStatus := RPCS_STATUS_RUNNING
    ::thFunction := StartThread(Self, "FunctionRunner", cFuncName, oFunc, nMode, aParams, aDesc)
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
 
@@ -985,7 +985,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
 
       CASE "C" // Vector of all results
          aRet := {}
-         ::lAllowProgress := .F.
+         ::lAllowProgress := FALSE
          FOR nCount := aDesc[2] TO aDesc[3] STEP aDesc[4]
             IF nSubstPos > 0
                aSubst[nSubstPos] := nCount
@@ -1003,7 +1003,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
          EXIT
 
       CASE "E" // Just send confirmation at end
-         ::lAllowProgress := .F.
+         ::lAllowProgress := FALSE
          FOR nCount := aDesc[2] TO aDesc[3] STEP aDesc[4]
             IF nSubstPos > 0
                aSubst[nSubstPos] := nCount
@@ -1038,7 +1038,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
 
       CASE "C" // Vector of all results
          aRet := {}
-         ::lAllowProgress := .F.
+         ::lAllowProgress := FALSE
          FOR EACH oElem IN  aDesc[2]
             IF nSubstPos > 0
                aSubst[nSubstPos] := oElem
@@ -1056,7 +1056,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
          EXIT
 
       CASE "E" // Just send confirmation at end
-         ::lAllowProgress := .F.
+         ::lAllowProgress := FALSE
          FOR EACH oElem IN aDesc[2]
             IF nSubstPos > 0
                aSubst[nSubstPos] := oElem
@@ -1087,7 +1087,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
    hb_mutexUnlock(::mtxBusy)
    */
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD SendResult(oRet, cFuncName)
 
@@ -1098,7 +1098,7 @@ METHOD SendResult(oRet, cFuncName)
    IF ::lCanceled
       hb_mutexUnlock(::mtxBusy)
       ::oServer:OnFunctionCanceled(Self, cFuncName)
-      RETURN .T. // as if it were done
+      RETURN TRUE // as if it were done
    ENDIF
    hb_mutexUnlock(::mtxBusy)
 
@@ -1121,21 +1121,21 @@ METHOD SendResult(oRet, cFuncName)
    ENDIF
 
    IF hb_inetErrorCode(::skRemote) != 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCServeCon:SendProgress(nProgress, oData)
 
-   LOCAL cOrigLen, cCompLen, lRet := .T.
+   LOCAL cOrigLen, cCompLen, lRet := TRUE
    LOCAL cData
 
    // Ignore if told so
    hb_mutexLock(::mtxBusy)
    IF !::lAllowProgress .OR. ::lCanceled
       hb_mutexUnlock(::mtxBusy)
-      RETURN .T.
+      RETURN TRUE
    ENDIF
    hb_mutexUnlock(::mtxBusy)
 
@@ -1156,7 +1156,7 @@ METHOD TRPCServeCon:SendProgress(nProgress, oData)
    ENDIF
 
    IF hb_inetErrorCode(::skRemote) != 0
-      lRet := .F.
+      lRet := FALSE
    ENDIF
 
    RETURN lRet
@@ -1268,7 +1268,7 @@ METHOD TRPCService:New()
 
 METHOD Add(xFunction, cVersion, nLevel, oExec, oMethod)
 
-   LOCAL nElem, lRet := .F.
+   LOCAL nElem, lRet := FALSE
    LOCAL oFunction
 
    IF hb_IsString(xFunction)
@@ -1281,7 +1281,7 @@ METHOD Add(xFunction, cVersion, nLevel, oExec, oMethod)
    nElem := AScan(::aFunctions, {|x|oFunction:cName == x:cName})
    IF nElem == 0
       AAdd(::aFunctions, oFunction)
-      lRet := .T.
+      lRet := TRUE
    ENDIF
    hb_mutexUnlock(::mtxBusy)
 
@@ -1304,13 +1304,13 @@ METHOD TRPCService:Find(cName)
 METHOD TRPCService:Remove(cName)
 
    LOCAL nElem
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
 
    hb_mutexLock(::mtxBusy)
    nElem := AScan(::aFunctions, {|x|cName == x:cName})
    IF nElem != 0
-      hb_ADel(::aFunctions, nElem, .T.)
-      lRet := .T.
+      hb_ADel(::aFunctions, nElem, TRUE)
+      lRet := TRUE
    ENDIF
    hb_mutexUnlock(::mtxBusy)
 
@@ -1360,7 +1360,7 @@ METHOD TRPCService:Start(lStartUdp)
       ::thUdp := NIL
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:Stop()
 
@@ -1369,7 +1369,7 @@ METHOD TRPCService:Stop()
    hb_mutexLock(::mtxBusy)
    IF hb_threadID(::thAccept) == 0
       hb_mutexUnlock(::mtxBusy)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_inetClose(::skServer)
@@ -1396,13 +1396,13 @@ METHOD TRPCService:Stop()
 
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:Accept()
 
    LOCAL skIn
 
-   DO WHILE .T.
+   DO WHILE TRUE
       skIn := hb_inetAccept(::skServer)
       // todo: better sync
       IF hb_inetstatus(::skServer) < 0
@@ -1413,7 +1413,7 @@ METHOD TRPCService:Accept()
       ENDIF
    ENDDO
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:StartService(skIn)
 
@@ -1426,14 +1426,14 @@ METHOD TRPCService:StartService(skIn)
    hb_mutexUnlock(::mtxBusy)
    ::OnClientConnect(oService)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:UDPListen()
 
    LOCAL cData := Space(1000)
    LOCAL nPacketLen
 
-   DO WHILE .T.
+   DO WHILE TRUE
       nPacketLen := hb_inetDGramRecv(::skUdp, @cData, 1000)
       IF hb_inetstatus(::skUdp) < 0
          EXIT
@@ -1441,7 +1441,7 @@ METHOD TRPCService:UDPListen()
       ::UDPParseRequest(cData, nPacketLen)
    ENDDO
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:UDPParseRequest(cData, nPacketLen)
 
@@ -1449,10 +1449,10 @@ METHOD TRPCService:UDPParseRequest(cData, nPacketLen)
 
    IF ::UDPInterpretRequest(cData, nPacketLen, @cToSend)
       hb_inetDGramSend(::skUdp, hb_inetAddress(::skUdp), hb_inetPort(::skUdp), cToSend)
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TRPCService:UDPInterpretRequest(cData, nPacketLen, cRes)
 
@@ -1460,7 +1460,7 @@ METHOD TRPCService:UDPInterpretRequest(cData, nPacketLen, cRes)
    LOCAL oFunc
 
    IF nPacketLen < 6
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cCode := hb_BSubStr(cData, 1, 6)
@@ -1469,7 +1469,7 @@ METHOD TRPCService:UDPInterpretRequest(cData, nPacketLen, cRes)
    /* XHRB00 - server scan */
    CASE cCode == "XHBR00"
       IF !::OnServerScan()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
       IF nPacketLen > 6
          cMatch := hb_Deserialize(hb_BSubStr(cData, 7))
@@ -1479,12 +1479,12 @@ METHOD TRPCService:UDPInterpretRequest(cData, nPacketLen, cRes)
       ELSE
          cRes := "XHBR10" + hb_Serialize(::cServerName)
       ENDIF
-      RETURN .T.
+      RETURN TRUE
 
       /* XRB01 - Function scan */
    CASE cCode == "XHBR01"
       IF !::OnFunctionScan()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
       /* minimal length to be valid */
       IF nPacketLen > 24
@@ -1505,19 +1505,19 @@ METHOD TRPCService:UDPInterpretRequest(cData, nPacketLen, cRes)
          FOR EACH oFunc IN ::aFunctions
             IF hb_regexMatch(cMatch, oFunc:cName) .AND. cNumber <= oFunc:cSerial
                cRes := "XHBR11" + hb_Serialize(::cServerName) + hb_Serialize(ofunc:Describe())
-               RETURN .T.
+               RETURN TRUE
             ENDIF
          NEXT
       ENDIF
 
       /* If we don't have the function, we cannot reply */
-      RETURN .F.
+      RETURN FALSE
 
    ENDCASE
 
    /* Ignore malformed requests. */
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TRPCService:Terminating(oConnection)
 
@@ -1527,11 +1527,11 @@ METHOD TRPCService:Terminating(oConnection)
    hb_mutexLock(::mtxBusy)
    nToken := AScan(::aServing, {|x|x == oConnection})
    IF nToken > 0
-      hb_ADel(::aServing, nToken, .T.)
+      hb_ADel(::aServing, nToken, TRUE)
    ENDIF
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:AuthorizeChallenge(cUserId, cData)
 
@@ -1589,7 +1589,7 @@ METHOD TRPCService:OnFunctionScan()
       RETURN Eval(::bOnFunctionScan, Self)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnServerScan()
 
@@ -1597,7 +1597,7 @@ METHOD TRPCService:OnServerScan()
       RETURN Eval(::bOnServerScan, Self)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnClientConnect(oClient)
 
@@ -1605,7 +1605,7 @@ METHOD TRPCService:OnClientConnect(oClient)
       RETURN Eval(::bOnClientConnect, oClient)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnClientLogin(oClient)
 
@@ -1613,7 +1613,7 @@ METHOD TRPCService:OnClientLogin(oClient)
       Eval(::bOnClientLogin, oClient)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnClientRequest(oClient, nRequest, cData)
 
@@ -1621,7 +1621,7 @@ METHOD TRPCService:OnClientRequest(oClient, nRequest, cData)
       RETURN Eval(::bOnClientRequest, oClient, nRequest, cData)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnFunctionProgress(oClient, nProgress, aData)
 
@@ -1629,7 +1629,7 @@ METHOD TRPCService:OnFunctionProgress(oClient, nProgress, aData)
       RETURN Eval(::bOnFunctionProgress, oClient, nProgress, aData)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnFunctionError(oClient, cFunction, nError)
 
@@ -1637,7 +1637,7 @@ METHOD TRPCService:OnFunctionError(oClient, cFunction, nError)
       RETURN Eval(::bOnFunctionError, oClient, cFunction, nError)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnFunctionReturn(oClient, aData)
 
@@ -1645,7 +1645,7 @@ METHOD TRPCService:OnFunctionReturn(oClient, aData)
       RETURN Eval(::bOnFunctionReturn, oClient, aData)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnFunctionCanceled(oClient, cFuncName)
 
@@ -1653,7 +1653,7 @@ METHOD TRPCService:OnFunctionCanceled(oClient, cFuncName)
       RETURN Eval(::bOnFunctionCanceled, oClient, cFuncName)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnClientLogout(oClient)
 
@@ -1661,7 +1661,7 @@ METHOD TRPCService:OnClientLogout(oClient)
       RETURN Eval(::bOnClientLogout, oClient)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TRPCService:OnClientTerminate(oClient)
 
@@ -1669,4 +1669,4 @@ METHOD TRPCService:OnClientTerminate(oClient)
       RETURN Eval(::bOnClientTerminate, oClient)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE

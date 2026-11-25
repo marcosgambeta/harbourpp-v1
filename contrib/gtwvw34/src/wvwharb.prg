@@ -56,10 +56,10 @@ FUNCTION wvw_SetClipboard(cData)
 
    IF hb_IsString(cData)
       hb_gtInfo(HB_GTI_CLIPBOARDDATA, cData)
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 PROCEDURE wvw_PasteFromClipboard()
 
@@ -96,7 +96,7 @@ FUNCTION wvw_BringToTop1(hWnd)
       wapi_SetForegroundWindow(hWnd)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION wvw_LoadIcon(ncRes)
    RETURN wapi_LoadIcon(IIf(hb_IsNumeric(ncRes),, wapi_GetModuleHandle()), ncRes)
@@ -105,7 +105,7 @@ FUNCTION wvw_LoadImage(hInstance, ncRes, ...)
    RETURN wapi_LoadImage(IIf(hb_IsNumeric(ncRes), wapi_GetModuleHandle(), hInstance), ncRes, ...)
 
 FUNCTION wvw_LoadBitmap(ncRes, lNULLInstance)
-   RETURN wapi_LoadBitmap(IIf(hb_defaultValue(lNULLInstance, .F.),, wapi_GetModuleHandle()), ncRes)
+   RETURN wapi_LoadBitmap(IIf(hb_defaultValue(lNULLInstance, FALSE),, wapi_GetModuleHandle()), ncRes)
 
 FUNCTION wvw_LoadBitmapEx(hInstance, ncRes)
    RETURN wapi_LoadBitmap(hb_defaultValue(hInstance, wapi_GetModuleHandle()), ncRes)
@@ -125,13 +125,13 @@ FUNCTION wvw_GetIconSize(hIcon)
    RETURN {ii[2] * 2, ii[3] * 2}
 
 /* Removes System Menu of a window
-   if lRemoveClose is .T., also removes the 'Close' command and 'X' button */
+   if lRemoveClose is TRUE, also removes the 'Close' command and 'X' button */
 PROCEDURE wvw_NoSysMenu(nWin, lRemoveClose)
 
    LOCAL hWnd
    LOCAL hMenu
 
-   IF !Empty(hWnd := wvw_Get_hnd_Window(nWin)) .AND. !Empty(hMenu := wapi_GetSystemMenu(hWnd, .F.))
+   IF !Empty(hWnd := wvw_Get_hnd_Window(nWin)) .AND. !Empty(hMenu := wapi_GetSystemMenu(hWnd, FALSE))
 
       wapi_DeleteMenu(hMenu, WIN_SC_MAXIMIZE, WIN_MF_BYCOMMAND)
       wapi_DeleteMenu(hMenu, WIN_SC_MINIMIZE, WIN_MF_BYCOMMAND)
@@ -139,7 +139,7 @@ PROCEDURE wvw_NoSysMenu(nWin, lRemoveClose)
       wapi_DeleteMenu(hMenu, WIN_SC_MOVE, WIN_MF_BYCOMMAND)
       wapi_DeleteMenu(hMenu, WIN_SC_RESTORE, WIN_MF_BYCOMMAND)
       wapi_DeleteMenu(hMenu, WIN_SC_NEXTWINDOW, WIN_MF_BYCOMMAND)
-      IF hb_defaultValue(lRemoveClose, .F.)
+      IF hb_defaultValue(lRemoveClose, FALSE)
          wapi_DeleteMenu(hMenu, WIN_SC_CLOSE, WIN_MF_BYCOMMAND)
          wapi_DeleteMenu(hMenu, 0, WIN_MF_BYPOSITION)
       ENDIF
@@ -154,7 +154,7 @@ PROCEDURE wvw_NoClose(nWin)
    LOCAL hWnd
    LOCAL hMenu
 
-   IF !Empty(hWnd := wvw_Get_hnd_Window(nWin)) .AND. !Empty(hMenu := wapi_GetSystemMenu(hWnd, .F.))
+   IF !Empty(hWnd := wvw_Get_hnd_Window(nWin)) .AND. !Empty(hMenu := wapi_GetSystemMenu(hWnd, FALSE))
 
       wapi_DeleteMenu(hMenu, WIN_SC_CLOSE, WIN_MF_BYCOMMAND)
       wapi_DrawMenuBar(hWnd)
@@ -167,7 +167,7 @@ PROCEDURE wvw_YesClose(nWin)
    LOCAL hWnd
    LOCAL hMenu
 
-   IF !Empty(hWnd := wvw_Get_hnd_Window(nWin)) .AND. !Empty(hMenu := wapi_GetSystemMenu(hWnd, .F.))
+   IF !Empty(hWnd := wvw_Get_hnd_Window(nWin)) .AND. !Empty(hMenu := wapi_GetSystemMenu(hWnd, FALSE))
 
       wapi_AppendMenu(hMenu, WIN_SC_CLOSE, WIN_MF_BYCOMMAND, "")
       wapi_DrawMenuBar(hWnd)
@@ -321,7 +321,7 @@ FUNCTION wvw_SetOnTop(nWin)
    LOCAL rc
 
    IF Empty(hWnd := wvw_Get_hnd_Window(nWin))
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    rc := {=>}
@@ -335,7 +335,7 @@ FUNCTION wvw_SetAsNormal(nWin)
    LOCAL rc
 
    IF Empty(hWnd := wvw_Get_hnd_Window(nWin))
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    rc := {=>}
@@ -379,7 +379,7 @@ FUNCTION wvw_EnableMaximize(nWin, lEnable)
    LOCAL lEnableOld
 
    IF Empty(hWnd := wvw_Get_hnd_Window(nWin))
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    nStyle := wapi_GetWindowLongPtr(hWnd, WIN_GWL_STYLE)
@@ -419,10 +419,10 @@ FUNCTION wvw_stSetText(dummy, hWnd, cText)  /* QUESTION: Is this correct? */
 
    IF !Empty(hWnd)
       wapi_SetWindowText(hWnd, cText)
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION wvw_GetCursorPos()
 

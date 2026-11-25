@@ -66,8 +66,8 @@ FUNCTION hb_SendMail(...)
    cPass       -> Required. Password for cUser
    cPopServer  -> Required. POP3 server name or address
    nPriority   -> Optional. Email priority: 1=High, 3=Normal (Standard), 5=Low
-   lRead       -> Optional. If set to .T., a confirmation request is send. Standard setting is .F.
-   xTrace      -> Optional. If set to .T., a log file is created (smtp-<n>.log). Standard setting is .F.
+   lRead       -> Optional. If set to TRUE, a confirmation request is send. Standard setting is FALSE
+   xTrace      -> Optional. If set to TRUE, a log file is created (smtp-<n>.log). Standard setting is FALSE
                             If a block is passed, it will be called for each log event with the message a string, no param on session close.
    lPopAuth    -> Optional. Do POP3 authentication before sending mail.
    lNoAuth     -> Optional. Disable authentication methods
@@ -97,8 +97,8 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    LOCAL oUrl1
 
    LOCAL lBodyHTML
-   LOCAL lAuthTLS      := .F.
-   LOCAL lConnect      := .F.
+   LOCAL lAuthTLS      := FALSE
+   LOCAL lConnect      := FALSE
    LOCAL oPop
 
    /* consider any empty values invalid */
@@ -113,10 +113,10 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    hb_default(@cUser, "")
    hb_default(@cPass, "")
    hb_default(@nPort, 25)
-   hb_default(@lPopAuth, .T.)
-   hb_default(@lNoAuth, .F.)
+   hb_default(@lPopAuth, TRUE)
+   hb_default(@lNoAuth, FALSE)
    hb_default(@nTimeOut, 10000)
-   hb_default(@lSSL, .F.)
+   hb_default(@lSSL, FALSE)
    hb_default(@cSMTPPass, cPass)
 
    // cTo
@@ -124,11 +124,11 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    CASE hb_IsArray(xTo)
       FOR tmp := Len(xTo) TO 1 STEP -1
          IF Empty(xTo[tmp])
-            hb_ADel( xTo, tmp, .T. )
+            hb_ADel( xTo, tmp, TRUE )
          ENDIF
       NEXT
       IF Empty(xTo)
-         RETURN .F.
+         RETURN FALSE
       ENDIF
       cTo := ""
       FOR EACH cTmp IN xTo
@@ -146,7 +146,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    CASE hb_IsArray(xCC)
       FOR tmp := Len(xCC) TO 1 STEP -1
          IF Empty(xCC[tmp])
-            hb_ADel( xCC, tmp, .T. )
+            hb_ADel( xCC, tmp, TRUE )
          ENDIF
       NEXT
       cCC := ""
@@ -165,7 +165,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    CASE hb_IsArray(xBCC)
       FOR tmp := Len(xBCC) TO 1 STEP -1
          IF Empty(xBCC[tmp])
-            hb_ADel( xBCC, tmp, .T. )
+            hb_ADel( xBCC, tmp, TRUE )
          ENDIF
       NEXT
       cBCC := ""
@@ -188,20 +188,20 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
          oUrl1:cUserid := StrTran(cUser, "&at;", "@")
          oPop := TIPClientPOP():New( oUrl1, xTrace )
       RECOVER
-         RETURN .F.
+         RETURN FALSE
       END SEQUENCE
 
       IF oPop:Open()
          oPop:Close()
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
    BEGIN SEQUENCE WITH __BreakBlock()
       oUrl := TUrl():New( IIf(lSSL, "smtps://", "smtp://") + cUser + IIf(Empty(cSMTPPass), "", ":" + cSMTPPass) + "@" + cServer )
    RECOVER
-      RETURN .F.
+      RETURN FALSE
    END SEQUENCE
 
    oUrl:nPort   := nPort
@@ -215,7 +215,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    BEGIN SEQUENCE WITH __BreakBlock()
       oInmail := TIPClientSMTP():New( oUrl, xTrace,, cClientHost )
    RECOVER
-      RETURN .F.
+      RETURN FALSE
    END SEQUENCE
 
    oInmail:nConnTimeout := nTimeOut
@@ -227,7 +227,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
 
          IF ( oInMail:lAuthLogin .AND. oInMail:Auth( cUser, cSMTPPass ) ) .OR. ;
             ( oInMail:lAuthPlain .AND. oInMail:AuthPlain( cUser, cSMTPPass ) )
-            lConnect := .T.
+            lConnect := TRUE
          ENDIF
       ENDIF
       IF !lConnect
@@ -235,7 +235,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
          BEGIN SEQUENCE WITH __BreakBlock()
             oInmail := TIPClientSMTP():New( oUrl, xTrace,, cClientHost )
          RECOVER
-            RETURN .F.
+            RETURN FALSE
          END SEQUENCE
 
          oInmail:nConnTimeout := nTimeOut
@@ -245,7 +245,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    IF !lConnect
       IF !oInMail:Open( NIL, lAuthTLS )
          oInmail:Close()
-         RETURN .F.
+         RETURN FALSE
       ENDIF
    ENDIF
 
@@ -255,11 +255,11 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    CASE ".html"
       IF hb_vfExists( cBody )
          cBody := MemoRead( cBody )
-         lBodyHTML := .T.
+         lBodyHTML := TRUE
          EXIT
       ENDIF
    OTHERWISE
-      lBodyHTML := .F.
+      lBodyHTML := FALSE
    ENDSWITCH
 
    oInMail:oUrl:cUserid := tip_GetRawEmail( cFrom )

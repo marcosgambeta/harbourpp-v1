@@ -68,30 +68,30 @@ CREATE CLASS WvgFont
    VAR nominalPointSize INIT 0
 
    VAR width INIT 0
-   VAR widthClass INIT .F.
+   VAR widthClass INIT FALSE
 
-   VAR bold INIT .F.
+   VAR bold INIT FALSE
    VAR weightClass INIT WIN_FW_DONTCARE
 
-   VAR italic INIT .F.
-   VAR strikeout INIT .F.
-   VAR underscore INIT .F.
+   VAR italic INIT FALSE
+   VAR strikeout INIT FALSE
+   VAR underscore INIT FALSE
    VAR codePage INIT WIN_DEFAULT_CHARSET
 
-   VAR fixed INIT .F.
-   VAR antiAliased INIT .F.
+   VAR fixed INIT FALSE
+   VAR antiAliased INIT FALSE
 
    VAR compoundName INIT ""
    METHOD setCompoundName(cName) INLINE ::compoundName := cName
 
-   VAR generic INIT .T.
+   VAR generic INIT TRUE
 
    VAR baseLine INIT 0 READONLY
-   VAR dbcs INIT .F.
-   VAR kerning INIT .F.
-   VAR mbcs INIT .F.
-   VAR vector INIT .F.
-   VAR outlined INIT .F.
+   VAR dbcs INIT FALSE
+   VAR kerning INIT FALSE
+   VAR mbcs INIT FALSE
+   VAR vector INIT FALSE
+   VAR outlined INIT FALSE
 
    VAR aFontInfo INIT {}
 

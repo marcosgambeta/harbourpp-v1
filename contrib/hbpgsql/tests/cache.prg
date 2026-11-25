@@ -66,7 +66,7 @@ FUNCTION SQLApplyUpdates()
    LOCAL oQuery
    LOCAL oRow
    LOCAL lUpdate
-   LOCAL lError := .F.
+   LOCAL lError := FALSE
    LOCAL cError
 
    IF (i := AScan(t_aTableTemp, {|aVal|aVal[DB_ALIAS] == cAlias})) > 0
@@ -104,12 +104,12 @@ FUNCTION SQLApplyUpdates()
             ELSE
                // Update if any of the fields have changed
 
-               lUpdate := .F.
+               lUpdate := FALSE
                FOR x := 1 TO FCount()
                   IF oRow:FieldPos(FieldName(x)) != 0 .AND. ;
                      !FieldGet(x) == oRow:FieldGet(FieldName(x))
                      oRow:FieldPut(FieldName(x), FieldGet(x))
-                     lUpdate := .T.
+                     lUpdate := TRUE
                   ENDIF
                NEXT
 
@@ -142,7 +142,7 @@ PROCEDURE SQLCloseTemp(cAlias)
    ENDIF
 
    IF (x := AScan(t_aTableTemp, {|aVal|aVal[DB_ALIAS] == cAlias})) > 0
-      hb_ADel(t_aTableTemp, x, .F. /* .T. */)
+      hb_ADel(t_aTableTemp, x, FALSE /* TRUE */)
    ENDIF
 
    RETURN
@@ -173,9 +173,9 @@ FUNCTION SQLFetch(lFetchAll)
    LOCAL x
    LOCAL y
    LOCAL nPos
-   LOCAL lEof := .F.
+   LOCAL lEof := FALSE
 
-   hb_default(@lFetchAll, .F.)
+   hb_default(@lFetchAll, FALSE)
 
    // Search for table in array
    IF (i := AScan(t_aTableTemp, {|aVal|aVal[DB_ALIAS] == cAlias})) > 0
@@ -185,7 +185,7 @@ FUNCTION SQLFetch(lFetchAll)
       nPos   := t_aTableTemp[i][DB_ROW] + 1
 
       IF lFetchAll
-         t_aTableTemp[i][DB_FETCH] := .T.
+         t_aTableTemp[i][DB_FETCH] := TRUE
       ENDIF
 
       IF oQuery:LastRec() >= nPos
@@ -216,7 +216,7 @@ FUNCTION SQLFetch(lFetchAll)
 
 PROCEDURE SQLFetchAll()
 
-   SQLFetch(.T.)
+   SQLFetch(TRUE)
    dbGoTop()
 
    RETURN
@@ -248,7 +248,7 @@ FUNCTION SQLOpen(cAlias, cQuery, xFetch, cOrder)
 
    IF oQuery:NetErr()
       ? oQuery:ErrorMsg()
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF Select(cAlias) == 0
@@ -261,7 +261,7 @@ FUNCTION SQLOpen(cAlias, cQuery, xFetch, cOrder)
    IF xFetch != NIL
       lFetch := xFetch
    ELSE
-      lFetch := .F.
+      lFetch := FALSE
    ENDIF
 
    // If there is no query in the temporary area then add, otherwise just refresh.
@@ -286,18 +286,18 @@ FUNCTION SQLOpen(cAlias, cQuery, xFetch, cOrder)
       dbGoTop()
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION SQLConnect(cHost, cDatabase, cUser, cPassword, cSchema)
 
-   LOCAL lRetval := .T.
+   LOCAL lRetval := TRUE
 
    t_oServer := TPQServer():New(cHost, cDatabase, cUser, cPassword, 5432, cSchema)
    IF t_oServer:NetErr()
       ? t_oServer:ErrorMsg()
-      lRetval := .F.
+      lRetval := FALSE
    ENDIF
-   t_oServer:lAllCols := .F.
+   t_oServer:lAllCols := FALSE
 
    RETURN lRetval
 
@@ -328,12 +328,12 @@ FUNCTION SQLExecQuery(cQuery)
 
    IF oQuery:NetErr()
       ? "Cannot execute", cQuery + ":" + oQuery:ErrorMsg()
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    oQuery:Destroy()
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION SQLPrepare(cQuery, ...)
 

@@ -58,10 +58,10 @@
 
 CREATE CLASS WvgStatic INHERIT WvgWindow
 
-   VAR autoSize INIT .F.
+   VAR autoSize INIT FALSE
    VAR caption INIT ""
-   VAR clipParent INIT .T.
-   VAR clipSiblings INIT .F.
+   VAR clipParent INIT TRUE
+   VAR clipSiblings INIT FALSE
    VAR options INIT -1 // WVGSTATIC_TEXT_LEFT
    VAR TYPE INIT -1 // WVGSTATIC_TYPE_TEXT
 

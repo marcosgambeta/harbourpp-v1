@@ -62,8 +62,8 @@ CREATE CLASS WvtProgressBar INHERIT WvtObject
    VAR    cImage
    VAR    nDirection                              INIT 0      // 0-Left-Right,Top-Bottom  1-Right-Left,Bottom-Top
    VAR    nStyle                                  INIT 0
-   VAR    lVertical                               INIT .F.
-   VAR    lActive                                 INIT .F.
+   VAR    lVertical                               INIT FALSE
+   VAR    lActive                                 INIT FALSE
 
    VAR    nBarColor                               INIT WIN_RGB(0, 0, 128)
    VAR    nCurrent                                INIT 0
@@ -130,13 +130,13 @@ METHOD WvtProgressBar:Activate()
 
    ::cScreen := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
    hb_DispBox( ::nTop, ::nLeft, ::nBottom, ::nRight, "         ", ::cBackColor )
-   ::lActive := .T.
+   ::lActive := TRUE
 
    RETURN Self
 
 METHOD WvtProgressBar:DeActivate()
 
-   ::lActive  := .F.
+   ::lActive  := FALSE
    ::nCurrent := 0
    ::nTotal   := 1
    RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen)

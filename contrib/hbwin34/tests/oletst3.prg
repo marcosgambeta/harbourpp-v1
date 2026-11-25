@@ -13,7 +13,7 @@ PROCEDURE Main()
 
    BEGIN SEQUENCE WITH {|| Break() }
       oObject := CreateObject( "MyOleServer" )
-      ? oObject:MyMethod( "Hello", 123, .T., ;
+      ? oObject:MyMethod( "Hello", 123, TRUE, ;
          { hb_DateTime(), 123.45, { Date(), 2, 3 } } )
       ? oObject:Property1
       oObject:Property1 := "!!! >>>" + Upper(oObject:Property1) + "<<< !!!"

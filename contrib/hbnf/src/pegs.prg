@@ -34,7 +34,7 @@
    board_[xx, 1] - subarray containing box coordinates for this peg
    board_[xx, 2] - subarray containing all adjacent locations
    board_[xx, 3] - subarray containing all target locations
-   board_[xx, 4] - is the location occupied or not? .T. -> Yes, .F. -> No
+   board_[xx, 4] - is the location occupied or not? TRUE -> Yes, FALSE -> No
 */
 
 FUNCTION ft_Pegs()
@@ -53,39 +53,39 @@ FUNCTION ft_Pegs()
    LOCAL GetList
 
    LOCAL board_ := { ;
-      { {  0, 29,  2, 34 }, { 2, 4 }, { 3, 9 }, .T. }, ;
-      { {  0, 37,  2, 42 }, { 5 }, { 10 }, .T. }, ;
-      { {  0, 45,  2, 50 }, { 2, 6 }, { 1, 11 }, .T. }, ;
-      { {  3, 29,  5, 34 }, { 5, 9 }, { 6, 16 }, .T. }, ;
-      { {  3, 37,  5, 42 }, { 10 }, { 17 }, .T. }, ;
-      { {  3, 45,  5, 50 }, { 5, 11 }, { 4, 18 }, .T. }, ;
-      { {  6, 13,  8, 18 }, { 8, 14 }, { 9, 21 }, .T. }, ;
-      { {  6, 21,  8, 26 }, { 9, 15 }, { 10, 22 }, .T. }, ;
-      { {  6, 29,  8, 34 }, { 4, 8, 10, 16 }, { 1, 7, 11, 23 }, .T. }, ;
-      { {  6, 37,  8, 42 }, { 5, 9, 11, 17 }, { 2, 8, 12, 24 }, .T. }, ;
-      { {  6, 45,  8, 50 }, { 6, 10, 12, 18 }, { 3, 9, 13, 25 }, .T. }, ;
-      { {  6, 53,  8, 58 }, { 11, 19 }, { 10, 26 }, .T. }, ;
-      { {  6, 61,  8, 66 }, { 12, 20 }, { 11, 27 }, .T. }, ;
-      { {  9, 13, 11, 18 }, { 15 }, { 16 }, .T. }, ;
-      { {  9, 21, 11, 26 }, { 16 }, { 17 }, .T. }, ;
-      { {  9, 29, 11, 34 }, { 9, 15, 17, 23 }, { 4, 14, 18, 28 }, .T. }, ;
-      { {  9, 37, 11, 42 }, { 10, 16, 18, 24 }, { 5, 15, 19, 29 }, .F. }, ;
-      { {  9, 45, 11, 50 }, { 11, 17, 19, 25 }, { 6, 16, 20, 30 }, .T. }, ;
-      { {  9, 53, 11, 58 }, { 18 }, { 17 }, .T. }, ;
-      { {  9, 61, 11, 66 }, { 19 }, { 18 }, .T. }, ;
-      { { 12, 13, 14, 18 }, { 14, 22 }, { 7, 23 }, .T. }, ;
-      { { 12, 21, 14, 26 }, { 15, 23 }, { 8, 24 }, .T. }, ;
-      { { 12, 29, 14, 34 }, { 16, 22, 24, 28 }, { 9, 21, 25, 31 }, .T. }, ;
-      { { 12, 37, 14, 42 }, { 17, 23, 25, 29 }, { 10, 22, 26, 32 }, .T. }, ;
-      { { 12, 45, 14, 50 }, { 18, 24, 26, 30 }, { 11, 23, 27, 33 }, .T. }, ;
-      { { 12, 53, 14, 58 }, { 19, 25 }, { 12, 24 }, .T. }, ;
-      { { 12, 61, 14, 66 }, { 20, 26 }, { 13, 25 }, .T. }, ;
-      { { 15, 29, 17, 34 }, { 23, 29 }, { 16, 30 }, .T. }, ;
-      { { 15, 37, 17, 42 }, { 24 }, { 17 }, .T. }, ;
-      { { 15, 45, 17, 50 }, { 25, 29 }, { 18, 28 }, .T. }, ;
-      { { 18, 29, 20, 34 }, { 28, 32 }, { 23, 33 }, .T. }, ;
-      { { 18, 37, 20, 42 }, { 29 }, { 24 }, .T. }, ;
-      { { 18, 45, 20, 50 }, { 30, 32 }, { 25, 31 }, .T. } }
+      { {  0, 29,  2, 34 }, { 2, 4 }, { 3, 9 }, TRUE }, ;
+      { {  0, 37,  2, 42 }, { 5 }, { 10 }, TRUE }, ;
+      { {  0, 45,  2, 50 }, { 2, 6 }, { 1, 11 }, TRUE }, ;
+      { {  3, 29,  5, 34 }, { 5, 9 }, { 6, 16 }, TRUE }, ;
+      { {  3, 37,  5, 42 }, { 10 }, { 17 }, TRUE }, ;
+      { {  3, 45,  5, 50 }, { 5, 11 }, { 4, 18 }, TRUE }, ;
+      { {  6, 13,  8, 18 }, { 8, 14 }, { 9, 21 }, TRUE }, ;
+      { {  6, 21,  8, 26 }, { 9, 15 }, { 10, 22 }, TRUE }, ;
+      { {  6, 29,  8, 34 }, { 4, 8, 10, 16 }, { 1, 7, 11, 23 }, TRUE }, ;
+      { {  6, 37,  8, 42 }, { 5, 9, 11, 17 }, { 2, 8, 12, 24 }, TRUE }, ;
+      { {  6, 45,  8, 50 }, { 6, 10, 12, 18 }, { 3, 9, 13, 25 }, TRUE }, ;
+      { {  6, 53,  8, 58 }, { 11, 19 }, { 10, 26 }, TRUE }, ;
+      { {  6, 61,  8, 66 }, { 12, 20 }, { 11, 27 }, TRUE }, ;
+      { {  9, 13, 11, 18 }, { 15 }, { 16 }, TRUE }, ;
+      { {  9, 21, 11, 26 }, { 16 }, { 17 }, TRUE }, ;
+      { {  9, 29, 11, 34 }, { 9, 15, 17, 23 }, { 4, 14, 18, 28 }, TRUE }, ;
+      { {  9, 37, 11, 42 }, { 10, 16, 18, 24 }, { 5, 15, 19, 29 }, FALSE }, ;
+      { {  9, 45, 11, 50 }, { 11, 17, 19, 25 }, { 6, 16, 20, 30 }, TRUE }, ;
+      { {  9, 53, 11, 58 }, { 18 }, { 17 }, TRUE }, ;
+      { {  9, 61, 11, 66 }, { 19 }, { 18 }, TRUE }, ;
+      { { 12, 13, 14, 18 }, { 14, 22 }, { 7, 23 }, TRUE }, ;
+      { { 12, 21, 14, 26 }, { 15, 23 }, { 8, 24 }, TRUE }, ;
+      { { 12, 29, 14, 34 }, { 16, 22, 24, 28 }, { 9, 21, 25, 31 }, TRUE }, ;
+      { { 12, 37, 14, 42 }, { 17, 23, 25, 29 }, { 10, 22, 26, 32 }, TRUE }, ;
+      { { 12, 45, 14, 50 }, { 18, 24, 26, 30 }, { 11, 23, 27, 33 }, TRUE }, ;
+      { { 12, 53, 14, 58 }, { 19, 25 }, { 12, 24 }, TRUE }, ;
+      { { 12, 61, 14, 66 }, { 20, 26 }, { 13, 25 }, TRUE }, ;
+      { { 15, 29, 17, 34 }, { 23, 29 }, { 16, 30 }, TRUE }, ;
+      { { 15, 37, 17, 42 }, { 24 }, { 17 }, TRUE }, ;
+      { { 15, 45, 17, 50 }, { 25, 29 }, { 18, 28 }, TRUE }, ;
+      { { 18, 29, 20, 34 }, { 28, 32 }, { 23, 33 }, TRUE }, ;
+      { { 18, 37, 20, 42 }, { 29 }, { 24 }, TRUE }, ;
+      { { 18, 45, 20, 50 }, { 30, 32 }, { 25, 31 }, TRUE } }
 
    /*
       the following code block is used in conjunction with AScan()
@@ -123,8 +123,8 @@ FUNCTION ft_Pegs()
             DO CASE
             CASE Len(possible_) == 1
                // clear out original position and the position you jumped over
-               board_[move][4] := board_[possible_[1, 1]][4] := .F.
-               board_[possible_[1, 2]][4] := .T.
+               board_[move][4] := board_[possible_[1, 1]][4] := FALSE
+               board_[possible_[1, 2]][4] := TRUE
                drawbox(board_, move)
                drawbox(board_, possible_[1, 1])
                drawbox(board_, possible_[1, 2])
@@ -139,7 +139,7 @@ FUNCTION ft_Pegs()
                hb_DispOutAt(toprow, 58, "Possible Moves")
                SetPos(toprow, 65)
                AEval(possible_, {|a|hb_DispOutAt(Row() + 1, 65, Transform(a[2], "##"))})
-               oldscore := Set(_SET_SCOREBOARD, .F.)
+               oldscore := Set(_SET_SCOREBOARD, FALSE)
 
                GetList := {Get():New(23, 44, {|v|IIf(PCount() == 0, move2, move2 := v)}, "move2", "##")}
                ATail(GetList):postBlock := {||AScan(possible_, scanblock) > 0}
@@ -150,8 +150,8 @@ FUNCTION ft_Pegs()
                Set(_SET_SCOREBOARD, oldscore)
                mpos := AScan(possible_, {|a|move2 == a[2]})
                // clear out original position and the position you jumped over
-               board_[move][4] := board_[possible_[mpos, 1]][4] := .F.
-               board_[move2][4] := .T.
+               board_[move][4] := board_[possible_[mpos, 1]][4] := FALSE
+               board_[move2][4] := TRUE
                drawbox(board_, move)
                drawbox(board_, possible_[mpos, 1])
                drawbox(board_, move2)
@@ -193,7 +193,7 @@ STATIC FUNCTION moremoves(board_)
 
    LOCAL xx
    LOCAL yy
-   LOCAL canmove := .F.
+   LOCAL canmove := FALSE
    LOCAL piecesleft := 0
    LOCAL buffer
 
@@ -202,7 +202,7 @@ STATIC FUNCTION moremoves(board_)
          IF board_[xx][4] .AND.  ;                     // if current location is filled
             board_[board_[xx][2, yy]][4] .AND. ;   // adjacent must be filled
             !board_[board_[xx][3, yy]][4]         // target must be empty
-            canmove := .T.
+            canmove := TRUE
             EXIT
          ENDIF
       NEXT

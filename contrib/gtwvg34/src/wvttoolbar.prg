@@ -61,7 +61,7 @@ CREATE CLASS WvtToolBar INHERIT WvtObject
 
    VAR    nPaintID
    VAR    aObjects                                INIT {}
-   VAR    lHidden                                 INIT .F.
+   VAR    lHidden                                 INIT FALSE
    VAR    nCurButton                              INIT 0
    VAR    lActive
    VAR    lFloating
@@ -91,8 +91,8 @@ METHOD WvtToolBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
    ::Super:New( oParent, DLG_OBJ_TOOLBAR, nID, nTop, nLeft, nBottom, nRight )
 
-   ::lActive   := .T.
-   ::lFloating := .F.
+   ::lActive   := TRUE
+   ::lFloating := FALSE
    ::nPaintID  := ::oParent:nPaintID++
 
    RETURN Self
@@ -100,8 +100,8 @@ METHOD WvtToolBar:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 METHOD WvtToolBar:Create()
 
    IF ::lFloating
-      ::lActive := .F.
-      ::lHidden := .T.
+      ::lActive := FALSE
+      ::lHidden := TRUE
    ENDIF
 
    AEval(::aObjects, {| o | o:lActive := ::lActive })
@@ -168,8 +168,8 @@ METHOD WvtToolBar:AddButton( cFileImage, bBlock, cTooltip )
 METHOD WvtToolBar:HoverOn()
 
    IF ::lFloating .AND. ::lHidden
-      ::lHidden   := .F.
-      ::lActive   := .T.
+      ::lHidden   := FALSE
+      ::lActive   := TRUE
 #if 0
       ::cScreen   := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
       ::wScreen   := wvt_SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
@@ -184,12 +184,12 @@ METHOD WvtToolBar:HoverOn()
 METHOD WvtToolBar:HoverOff()
 
    IF ::lFloating .AND. !::lHidden
-      ::lHidden := .T.
-      ::lActive := .F.
+      ::lHidden := TRUE
+      ::lActive := FALSE
       AEval(::aObjects, {| o | o:lActive := ::lActive })
 #if 0
       RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen)
-      wvt_RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::wScreen, .F.)
+      wvt_RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::wScreen, FALSE)
 #endif
       ::Refresh()
    ENDIF

@@ -3,8 +3,8 @@
  * on previous versions, all placed in the public domain.
  */
 
-THREAD STATIC t_lCrsState := .F.
-THREAD STATIC t_lMInit := .F.
+THREAD STATIC t_lCrsState := FALSE
+THREAD STATIC t_lMInit := FALSE
 
 FUNCTION ft_MDblClk(nClick, nButton, nInterval, nRow, nCol, nStart)
 
@@ -54,7 +54,7 @@ FUNCTION ft_MDblClk(nClick, nButton, nInterval, nRow, nCol, nStart)
 
    IF lDouble
 
-      lDouble := lDone := .F.
+      lDouble := lDone := FALSE
 
       DO WHILE !lDone
 
@@ -147,7 +147,7 @@ FUNCTION ft_MInit()
 
 FUNCTION ft_MReset()
 
-   t_lCrsState := .F. // Cursor is off after reset
+   t_lCrsState := FALSE // Cursor is off after reset
    MHide()
    MSetBounds()
    MSetPos((MaxRow() + 1) / 2, (MaxCol() + 1) / 2)
@@ -172,7 +172,7 @@ FUNCTION ft_MShowCrs()
 
    MShow()
 
-   t_lCrsState := .T.
+   t_lCrsState := TRUE
 
    RETURN NIL                // no output from function
 
@@ -180,7 +180,7 @@ FUNCTION ft_MHideCrs() // decrement internal cursor flag and hide cursor
 
    MHide()
 
-   t_lCrsState := .F.
+   t_lCrsState := FALSE
 
    RETURN NIL                // no output from function
 

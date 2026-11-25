@@ -82,7 +82,7 @@
 #define cTapeScr   aAdder[23]
 
 // I still use a few of STATICS, but most are set to NIL when quiting...
-THREAD STATIC t_lAdderOpen := .F.
+THREAD STATIC t_lAdderOpen := FALSE
 THREAD STATIC t_aKeys
 THREAD STATIC t_aWindow
 THREAD STATIC t_nWinColor
@@ -109,7 +109,7 @@ FUNCTION ft_Adder()
    LOCAL nOldCol     := Col()
    LOCAL bOldF10     := SetKey(K_F10, NIL)
    LOCAL nOldLastKey := LastKey()
-   LOCAL lShowRight  := .T.
+   LOCAL lShowRight  := TRUE
    LOCAL aAdder      := Array(23)
    LOCAL tmp
    LOCAL tmp1
@@ -121,7 +121,7 @@ FUNCTION ft_Adder()
    IF t_lAdderOpen
       RETURN NIL
    ELSE
-      t_lAdderOpen := .T.
+      t_lAdderOpen := TRUE
    ENDIF
 
    aTrans       := {"                  0.00 C "}
@@ -129,15 +129,15 @@ FUNCTION ft_Adder()
    cTotPict     := "999999999999999.99"
    cTapeScr     := ""
    nTotal       := nNumTotal := nSavTotal := nDecDigit := 0
-   lDone        := .F.                   // Loop flag
+   lDone        := FALSE                   // Loop flag
    nMaxDeci     := 2                     // Initial # of decimals
    nSavSubTot   := 0
-   lNewNum      := .F.
+   lNewNum      := FALSE
    nAddMode     := 1                     // Start in ADD mode
-   lMultDiv     := .F.                   // Start in ADD mode
-   lClAdder     := .F.                   // Clear adder flag
-   lDecSet      := .F.                   // Decimal ? - keyboard routine
-   lSubRtn      := lTotalOk := lTape := lAddError := lDivError := .F.
+   lMultDiv     := FALSE                   // Start in ADD mode
+   lClAdder     := FALSE                   // Clear adder flag
+   lDecSet      := FALSE                   // Decimal ? - keyboard routine
+   lSubRtn      := lTotalOk := lTape := lAddError := lDivError := FALSE
 
    nTopOS       := Int((MaxRow() - 24) / 2)  // Using the TopOffSet and LeftOffSet
    nLeftOS      := Int((MaxCol() - 79) / 2)  // the Adder will always be centered
@@ -180,8 +180,8 @@ FUNCTION ft_Adder()
          SetPos(nOldRow, nOldCol)
          _ftSetLastKey(nOldLastKey)
          SetKey(K_F10, bOldF10)
-         t_lAdderOpen := .F.               // Reset the recursive flag
-         lDone      := .T.
+         t_lAdderOpen := FALSE               // Reset the recursive flag
+         lDone      := TRUE
       CASE nKey == hb_keyCode("D") .OR. nKey == hb_keyCode("d")  // <D> Change number of decimal places
          _ftChangeDec(aAdder)
       CASE nKey == hb_keyCode("T") .OR. nKey == hb_keyCode("t")  // <T> Display Tape
@@ -211,7 +211,7 @@ FUNCTION ft_Adder()
          _ftAddScreen(aAdder)
          _ftDispTotal(aAdder)
          IF lTape
-            lTape := .F.
+            lTape := FALSE
             _ftDisplayTape(aAdder, nKey)
          ENDIF
          hb_DispOutAt(4 + nTopOS, 8 + nAddSpace, cTotal)
@@ -225,8 +225,8 @@ FUNCTION ft_Adder()
             SetColor("GR+/W")
             hb_DispOutAt(21 + nTopOS, 8 + nTapeSpace, " " + /* LOW-ASCII "↑↓" */ Chr(24) + Chr(25) + "-SCROLL  <ESC>-QUIT ")
             SetColor("N/W,W+/N")
-            lAC_exit_ok := .F.
-            AChoice(5 + nTopOS, 7 + nTapeSpace, 20 + nTopOS, 32 + nTapeSpace, aTrans, .T., ;
+            lAC_exit_ok := FALSE
+            AChoice(5 + nTopOS, 7 + nTapeSpace, 20 + nTopOS, 32 + nTapeSpace, aTrans, TRUE, ;
                {|nMode, cur_elem, rel_pos|_ftAdderTapeUDF(nMode, cur_elem, rel_pos, @lAC_exit_ok)}, Len(aTrans), 20)
             SetColor("R+/W")
             hb_DispBox(21 + nTopOS, 8 + nTapeSpace, 21 + nTopOS, 30 + nTapeSpace, HB_B_SINGLE_UNI)
@@ -255,8 +255,8 @@ FUNCTION ft_Adder()
                _ftSetLastKey(nOldLastKey)
                SetKey(K_F10, bOldF10)
                oGet:VARPUT(nSavTotal)
-               t_lAdderOpen := .F.           // Reset the recursive flag
-               lDone        := .T.
+               t_lAdderOpen := FALSE           // Reset the recursive flag
+               lDone        := TRUE
             ELSE
                _ftError("but I can not return the total from the " + ;
                   "adder to this variable. You must quit the adder using" + ;
@@ -365,12 +365,12 @@ STATIC FUNCTION _ftDispTotal(aAdder)
       cTotStr   := _ftStuffComma(hb_ntos(nTotal))
       hb_DispOutAt(4 + nTopOS, 8 + nAddSpace, "****  ERROR  **** ")
       _ftError("that number is to big to display! I believe the answer was " + cTotStr + ".")
-      lAddError := .T.
-      _ftUpdateTrans(aAdder, .T., NIL)
+      lAddError := TRUE
+      _ftUpdateTrans(aAdder, TRUE, NIL)
       _ftClearAdder(aAdder)
       nTotal    := 0
       nNumTotal := 0
-      lAddError := .F.
+      lAddError := FALSE
    ELSE
       hb_DispOutAt(4 + nTopOS, 7 + nAddSpace, Transform(nTotal, cTotPict))
    ENDIF
@@ -388,12 +388,12 @@ STATIC FUNCTION _ftDispSubTot(aAdder)
       cStotStr  := _ftStuffComma(hb_ntos(nNumTotal))
       hb_DispOutAt(4 + nTopOS, 8 + nAddSpace, "****  ERROR  **** ")
       _ftError("that number is to big to display! I believe the answer was " + cStotStr + ".")
-      lAddError := .T.
-      _ftUpdateTrans(aAdder, .T., nNumTotal)
+      lAddError := TRUE
+      _ftUpdateTrans(aAdder, TRUE, nNumTotal)
       _ftClearAdder(aAdder)
       nTotal    := 0
       nNumTotal := 0
-      lAddError := .F.
+      lAddError := FALSE
    ELSE
       hb_DispOutAt(4 + nTopOS, 7 + nAddSpace, Transform(nNumTotal, cTotPict))
    ENDIF
@@ -408,18 +408,18 @@ STATIC FUNCTION _ftProcessNumb(aAdder, nKey)
    LOCAL nNum
 
    _ftEraseTotSubTot(aAdder)
-   lTotalOk  := .F.
-   lClAdder  := .F.                      // Reset the Clear flag
-   lAddError := .F.                      // Reset adder error flag
+   lTotalOk  := FALSE
+   lClAdder  := FALSE                      // Reset the Clear flag
+   lAddError := FALSE                      // Reset adder error flag
 
    IF nKey == hb_keyCode(".")          // Period (.) decimal point
       IF lDecSet                         // Has decimal already been set
          Tone(800, 1)
       ELSE
-         lDecSet := .T.
+         lDecSet := TRUE
       ENDIF
    ELSE                                  // It must be a number input
-      lNewNum := .T.
+      lNewNum := TRUE
       nNum := nKey - hb_keyCode("0")
       IF lDecSet                         // Decimal set
          IF nDecDigit < nMaxDeci         // Check how many decimals are allowed
@@ -441,24 +441,24 @@ STATIC FUNCTION _ftProcessNumb(aAdder, nKey)
 STATIC FUNCTION _ftAddTotal(aAdder)
 
    _ftEraseTotSubTot(aAdder)
-   lDecSet   := .F.
+   lDecSet   := FALSE
    nDecDigit :=  0
-   lClAdder  := .F.                      // Reset the Clear flag
+   lClAdder  := FALSE                      // Reset the Clear flag
    IF lSubRtn                            // If this was the second time they
       IF !lMultDiv
          _ftSetWinColor(W_CURR, W_SCREEN)
          hb_DispOutAt(6 + nTopOS, 18 + nAddSpace, "   <TOTAL>")
          _ftSetWinColor(W_CURR, W_PROMPT)
-         _ftUpdateTrans(aAdder, .T., NIL)
+         _ftUpdateTrans(aAdder, TRUE, NIL)
          _ftDispTotal(aAdder)
-         lSubRtn   := .F.                  // pressed the total key reset everyting
+         lSubRtn   := FALSE                  // pressed the total key reset everyting
          nSavTotal := nTotal
          nTotal    := 0
-         lTotalOk  := .T.
+         lTotalOk  := TRUE
       ENDIF
    ELSE                                  // This was the first time they pressed
       IF !lMultDiv .AND. LastKey() == K_ENTER // total key
-         lSubRtn := .T.
+         lSubRtn := TRUE
       ENDIF
       IF _ftRoundIt(nTotal, nMaxDeci) != 0 .OR. _ftRoundIt(nNumTotal, nMaxDeci) != 0
          IF !lMultDiv
@@ -467,11 +467,11 @@ STATIC FUNCTION _ftAddTotal(aAdder)
             _ftSetWinColor(W_CURR, W_PROMPT)
          ENDIF
          IF _ftRoundIt(nNumTotal, nMaxDeci) != 0
-            lSubRtn := .F.
-            _ftUpdateTrans(aAdder, .F., nNumTotal)
+            lSubRtn := FALSE
+            _ftUpdateTrans(aAdder, FALSE, nNumTotal)
          ENDIF
          IF !lMultDiv
-            lSubRtn := .T.                  // total key
+            lSubRtn := TRUE                  // total key
          ENDIF
          IF nAddMode == 1                  // Add
             nTotal := nTotal + nNumTotal
@@ -483,7 +483,7 @@ STATIC FUNCTION _ftAddTotal(aAdder)
             nTotal := _ftDivide(aAdder, nTotal, nNumTotal)
             IF lDivError
                _ftError("you can't divide by ZERO!")
-               lDivError := .F.
+               lDivError := FALSE
             ENDIF
          ENDIF
       ENDIF
@@ -492,17 +492,17 @@ STATIC FUNCTION _ftAddTotal(aAdder)
          _ftSetWinColor(W_CURR, W_SCREEN)
          hb_DispOutAt(6 + nTopOS, 18 + nAddSpace, "   <TOTAL>")
          _ftSetWinColor(W_CURR, W_PROMPT)
-         lSubRtn := .F.                    // pressed total so key reset everything
+         lSubRtn := FALSE                    // pressed total so key reset everything
          IF !lTotalOk                     // If you haven't printed total DO-IT
-            lTotalOk := .T.
-            _ftUpdateTrans(aAdder, .F., NIL)
+            lTotalOk := TRUE
+            _ftUpdateTrans(aAdder, FALSE, NIL)
          ENDIF
          nNumTotal := 0
          nSavTotal := nTotal
          nTotal    := 0
       ELSE
          IF !lTotalOk                     // If you haven't printed total DO-IT
-            _ftUpdateTrans(aAdder, .F., NIL)
+            _ftUpdateTrans(aAdder, FALSE, NIL)
             nNumTotal := 0
          ENDIF
       ENDIF
@@ -515,36 +515,36 @@ STATIC FUNCTION _ftAddTotal(aAdder)
 
 STATIC FUNCTION _ftAddSub(aAdder, nKey)
 
-   lMultDiv  := .F.
+   lMultDiv  := FALSE
    _ftEraseTotSubTot(aAdder)
-   lTotalOk  := .F.
-   lDecSet   := .F.
+   lTotalOk  := FALSE
+   lDecSet   := FALSE
    nDecDigit := 0
-   lSubRtn   := .F.
+   lSubRtn   := FALSE
    // They pressed the + or - key to process the previous total
    IF _ftRoundIt(nNumTotal, nMaxDeci) == 0 .AND. _ftRoundIt(nTotal, nMaxDeci) == 0
       nNumTotal := nSavTotal
-      lNewNum   := .T.
+      lNewNum   := TRUE
    ENDIF
    IF nKey == hb_keyCode("+")                 // Add
       nAddMode := 1
       IF !lNewNum                         // They pressed + again to add the same
          nNumTotal := nSavSubTot           // number without re-entering
       ENDIF
-      _ftUpdateTrans(aAdder, .F., nNumTotal)
+      _ftUpdateTrans(aAdder, FALSE, nNumTotal)
       nTotal     := nTotal + nNumTotal
-      lNewNum    := .F.
+      lNewNum    := FALSE
       nSavSubTot := nNumTotal   // Save this number in case they just press + or -
       nNumTotal  := 0
    ELSEIF nKey == hb_keyCode("-")          // Subtract
       nAddMode := 2
       IF !lNewNum                         // They pressed + again to add the same
          nNumTotal := nSavSubTot           // number without re-entering
-         lNewNum   := .T.
+         lNewNum   := TRUE
       ENDIF
-      _ftUpdateTrans(aAdder, .F., nNumTotal)
+      _ftUpdateTrans(aAdder, FALSE, nNumTotal)
       nTotal     := nTotal - nNumTotal
-      lNewNum    := .F.
+      lNewNum    := FALSE
       nSavSubTot := nNumTotal   // Save this number in case they just press + or -
       nNumTotal  := 0
    ENDIF
@@ -558,12 +558,12 @@ STATIC FUNCTION _ftAddSub(aAdder, nKey)
 
 STATIC FUNCTION _ftMultDiv(aAdder, nKey)
 
-   lMultDiv  := .T.
+   lMultDiv  := TRUE
    _ftEraseTotSubTot(aAdder)
-   lTotalOk  := .F.
-   lDecSet   := .F.
+   lTotalOk  := FALSE
+   lDecSet   := FALSE
    nDecDigit := 0
-   lSubRtn   := .F.
+   lSubRtn   := FALSE
    // They pressed the + or - key to process the previous total
    IF _ftRoundIt(nNumTotal, nMaxDeci) == 0 .AND. _ftRoundIt(nTotal, nMaxDeci) == 0
       nNumTotal := nSavTotal
@@ -572,26 +572,26 @@ STATIC FUNCTION _ftMultDiv(aAdder, nKey)
    IF _ftRoundIt(nTotal, nMaxDeci) == 0
       IF nKey == hb_keyCode("*")            // Setup mode
          nAddMode := 3
-         _ftUpdateTrans(aAdder, .F., nNumTotal)
+         _ftUpdateTrans(aAdder, FALSE, nNumTotal)
       ELSEIF nKey == hb_keyCode("/")
          nAddMode := 4
-         _ftUpdateTrans(aAdder, .F., nNumTotal)
+         _ftUpdateTrans(aAdder, FALSE, nNumTotal)
       ENDIF
       nTotal    := nNumTotal
       nNumTotal := 0
    ELSE
       IF nKey == hb_keyCode("*")           // Multiply
          nAddMode  := 3
-         _ftUpdateTrans(aAdder, .F., nNumTotal)
+         _ftUpdateTrans(aAdder, FALSE, nNumTotal)
          nTotal    := nTotal * nNumTotal
          nNumTotal := 0
       ELSEIF nKey == hb_keyCode("/")       // Divide
          nAddMode := 4
-         _ftUpdateTrans(aAdder, .F., nNumTotal)
+         _ftUpdateTrans(aAdder, FALSE, nNumTotal)
          nTotal := _ftDivide(aAdder, nTotal, nNumTotal)
          IF lDivError
             _ftError("you can't divide by ZERO!")
-            lDivError := .F.
+            lDivError := FALSE
          ENDIF
          nNumTotal := 0
       ENDIF
@@ -624,7 +624,7 @@ STATIC FUNCTION _ftAddHelp
       "         <ESC>      - Quit"                          + hb_eol() + ;
       "         <F10>      - return a <TOTAL> to the active get"
 
-   _ftPushMessage(cMess, .T., "ADDER HELP", "press any key to continue...", "QUIET")
+   _ftPushMessage(cMess, TRUE, "ADDER HELP", "press any key to continue...", "QUIET")
 
    RETURN NIL
 
@@ -634,17 +634,17 @@ STATIC FUNCTION _ftAddHelp
 STATIC FUNCTION _ftClearAdder(aAdder)
 
    _ftEraseTotSubTot(aAdder)
-   lDecSet   := .F.
+   lDecSet   := FALSE
    nDecDigit := 0
    IF lClAdder                           // If it has alredy been pressed once
       nTotal    := 0                      // then we are clearing the total
       nSavTotal := 0
-      _ftUpdateTrans(aAdder, .F., NIL)
-      lClAdder  := .F.
+      _ftUpdateTrans(aAdder, FALSE, NIL)
+      lClAdder  := FALSE
       _ftDispTotal(aAdder)
    ELSE
       nNumTotal := 0                      // Just clearing the last entry
-      lClAdder  := .T.
+      lClAdder  := TRUE
       _ftDispSubTot(aAdder)
    ENDIF
 
@@ -667,14 +667,14 @@ STATIC FUNCTION _ftUpdateTrans(aAdder, lTypeTotal, nAmount)
       RETU NIL
    ENDIF
 
-   IF lTypeTotal                         // If lTypeTotal == .T. Update from total
+   IF lTypeTotal                         // If lTypeTotal == TRUE Update from total
       AAdd(aTrans, Str(IIf(lUseTotal, nTotal, nAmount), 22, nMaxDeci))
-      aTrans[Len(aTrans)] := _ftStuffComma(aTrans[Len(aTrans)], .T.) + " *" + IIf(lAddError, "ER", "")
+      aTrans[Len(aTrans)] := _ftStuffComma(aTrans[Len(aTrans)], TRUE) + " *" + IIf(lAddError, "ER", "")
 
-   ELSE                            // If lTypeTotal=.F. Update from nNumTotal
+   ELSE                            // If lTypeTotal=FALSE Update from nNumTotal
       AAdd(aTrans, Str(IIf(lUseTotal, nTotal, nAmount), 22, nMaxDeci))
 
-      aTrans[Len(aTrans)] := _ftStuffComma(aTrans[Len(aTrans)], .T.) + ;
+      aTrans[Len(aTrans)] := _ftStuffComma(aTrans[Len(aTrans)], TRUE) + ;
          IIf(lSubRtn, " S", IIf(nAddMode == 1, " +", IIf(nAddMode == 2, " -", ;
          IIf(lTotalOk, " =", IIf(nAddMode == 3, " X", " /"))))) + IIf(lAddError, "ER", "")
 
@@ -713,10 +713,10 @@ STATIC FUNCTION _ftRoundIt(nNumber, nPlaces)
 STATIC FUNCTION _ftDivide(aAdder, nNumerator, nDenominator)
 
    IF nDenominator == 0.0
-      lDivError := .T.
+      lDivError := TRUE
       RETU 0
    ELSE
-      lDivError := .F.
+      lDivError := FALSE
    ENDIF
 
    RETURN nNumerator / nDenominator
@@ -726,11 +726,11 @@ STATIC FUNCTION _ftDivide(aAdder, nNumerator, nDenominator)
 
 STATIC FUNCTION _ftValDeci(oGet)
 
-   LOCAL lRtnValue := .T.
+   LOCAL lRtnValue := TRUE
 
    IF oGet:VarGet() > 8
       _ftError("no more than 8 decimal places please!")
-      lRtnValue := .F.
+      lRtnValue := FALSE
    ENDIF
 
    RETURN lRtnValue
@@ -744,7 +744,7 @@ STATIC FUNCTION _ftDisplayTape(aAdder, nKey)
    LOCAL nTopTape := 1
 
    IF (nKey == hb_keyCode("T") .OR. nKey == hb_keyCode("t")) .AND. lTape  // Stop displaying tape
-      lTape := .F.
+      lTape := FALSE
       RestScreen(4 + nTopOS, 6 + nTapeSpace, 22 + nTopOS, 35 + nTapeSpace, cTapeScr)
       RETURN NIL
    ENDIF
@@ -756,7 +756,7 @@ STATIC FUNCTION _ftDisplayTape(aAdder, nKey)
       ENDIF
       _ftSetWinColor(W_CURR, W_PROMPT)
    ELSE                                  // Start displaying tape
-      lTape := .T.
+      lTape := TRUE
       SetColor("N/W")
       cTapeScr := SaveScreen(4 + nTopOS, 6 + nTapeSpace, 22 + nTopOS, 35 + nTapeSpace)
       hb_Shadow(4 + nTopOS, 6 + nTapeSpace, 21 + nTopOS, 33 + nTapeSpace)
@@ -836,7 +836,7 @@ STATIC FUNCTION _ftPushMessage(cMessage, lWait, cTitle, cBotTitle, xQuiet, nTop)
    LOCAL nWinColor   := W_CURR
 
    cOldDevic := Set(_SET_DEVICE, "SCREEN")
-   lOldPrint := Set(_SET_PRINTER, .F.)
+   lOldPrint := Set(_SET_PRINTER, FALSE)
    nMessLen  := Len(cMessage)
    nWide     := IIf(nMessLen > 72, 72, IIf(nMessLen < 12, 12, nMessLen))
    nNumRows  := MLCount(cMessage, nWide)
@@ -848,7 +848,7 @@ STATIC FUNCTION _ftPushMessage(cMessage, lWait, cTitle, cBotTitle, xQuiet, nTop)
    nLeft     := Int((MaxCol() - nWide) / 2) - 3
    nRight    := nLeft + nWide + 4
 
-   __defaultNIL(@lWait, .F.)
+   __defaultNIL(@lWait, FALSE)
 
    _ftPushWin(nTop, nLeft, nBottom, nRight, cTitle, cBotTitle, nWinColor)
    _ftDispMessage(cMessage, nTop + 1, nLeft + 2, nBottom - 1, nRight - 2)
@@ -908,14 +908,14 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
       IIf(cVarType == "N", IIf(cPict == NIL, 9, Len(cPict)), 0))))
    LOCAL nOldLastKey := LastKey()
    LOCAL cOldDevice  := Set(_SET_DEVICE, "SCREEN")
-   LOCAL lOldPrint   := Set(_SET_PRINTER, .F.)
+   LOCAL lOldPrint   := Set(_SET_PRINTER, FALSE)
 
    nOldRow   := Row()
    nOldCol   := Col()
    nOldCurs  := SetCursor(SC_NONE)
    cOldColor := SetColor()
 
-   __defaultNIL(@lNoESC, .F.)
+   __defaultNIL(@lNoESC, FALSE)
 
    nMessLen  := Len(cMessage) + nVarLen + 1
    nWide     := IIf(nMessLen > 66, 66, IIf(nMessLen < 12, 12, nMessLen))
@@ -960,7 +960,7 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
    oNewGet:Display()
 
    SetCursor(SC_NORMAL)
-   DO WHILE .T.                          // Loop so we can check for <ESC>
+   DO WHILE TRUE                          // Loop so we can check for <ESC>
       // without reissuing the gets
       ReadModal({oNewGet})
       IF LastKey() == K_ESC .AND. lNoESC  // They pressed <ESC>
@@ -1001,11 +1001,11 @@ STATIC FUNCTION _ftAdderTapeUDF(mode, cur_elem, rel_pos, /* @ */ lAC_exit_ok)
          nRtnVal := AC_CONT
       CASE nKey == K_ESC
          hb_keyPut({K_CTRL_PGDN, K_ENTER})  // Go to last item
-         lAC_exit_ok := .T.
+         lAC_exit_ok := TRUE
          nRtnVal := AC_CONT
       CASE lAC_exit_ok
          nRtnVal := AC_ABORT
-         lAC_exit_ok := .F.
+         lAC_exit_ok := FALSE
       OTHERWISE
          nRtnVal := AC_CONT
       ENDCASE
@@ -1043,7 +1043,7 @@ STATIC FUNCTION _ftError(cMessage, xDontReset)
    nOldCurs := SetCursor(SC_NONE)
    cOldColor := _ftSetSCRColor(STD_ERROR)
    cOldDevic := Set(_SET_DEVICE, "SCREEN")
-   lOldPrint := Set(_SET_PRINTER, .F.)
+   lOldPrint := Set(_SET_PRINTER, FALSE)
    cMessage := "I'm sorry but, " + cMessage
    nMessLen := Len(cMessage)
    nWide    := IIf(nMessLen > 66, 66, IIf(nMessLen < 12, 12, nMessLen))
@@ -1083,7 +1083,7 @@ STATIC FUNCTION _ftStuffComma(cStrToStuff, lTrimStuffedStr)
    LOCAL nDecPosit
    LOCAL x
 
-   __defaultNIL(@lTrimStuffedStr, .F.)
+   __defaultNIL(@lTrimStuffedStr, FALSE)
 
    IF !("." $ cStrToStuff)
       cStrToStuff := _ftPosIns(cStrToStuff, ".", IIf("C" $ cStrToStuff .OR. ;
@@ -1143,7 +1143,7 @@ STATIC FUNCTION _ftSetSCRColor(nStd, nEnh, nBord, nBack, nUnsel)
 //       one they requested. Push the window coordinates, the
 //       color number, the SaveScreen() value, and whether they
 //       picked the window color they wanted to use. If
-//       lAutoWindow=.F. then the window color was incremented
+//       lAutoWindow=FALSE then the window color was incremented
 //       and we will will restore the color number when we pop
 //       the window off.
 //          nWinColor DEFAULT == _ftNextWinColor()
@@ -1314,7 +1314,7 @@ STATIC FUNCTION _ftInkey(nSecs, cVar)
 
    LOCAL nVar
 
-   DO WHILE .T.
+   DO WHILE TRUE
       nVar := Inkey(nSecs)
       IF SetKey(nVar) != NIL
          Eval(SetKey(nVar), ProcName(), ProcLine(), cVar)
@@ -1329,7 +1329,7 @@ STATIC PROCEDURE _ftDispMessage(cMessage, nT, nL, nB, nR)
 
    _ftPushKeys()
    hb_keyPut({K_CTRL_PGDN, K_CTRL_W})
-   MemoEdit(cMessage, nT, nL, nB, nR, .F., NIL, nR - nL + 1)
+   MemoEdit(cMessage, nT, nL, nB, nR, FALSE, NIL, nR - nL + 1)
    _ftPopKeys()
 
    RETURN

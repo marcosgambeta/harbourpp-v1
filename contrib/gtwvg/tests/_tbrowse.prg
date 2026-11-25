@@ -31,11 +31,11 @@
 PROCEDURE WvtMyBrowse()
 
    IF hb_mtvm()
-      hb_threadStart({|oCrt|oCrt := WvgCrt():new(, , {-1, -2}, {34, 69}, , .T.), ;
+      hb_threadStart({|oCrt|oCrt := WvgCrt():new(, , {-1, -2}, {34, 69}, , TRUE), ;
          oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS, ;
          oCrt:icon := GetResource("resources\dia_excl.ico"), ;
          oCrt:create(), ;
-         wvt_SetGUI(.T.), ;
+         wvt_SetGUI(TRUE), ;
          ExecBrowser(oCrt), ;
          oCrt:destroy()})
 
@@ -49,7 +49,7 @@ STATIC PROCEDURE ExecBrowser(oCrt)
 
    LOCAL nKey, bBlock, oBrowse, aLastPaint, i, pGT
    LOCAL cFileIndex, cFileDbf, cRDD, nIndex, oTBar, cScr, info_ // , oLB
-   LOCAL lEnd := .F.
+   LOCAL lEnd := FALSE
    LOCAL aBlocks := {}
    LOCAL nTop :=  4
    LOCAL nLeft :=  3
@@ -66,7 +66,7 @@ STATIC PROCEDURE ExecBrowser(oCrt)
    STATIC s_nStyle := 0
 
    THREAD STATIC t_nFactor := 200
-   THREAD STATIC t_lActiveX := .F.
+   THREAD STATIC t_lActiveX := FALSE
 
    IF oCrt == NIL
       cScr := SaveScreen(0, 0, MaxRow(), MaxCol())
@@ -170,10 +170,10 @@ STATIC PROCEDURE ExecBrowser(oCrt)
          hb_gtInfo(HB_GTI_SPEC, HB_GTS_FACTOR, t_nFactor)
 
       CASE nKey == K_F6
-         hb_gtInfo(HB_GTI_RESIZABLE, .F.)
+         hb_gtInfo(HB_GTI_RESIZABLE, FALSE)
 
       CASE nKey == K_F7
-         hb_gtInfo(HB_GTI_RESIZABLE, .T.)
+         hb_gtInfo(HB_GTI_RESIZABLE, TRUE)
 
       CASE nKey == K_F2
          nIndex := IndexOrd()
@@ -263,7 +263,7 @@ STATIC FUNCTION BrwHandleResize(oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTre
    oCrt:hide()
    oCrt:show()
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC PROCEDURE BrwShowColumn(oBrw, cHeading)
 
@@ -294,9 +294,9 @@ STATIC FUNCTION BrwBuildTree(oCrt /*, oBrw*/)
    LOCAL oTree, oItem1, oItem2
 
    oTree := WvgTreeView():new(oCrt)
-   oTree:hasLines := .T.
-   oTree:hasButtons := .T.
-   oTree:alwaysShowSelection := .T.
+   oTree:hasLines := TRUE
+   oTree:hasButtons := TRUE
+   oTree:alwaysShowSelection := TRUE
    oTree:create(, , {-24, -1}, {{||-(MaxRow() - 1 - 24)}, -10})
    oTree:setColorFG("W+")
    oTree:setColorBG("R*")
@@ -313,7 +313,7 @@ STATIC FUNCTION BrwBuildTree(oCrt /*, oBrw*/)
    oItem2:addItem("Third level y")
    oItem2:addItem("Third level z")
 
-   oTree:showExpanded(.T., 2)
+   oTree:showExpanded(TRUE, 2)
    oTree:setData(oItem2)
 
    oTree:tooltipText := "Treeview embedded onto CUI window"
@@ -326,7 +326,7 @@ STATIC FUNCTION BrwBuildActiveX(oCrt, oBrw)
 
    HB_SYMBOL_UNUSED(oBrw)
 
-   oCom := WvgActiveXControl():new(oCrt, , {-24, -13}, {{||-(MaxRow() - 1 - 24)}, {||-(MaxCol() - 1 - 13)}}, , .F.)
+   oCom := WvgActiveXControl():new(oCrt, , {-24, -13}, {{||-(MaxRow() - 1 - 24)}, {||-(MaxCol() - 1 - 13)}}, , FALSE)
    oCom:CLSID := "Shell.Explorer.2"
 #if 0
    oCom:mapEvent(269, {||uiDebug("EXPLORER-269")})
@@ -341,7 +341,7 @@ STATIC FUNCTION BrwBuildListBox(oCrt, oBrw)
    LOCAL oXbp, i
 
    oXbp := WvgListBox():new(oCrt)
-   oXbp:create(, , {-4, -1}, {-10, -10}, , .T.)
+   oXbp:create(, , {-4, -1}, {-10, -10}, , TRUE)
    oXbp:setColorFG("W+")
    oXbp:setColorBG("B*")
    oXbp:itemMarked := {|m1, m2, o|m1 := m1, m2 := m2, BrwShowColumn(oBrw, o:getCurItem())}
@@ -374,7 +374,7 @@ STATIC FUNCTION BrwBuildListBoxIdx(oCrt, oBrw)
 
    oXbp := WvgComboBox():new(oCrt)
    oXbp:type := WVGCOMBO_DROPDOWN
-   oXbp:create(, , {-18, -1}, {-5, -10}, , .T.)
+   oXbp:create(, , {-18, -1}, {-5, -10}, , TRUE)
    oXbp:setColorFG("W+")
    oXbp:setColorBG("B*")
    oXbp:itemMarked := {|m1, m2, o|m1 := m2, BrwSetThisOrder(oBrw, o:XbpListBox:getData() - 1)}
@@ -417,13 +417,13 @@ STATIC FUNCTION BrwBuildNvg(oCrt, oBrw, oCom)
    oLbl:type := WVGSTATIC_TYPE_TEXT
    oLbl:options := WVGSTATIC_TEXT_LEFT
    oLbl:caption := "Navigate"
-   oLbl:create(, , {-23, -13}, {-1, -6}, , .F.)
+   oLbl:create(, , {-23, -13}, {-1, -6}, , FALSE)
    oLbl:setColorFG("W+")
    oLbl:setColorBG("BG")
 
    oXbp := WvgSLE():new(oCrt)
    oXbp:bufferLength := 300
-   oXbp:create(, , {-23, -19}, {-1, {||-(MaxCol() - 1 - 19)}}, , .F.)
+   oXbp:create(, , {-23, -19}, {-1, {||-(MaxCol() - 1 - 19)}}, , FALSE)
    oXbp:setColorFG("N")
    oXbp:setColorBG("BG+")
    oXbp:returnPressed := {|m1, m2, o|m1 := m2, oCom:navigate(RTrim(o:getData()))}
@@ -439,10 +439,10 @@ STATIC FUNCTION BrwBuildCheckBox(oCrt, oBrw, lActiveX)
    HB_SYMBOL_UNUSED(oBrw)
 
    oXbp := WvgCheckBox():new(oCrt)
-   oXbp:pointerFocus := .F.
+   oXbp:pointerFocus := FALSE
    oXbp:caption := "ActiveX"
    oXbp:selected := {|x, y, o|x := y, lActiveX := o:getData(), wvt_Keyboard(HB_K_RESIZE)}
-   oXbp:selection := .F.
+   oXbp:selection := FALSE
    oXbp:create(, , {-23, -1}, {-1, -10})
    oXbp:setColorFG("R+")
    oXbp:setColorBG("W")
@@ -493,7 +493,7 @@ STATIC PROCEDURE BrwBuildButtons(oCrt, oBrw)
    FOR i := 1 TO Len(aPmt)
       oPB := WvgPushButton():new(oCrt)
       IF i == 3  // We do not want this button to gain focus anytime
-         oPB:pointerFocus := .F.
+         oPB:pointerFocus := FALSE
       ENDIF
       IF i == Len(aPmt)
          oPB:caption := hb_DirBase() + "\" + "resources\v_lock.bmp"
@@ -574,7 +574,7 @@ STATIC FUNCTION BrwBuildToolBar(oCrt)
    oTBar:imageWidth := 26
    oTBar:imageHeight := 24
 
-   oTBar:showToolTips := .T.
+   oTBar:showToolTips := TRUE
 
    // After setting properties, create toolbar.
    oTBar:create()
@@ -593,85 +593,85 @@ STATIC FUNCTION BrwBuildToolBar(oCrt)
 
 STATIC FUNCTION BrwHandleKey(oBrowse, nKey, lEnd)
 
-   LOCAL lVMove := .F.
-   LOCAL lHMove := .F.
-   LOCAL lRet := .T.
+   LOCAL lVMove := FALSE
+   LOCAL lHMove := FALSE
+   LOCAL lRet := TRUE
 
    DO CASE
    CASE nKey == K_ESC
-      lEnd := .T.
+      lEnd := TRUE
 
    CASE nKey == K_ENTER
-      lEnd := .T.
+      lEnd := TRUE
 
    CASE nKey == K_DOWN
-      lVMove := .T.
+      lVMove := TRUE
       oBrowse:Down()
 
    CASE nKey == K_UP
-      lVMove := .T.
+      lVMove := TRUE
       oBrowse:Up()
 
    CASE nKey == K_PGDN
-      lVMove := .T.
+      lVMove := TRUE
       oBrowse:pageDown()
 
    CASE nKey == K_PGUP
-      lVMove := .T.
+      lVMove := TRUE
       oBrowse:pageUp()
 
    CASE nKey == K_CTRL_PGUP
-      lVMove := .T.
+      lVMove := TRUE
       oBrowse:goTop()
 
    CASE nKey == K_CTRL_PGDN
-      lVMove := .T.
+      lVMove := TRUE
       oBrowse:goBottom()
 
    CASE nKey == K_LEFT
-      lHMove := .T.
+      lHMove := TRUE
       oBrowse:Left()
 
    CASE nKey == K_RIGHT
-      lHMove := .T.
+      lHMove := TRUE
       oBrowse:Right()
 
    CASE nKey == K_HOME
-      lHMove := .T.
+      lHMove := TRUE
       oBrowse:home()
 
    CASE nKey == K_END
-      lHMove := .T.
+      lHMove := TRUE
       oBrowse:end()
 
    CASE nKey == K_CTRL_LEFT
-      lHMove := .T.
+      lHMove := TRUE
       oBrowse:panLeft()
 
    CASE nKey == K_CTRL_RIGHT
-      lHMove := .T.
+      lHMove := TRUE
       oBrowse:panRight()
 
    CASE nKey == K_CTRL_HOME
-      lHMove := .T.
+      lHMove := TRUE
       oBrowse:panHome()
 
    CASE nKey == K_CTRL_END
-      lHMove := .T.
+      lHMove := TRUE
       oBrowse:panEnd()
 
    CASE nKey == K_MWBACKWARD
-      lVMove := .T.
+      lVMove := TRUE
       oBrowse:down()
 
    CASE nKey == K_MWFORWARD
-      lVMove := .T.
+      lVMove := TRUE
       oBrowse:up()
 
    CASE Vou_NavigateToCell(oBrowse, nKey)
 
    OTHERWISE
-      lRet := .F.
+      lRet := FALSE
 
    ENDCASE
 
@@ -718,11 +718,11 @@ STATIC FUNCTION Vou_NavigateToCell(oBrowse)
          DispEnd()
          oBrowse:hilite()
 
-         RETURN .T.
+         RETURN TRUE
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 STATIC FUNCTION DbSkipBlock(n)
 
@@ -746,14 +746,14 @@ STATIC FUNCTION DbSkipBlock(n)
 STATIC FUNCTION TBNext()
 
    LOCAL nSaveRecNum := RecNo()
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    IF Eof()
-      lMoved := .F.
+      lMoved := FALSE
    ELSE
       dbSkip()
       IF Eof()
-         lMoved := .F.
+         lMoved := FALSE
          dbGoto(nSaveRecNum)
       ENDIF
    ENDIF
@@ -763,13 +763,13 @@ STATIC FUNCTION TBNext()
 STATIC FUNCTION TBPrev()
 
    LOCAL nSaveRecNum := RecNo()
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    dbSkip(-1)
 
    IF Bof()
       dbGoto(nSaveRecNum)
-      lMoved := .F.
+      lMoved := FALSE
    ENDIF
 
    RETURN lMoved
@@ -851,7 +851,7 @@ STATIC PROCEDURE Vou_BrwSetVScroll(mp1, oBrowse)
 
 STATIC FUNCTION BrwOnEvent(oWvtBrw, cPaintID, oBrowse, nKey)
 
-   LOCAL lRet := .T., lRefAll := .F.
+   LOCAL lRet := TRUE, lRefAll := FALSE
 
    HB_SYMBOL_UNUSED(cPaintID)
 
@@ -870,19 +870,19 @@ STATIC FUNCTION BrwOnEvent(oWvtBrw, cPaintID, oBrowse, nKey)
 
    CASE nKey == K_PGDN
       oBrowse:pageDown()
-      lRefAll := .T.
+      lRefAll := TRUE
 
    CASE nKey == K_PGUP
       oBrowse:pageUp()
-      lRefAll := .T.
+      lRefAll := TRUE
 
    CASE nKey == K_CTRL_PGUP
       oBrowse:goTop()
-      lRefAll := .T.
+      lRefAll := TRUE
 
    CASE nKey == K_CTRL_PGDN
       oBrowse:goBottom()
-      lRefAll := .T.
+      lRefAll := TRUE
 
    CASE nKey == K_HOME
       oBrowse:home()
@@ -910,7 +910,7 @@ STATIC FUNCTION BrwOnEvent(oWvtBrw, cPaintID, oBrowse, nKey)
 
    CASE nKey == K_SBTHUMBTRACKVERT
       ordKeyGoto(oWvtBrw:oVBar:GetPos())
-      lRefAll := .T.
+      lRefAll := TRUE
 
    CASE nKey == K_SBTHUMBTRACKHORZ
       oBrowse:ColPos := oWvtBrw:oHBar:GetPos()
@@ -940,7 +940,7 @@ STATIC FUNCTION BrwOnEvent(oWvtBrw, cPaintID, oBrowse, nKey)
       oBrowse:Right()
 
    OTHERWISE
-      lRet := .F.
+      lRet := FALSE
 
    ENDCASE
 

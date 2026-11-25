@@ -25,7 +25,7 @@ PROCEDURE Main(cHost, cDatabase, cUser, cPass)
       RETURN
    ENDIF
 
-   ? "Blocking:", PQisnonblocking(conn), PQsetnonblocking(conn, .T.), PQisnonblocking(conn)
+   ? "Blocking:", PQisnonblocking(conn), PQsetnonblocking(conn, TRUE), PQisnonblocking(conn)
 
    pFile := PQtracecreate(hb_DirBase() + "trace.log")
    PQtrace(conn, pFile)

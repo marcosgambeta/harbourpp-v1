@@ -34,7 +34,7 @@ FUNCTION ft_AcctAdj(dGivenDate, lIsEnd)
       dGivenDate := Date()
    ENDIF
 
-   hb_default(@lIsEnd, .F.)
+   hb_default(@lIsEnd, FALSE)
 
    nTemp := ft_DayToBoW(dGivenDate)
 

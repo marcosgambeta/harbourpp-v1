@@ -14,8 +14,8 @@ STATIC s_nAngle, s_nCoordX, s_nCoordY
 
 PROCEDURE Main()
 
-   DrawFlake(.T.)
-   DrawFlake(.F.)
+   DrawFlake(TRUE)
+   DrawFlake(FALSE)
 
    RETURN
 
@@ -41,7 +41,7 @@ PROCEDURE DrawFlake( lOpenPoly )
    s_nAngle := 0
 
    FOR nSide := 1 TO nSides
-      KochFlake( nOrder, nSideLen, .F. )
+      KochFlake( nOrder, nSideLen, FALSE )
       s_nAngle += Pi() * 2 / nSides
    NEXT
 
@@ -63,7 +63,7 @@ PROCEDURE DrawFlake( lOpenPoly )
    s_nAngle := 0
 
    FOR nSide := 1 TO nSides
-      KochFlake( nOrder, nSideLen, .T. )
+      KochFlake( nOrder, nSideLen, TRUE )
       s_nAngle += Pi() * 2 / nSides
    NEXT
 

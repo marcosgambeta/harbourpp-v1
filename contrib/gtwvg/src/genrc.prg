@@ -77,7 +77,7 @@ FUNCTION WvgSetAppWindow(oCrt)
          t_oCrt:hWnd := wvt_GetWindowHandle()
          t_oCrt:pWnd := win_N2P(t_oCrt:hWnd)
          hb_gtInfo(HB_GTI_NOTIFIERBLOCKGUI, {|nEvent, ...|t_oCrt:notifier(nEvent, ...)})
-         t_oCrt:isGT := .T.
+         t_oCrt:isGT := TRUE
          RETURN t_oCrt
       ENDIF
    ELSE

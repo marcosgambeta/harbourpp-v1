@@ -3,13 +3,13 @@
 PROCEDURE Main( cFile )
 
    LOCAL cText
-   LOCAL lEdit := .T.
+   LOCAL lEdit := TRUE
 
    IF cFile == NIL
       cText := Example_Text()
    ELSE
       IF hb_FileMatch( cFile, __FILE__ )
-         lEdit := .F.
+         lEdit := FALSE
       ENDIF
       cText := MemoRead(cFile)
    ENDIF
@@ -30,7 +30,7 @@ STATIC FUNCTION MyMemoEdit( cText, nTop, nLeft, nBottom, nRight, lEdit )
    oED := EditorNew( nTop, nLeft, nBottom, nRight, 254, , , , Len(cText) * 2, 168 )
    IF oED != NIL
       EditorSetText( oED, cText )
-      EditorEdit( oED, lEdit, .T. )
+      EditorEdit( oED, lEdit, TRUE )
       cText := EditorGetText( oED )
       EditorKill( oED )
    ELSE

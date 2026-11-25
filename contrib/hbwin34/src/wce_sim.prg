@@ -51,7 +51,7 @@
 
 CREATE CLASS wce_Sim
 
-   VAR lInitialized INIT .F.
+   VAR lInitialized INIT FALSE
    VAR hSim
    VAR nLastError INIT SIM_E_OK
 
@@ -64,8 +64,8 @@ CREATE CLASS wce_Sim
    METHOD lNumberOfPhoneBookEntries(nType, /* @ */ nTotal, /* @ */ nUsed)
    METHOD aGetAllPhoneBookEntries(nType)  // --> array with phonebook entries of nType storage
    METHOD lGetSimPhoneEntry(nPos, nType, /* @ */ aEntry)  // --> aEntry by reference contains phonebook entry
-   METHOD lSetSimPhoneEntry(nPos, nType, cNumber, cName, nPlan, nAddrType)  // --> .T. / .F. if phonebook entry written
-   METHOD lDelSimPhoneEntry(nPos, nType)  // --> .T. / .F. if phonebook entry deleted
+   METHOD lSetSimPhoneEntry(nPos, nType, cNumber, cName, nPlan, nAddrType)  // --> TRUE / FALSE if phonebook entry written
+   METHOD lDelSimPhoneEntry(nPos, nType)  // --> TRUE / FALSE if phonebook entry deleted
 
 ENDCLASS
 

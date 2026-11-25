@@ -61,44 +61,44 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    VAR    oMenu
 
    // Configuration
-   VAR    alwaysOnTop                           INIT .F.        // Determines whether the dialog can be covered by other windows
+   VAR    alwaysOnTop                           INIT FALSE        // Determines whether the dialog can be covered by other windows
    VAR    border                                INIT 0          // Border type for the XbpCrt window
-   VAR    clipChildren                          INIT .F.
-   VAR    closable                              INIT .T.
+   VAR    clipChildren                          INIT FALSE
+   VAR    closable                              INIT TRUE
    VAR    fontHeight                            INIT 16
    VAR    fontWidth                             INIT 10
    VAR    fontName                              INIT "Courier New"
-   VAR    gridMove                              INIT .F.
+   VAR    gridMove                              INIT FALSE
    VAR    icon                                  INIT 0
-   VAR    minMax                                INIT .T.
-   VAR    sysMenu                               INIT .T.
-   VAR    taskList                              INIT .T.
+   VAR    minMax                                INIT TRUE
+   VAR    sysMenu                               INIT TRUE
+   VAR    taskList                              INIT TRUE
    VAR    title                                 INIT " "
-   VAR    titleBar                              INIT .T.
-   VAR    visible                               INIT .T.
+   VAR    titleBar                              INIT TRUE
+   VAR    visible                               INIT TRUE
 
-   VAR    autoFocus                             INIT .T.
-   VAR    autoMark                              INIT .T.
-   VAR    dropFont                              INIT .T.
-   VAR    dropZone                              INIT .F.
+   VAR    autoFocus                             INIT TRUE
+   VAR    autoMark                              INIT TRUE
+   VAR    dropFont                              INIT TRUE
+   VAR    dropZone                              INIT FALSE
    VAR    helpLink
    VAR    maxCol                                INIT 79
    VAR    maxRow                                INIT 24
    VAR    mouseMode                             INIT 1          // Determines whether mouse coordinates are given as graphics or text coordinates.
    VAR    modalResult                                           // Specifies the result of a modal dialog.
-   VAR    aSyncFlush                            INIT .F.        // Determines the display behavior of text-mode output.
+   VAR    aSyncFlush                            INIT FALSE        // Determines the display behavior of text-mode output.
    VAR    tooltipText                           INIT ""
-   VAR    useShortCuts                          INIT .F.        // Enables shortcut keys for the system menu
+   VAR    useShortCuts                          INIT FALSE        // Enables shortcut keys for the system menu
    VAR    xSize                                 INIT 640 READONLY
    VAR    ySize                                 INIT 400 READONLY
 
    // GUI Specifics
-   VAR    animate                               INIT .F.
-   VAR    clipParent                            INIT .F.
-   VAR    clipSiblings                          INIT .T.
+   VAR    animate                               INIT FALSE
+   VAR    clipParent                            INIT FALSE
+   VAR    clipSiblings                          INIT TRUE
    VAR    group                                 INIT 0          // XBP_NO_GROUP
-   VAR    sizeRedraw                            INIT .F.
-   VAR    tabStop                               INIT .F.
+   VAR    sizeRedraw                            INIT FALSE
+   VAR    tabStop                               INIT FALSE
 
    // Callback slots
    VAR    sl_enter
@@ -135,11 +135,11 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    VAR    sl_dragDrop
 
    // Harbour implementation
-   VAR    resizable                             INIT .T.
+   VAR    resizable                             INIT TRUE
    VAR    resizeMode                            INIT HB_GTI_RESIZEMODE_FONT
    VAR    style                                 INIT WIN_WS_OVERLAPPED + WIN_WS_CAPTION + WIN_WS_SYSMENU + WIN_WS_SIZEBOX + WIN_WS_MINIMIZEBOX + WIN_WS_MAXIMIZEBOX
    VAR    exStyle                               INIT 0
-   VAR    lModal                                INIT .F.
+   VAR    lModal                                INIT FALSE
    VAR    pGTp
    VAR    pGT
    VAR    objType                               INIT objTypeCrt
@@ -149,10 +149,10 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    VAR    aPos                                  INIT { 0, 0 }
    VAR    aSize                                 INIT { 24, 79 }
    VAR    aPresParams                           INIT {}
-   VAR    lHasInputFocus                        INIT .F.
+   VAR    lHasInputFocus                        INIT FALSE
    VAR    nFrameState                           INIT 0  // normal
 
-   VAR    isGT                                  INIT .F.
+   VAR    isGT                                  INIT FALSE
 
    METHOD setTitle( cTitle )                    INLINE ::title := cTitle, hb_gtInfo( HB_GTI_WINTITLE, cTitle )
    METHOD getTitle()                            INLINE hb_gtInfo( HB_GTI_WINTITLE )
@@ -261,7 +261,7 @@ METHOD WvgCrt:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
 METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   LOCAL lRowCol := .T.
+   LOCAL lRowCol := TRUE
 
    __defaultNIL( @oParent    , ::oParent )
    __defaultNIL( @oOwner     , ::oOwner )
@@ -302,7 +302,7 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    hb_gtInfo( HB_GTI_RESIZABLE, ::resizable )
    hb_gtInfo( HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[1], ::aPos[2], ;
-      ::maxRow + 1, ::maxCol + 1, ::pGTp, .F., lRowCol, HB_WNDTYPE_CRT } )
+      ::maxRow + 1, ::maxCol + 1, ::pGTp, FALSE, lRowCol, HB_WNDTYPE_CRT } )
    hb_gtInfo( HB_GTI_SETFONT, { ::fontName, ::fontHeight, ::fontWidth } )
 
    IF hb_IsNumeric(::icon)
@@ -328,7 +328,7 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    IF ::visible
       hb_gtInfo( HB_GTI_SPEC, HB_GTS_SHOWWINDOW, WIN_SW_NORMAL )
-      ::lHasInputFocus := .T.
+      ::lHasInputFocus := TRUE
    ENDIF
 
    RETURN Self
@@ -477,7 +477,7 @@ METHOD WvgCrt:setFrameState( nState )
       ENDSWITCH
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD WvgCrt:setModalState()
    RETURN Self
@@ -500,7 +500,7 @@ METHOD WvgCrt:setPresParam()
 METHOD WvgCrt:setSize( aSize, lPaint )
 
    IF hb_IsArray(aSize)
-      __defaultNIL( @lPaint, .T. )
+      __defaultNIL( @lPaint, TRUE )
 
       hb_gtInfo( HB_GTI_SCREENHEIGHT, aSize[1] )
       hb_gtInfo( HB_GTI_SCREENWIDTH , aSize[2] )
@@ -511,7 +511,7 @@ METHOD WvgCrt:setSize( aSize, lPaint )
 METHOD WvgCrt:show()
 
    hb_gtInfo( HB_GTI_SPEC, HB_GTS_SHOWWINDOW, WIN_SW_NORMAL )
-   ::lHasInputFocus := .T.
+   ::lHasInputFocus := TRUE
 
    RETURN Self
 

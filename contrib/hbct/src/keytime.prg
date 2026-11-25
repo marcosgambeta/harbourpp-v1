@@ -62,10 +62,10 @@ FUNCTION KeyTime(nKey, cClockTime)
       nSec := Val(SubStr(cClockTime, 7, 2))
       nLast := -1
       t_hIdle := hb_idleAdd({||doKeyTime(nKey, cClockTime, nHour, nMin, nSec, @nLast)})
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 STATIC PROCEDURE doKeyTime(nKey, cClockTime, nHour, nMin, nSec, nLast)
 

@@ -97,9 +97,9 @@ STATIC FUNCTION s_oleOpError(cOperator, ...)
 
    oErr := ErrorNew()
    oErr:Args          := {...}
-   oErr:CanDefault    := .F.
-   oErr:CanRetry      := .F.
-   oErr:CanSubstitute := .T.
+   oErr:CanDefault    := FALSE
+   oErr:CanRetry      := FALSE
+   oErr:CanSubstitute := TRUE
    oErr:Description   := "argument error"
    oErr:GenCode       := EG_ARG
    oErr:Operation     := cOperator
@@ -115,9 +115,9 @@ STATIC FUNCTION s_oleError(nGenCode, cDescript)
 
    oErr := ErrorNew()
    oErr:Args          := hb_AParams(1)
-   oErr:CanDefault    := .F.
-   oErr:CanRetry      := .F.
-   oErr:CanSubstitute := .T.
+   oErr:CanDefault    := FALSE
+   oErr:CanRetry      := FALSE
+   oErr:CanSubstitute := TRUE
    IF PCount() != 0
       oErr:GenCode       := nGenCode
       oErr:Description   := cDescript

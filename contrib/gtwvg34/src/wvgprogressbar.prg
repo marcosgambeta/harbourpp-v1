@@ -55,22 +55,22 @@
 
 CREATE CLASS WvgProgressBar INHERIT WvgWindow
 
-   VAR    autosize         INIT .F.
-   VAR    Border           INIT .F.
-   VAR    cancel           INIT .F.
+   VAR    autosize         INIT FALSE
+   VAR    Border           INIT FALSE
+   VAR    cancel           INIT FALSE
    VAR    caption
-   VAR    default          INIT .F.
+   VAR    default          INIT FALSE
    VAR    drawMode         INIT WVG_DRAW_NORMAL
-   VAR    preSelect        INIT .F.
-   VAR    pointerFocus     INIT .F.
+   VAR    preSelect        INIT FALSE
+   VAR    pointerFocus     INIT FALSE
    VAR    Style            INIT 0
-   VAR    lVertical        INIT .F.
-   VAR    lSmooth          INIT .F.
+   VAR    lVertical        INIT FALSE
+   VAR    lSmooth          INIT FALSE
    VAR    nValue
    VAR    nRangeMin
    VAR    nRangeMax
    VAR    nVelocity
-   VAR    lMarquee         INIT .F.
+   VAR    lMarquee         INIT FALSE
    VAR    nSpeed           INIT 30
    VAR    nColorBarFG
    VAR    nColorBarBG

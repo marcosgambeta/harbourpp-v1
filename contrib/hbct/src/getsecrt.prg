@@ -55,11 +55,11 @@ FUNCTION GetSecret(cVar, nRow, nCol, lSay, xPrompt)
    LOCAL nCursorCol := Col()
    LOCAL GetList := {}
    LOCAL _cGetSecret := cVar
-   LOCAL lHide := .T.
+   LOCAL lHide := TRUE
 
    hb_default(@nRow, nCursorRow)
    hb_default(@nCol, nCursorCol)
-   hb_default(@lSay, .F.)
+   hb_default(@lSay, FALSE)
 
    SetPos(nRow, nCol)
    IF xPrompt != NIL
@@ -125,12 +125,12 @@ STATIC PROCEDURE _SECRET(/* @ */ _cGetSecret, /* @ */ lHide, oGet, oGetList)
             nKey := Inkey(0)
             SetCursor(SC_NONE)
             IF (bKeyBlock := SetKey(nKey)) != NIL
-               lHide := .F.
+               lHide := FALSE
                Eval(bKeyBlock, ;
                   ReadStats(10 /* SCREADPROCNAME */), ;
                   ReadStats(11 /* SNREADPROCLINE */), ;
                   oGetList:ReadVar())
-               lHide := .T.
+               lHide := TRUE
                LOOP
             ELSEIF nKey == K_BS
                IF oGet:pos > 1

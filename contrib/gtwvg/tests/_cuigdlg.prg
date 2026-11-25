@@ -10,7 +10,7 @@
 PROCEDURE ExecGCUI()
 
    IF hb_mtvm()
-      hb_threadStart({|oCrt|oCrt := WvgCrt():New(, , {2, 4}, {20, 81}, , .T.), ;
+      hb_threadStart({|oCrt|oCrt := WvgCrt():New(, , {2, 4}, {20, 81}, , TRUE), ;
          oCrt:icon := GetResource("resources\dia_excl.ico"), ;
          oCrt:create(), ;
          GCUIConsole(oCrt), ;
@@ -48,22 +48,22 @@ PROCEDURE GCUIConsole(oCrt)
 
    @  3, nColGet GET dDate  ;
       WHEN  {||Wvg_SetGObjData(hTxt, 1, FetchText(1))} ;
-      VALID {||Wvg_SetGObjData(hTxt, 6, RGB(255, 0, 0)), .T.}
+      VALID {||Wvg_SetGObjData(hTxt, 6, RGB(255, 0, 0)), TRUE}
    @  6, nColGet GET cName  ;
       WHEN  {||Wvg_SetGObjData(hTxt, 1, FetchText(2))} ;
       VALID {||Wvg_SetGObjData(hTxt, 6, RGB(255, 255, 0)), ;
-      Wvg_SetGObjState(hBoxR, 3), .T.}
+      Wvg_SetGObjState(hBoxR, 3), TRUE}
    @  9, nColGet GET cAdd1  ;
       WHEN  {||Wvg_SetGObjData(hTxt, 1, FetchText(3))} ;
-      VALID {||Wvg_SetGObjData(hTxt, 6, RGB(255, 0, 255)), .T.}
+      VALID {||Wvg_SetGObjData(hTxt, 6, RGB(255, 0, 255)), TRUE}
    @ 11, nColGet GET cAdd2  ;
       WHEN  {||Wvg_SetGObjData(hTxt, 1, FetchText(4))} ;
       VALID {||Wvg_SetGObjData(hTxt, 6, RGB(255, 255, 255)), ;
-      Wvg_SetGObjState(hBoxR, 1), .T.}
+      Wvg_SetGObjState(hBoxR, 1), TRUE}
    @ 13, nColGet GET cAdd3  ;
-      WHEN  {||Wvg_SetGObjData(hTxt, 6, RGB(198, 21, 140)), .T.}
+      WHEN  {||Wvg_SetGObjData(hTxt, 6, RGB(198, 21, 140)), TRUE}
    @ 16, nColGet GET nSlry PICTURE "@Z 9999999.99" ;
-      WHEN  {||Wvg_SetGObjData(hTxt, 6, RGB(0, 0, 0)), .T.}
+      WHEN  {||Wvg_SetGObjData(hTxt, 6, RGB(0, 0, 0)), TRUE}
 
    // The only additional calls to render your console GUI
    // The GETLIST  : This can be embedded via  @ GET preprocessor command

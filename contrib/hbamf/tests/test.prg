@@ -24,8 +24,8 @@ PROCEDURE Main()
    HBTEST amf3_Encode( 9007199254740991.00                            ) IS e"\005C?\377\377\377\377\377\377"
    HBTEST amf3_Encode( 6969.69                                        ) IS e"\005@\2739\260\243\327\012="
    HBTEST amf3_Encode( NIL                                            ) IS e"\001"
-   HBTEST amf3_Encode( .T.                                            ) IS e"\003"
-   HBTEST amf3_Encode( .F.                                            ) IS e"\002"
+   HBTEST amf3_Encode( TRUE                                            ) IS e"\003"
+   HBTEST amf3_Encode( FALSE                                            ) IS e"\002"
    HBTEST amf3_Encode( { 1, -1 }                                      ) IS e"\011\005\001\004\001\004\377\377\377\377"
    HBTEST amf3_Encode( { "ONE" => 0xCAFE, "TWO" => 0xBABE }           ) IS e"\011\001\007ONE\004\203\225~\007TWO\004\202\365>\001"
 

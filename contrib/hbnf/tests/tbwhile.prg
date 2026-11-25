@@ -12,7 +12,7 @@
 PROCEDURE Main()
 
    LOCAL aFields := {}, cKey := "O", cOldColor
-   LOCAL nFreeze := 1, lSaveScrn := .T., nRecSel
+   LOCAL nFreeze := 1, lSaveScrn := TRUE, nRecSel
    LOCAL cColorList := "N/W, N/BG, B/W, B/BG, B/W, B/BG, R/W, B/R"
    LOCAL cColorShad := "N/N"
    LOCAL GetList := {}

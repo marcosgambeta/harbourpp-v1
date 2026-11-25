@@ -72,7 +72,7 @@ FUNCTION WvtPaintObjects()
       tlbr_ := wvt_GetPaintRect()
 
       FOR EACH blk IN aBlocks
-         lExe := .T.
+         lExe := TRUE
 
          IF blk[3] != NIL .AND. !Empty(blk[3])
             // Check parameters against tlbr_ depending upon the
@@ -81,7 +81,7 @@ FUNCTION WvtPaintObjects()
             CASE blk[3][1] == WVT_BLOCK_GRID_V
                b := blk[3][6]
                IF Len(b:aColumnsSep) == 0
-                  lExe := .F.
+                  lExe := FALSE
                ELSE
                   nLeft  := b:aColumnsSep[1]
                   nRight := ATail( b:aColumnsSep )
@@ -89,7 +89,7 @@ FUNCTION WvtPaintObjects()
                      tlbr_[3] < blk[3][2] .OR. ;  // bottom < top
                      tlbr_[2] > nRight + 1 .OR. ;     // left   > right
                      tlbr_[4] < nLeft - 2             // right  < left
-                     lExe := .F.
+                     lExe := FALSE
                   ENDIF
                ENDIF
 
@@ -98,7 +98,7 @@ FUNCTION WvtPaintObjects()
                   tlbr_[3] < blk[3][2] .OR. ;  // bottom < top
                   tlbr_[2] > blk[3][5] .OR. ;  // left   > right
                   tlbr_[4] < blk[3][3]         // right  < left
-                  lExe := .F.
+                  lExe := FALSE
                ENDIF
 
             OTHERWISE
@@ -108,7 +108,7 @@ FUNCTION WvtPaintObjects()
                   tlbr_[3] < blk[3][2] .OR. ;  // bottom < top
                   tlbr_[2] > blk[3][5] .OR. ;  // left   > right
                   tlbr_[4] < blk[3][3]         // right  < left
-                  lExe := .F.
+                  lExe := FALSE
                ENDIF
             ENDCASE
          ENDIF
@@ -177,7 +177,7 @@ FUNCTION wvg_DelPaint(cID, nAction)
    IF ( n := AScan(t_paint_, {| e_ | e_[1] == cID }) ) > 0
       IF ( n1 := AScan(t_paint_[n][2], {| e_ | e_[1] == nAction }) ) > 0
          xData := t_paint_[n][2][n1][2]
-         t_paint_[n][2][n1][2] := {|| .T. }
+         t_paint_[n][2][n1][2] := {|| TRUE }
       ENDIF
    ENDIF
 
@@ -189,10 +189,10 @@ FUNCTION wvg_PurgePaint(cID, lDummy)
 
    IF ( n := AScan(t_paint_, {| e_ | e_[1] == cID }) ) > 0
       aPaint := t_paint_[n]
-      hb_ADel( t_paint_, n, .T. )
+      hb_ADel( t_paint_, n, TRUE )
    ENDIF
 
-   IF hb_defaultValue( lDummy, .F. )
+   IF hb_defaultValue( lDummy, FALSE )
       WvtSetPaint({})
    ENDIF
 
@@ -208,7 +208,7 @@ PROCEDURE wvg_InsertPaint(cID, aPaint, lSet)
       AAdd(t_paint_, aPaint)
    ENDIF
 
-   IF hb_defaultValue( lSet, .F. )
+   IF hb_defaultValue( lSet, FALSE )
       WvtSetPaint(aPaint)
    ENDIF
 
@@ -295,7 +295,7 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
    IF hb_bitAnd(nStyle, DS_SETFONT) != 0
       AAdd(aDlg[1], hb_defaultValue( nPointSize, 8 ))
       AAdd(aDlg[1], hb_defaultValue( nWeight, 400 ))
-      AAdd(aDlg[1], hb_defaultValue( lItalic, .F. ))
+      AAdd(aDlg[1], hb_defaultValue( lItalic, FALSE ))
       AAdd(aDlg[1], hb_defaultValue( cFaceName, "MS Sans Serif" ))
    ENDIF
 
@@ -414,7 +414,7 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
       xTemplate := acnDlg
    ENDIF
 
-   nResult := wvt_CreateDialogModal( xTemplate, .F., cbDlgProc, nDlgMode, hWndParent )
+   nResult := wvt_CreateDialogModal( xTemplate, FALSE, cbDlgProc, nDlgMode, hWndParent )
 
    wapi_SetFocus( hWndParent )
 
@@ -586,7 +586,7 @@ FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
       IF lEnh
          s := hb_StrReplace( s, "*+" )
       ENDIF
-      IF ( nIndex := hb_AScan({ "N", "B", "G", "BG", "R", "RB", "GR", "W" }, s,,, .T.) ) > 0
+      IF ( nIndex := hb_AScan({ "N", "B", "G", "BG", "R", "RB", "GR", "W" }, s,,, TRUE) ) > 0
          IF lEnh
             nIndex += 8
          ENDIF
@@ -617,16 +617,16 @@ FUNCTION wvt_GetWindowHandle()
 #endif
 
 FUNCTION wvt_CenterWindow( lCenter, lRePaint )
-   RETURN hb_gtInfo( HB_GTI_SPEC, HB_GTS_CENTERWINDOW, { hb_defaultValue( lCenter, .T. ), hb_defaultValue( lRePaint, .F. ) } )
+   RETURN hb_gtInfo( HB_GTI_SPEC, HB_GTS_CENTERWINDOW, { hb_defaultValue( lCenter, TRUE ), hb_defaultValue( lRePaint, FALSE ) } )
 
 FUNCTION wvt_WindowCentre( lCenter, lRePaint )
-   RETURN hb_gtInfo( HB_GTI_SPEC, HB_GTS_CENTERWINDOW, { hb_defaultValue( lCenter, .T. ), hb_defaultValue( lRePaint, .F. ) } )
+   RETURN hb_gtInfo( HB_GTI_SPEC, HB_GTS_CENTERWINDOW, { hb_defaultValue( lCenter, TRUE ), hb_defaultValue( lRePaint, FALSE ) } )
 
 FUNCTION wvt_ProcessMessages()
 
    hb_gtInfo( HB_GTI_SPEC, HB_GTS_PROCESSMESSAGES )
 
-   RETURN .T.
+   RETURN TRUE
 
 PROCEDURE wvt_Keyboard(nKey)
 
@@ -734,7 +734,7 @@ FUNCTION wvg_SetTimer(...)
    RETURN ! Empty(wapi_SetTimer(...))
 
 FUNCTION wvg_InvalidateRect( w, r, e )
-   RETURN wapi_InvalidateRect( w, r, hb_defaultValue( e, .T. ) )
+   RETURN wapi_InvalidateRect( w, r, hb_defaultValue( e, TRUE ) )
 
 FUNCTION wvg_GetMessageText( w, p1, p2 )
 
@@ -771,17 +771,17 @@ FUNCTION wvg_SetWindowPosToTop( hWnd )
 
 FUNCTION wvg_SetWindowSize( hWnd, w, h, lPaint )
    RETURN wapi_SetWindowPos( hWnd,, 0, 0, w, h, ;
-      IIf(hb_defaultValue( lPaint, .F. ),, ;
+      IIf(hb_defaultValue( lPaint, FALSE ),, ;
       hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOMOVE, WIN_SWP_NOACTIVATE )) )
 
 FUNCTION wvg_SetWindowPosition( hWnd, x, y, lPaint )
    RETURN wapi_SetWindowPos( hWnd,, x, y, 0, 0, ;
-      IIf(hb_defaultValue( lPaint, .F. ),, ;
+      IIf(hb_defaultValue( lPaint, FALSE ),, ;
       hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOMOVE, WIN_SWP_NOACTIVATE )) )
 
 FUNCTION wvg_SetWindowPosAndSize( hWnd, x, y, w, h, lPaint )
    RETURN wapi_SetWindowPos( hWnd,, x, y, w, h, ;
-      IIf(hb_defaultValue( lPaint, .F. ),, ;
+      IIf(hb_defaultValue( lPaint, FALSE ),, ;
       hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOACTIVATE, WIN_SWP_FRAMECHANGED )) )
 
 PROCEDURE wvg_ForceWindowToTop( hWnd )
@@ -906,18 +906,18 @@ FUNCTION wvt_ChooseColor(nColor, aColor, nFlags)
 FUNCTION wvg_PrepareBitmapFromResource( xNameOrID, nExpWidth, nExpHeight, lMap3Dcolors )
    RETURN wapi_LoadImage( wapi_GetModuleHandle(), xNameOrID, WIN_IMAGE_BITMAP, ;
       nExpWidth, nExpHeight, ;
-      IIf(hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
+      IIf(hb_defaultValue( lMap3Dcolors, FALSE ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
 
 #ifdef HB_LEGACY_LEVEL5
 
 FUNCTION wvg_PrepareBitmapFromResourceId(nID, nExpWidth, nExpHeight, lMap3Dcolors)
    RETURN wapi_LoadImage( wapi_GetModuleHandle(), nID, WIN_IMAGE_BITMAP, ;
       nExpWidth, nExpHeight, ;
-      IIf(hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
+      IIf(hb_defaultValue( lMap3Dcolors, FALSE ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
 
 FUNCTION wvg_PrepareBitmapFromResourceName( cName, nExpWidth, nExpHeight, lMap3Dcolors )
    RETURN wapi_LoadImage( wapi_GetModuleHandle(), cName, WIN_IMAGE_BITMAP, ;
       nExpWidth, nExpHeight, ;
-      IIf(hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
+      IIf(hb_defaultValue( lMap3Dcolors, FALSE ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
 
 #endif

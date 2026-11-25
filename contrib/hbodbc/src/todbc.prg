@@ -63,7 +63,7 @@ CREATE CLASS TODBCField
    VAR DataType     INIT -1
    VAR DataSize     INIT -1
    VAR DataDecs     INIT -1
-   VAR AllowNull    INIT .F.
+   VAR AllowNull    INIT FALSE
    VAR Value        INIT NIL
 
    METHOD New()
@@ -86,17 +86,17 @@ CREATE CLASS TODBC
    VAR cODBCStr
    VAR cODBCRes
    VAR cSQL
-   VAR Active       INIT .F.
+   VAR Active       INIT FALSE
    VAR Fields       INIT {}
    VAR nEof         INIT 0
-   VAR lBof         INIT .F.
+   VAR lBof         INIT FALSE
    VAR nRetCode
    VAR nRecCount    INIT 0  // number of rows in current recordset
    VAR nRecNo       INIT 0  // Current row number in current recordset
    VAR lCacheRS             // Do we want to cache recordset in memory
    VAR aRecordSet   INIT {} // Array to store cached recordset
 
-   VAR lAutoCommit AS LOGICAL INIT .T.   // Autocommit is usually on at startup
+   VAR lAutoCommit AS LOGICAL INIT TRUE   // Autocommit is usually on at startup
 
    METHOD New(cODBCStr, cUserName, cPassword, lCache)
    METHOD Destroy()
@@ -151,7 +151,7 @@ METHOD TODBC:New(cODBCStr, cUserName, cPassword, lCache)
 
    LOCAL nRet
 
-   hb_default(@lCache, .T.)
+   hb_default(@lCache, TRUE)
 
    ::cODBCStr := cODBCStr
    ::lCacheRS := lCache
@@ -181,7 +181,7 @@ METHOD TODBC:SetAutoCommit(lEnable)
 
    LOCAL lOld := ::lAutoCommit
 
-   hb_default(@lEnable, .T.)
+   hb_default(@lEnable, TRUE)
 
    IF lEnable != lOld
       ::SetCnnOptions(SQL_AUTOCOMMIT, IIf(lEnable, SQL_AUTOCOMMIT_ON, SQL_AUTOCOMMIT_OFF))
@@ -260,7 +260,7 @@ METHOD TODBC:Open()
    LOCAL aCurRow
    LOCAL oField
 
-   DO WHILE .T.
+   DO WHILE TRUE
 
       // Dataset must be closed
       IF ::Active
@@ -336,7 +336,7 @@ METHOD TODBC:Open()
       ENDIF
 
       ::nRecNo := 1 // Newly opened recordset - we are on first row
-      ::Active := .T. // Sets the Dataset state to active
+      ::Active := TRUE // Sets the Dataset state to active
 
       EXIT
 
@@ -367,7 +367,7 @@ METHOD TODBC:Close()
 
    // Frees the statement
    ::hStmt := NIL
-   ::Active := .F.
+   ::Active := FALSE
 
    // Reset all recordset related variables
    IF ::lCacheRS
@@ -375,7 +375,7 @@ METHOD TODBC:Close()
    ENDIF
    ::nRecCount := 0
    ::nRecNo    := 0
-   ::lBof      := .T.
+   ::lBof      := TRUE
 
    RETURN NIL
 
@@ -471,7 +471,7 @@ METHOD TODBC:Fetch(nFetchType, nOffset)
       nResult := SQL_SUCCESS
 
       ::LoadData(nPos)
-      ::lBof := .F.
+      ::lBof := FALSE
    ELSE
       // TODO: Report error here
    ENDIF
@@ -505,7 +505,7 @@ METHOD TODBC:Prior()
    ELSEIF nResult == SQL_NO_DATA_FOUND .AND. ::nRecNo == 1 // permit skip-1 on first row, so that Bof() can work properly
       --::nRecNo
       ::Next()
-      ::lBof := .T.
+      ::lBof := TRUE
    ELSE
       // TODO: Error handling
    ENDIF

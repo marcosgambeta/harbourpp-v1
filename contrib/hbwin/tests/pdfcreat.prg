@@ -57,7 +57,7 @@ PROCEDURE Main()
    Inkey(0)
 #endif
 
-   oPC:cPrinterStop := .F.
+   oPC:cPrinterStop := FALSE
 
    nTime := hb_MilliSeconds()
    DO WHILE nEvent == 0 .AND. hb_MilliSeconds() - nTime < 10000

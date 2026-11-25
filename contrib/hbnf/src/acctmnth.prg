@@ -39,7 +39,7 @@ FUNCTION ft_AcctMonth(dGivenDate, nMonthNum)
    nYTemp := Val(SubStr(aRetVal[1], 1, 4))
    nMTemp := Val(SubStr(aRetVal[1], 5, 2))
    aRetVal[2] := ft_AcctAdj(aRetVal[2])
-   aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
+   aRetVal[3] := ft_AcctAdj(aRetVal[3], TRUE)
 
    IF dGivenDate < aRetVal[2]
 
@@ -51,7 +51,7 @@ FUNCTION ft_AcctMonth(dGivenDate, nMonthNum)
          nMTemp := 12
       ENDIF
       aRetVal[2] := ft_AcctAdj(aRetVal[2])
-      aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
+      aRetVal[3] := ft_AcctAdj(aRetVal[3], TRUE)
 
    ELSEIF dGivenDate > aRetVal[3]
 
@@ -63,7 +63,7 @@ FUNCTION ft_AcctMonth(dGivenDate, nMonthNum)
          nMTemp := 1
       ENDIF
       aRetVal[2] := ft_AcctAdj(aRetVal[2])
-      aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
+      aRetVal[3] := ft_AcctAdj(aRetVal[3], TRUE)
 
    ENDIF
 
@@ -75,7 +75,7 @@ FUNCTION ft_AcctMonth(dGivenDate, nMonthNum)
       nYTemp       := Val(SubStr(aRetVal[1], 1, 4))
       nMTemp       := Val(SubStr(aRetVal[1], 5, 2))
       aRetVal[2] := ft_AcctAdj(aRetVal[2])
-      aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
+      aRetVal[3] := ft_AcctAdj(aRetVal[3], TRUE)
    ENDIF
 
    aRetVal[1] := Str(nYTemp, 4) + StrZero(nMTemp, 2)

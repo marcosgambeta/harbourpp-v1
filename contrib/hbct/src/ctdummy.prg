@@ -47,7 +47,7 @@
 
 FUNCTION DSetKBIOS(lNewKeyboardMode)
 
-   THREAD STATIC t_lKeyboardMode := .T.
+   THREAD STATIC t_lKeyboardMode := TRUE
 
    HB_SYMBOL_UNUSED(lNewKeyboardMode)
 

@@ -15,7 +15,7 @@ PROCEDURE Main( cPort )
 #endif
 
    ? "start"
-   ? sms_Send( cPort, "555555555", "test msg", .T. )
+   ? sms_Send( cPort, "555555555", "test msg", TRUE )
    ? "end"
 
    RETURN

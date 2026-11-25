@@ -61,12 +61,12 @@ CREATE CLASS TJSWindow
    VAR ScreenX, ScreenY INIT 100
    VAR HEIGHT, WIDTH INIT 300
    VAR innerHeight, innerWidth, outerHeight INIT 0
-   VAR alwaysRaised, alwaysLowered INIT .F.
-   VAR Menubar, personalBar INIT .F.
-   VAR location, directories, copyHistory INIT .F.
-   VAR Toolbar INIT .F.
-   VAR Status, TitleBar INIT .T.
-   VAR Scrollbars, Resizable, dependent INIT .T.
+   VAR alwaysRaised, alwaysLowered INIT FALSE
+   VAR Menubar, personalBar INIT FALSE
+   VAR location, directories, copyHistory INIT FALSE
+   VAR Toolbar INIT FALSE
+   VAR Status, TitleBar INIT TRUE
+   VAR Scrollbars, Resizable, dependent INIT TRUE
 
    VAR TITLE
    VAR aScriptSRC

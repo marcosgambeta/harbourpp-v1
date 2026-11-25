@@ -83,8 +83,8 @@ CREATE CLASS WvtBrowse INHERIT WvtObject
 
    VAR cAlias
    VAR oBrw
-   VAR lHSBar INIT .T.
-   VAR lVSBar INIT .T.
+   VAR lHSBar INIT TRUE
+   VAR lVSBar INIT TRUE
    VAR oHBar
    VAR oVBar
    VAR bTotalRecords
@@ -214,7 +214,7 @@ METHOD WvtBrowse:Refresh()
 
 METHOD WvtBrowse:HandleEvent(nKey)
 
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
 
    IF hb_IsBlock(::bHandleEvent)
       lRet := Eval(::bHandleEvent, Self, ::oParent:cPaintBlockID, ::oBrw, nKey)

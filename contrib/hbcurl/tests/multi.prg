@@ -32,7 +32,7 @@ PROCEDURE Main( cRemote4 )
          curl_easy_setopt( hEasy, HB_CURLOPT_URL, aUrls[i] )
          curl_easy_setopt( hEasy, HB_CURLOPT_DOWNLOAD )
          curl_easy_setopt( hEasy, HB_CURLOPT_DL_BUFF_SETUP )
-//       curl_easy_setopt( hEasy, HB_CURLOPT_VERBOSE, .T. )
+//       curl_easy_setopt( hEasy, HB_CURLOPT_VERBOSE, TRUE )
          curl_easy_setopt( hEasy, HB_CURLOPT_SSL_OPTIONS, HB_CURLSSLOPT_NATIVE_CA )
          curl_multi_add_handle( hMulti, hEasy )
          aHandles[i] := hEasy

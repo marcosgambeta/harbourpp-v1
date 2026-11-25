@@ -59,8 +59,8 @@
 CREATE CLASS WvgTabPage INHERIT WvgWindow
 
    VAR    caption                                        // Character string, Numeric, Object ("")
-   VAR    clipChildren                          INIT .T. // Determines whether Xbase Parts in the child list are clipped during graphic output.
-   VAR    minimized                             INIT .T. // Determines whether the XbpTabPage is minimized after it is created (the page is not visible).
+   VAR    clipChildren                          INIT TRUE // Determines whether Xbase Parts in the child list are clipped during graphic output.
+   VAR    minimized                             INIT TRUE // Determines whether the XbpTabPage is minimized after it is created (the page is not visible).
    VAR    postOffset                            INIT 80  // Determines the distance between the end of the tab and the end of the page as a percentage of the page width.
    VAR    preOffset                             INIT 0   // Determines the distance between the start of the tab and the start of the page as a percentage of the page width.
    VAR    tabHeight                             INIT -1  // Determines the height of the tab.
@@ -169,13 +169,13 @@ METHOD WvgTabPage:minimize()
 
    ::hide()
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD WvgTabPage:maximize()
 
    ::show()
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD WvgTabPage:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 

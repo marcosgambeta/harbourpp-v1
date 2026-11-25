@@ -75,23 +75,23 @@ PROCEDURE Main()
    oBlat:cBody                   := e"Body part\n\rEnd Body"
    oBlat:cServerSMTP             := SERVER_SMTP
    oBlat:cSubject                := "Test from Blat"
-// oBlat:lSuppressSubject        := .T.
+// oBlat:lSuppressSubject        := TRUE
 // oBlat:cSubjectFile            := "f_subjct.txt"
-// oBlat:lToUndiscloseRecipients := .T.
+// oBlat:lToUndiscloseRecipients := TRUE
    oBlat:cPostScriptumFile       := "f_ps.txt"
-   oBlat:lRequestDisposition     := .T.          // does not work ???
-   oBlat:lRequestReturnReceipt   := .T.
+   oBlat:lRequestDisposition     := TRUE          // does not work ???
+   oBlat:lRequestReturnReceipt   := TRUE
 
    oBlat:cAttachTextFiles        := "f_subjct.txt"
    oBlat:aAttachTextFiles        := { __FILE__, "blatcmd.prg", "f_ps.txt" }
    oBlat:cAttachListTextFile     := "f_listtx.txt"
 
    oBlat:cLogFile                := "log.txt"
-   oBlat:lLogTimestamp           := .T.
-   oBlat:lDebug                  := .T.
-   oBlat:lLogOverwrite           := .T.
+   oBlat:lLogTimestamp           := TRUE
+   oBlat:lDebug                  := TRUE
+   oBlat:lLogOverwrite           := TRUE
 
-// oBlat:lSuperDebug             := .T.     // This display internal checking
+// oBlat:lSuperDebug             := TRUE     // This display internal checking
 
    ? "Checking options ..."
 // oBlat:Check()

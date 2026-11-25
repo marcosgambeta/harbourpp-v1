@@ -51,7 +51,7 @@
 
 CREATE CLASS wce_Sim
 
-   VAR lInitialized INIT .F.
+   VAR lInitialized INIT FALSE
    VAR hSim
    VAR nLastError INIT SIM_E_OK
 
@@ -64,8 +64,8 @@ CREATE CLASS wce_Sim
    METHOD lNumberOfPhoneBookEntries(nType, nTotal, nUsed) // nTotal, nUsed both by reference
    METHOD aGetAllPhoneBookEntries(nType) // -> array with phoneBook entries of nType storage
    METHOD lGetSimPhoneEntry(nPos, nType, aEntry) // -> aEntry by refence contains phonebook entry
-   METHOD lSetSimPhoneEntry(nPos, nType, cNumber, cName, nPlan, nAddrType) // -> .T. / .F. if phonebook entry written
-   METHOD lDelSimPhoneEntry(nPos, nType) // -> .T. / .F. if phonebook entry deleted
+   METHOD lSetSimPhoneEntry(nPos, nType, cNumber, cName, nPlan, nAddrType) // -> TRUE / FALSE if phonebook entry written
+   METHOD lDelSimPhoneEntry(nPos, nType) // -> TRUE / FALSE if phonebook entry deleted
 
 ENDCLASS
 
@@ -87,7 +87,7 @@ METHOD wce_Sim:lDeInitialize()
 
    IF !::lInitialized
       ::nLastError := SIM_E_HB_NOTINITIALIZED
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    nResult := wce_SimDeInitialize(::hSim)
@@ -103,7 +103,7 @@ METHOD wce_Sim:lNumberOfPhoneBookEntries(nType, /* @ */ nTotal, /* @ */ nUsed)
 
    IF !::lInitialized
       ::nLastError := SIM_E_HB_NOTINITIALIZED
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_default(@nType, SIM_PBSTORAGE_SIM)
@@ -124,7 +124,7 @@ METHOD wce_Sim:aGetAllPhoneBookEntries(nType)
 
    IF !::lInitialized
       ::nLastError := SIM_E_HB_NOTINITIALIZED
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_default(@nType, SIM_PBSTORAGE_SIM)
@@ -156,7 +156,7 @@ METHOD wce_Sim:lGetSimPhoneEntry(nPos, nType, /* @ */ aEntry)
 
    IF !::lInitialized
       ::nLastError := SIM_E_HB_NOTINITIALIZED
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_default(@nType, SIM_PBSTORAGE_SIM)
@@ -174,7 +174,7 @@ METHOD wce_Sim:lSetSimPhoneEntry(nPos, nType, cNumber, cName, nPlan, nAddrType)
 
    IF !::lInitialized
       ::nLastError := SIM_E_HB_NOTINITIALIZED
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_default(@nPos, SIM_PBINDEX_FIRSTAVAILABLE)
@@ -191,7 +191,7 @@ METHOD wce_Sim:lDelSimPhoneEntry(nPos, nType)
 
    IF !::lInitialized
       ::nLastError := SIM_E_HB_NOTINITIALIZED
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_default(@nType, SIM_PBSTORAGE_SIM)

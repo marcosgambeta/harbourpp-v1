@@ -9,11 +9,11 @@ PROCEDURE Main()
    HBTEST AddAscii( "0000", 1 )            IS "0001"
    HBTEST AddAscii( "AAAA", -255, 1 )      IS "BAAA"
    HBTEST AddAscii( "AAAA", -255 )         IS "AAAB"
-   HBTEST AddAscii( "AAAA", 1, 2, .T. )    IS "ABAA"
-   HBTEST AddAscii( "AAAA", 257, 2, .T. )  IS "BBAA"
-   HBTEST AddAscii( "AAAA", 257, 2, .F. )  IS "ABAA"
-   HBTEST AddAscii( "AAAA", 258,, .T. )    IS "AABC"
-   HBTEST AddAscii( "ABBA", -257, 3, .T. ) IS "AAAA"
+   HBTEST AddAscii( "AAAA", 1, 2, TRUE )    IS "ABAA"
+   HBTEST AddAscii( "AAAA", 257, 2, TRUE )  IS "BBAA"
+   HBTEST AddAscii( "AAAA", 257, 2, FALSE )  IS "ABAA"
+   HBTEST AddAscii( "AAAA", 258,, TRUE )    IS "AABC"
+   HBTEST AddAscii( "ABBA", -257, 3, TRUE ) IS "AAAA"
 
    HBTEST AsciiSum( Replicate("A", 10000) ) IS 650000
    HBTEST AsciiSum( "0123456789" )            IS 525
@@ -42,7 +42,7 @@ PROCEDURE Main()
    HBTEST AtRepl( "ABC", "ABCDABCDABC", "xx" )         IS "xxDxxDxx"
    HBTEST AtRepl( "ABC", "ABCDABC", "ZYXW" )           IS "ZYXWDZYXW"
    HBTEST AtRepl( "ABC", "ABCDABCDABC", "xx", 2 )      IS "xxDxxDABC"
-   HBTEST AtRepl( "ABC", "ABCDABCDABC", "xx", 2, .T. ) IS "ABCDxxDABC"
+   HBTEST AtRepl( "ABC", "ABCDABCDABC", "xx", 2, TRUE ) IS "ABCDxxDABC"
 
    HBTEST CharEven( " 1 2 3 4 5" ) IS "12345"
    HBTEST CharEven( " 1 2 3 4 " )  IS "1234"
@@ -65,8 +65,8 @@ PROCEDURE Main()
    HBTEST CharNoList( CharNoList(NIL) )               IS ""
 
    HBTEST CharMirr( "racecar" )        IS "racecar"
-   HBTEST CharMirr( "racecar  ", .T. ) IS "racecar  "
-   HBTEST CharMirr( "racecar  ", .F. ) IS "  racecar"
+   HBTEST CharMirr( "racecar  ", TRUE ) IS "racecar  "
+   HBTEST CharMirr( "racecar  ", FALSE ) IS "  racecar"
 
    HBTEST CharMix( "ABC", "123" )  IS "A1B2C3"
    HBTEST CharMix( "ABCDE", "12" ) IS "A1B2C1D2E1"
@@ -124,7 +124,7 @@ PROCEDURE Main()
    HBTEST CharRepl( "abcdefghij", "jhfdb", "1234567890" ) IS "08642"
    HBTEST CharRepl( "abcdefghij", "jhfdb", "12345" )      IS "55542"
    HBTEST CharRepl( "1234", "1234", "234A" )              IS "AAAA"
-   HBTEST CharRepl( "1234", "1234", "234A", .T. )         IS "234A"
+   HBTEST CharRepl( "1234", "1234", "234A", TRUE )         IS "234A"
 
    HBTEST CharSort( "qwert" )                     IS "eqrtw"
    HBTEST CharSort( "qwert", 2 )                  IS "erqwt"
@@ -132,13 +132,13 @@ PROCEDURE Main()
    HBTEST CharSort( "XXXqwert", 1, 1, 3 )         IS "XXXeqrtw"
    HBTEST CharSort( "b1a4a3a2a1", 2, 1, 0, 1 )    IS "a1b1a2a3a4"
    HBTEST CharSort( "384172852", 1, 1, 0, 0, 4 )  IS "134872852"
-   HBTEST CharSort( "qwert",,,,,, .T. )           IS "wtrqe"
+   HBTEST CharSort( "qwert",,,,,, TRUE )           IS "wtrqe"
 
    HBTEST CharSwap( "0123456789" )  IS "1032547698"
    HBTEST CharSwap( "ABCDEFGHIJK" ) IS "BADCFEHGJIK"
 
    HBTEST WordSwap( "1234567890" )      IS "3412785690"
-   HBTEST WordSwap( "1234567890", .T. ) IS "4321876590"
+   HBTEST WordSwap( "1234567890", TRUE ) IS "4321876590"
 
    HBTEST Floor( 1.1 )  IS 1.0
    HBTEST Floor( -1.1 ) IS -2.0
@@ -255,9 +255,9 @@ PROCEDURE Main()
 
    HBTEST WordRepl( "CC", "AABBCCDDEE", "XX" ) IS "AABBXXDDEE"
    HBTEST WordRepl( "aa", "1aaaa", "ba" )      IS "1abaa"
-   HBTEST WordRepl( "aa", "1aaaa", "ba", .T. ) IS "1baba"
+   HBTEST WordRepl( "aa", "1aaaa", "ba", TRUE ) IS "1baba"
 
-   HBTEST ( CSetAtMupa(.T.), WordRepl( "aa", "1aaaa", "ba" ) )      IS "1abaa"
-   HBTEST ( CSetAtMupa(.T.), WordRepl( "aa", "1aaaa", "ba", .T. ) ) IS "1bbba"
+   HBTEST ( CSetAtMupa(TRUE), WordRepl( "aa", "1aaaa", "ba" ) )      IS "1abaa"
+   HBTEST ( CSetAtMupa(TRUE), WordRepl( "aa", "1aaaa", "ba", TRUE ) ) IS "1bbba"
 
    RETURN

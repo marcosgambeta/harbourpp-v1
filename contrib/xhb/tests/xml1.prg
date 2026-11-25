@@ -28,7 +28,7 @@ PROCEDURE Main()
       RETURN
    ENDIF
 
-   DO WHILE .T.
+   DO WHILE TRUE
 
       IF "id" $ oBook:aAttributes
          ? "book ID : " + oBook:aAttributes[ "id" ]
@@ -40,7 +40,7 @@ PROCEDURE Main()
       cDiscount := ""
       oIterator := TXMLIterator():New( oBook )
 
-      DO WHILE .T.
+      DO WHILE TRUE
          oCurrent := oIterator:Next()
          IF oCurrent == NIL
             ? "end branch"

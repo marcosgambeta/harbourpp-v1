@@ -69,14 +69,14 @@ FUNCTION hb_Decode(...)
 
       xVal := aParams[1]
 
-      hb_ADel(aParams, 1, .T.) // Resize params
+      hb_ADel(aParams, 1, TRUE) // Resize params
       nParams := Len(aParams)
 
       // if I have a odd number of members, last is default
       IF nParams % 2 != 0
          xDefault := ATail(aParams)
          // Resize again deleting last
-         hb_ADel(aParams, nParams, .T.)
+         hb_ADel(aParams, nParams, TRUE)
          nParams := Len(aParams)
       ENDIF
 
@@ -149,7 +149,7 @@ FUNCTION hb_Decode(...)
          ENDIF
 
          // Then add Decoding value at beginning
-         hb_AIns(aParams, 1, xVal, .T.)
+         hb_AIns(aParams, 1, xVal, TRUE)
 
          // And run decode() again
          xRet := hb_ExecFromArray(@hb_Decode(), aParams)
@@ -207,7 +207,7 @@ STATIC FUNCTION EmptyValue(xVal)
    CASE "D"  // Date
       RETURN hb_SToD()
    CASE "L"  // Logical
-      RETURN .F.
+      RETURN FALSE
    CASE "N"  // Number
       RETURN 0
    CASE "B"  // code block

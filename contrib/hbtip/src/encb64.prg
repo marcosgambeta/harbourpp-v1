@@ -49,10 +49,10 @@
 
 CREATE CLASS TIPEncoderBase64 INHERIT TIPEncoder
 
-   /* Set this to .T. to enable RFC 2068 (HTTP/1.1) exception to
+   /* Set this to TRUE to enable RFC 2068 (HTTP/1.1) exception to
       RFC 2045 (MIME) base64 format. This exception consists in
       not applying CRLF after each 76 output bytes. */
-   VAR bHttpExcept INIT .F.
+   VAR bHttpExcept INIT FALSE
 
    METHOD New() CONSTRUCTOR
    METHOD Encode( cData )

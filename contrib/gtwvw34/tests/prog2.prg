@@ -28,7 +28,7 @@ PROCEDURE Main()
    hbshell_gtSelect( "GTWVW" )
 #endif
 
-   wvw_SetMainCoord(.T.)
+   wvw_SetMainCoord(TRUE)
    nMaxRow := MaxRow()
    nMaxCol := MaxCol()
 
@@ -36,7 +36,7 @@ PROCEDURE Main()
    wvw_SetCodepage( , 255 )
    wvw_sbCreate()
 
-   Set( _SET_SCOREBOARD, .F. )
+   Set( _SET_SCOREBOARD, FALSE )
    SetColor(_STD_COLOR_)
    SetCursor( SC_NONE )
    CLS
@@ -71,7 +71,7 @@ STATIC PROCEDURE xGet1()
 
    AddMiscObjects( nWin, {| nWindow | __temp__ := nWindow, AEval(GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform(oGet:VarGet(), oGet:Picture)) ) }) } )
 
-   DO WHILE .T.
+   DO WHILE TRUE
       @ 12, 22 SAY "Name    :" GET cName  PICTURE "@!K" WHEN lMessage( "Please enter your name" )
       @ 14, 22 SAY "Address :" GET cAddr  PICTURE "@!K" WHEN lMessage( "Please enter your address" )
       @ 16, 22 SAY "Phone   :" GET cPhone PICTURE "@K"  WHEN lMessage( "Please enter your phone number" )
@@ -96,7 +96,7 @@ STATIC PROCEDURE xGet1()
 STATIC PROCEDURE xBrowse1()
 
    LOCAL nKey, oBrowse, i
-   LOCAL lEnd    := .F.
+   LOCAL lEnd    := FALSE
    LOCAL nTop    :=  6
    LOCAL nLeft   :=  3
    LOCAL nBottom := MaxRow() - 2
@@ -201,15 +201,15 @@ STATIC FUNCTION DbSkipBlock( n )
 STATIC FUNCTION TBNext()
 
    LOCAL nSaveRecNum := RecNo()
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    IF Eof()
-      lMoved := .F.
+      lMoved := FALSE
    ELSE
       dbSkip()
       IF Eof()
          dbGoto( nSaveRecNum )
-         lMoved := .F.
+         lMoved := FALSE
       ENDIF
    ENDIF
 
@@ -220,27 +220,27 @@ STATIC FUNCTION TBNext()
 STATIC FUNCTION TBPrev()
 
    LOCAL nSaveRecNum := RecNo()
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    dbSkip( -1 )
    IF Bof()
       dbGoto( nSaveRecNum )
-      lMoved := .F.
+      lMoved := FALSE
    ENDIF
 
    RETURN lMoved
 
 // supporting functions
 
-// displays a message on MaxRow() and returns .T.
+// displays a message on MaxRow() and returns TRUE
 STATIC FUNCTION lMessage( cMsg )
 
-   // displays a message on status bar of Main Window and returns .T.
+   // displays a message on status bar of Main Window and returns TRUE
    wvw_sbSetText( 0, 0, cMsg )
 
-   RETURN .T.
+   RETURN TRUE
 
-// display cmsg with Yes/No option, returns .T. if Yes selected
+// display cmsg with Yes/No option, returns TRUE if Yes selected
 STATIC FUNCTION lYesNo( cMsg )
 
    LOCAL nTopLine, ;
@@ -368,7 +368,7 @@ STATIC PROCEDURE ZREVWINDOW()
    SetColor(s_zwin[i][10])
 
    // remove window from list
-   hb_ADel( s_zwin, i, .T. )
+   hb_ADel( s_zwin, i, TRUE )
 
    RETURN
 

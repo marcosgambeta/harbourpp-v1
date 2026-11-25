@@ -52,7 +52,7 @@
  * ToChar( <xValue>, [<cSeparator>], [<lDebug>] ) --> <cOut>
  *   <xValue>     : Item to write
  *   <cSeparator> : Separator for arrays
- *   <lDebug>     : .T. -> Write debug output
+ *   <lDebug>     : TRUE -> Write debug output
  *
  * In <lDebug> mode:
  *
@@ -63,7 +63,7 @@
  * Character  "<chr>"
  * Array      {<el1>, <el2>, ...}
  * NIL        NIL
- * Logical    .T. / .F.
+ * Logical    TRUE / FALSE
  * Object     <ClassName>(<ClassH>):{<DataSymbol1>:<val1>, ...}
  */
 
@@ -75,7 +75,7 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
    LOCAL aData
 
    hb_default(@cSeparator, " ")
-   hb_default(@lDebug, .F.)
+   hb_default(@lDebug, FALSE)
 
    SWITCH ValType(xTxt)
    CASE "C"
@@ -129,6 +129,6 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
 // passed argument.
 FUNCTION Debug( xItem )
 
-   ? ToChar( xItem, ", ", .T. )
+   ? ToChar( xItem, ", ", TRUE )
 
    RETURN xItem

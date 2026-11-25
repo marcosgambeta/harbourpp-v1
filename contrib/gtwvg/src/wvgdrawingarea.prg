@@ -59,8 +59,8 @@
 CREATE CLASS WvgDrawingArea INHERIT WvgWindow
 
    VAR caption INIT ""
-   VAR clipParent INIT .T.
-   VAR clipSiblings INIT .T.
+   VAR clipParent INIT TRUE
+   VAR clipSiblings INIT TRUE
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -77,7 +77,7 @@ METHOD WvgDrawingArea:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ::exStyle := 0
    ::className := "DrawingArea"
    ::objType := objTypeDA
-   ::visible := .T.
+   ::visible := TRUE
 
    RETURN Self
 
@@ -85,7 +85,7 @@ METHOD WvgDrawingArea:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
    HB_SYMBOL_UNUSED(lVisible)
 
-   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, .T.)
+   ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, TRUE)
 
    ::oParent:addChild(Self)
 

@@ -34,7 +34,7 @@ FUNCTION ft_GCD(nNumber1, nNumber2)
       nHold1 := Max(Abs(nNumber1), Abs(nNumber2))
       nHold2 := Min(Abs(nNumber1), Abs(nNumber2))
 
-      DO WHILE .T.
+      DO WHILE TRUE
 
          nResult := nHold1 % nHold2     // Get the Remainder
          nHold1  := nHold2              // Which Makes a New Maximum Number

@@ -128,11 +128,11 @@ METHOD wvtMenu:Destroy()
       ::hMenu := 0
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD wvtMenu:AddItem(cCaption, bAction)
 
-   LOCAL lResult := .F.
+   LOCAL lResult := FALSE
    LOCAL aItem
 
    IF !Empty(::hMenu) .AND. (!Empty(cCaption) .OR. !Empty(bAction))
@@ -157,14 +157,14 @@ METHOD wvtMenu:AddItem(cCaption, bAction)
 
       AAdd(::aItems, aItem)
 
-      lResult := .T.
+      lResult := TRUE
    ENDIF
 
    RETURN lResult
 
 METHOD wvtMenu:DelAllItems()
 
-   LOCAL lResult := .T.
+   LOCAL lResult := TRUE
    LOCAL nItems
 
    nItems := ::NumItems()
@@ -177,7 +177,7 @@ METHOD wvtMenu:DelAllItems()
 
 METHOD wvtMenu:DelItem(nItemNum)
 
-   LOCAL lResult := .F.
+   LOCAL lResult := FALSE
 
    IF nItemNum > 0 .AND. nItemNum <= ::NumItems()
       IF ::aItems[nItemNum][WVT_MENU_TYPE] == MF_POPUP
@@ -185,7 +185,7 @@ METHOD wvtMenu:DelItem(nItemNum)
       ENDIF
 
       IF (lResult := wvt_DeleteMenu(::hMenu, nItemNum - 1, MF_BYPOSITION)) // Remember ZERO base
-         hb_ADel(::aItems, nItemNum, .T.)
+         hb_ADel(::aItems, nItemNum, TRUE)
       ELSE
 #if 0
          Throw(ErrorNew("wvtMenu", 1000, "wvtMenu:DelItem()", "Delete menu item FAILED", {nItemNum}))

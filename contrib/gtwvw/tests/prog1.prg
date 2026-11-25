@@ -34,7 +34,7 @@ PROCEDURE Main()
    hbshell_gtSelect( "GTWVW" )
 #endif
 
-   lMainCoord := wvw_SetMainCoord(.T.)
+   lMainCoord := wvw_SetMainCoord(TRUE)
 
    wvw_SetCodepage( , 255 )
 
@@ -71,7 +71,7 @@ PROCEDURE xGet1()
    LOCAL cAddr := PadR("Address", 25)
    LOCAL cPhone := PadR("Phone", 15)
    LOCAL cFax  := PadR("Fax", 15)
-   LOCAL lDone := .F.
+   LOCAL lDone := FALSE
    LOCAL getlist := {}
    LOCAL oldCurs := SetCursor( SC_NORMAL )
 
@@ -105,7 +105,7 @@ PROCEDURE xGet1()
 FUNCTION xBrowse1()
 
    LOCAL nKey, bBlock, oBrowse, i
-   LOCAL lEnd    := .F.
+   LOCAL lEnd    := FALSE
    LOCAL info_
    LOCAL nTop    :=  6
    LOCAL nLeft   :=  3
@@ -216,16 +216,16 @@ STATIC FUNCTION DbSkipBlock( n, oTbr )
 STATIC FUNCTION TBNext( oTbr )
 
    LOCAL nSaveRecNum := RecNo()
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    HB_SYMBOL_UNUSED(oTbr)
 
    IF Eof()
-      lMoved := .F.
+      lMoved := FALSE
    ELSE
       dbSkip(1)
       IF Eof()
-         lMoved := .F.
+         lMoved := FALSE
          dbGoto( nSaveRecNum )
       ENDIF
    ENDIF
@@ -237,14 +237,14 @@ STATIC FUNCTION TBNext( oTbr )
 STATIC FUNCTION TBPrev( oTbr )
 
    LOCAL nSaveRecNum := RecNo()
-   LOCAL lMoved := .T.
+   LOCAL lMoved := TRUE
 
    HB_SYMBOL_UNUSED(oTbr)
 
    dbSkip( -1 )
    IF Bof()
       dbGoto( nSaveRecNum )
-      lMoved := .F.
+      lMoved := FALSE
    ENDIF
 
    RETURN lMoved
@@ -259,16 +259,16 @@ STATIC FUNCTION VouBlockField(i)
 
 FUNCTION lMessage( cMsg )
 
-   // displays a message on MaxRow() and returns .T.
+   // displays a message on MaxRow() and returns TRUE
    LOCAL cOldColor := SetColor(s_cStdColor)
    @ MaxRow(), 0 SAY PadC(cMsg, MaxCol() + 1)
    SetColor(cOldColor)
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION lYesNo( cMsg )
 
-   // display cmsg with Yes/No option, returns .T. if Yes selected
+   // display cmsg with Yes/No option, returns TRUE if Yes selected
    LOCAL nTopLine, ;
       nLeft := 5, ;
       nBotLine := MaxRow() - 2, ;
@@ -347,7 +347,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
    SetCursor( oldCurs )
    SetColor(oldColor)
 
-   RETURN .T.
+   RETURN TRUE
 
 // Draw a new window on screen and register it in window list
 // wtype       : Window border type, eg. "┌─┐│┘─└│"
@@ -402,7 +402,7 @@ FUNCTION ZREVWINDOW()
    SetColor(s_zwin[i][10])
 
    // remove window from list
-   hb_ADel( s_zwin, i, .T. )
+   hb_ADel( s_zwin, i, TRUE )
 
    RETURN NIL
 

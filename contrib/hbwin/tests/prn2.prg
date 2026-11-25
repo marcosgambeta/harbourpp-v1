@@ -19,7 +19,7 @@ PROCEDURE Main()
          @ 1, 0 SAY "File name:" GET cFileName PICT "@!K"
          READ
          @ 2, 0 TO MaxRow(), MaxCol()
-         nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn )
+         nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, TRUE,, nPrn )
          IF nPrn != 0
             PrnTest( aPrn[nPrn], cFileName )
          ENDIF
@@ -34,9 +34,9 @@ STATIC PROCEDURE PrnTest( cPrinter, cFileName )
 
    IF Empty(cFileName)
       hb_MemoWrit( cFileName := hb_FNameExtSet( __FILE__, ".prn" ), "Hello World!" + Chr(12) )
-      lDelete := .T.
+      lDelete := TRUE
    ELSE
-      lDelete := .F.
+      lDelete := FALSE
    ENDIF
 
    Alert("win_PrintFileRaw() returned: " + hb_ntos(win_PrintFileRaw( cPrinter, cFileName, "testing raw printing" )))

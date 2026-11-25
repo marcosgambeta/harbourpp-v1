@@ -117,8 +117,8 @@ METHOD WvtGets:Create()
    FOR i := 1 TO Len(::aGetList)
 
       __defaultNIL(@::aGetList[i][7], "N/W*,N/W*,,,N/GR*")
-      __defaultNIL(@::aGetList[i][5], {||.T.})
-      __defaultNIL(@::aGetList[i][6], {||.T.})
+      __defaultNIL(@::aGetList[i][5], {||TRUE})
+      __defaultNIL(@::aGetList[i][6], {||TRUE})
 
       AAdd(::GetList, Get():New(::aGetList[i][1], ::aGetList[i][2], {|v|IIf(PCount() == 0, ::aGetList[i][3], ::aGetList[i][3] := v)}, "::aGetList[i][3]", ::aGetList[i][7]))
 
@@ -161,12 +161,12 @@ METHOD WvtGets:AddGets(nRow, nCol, xVar, cPic, cColor, bValid, bWhen)
 
 METHOD WvtGets:HandleEvent(nKey)
 
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
 
    DO CASE
    CASE nKey == K_LDBLCLK
       ::Read()
-      lRet := .T.
+      lRet := TRUE
    ENDCASE
 
    RETURN lRet

@@ -76,7 +76,7 @@ CREATE CLASS GDBar INHERIT GDImage
    VAR LeftHand_Odd   AS ARRAY
    VAR keys           AS ARRAY
 
-   VAR book           AS LOGICAL INIT .F.
+   VAR book           AS LOGICAL INIT FALSE
    VAR acode          AS ARRAY
    VAR KeysModeA      AS CHARACTER
    VAR KeysModeB      AS CHARACTER
@@ -91,7 +91,7 @@ CREATE CLASS GDBar INHERIT GDImage
    VAR color_f        AS ARRAY
    VAR FillColor      AS NUMERIC
    VAR BackColor      AS NUMERIC
-   VAR lDrawValue     AS LOGICAL INIT .T.
+   VAR lDrawValue     AS LOGICAL INIT TRUE
 
    // Methods
    METHOD CreateBar( sx, sy, filename, cColor )
@@ -148,8 +148,8 @@ METHOD GDBar:CreateBar( sx, sy, filename, cColor )
 
 METHOD GDBar:Configure( nMaxHeight, aFillColor, aBackColor, nRes, nTextFont, lBook, lDrawValue )
 
-   hb_default(@lBook, .F.)
-   hb_default(@lDrawValue, .T.)
+   hb_default(@lBook, FALSE)
+   hb_default(@lDrawValue, TRUE)
    hb_default(@nMaxHeight, 25)
    hb_default(@nTextFont, 2)
    hb_default(@nRes, 2)
@@ -228,7 +228,7 @@ METHOD GDBar:DrawSingleI25( pcode )
 
       FOR qw := 1 TO imgWid
          ::Line( ::positionX, 1, ::positionX, end_y, imgBar )
-         ::nextX(.T.)
+         ::nextX(TRUE)
       NEXT
    NEXT
 
@@ -247,7 +247,7 @@ METHOD GDBar:DrawError( ptext )
 
 METHOD GDBar:nextX( lI25 )
 
-   hb_default(@li25, .F.)
+   hb_default(@li25, FALSE)
 
    IF li25
       ::positionX++
@@ -261,7 +261,7 @@ METHOD GDBar:DrawText( lIsI25 )
 
    LOCAL xPosition
 
-   hb_default(@lIsI25, .F.)
+   hb_default(@lIsI25, FALSE)
 
    IF lIsI25
       If ::textfont != 0
@@ -277,17 +277,17 @@ METHOD GDBar:DrawText( lIsI25 )
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD GDBar:CheckCode()
 
-   LOCAL lRet := .T.
+   LOCAL lRet := TRUE
    LOCAL i
 
    FOR i := 1 TO Len(::text)
       IF hb_IsString(::CheckValInArray( SubStr(::text, i, 1) ))
          ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
-         lRet := .F.
+         lRet := FALSE
       ENDIF
    NEXT
 
@@ -331,4 +331,4 @@ METHOD GDBar:Finish( image_style, quality, nFG )
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE

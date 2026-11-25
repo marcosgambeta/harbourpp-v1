@@ -59,7 +59,7 @@
 CREATE CLASS WvgStatusBar INHERIT WvgWindow // WvgActiveXControl
 
    VAR caption INIT ""
-   VAR sizeGrip INIT .T.
+   VAR sizeGrip INIT TRUE
 
    VAR aItems INIT {}
 
@@ -224,7 +224,7 @@ METHOD WvgStatusBar:delItem(nItemORcKey)
 
    IF nIndex > 0
       // Delete panel by window
-      hb_ADel(::aItems, nIndex, .T.)
+      hb_ADel(::aItems, nIndex, TRUE)
    ENDIF
 
    RETURN Self

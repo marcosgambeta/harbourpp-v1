@@ -57,8 +57,8 @@
 CREATE CLASS TMariaDBRow
 
    VAR aRow                                     // a single row of answer
-   VAR aDirty                                   // array of booleans set to .T. if corresponding field of aRow has been changed
-   VAR aOldValue                                // If aDirty[n] is .T. aOldValue[n] keeps a copy of changed value if aRow[n] is part of a primary key
+   VAR aDirty                                   // array of booleans set to TRUE if corresponding field of aRow has been changed
+   VAR aOldValue                                // If aDirty[n] is TRUE aOldValue[n] keeps a copy of changed value if aRow[n] is part of a primary key
 
    VAR aOriValue                                // Original values ( same as TMySQLtable:aOldValue )
 
@@ -95,7 +95,7 @@ METHOD TMariaDBRow:New(aRow, aFStruct, cTableName)
    ::aDirty := Array(Len(::aRow))
    ::aOldValue := Array(Len(::aRow))
 
-   AFill(::aDirty, .F.)
+   AFill(::aDirty, FALSE)
 
    RETURN Self
 
@@ -131,7 +131,7 @@ METHOD TMariaDBRow:FieldPut(cnField, Value)
          // Save starting value for this field
          IF !::aDirty[nNum]
             ::aOldValue[nNum] := ::aRow[nNum]
-            ::aDirty[nNum] := .T.
+            ::aDirty[nNum] := TRUE
          ENDIF
 
          ::aRow[nNum] := Value
@@ -156,12 +156,12 @@ METHOD TMariaDBRow:FieldName(nNum)
 METHOD TMariaDBRow:FieldLen(nNum)
    RETURN IIf(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][MYSQL_FS_LENGTH], 0)
 
-/* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
+/* lFormat: when TRUE method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
    lFormat is useful for copying table structure from mysql to dbf
  */
 METHOD TMariaDBRow:FieldDec(nNum, lFormat)
 
-   hb_default(@lFormat, .F.)
+   hb_default(@lFormat, FALSE)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
@@ -260,13 +260,13 @@ CREATE CLASS TMariaDBQuery
 
    VAR lFieldAsData                     // Use fields as object DATA. For compatibility
                                         // Names of fields can match name of TMySQLQuery/Table DATAs,
-                                        // and it is dangerous. ::lFieldAsData:=.F. can fix it
+                                        // and it is dangerous. ::lFieldAsData:=FALSE can fix it
    VAR aRow                             // Values of fields of current row
 
    VAR nNumFields                       // how many fields per row
    VAR aFieldStruct                     // type of each field, a copy is here a copy inside each row
 
-   VAR lError                           // .T. if last operation failed
+   VAR lError                           // TRUE if last operation failed
 
    METHOD New(nSocket, cQuery)          // New query object
    METHOD Destroy()
@@ -287,7 +287,7 @@ CREATE CLASS TMariaDBQuery
 
    METHOD FCount()
 
-   METHOD NetErr() INLINE ::lError      // Returns .T. if something went wrong
+   METHOD NetErr() INLINE ::lError      // Returns TRUE if something went wrong
    METHOD Error()                       // Returns textual description of last error and clears ::lError
 
    METHOD FieldName(nNum)
@@ -309,16 +309,16 @@ METHOD TMariaDBQuery:New(nSocket, cQuery)
    ::nSocket := nSocket
    ::cQuery := cQuery
 
-   ::lError := .F.
+   ::lError := FALSE
    ::aFieldStruct := {}
    ::nCurRow := 1
    ::nResultHandle := NIL
    ::nNumFields := 0
    ::nNumRows := 0
-   ::lBof := .T.
-   ::lEof := .T.
+   ::lBof := TRUE
+   ::lEof := TRUE
 
-   ::lFieldAsData := .T.     // Use fields as object DATA. For compatibility
+   ::lFieldAsData := TRUE     // Use fields as object DATA. For compatibility
    ::aRow := {}              // Values of fields of current row
 
    IF mysql_query(nSocket, cQuery) == 0
@@ -343,7 +343,7 @@ METHOD TMariaDBQuery:New(nSocket, cQuery)
          ::nResultHandle := NIL
       ENDIF
    ELSE
-      ::lError := .T.
+      ::lError := TRUE
    ENDIF
 
    RETURN Self
@@ -353,7 +353,7 @@ METHOD TMariaDBQuery:Refresh()
    // free present result handle
    ::nResultHandle := NIL
 
-   ::lError := .F.
+   ::lError := FALSE
 
    IF mysql_query(::nSocket, ::cQuery) == 0
 
@@ -378,7 +378,7 @@ METHOD TMariaDBQuery:Refresh()
       ::nNumFields := 0
       ::nNumRows := 0
 #endif
-      ::lError := .T.
+      ::lError := TRUE
 
    ENDIF
 
@@ -401,8 +401,8 @@ METHOD TMariaDBQuery:Skip(nRows)
       // Negative movement
       IF (::RecNo() + nRows) < 1
          nRows := - ::RecNo() + 1
-         // Cl*pper: only SKIP movement can set Bof() to .T.
-         ::lBof := .T.  // Try to skip before first record
+         // Cl*pper: only SKIP movement can set Bof() to TRUE
+         ::lBof := TRUE  // Try to skip before first record
       ENDIF
    ELSE
       // positive movement
@@ -414,14 +414,14 @@ METHOD TMariaDBQuery:Skip(nRows)
    ::nCurRow := ::nCurRow + nRows
 
    // Maintain ::bof() true until next movement
-   // Cl*pper: only SKIP movement can set Bof() to .T.
+   // Cl*pper: only SKIP movement can set Bof() to TRUE
    lBof := ::Bof()
 
    // mysql_data_seek(::nResultHandle, ::nCurRow - 1)
    ::getRow(::nCurrow)
 
    IF lBof
-      ::lBof := .T.
+      ::lBof := TRUE
    ENDIF
 
    RETURN NIL
@@ -444,7 +444,7 @@ METHOD TMariaDBQuery:GetRow(nRow)
          // Equal to Clipper behaviour
          nRow := ::LastRec() + 1  // LastRec()+1
          ::nCurRow := ::LastRec() + 1
-         // ::lEof := .T.
+         // ::lEof := TRUE
       ENDIF
 
       IF nRow >= 1 .AND. nRow <= ::nNumRows
@@ -544,7 +544,7 @@ METHOD TMariaDBQuery:FCount()
 
 METHOD TMariaDBQuery:Error()
 
-   ::lError := .F.
+   ::lError := FALSE
 
    RETURN mysql_error(::nSocket)
 
@@ -615,12 +615,12 @@ METHOD TMariaDBQuery:FieldLen(nNum)
    ENDIF
 
    RETURN 0
-/* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
+/* lFormat: when TRUE method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
 
    lFormat is useful for copying table structure from mysql to dbf */
 METHOD TMariaDBQuery:FieldDec(nNum, lFormat)
 
-   hb_default(@lFormat, .F.)
+   hb_default(@lFormat, FALSE)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       IF !lFormat .AND. (::aFieldStruct[nNum][MYSQL_FS_TYPE] == MYSQL_TYPE_FLOAT .OR. ;
@@ -691,7 +691,7 @@ CREATE CLASS TMariaDBTable INHERIT TMariaDBQuery
    METHOD Delete(oRow, lOldRecord, lRefresh)        // Deletes passed row from table
    METHOD Append(oRow, lRefresh)                    // Inserts passed row into table
    METHOD GetBlankRow(lSetValues)                   // Returns an empty row with all available fields empty
-   METHOD SetBlankRow() INLINE ::GetBlankRow(.T.)   // Compatibility
+   METHOD SetBlankRow() INLINE ::GetBlankRow(TRUE)   // Compatibility
 
    METHOD Blank() INLINE ::GetBlankRow()
    METHOD FieldPut(cnField, Value)                  // field identifier, not only a number
@@ -753,11 +753,11 @@ METHOD TMariaDBTable:Update(oRow, lOldRecord, lRefresh)
    LOCAL ni
    LOCAL cWhere := " WHERE "
 
-   hb_default(@lOldRecord, .F.)
+   hb_default(@lOldRecord, FALSE)
    // Too many ::refresh() can slow some processes, so we can deactivate it by parameter
-   hb_default(@lRefresh, .T.)
+   hb_default(@lRefresh, TRUE)
 
-   ::lError := .F.
+   ::lError := FALSE
 
    IF oRow == NIL // default Current row
 
@@ -803,7 +803,7 @@ METHOD TMariaDBTable:Update(oRow, lOldRecord, lRefresh)
             NEXT
          ENDIF
       ELSE
-         ::lError := .T.
+         ::lError := TRUE
       ENDIF
    ELSE
       IF oRow:cTable == ::cTable
@@ -836,7 +836,7 @@ METHOD TMariaDBTable:Update(oRow, lOldRecord, lRefresh)
          IF mysql_query(::nSocket, cUpdateQuery) == 0
 
             // All values are committed
-            AFill(oRow:aDirty, .F.)
+            AFill(oRow:aDirty, FALSE)
             AFill(oRow:aOldValue, NIL)
 
             oRow:aOriValue := AClone(oRow:aRow)
@@ -848,7 +848,7 @@ METHOD TMariaDBTable:Update(oRow, lOldRecord, lRefresh)
                ::refresh()
             ENDIF
          ELSE
-            ::lError := .T.
+            ::lError := TRUE
          ENDIF
       ENDIF
    ENDIF
@@ -862,9 +862,9 @@ METHOD TMariaDBTable:Delete(oRow, lOldRecord, lRefresh)
    LOCAL ni
    LOCAL cWhere := " WHERE "
 
-   hb_default(@lOldRecord, .F.)
+   hb_default(@lOldRecord, FALSE)
    // Too many ::refresh() can slow some processes, so we can deactivate it by parameter
-   hb_default(@lRefresh, .T.)
+   hb_default(@lRefresh, TRUE)
 
    // is this a row of this table ?
    IF oRow == NIL
@@ -888,7 +888,7 @@ METHOD TMariaDBTable:Delete(oRow, lOldRecord, lRefresh)
       ENDIF
 
       IF mysql_query(::nSocket, cDeleteQuery) == 0
-         ::lError := .F.
+         ::lError := FALSE
          // Cl*pper maintain same record pointer
 
          // After refresh(), position of current record is often unpredictable
@@ -900,7 +900,7 @@ METHOD TMariaDBTable:Delete(oRow, lOldRecord, lRefresh)
             NEXT
          ENDIF
       ELSE
-         ::lError := .T.
+         ::lError := TRUE
       ENDIF
    ELSE
 
@@ -926,14 +926,14 @@ METHOD TMariaDBTable:Delete(oRow, lOldRecord, lRefresh)
          ENDIF
 
          IF mysql_query(::nSocket, cDeleteQuery) == 0
-            ::lError := .F.
+            ::lError := FALSE
 
             // After refresh(), position of current record is often unpredictable
             IF lRefresh
                ::refresh()
             ENDIF
          ELSE
-            ::lError := .T.
+            ::lError := TRUE
          ENDIF
       ENDIF
    ENDIF
@@ -947,7 +947,7 @@ METHOD TMariaDBTable:Append(oRow, lRefresh)
    LOCAL i
 
    // Too many ::refresh() can slow some processes, so we can deactivate it by parameter
-   hb_default(@lRefresh, .T.)
+   hb_default(@lRefresh, TRUE)
 
    IF oRow == NIL // default Current row
 
@@ -971,7 +971,7 @@ METHOD TMariaDBTable:Append(oRow, lRefresh)
       cInsertQuery := Left(cInsertQuery, Len(cInsertQuery) - 1) + ")"
 
       IF mysql_query(::nSocket, cInsertQuery) == 0
-         ::lError := .F.
+         ::lError := FALSE
          // Cl*pper add record at end
          ::nCurRow := ::LastRec() + 1
 
@@ -987,9 +987,9 @@ METHOD TMariaDBTable:Append(oRow, lRefresh)
 #endif
          ENDIF
 
-         RETURN .T.
+         RETURN TRUE
       ELSE
-         ::lError := .T.
+         ::lError := TRUE
       ENDIF
    ELSE
 
@@ -1015,10 +1015,10 @@ METHOD TMariaDBTable:Append(oRow, lRefresh)
          cInsertQuery := Left(cInsertQuery, Len(cInsertQuery) - 1) + ")"
 
          IF mysql_query(::nSocket, cInsertQuery) == 0
-            ::lError := .F.
+            ::lError := FALSE
 
             // All values are committed
-            AFill(oRow:aDirty, .F.)
+            AFill(oRow:aDirty, FALSE)
             AFill(oRow:aOldValue, NIL)
 
             oRow:aOriValue := AClone(oRow:aRow)
@@ -1031,14 +1031,14 @@ METHOD TMariaDBTable:Append(oRow, lRefresh)
                ::refresh()
             ENDIF
 
-            RETURN .T.
+            RETURN TRUE
          ELSE
-            ::lError := .T.
+            ::lError := TRUE
          ENDIF
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TMariaDBTable:GetBlankRow(lSetValues)
 
@@ -1046,7 +1046,7 @@ METHOD TMariaDBTable:GetBlankRow(lSetValues)
    LOCAL aRow := Array(::nNumFields)
 
    // It is not current row, so do not change it
-   hb_default(@lSetValues, .F.)
+   hb_default(@lSetValues, FALSE)
 
    // crate an array of empty fields
    FOR i := 1 TO ::nNumFields
@@ -1092,7 +1092,7 @@ METHOD TMariaDBTable:GetBlankRow(lSetValues)
       NEXT
    ENDIF
 
-   RETURN TMariaDBRow():New(aRow, ::aFieldStruct, ::cTable, .F.)
+   RETURN TMariaDBRow():New(aRow, ::aFieldStruct, ::cTable, FALSE)
 
 METHOD TMariaDBTable:FieldPut(cnField, Value)
 
@@ -1129,7 +1129,7 @@ METHOD TMariaDBTable:Refresh()
    // free present result handle
    ::nResultHandle := NIL
 
-   ::lError := .F.
+   ::lError := FALSE
 
    IF mysql_query(::nSocket, ::cQuery) == 0
 
@@ -1156,7 +1156,7 @@ METHOD TMariaDBTable:Refresh()
 
       ::aOldValue := {}
 #endif
-      ::lError := .T.
+      ::lError := TRUE
    ENDIF
 
    RETURN !::lError
@@ -1198,7 +1198,7 @@ CREATE CLASS TMariaDBServer
    VAR cDBName                                             // Selected DB
    VAR cUser                                               // user accessing db
    VAR cPassword                                           // his/her password
-   VAR lError                                              // .T. if occurred an error
+   VAR lError                                              // TRUE if occurred an error
    VAR cCreateQuery
 
    METHOD New(cServer, cUser, cPassword, nPort, nFlags)    // Opens connection to a server, returns a server object
@@ -1217,7 +1217,7 @@ CREATE CLASS TMariaDBServer
 
    METHOD Query(cQuery)                                    // Gets a textual query and returns a TMySQLQuery or TMySQLTable object
 
-   METHOD NetErr() INLINE ::lError                         // Returns .T. if something went wrong
+   METHOD NetErr() INLINE ::lError                         // Returns TRUE if something went wrong
    METHOD Error()                                          // Returns textual description of last error
    METHOD CreateDatabase(cDataBase)                        // Create an New Mysql Database
    METHOD DeleteDatabase(cDataBase)                        // Delete database
@@ -1236,10 +1236,10 @@ METHOD TMariaDBServer:New(cServer, cUser, cPassword, nPort, nFlags)
    ::cUser := cUser
    ::cPassword := cPassword
    ::nSocket := mysql_real_connect(cServer, cUser, cPassword, nPort, nFlags)
-   ::lError := .F.
+   ::lError := FALSE
 
    IF Empty(::nSocket)
-      ::lError := .T.
+      ::lError := TRUE
    ENDIF
 
    RETURN Self
@@ -1265,29 +1265,29 @@ METHOD TMariaDBServer:sql_version()
 //
 //   IF mysql_select_db(::nSocket, cDBName) == 0
 //      ::cDBName := cDBName
-//      RETURN .T.
+//      RETURN TRUE
 //   ELSE
 //      ::cDBName := ""
 //   ENDIF
 //
-//   RETURN .F.
+//   RETURN FALSE
 
 
 // === alterado ===
 METHOD TMariaDBServer:SelectDB(cDBName)
 
-   ::lError := .F.
+   ::lError := FALSE
 
    IF mysql_select_db(::nSocket, cDBName) != 0     /* table doesn't exist */
       ::cDBName := ""
-      ::lError := .T.
+      ::lError := TRUE
    ELSE                                       /* table exists */
       ::cDBName := cDBName
-      ::lError := .F.
-      RETURN .T.
+      ::lError := FALSE
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 
 METHOD TMariaDBServer:CreateDatabase(cDataBase)
@@ -1295,10 +1295,10 @@ METHOD TMariaDBServer:CreateDatabase(cDataBase)
    LOCAL cCreateQuery := "CREATE DATABASE " + Lower(cDatabase)
 
    IF mysql_query(::nSocket, cCreateQuery) == 0
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 // NOTE: OS/2 port of MySQL is picky about table names, that is if you create a table with
 // an upper case name you cannot alter it (for example) using a lower case name, this violates
@@ -1381,19 +1381,19 @@ METHOD TMariaDBServer:CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAut
    // remove last comma from list
    ::cCreateQuery := Left(::cCreateQuery, Len(::cCreateQuery) - 1) + ");"
    IF mysql_query(::nSocket, ::cCreateQuery) == 0
-      RETURN .T.
+      RETURN TRUE
    ELSE
-      ::lError := .T.
+      ::lError := TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TMariaDBServer:CreateIndex(cName, cTable, aFNames, lUnique)
 
    LOCAL cCreateQuery := "CREATE "
    LOCAL i
 
-   hb_default(@lUnique, .F.)
+   hb_default(@lUnique, FALSE)
 
    IF lUnique
       cCreateQuery += "UNIQUE INDEX "
@@ -1411,10 +1411,10 @@ METHOD TMariaDBServer:CreateIndex(cName, cTable, aFNames, lUnique)
    cCreateQuery := Left(cCreateQuery, Len(cCreateQuery) - 1) + ")"
 
    IF mysql_query(::nSocket, cCreateQuery) == 0
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 
 METHOD TMariaDBServer:DeleteIndex(cName, cTable)
@@ -1422,10 +1422,10 @@ METHOD TMariaDBServer:DeleteIndex(cName, cTable)
    LOCAL cDropQuery := "DROP INDEX " + cName + " FROM " + Lower(cTable)
 
    IF mysql_query(::nSocket, cDropQuery) == 0
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 
 METHOD TMariaDBServer:DeleteTable(cTable)
@@ -1433,10 +1433,10 @@ METHOD TMariaDBServer:DeleteTable(cTable)
    LOCAL cDropQuery := "DROP TABLE " + Lower(cTable)
 
    IF mysql_query(::nSocket, cDropQuery) == 0
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 
 METHOD TMariaDBServer:DeleteDatabase(cDataBase)
@@ -1444,10 +1444,10 @@ METHOD TMariaDBServer:DeleteDatabase(cDataBase)
    LOCAL cDropQuery := "DROP DATABASE " + Lower(cDataBase)
 
    IF mysql_query(::nSocket, cDropQuery) == 0
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 
 METHOD TMariaDBServer:Query(cQuery)
@@ -1486,14 +1486,14 @@ METHOD TMariaDBServer:Query(cQuery)
    ENDIF
 
    IF oQuery:NetErr()
-      ::lError := .T.
+      ::lError := TRUE
    ENDIF
 
    RETURN oQuery
 
 METHOD TMariaDBServer:Error()
 
-   ::lError := .F.
+   ::lError := FALSE
 
    RETURN IIf(Empty(::nSocket ), "No connection to server", mysql_error(::nSocket))
 

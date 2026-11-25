@@ -138,18 +138,18 @@ PROCEDURE Main()
    cStr := MemoEdit( , 1, 1, 9, 59,,, 59 )
    CLS
    ? "  Now printing the expanded text using a tab length of 4 and soft CRs"
-   cStr1 := TabExpand(cStr, 4, "+",,, .F.)
+   cStr1 := TabExpand(cStr, 4, "+",,, FALSE)
    cStr1 := StrTran(cStr, hb_BChar( 141 ), hb_eol())
 
-   FOR ni := 1 TO MLCount( cStr1, 59, 4, .T. )
-      ? "  " + Str(ni) + ": " + MemoLine( cStr1, 59, ni, 4, .T. )
+   FOR ni := 1 TO MLCount( cStr1, 59, 4, TRUE )
+      ? "  " + Str(ni) + ": " + MemoLine( cStr1, 59, ni, 4, TRUE )
    NEXT
 
    QOut( "  Now printing the expanded text using a tab length of 4 but without soft CRs" )
-   cStr1 := TabExpand(cStr, 4, "+",,, .T.)
+   cStr1 := TabExpand(cStr, 4, "+",,, TRUE)
 
-   FOR ni := 1 TO MLCount( cStr1, 59, 4, .T. )
-      ? "  " + Str(ni) + ": " + MemoLine( cStr1, 59, ni, 4, .T. )
+   FOR ni := 1 TO MLCount( cStr1, 59, 4, TRUE )
+      ? "  " + Str(ni) + ": " + MemoLine( cStr1, 59, ni, 4, TRUE )
    NEXT
    Inkey(0)
 #endif

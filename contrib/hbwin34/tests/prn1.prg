@@ -18,8 +18,8 @@ PROCEDURE Main( cPar1 )
          READ
          @ 2, 0 TO MaxRow(), MaxCol()
 
-         IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn ) ) > 0
-            PrnTest( aPrn[nPrn], cBMPFile, IIf(hb_IsString(cPar1) .AND. Lower(cPar1) == "ask", .T., NIL) )
+         IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, TRUE,, nPrn ) ) > 0
+            PrnTest( aPrn[nPrn], cBMPFile, IIf(hb_IsString(cPar1) .AND. Lower(cPar1) == "ask", TRUE, NIL) )
          ENDIF
       ENDDO
    ENDIF
@@ -35,7 +35,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
    LOCAL nColTTF
    LOCAL nColCharSet
 
-   oPrinter:Landscape := .F.
+   oPrinter:Landscape := FALSE
    oPrinter:FormType  := WIN_DMPAPER_A4
    oPrinter:Copies    := 1
    IF hb_IsLogical(lAsk)
@@ -51,8 +51,8 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:NewLine()
          oPrinter:TextOut( "   Partial list of available fonts that are available for OEM_" )
          oPrinter:NewLine()
-         oPrinter:UnderLine(.T.)
-         oPrinter:Italic(.T.)
+         oPrinter:UnderLine(TRUE)
+         oPrinter:Italic(TRUE)
 #if 0
          oPrinter:SetFont("Courier New", 7, { 3, -50 })  // Compressed print
 #endif
@@ -65,10 +65,10 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:SetPos(nColTTF)
          oPrinter:TextOut( "TrueType?" )
          oPrinter:SetPos(nColCharset)
-         oPrinter:TextOut( "CharSet#", .T. )
+         oPrinter:TextOut( "CharSet#", TRUE )
          oPrinter:NewLine()
-         oPrinter:Italic(.F.)
-         oPrinter:UnderLine(.F.)
+         oPrinter:Italic(FALSE)
+         oPrinter:UnderLine(FALSE)
          oPrinter:NewLine()
          aFonts := oPrinter:GetFonts()
          FOR x := 1 TO Len(aFonts) STEP 2
@@ -105,9 +105,9 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:TextOut( hb_ntos(oPrinter:PCol()) )
          oPrinter:SetPRC(oPrinter:PRow() + 3, 0)
          oPrinter:Bold( WIN_FW_DONTCARE )
-         oPrinter:TextOut( "Notice: UNDERLINE only prints correctly if there is a blank line after", .T. )
-         oPrinter:TextOut( "        it. This is because of :LineHeight and the next line", .T. )
-         oPrinter:TextOut( "        printing over top of the underline. To avoid this happening", .T. )
+         oPrinter:TextOut( "Notice: UNDERLINE only prints correctly if there is a blank line after", TRUE )
+         oPrinter:TextOut( "        it. This is because of :LineHeight and the next line", TRUE )
+         oPrinter:TextOut( "        printing over top of the underline. To avoid this happening", TRUE )
          oPrinter:TextOut( "        you can to alter :LineHeight or use a smaller font, or use :SetBkMode( WIN_TRANSPARENT )" )
          oPrinter:NewLine()
          oPrinter:NewLine()

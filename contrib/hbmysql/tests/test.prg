@@ -67,7 +67,7 @@ PROCEDURE Main( cArg )
    oRow := oQuery:GetRow()
 #endif
 
-   dbUseArea(.T.,, cArg, "wn", .F.)
+   dbUseArea(TRUE,, cArg, "wn", FALSE)
 
    IF !oServer:DeleteTable( "test" )
       Alert(oServer:Error())

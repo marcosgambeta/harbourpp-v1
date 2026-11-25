@@ -4,7 +4,7 @@ PROCEDURE Main()
 
    LOCAL cTable := hb_FNameExtSet( __FILE__, ".dbf" )
 
-   dbCreate( cTable, { { "TESTM", "M", 10, 0 } }, NIL, .T., "w_TEST" )
+   dbCreate( cTable, { { "TESTM", "M", 10, 0 } }, NIL, TRUE, "w_TEST" )
    dbAppend()
    w_TEST->TESTM := "hello"
 
@@ -13,7 +13,7 @@ PROCEDURE Main()
    HBTEST Chr(0)            IS Chr(0)
    HBTEST 0d20111213        IS 0d20111213
    HBTEST NIL               IS NIL
-   HBTEST .T.               IS .T.
+   HBTEST TRUE               IS TRUE
    HBTEST " " + " "         IS "  "
    HBTEST w_TEST->TESTM     IS "hello"
    HBTEST { "a", {} }       IS '{"a", {}}'
@@ -26,7 +26,7 @@ PROCEDURE Main()
    HBTEST 2 + '"'           IS "E 1 BASE 1081 Argument error (+) OS:0 #:0 A:2:N:2;C:\042 F:S"
    HBTEST 2 + "'"           IS "E 1 BASE 1081 Argument error (+) OS:0 #:0 A:2:N:2;C:' F:S"
    HBTEST "" + 0d20111213   IS "E 1 BASE 1081 Argument error (+) OS:0 #:0 A:2:C:;D:0d20111213 F:S"
-   HBTEST .T. - .F.         IS "E 1 BASE 1082 Argument error (-) OS:0 #:0 A:2:L:.T.;L:.F. F:S"
+   HBTEST TRUE - FALSE         IS "E 1 BASE 1082 Argument error (-) OS:0 #:0 A:2:L:TRUE;L:FALSE F:S"
    HBTEST w_TEST->TESTM + 0 IS "E 1 BASE 1081 Argument error (+) OS:0 #:0 A:2:M:hello;N:0 F:S"
    HBTEST {} + 0            IS "E 1 BASE 1081 Argument error (+) OS:0 #:0 A:2:A:{ Array of 0 Items };N:0 F:S"
 
@@ -34,7 +34,7 @@ PROCEDURE Main()
    HBTEST hb_BChar( 254 )   IS hb_BChar( 255 )
    HBTEST 0d20111213        IS 0d20111214
    HBTEST 2 + 2             IS 5
-   HBTEST .T.               IS .F.
+   HBTEST TRUE               IS FALSE
 
    dbCloseArea()
    hb_dbDrop( cTable )

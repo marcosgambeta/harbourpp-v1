@@ -61,7 +61,7 @@ CREATE CLASS WvgDialog INHERIT WvgWindow
    VAR    oMenu
    VAR    aRect
    VAR    drawingArea
-   VAR    tasklist                              INIT .T.
+   VAR    tasklist                              INIT TRUE
 
    METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
@@ -107,7 +107,7 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
 
    hb_gtInfo( HB_GTI_PRESPARAMS, { ::exStyle, ::style, ::aPos[1], ::aPos[2], ;
-      ::aSize[1], ::aSize[2], ::pGTp, .F., .F., HB_WNDTYPE_DIALOG } )
+      ::aSize[1], ::aSize[2], ::pGTp, FALSE, FALSE, HB_WNDTYPE_DIALOG } )
 
    IF ::visible
       hb_gtInfo( HB_GTI_SPEC, HB_GTS_SHOWWINDOW, WIN_SW_NORMAL )
@@ -136,10 +136,10 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
 
    IF ::visible
-      ::lHasInputFocus := .T.
+      ::lHasInputFocus := TRUE
    ENDIF
 
-   oW := WvgDrawingArea():new( Self ):create( , , { 0, 0 }, ::currentSize(), , .F. )
+   oW := WvgDrawingArea():new( Self ):create( , , { 0, 0 }, ::currentSize(), , FALSE )
    IF Empty(oW:hWnd)
       ::drawingArea := Self
    ELSE
@@ -183,7 +183,7 @@ METHOD WvgDialog:setFrameState( nState )
       ENDSWITCH
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD WvgDialog:getFrameState()
 

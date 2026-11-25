@@ -82,7 +82,7 @@ METHOD UHttpdLog:IsOpen()
 METHOD UHttpdLog:Add(cMsg)
 
    IF !hb_IsString(cMsg)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::fhnd == F_ERROR .AND. !Empty(::cFileName)
@@ -99,7 +99,7 @@ METHOD UHttpdLog:Close()
       lRetVal := FClose( ::fhnd )
       ::fhnd := F_ERROR
    ELSE
-      lRetVal := .F.
+      lRetVal := FALSE
    ENDIF
 
    RETURN lRetVal

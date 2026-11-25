@@ -62,7 +62,7 @@ PROCEDURE Main()
    LOCAL cTable
    LOCAL cFile
    LOCAL i
-   LOCAL lCreateTable := .F.
+   LOCAL lCreateTable := FALSE
    LOCAL oServer
    LOCAL oTable
    LOCAL oRecord
@@ -74,12 +74,12 @@ PROCEDURE Main()
    LOCAL hFile
    LOCAL nCount := 0
    LOCAL nRecno := 0
-   LOCAL lTruncate := .F.
-   LOCAL lUseTrans := .F.
+   LOCAL lTruncate := FALSE
+   LOCAL lUseTrans := FALSE
    LOCAL cPath := "public"
 
    Set(_SET_DATEFORMAT, "yyyy-mm-dd")
-   Set(_SET_DELETED, .T.)
+   Set(_SET_DELETED, TRUE)
 
    // Scan parameters and setup workings
    FOR i := 1 TO PCount()
@@ -91,9 +91,9 @@ PROCEDURE Main()
       CASE "-f" ; cFile := hb_PValue(++i) ; EXIT
       CASE "-u" ; cUser := hb_PValue(++i) ; EXIT
       CASE "-p" ; cPassword := hb_PValue(++i) ; EXIT
-      CASE "-c" ; lCreateTable := .T. ; EXIT
-      CASE "-x" ; lTruncate := .T. ; EXIT
-      CASE "-s" ; lUseTrans := .T. ; EXIT
+      CASE "-c" ; lCreateTable := TRUE ; EXIT
+      CASE "-x" ; lTruncate := TRUE ; EXIT
+      CASE "-s" ; lUseTrans := TRUE ; EXIT
       CASE "-m" ; nCommit := Val(hb_PValue(++i)) ; EXIT
       CASE "-r" ; nRecno := Val(hb_PValue(++i)) ; EXIT
       CASE "-e" ; cPath := hb_PValue(++i) ; EXIT
@@ -123,7 +123,7 @@ PROCEDURE Main()
       RETURN
    ENDIF
 
-   oServer:lallCols := .F.
+   oServer:lallCols := FALSE
 
    IF lCreateTable
       IF oServer:TableExists(cTable)

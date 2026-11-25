@@ -109,7 +109,7 @@ METHOD HB_LogEmail:Open(cName)
    HB_SYMBOL_UNUSED(cName)
    hb_inetInit()
 
-   RETURN .T.
+   RETURN TRUE
 
 /* hb_inetCleanup() to be called here */
 METHOD HB_LogEmail:Close(cName)
@@ -117,7 +117,7 @@ METHOD HB_LogEmail:Close(cName)
    HB_SYMBOL_UNUSED(cName)
    hb_inetCleanup()
 
-   RETURN .T.
+   RETURN TRUE
 
 /* Sends the real message in email */
 METHOD HB_LogEmail:Send(nStyle, cMessage, cName, nPriority)
@@ -129,34 +129,34 @@ METHOD HB_LogEmail:Send(nStyle, cMessage, cName, nPriority)
    hb_inetConnect(::cServer, ::nPort, skCon)
 
    IF hb_inetErrorCode(skCon) != 0 .OR. !::GetOk(skCon)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_inetSendAll(skCon, "HELO " + ::cHelo + CRLF)
    IF !::GetOk(skCon)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_inetSendAll(skCon, "MAIL FROM: <" + ::cAddress + ">" + CRLF)
    IF !::GetOk(skCon)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_inetSendAll(skCon, "RCPT TO: <" + ::cSendTo + ">" + CRLF)
    IF !::GetOk(skCon)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_inetSendAll(skCon, "DATA" + CRLF)
    IF !::GetOk(skCon)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cMessage := ::Prepare(nStyle, cMessage, cName, nPriority)
 
    hb_inetSendAll(skCon,  cMessage + CRLF + "." + CRLF)
    IF !::GetOk(skCon)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    hb_inetSendAll(skCon, "QUIT" + CRLF)
@@ -170,10 +170,10 @@ METHOD HB_LogEmail:GetOk(skCon)
 
    cReply := hb_inetRecvLine(skCon, @nLen, 128)
    IF hb_inetErrorCode(skcon) != 0 .OR. SubStr(cReply, 1, 1) == "5"
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogEmail:Prepare(nStyle, cMessage, cName, nPriority)
 
@@ -202,7 +202,7 @@ CREATE CLASS HB_LogInetPort FROM HB_LogChannel
    VAR aListeners      INIT {}
    VAR skIn
 
-   VAR bTerminate      INIT .F.
+   VAR bTerminate      INIT FALSE
    VAR nThread
    VAR mtxBusy
 
@@ -237,13 +237,13 @@ METHOD HB_LogInetPort:Open(cName)
    ::skIn := hb_inetServer(::nPort)
 
    IF ::skIn == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::mtxBusy := hb_mutexCreate()
    ::nThread := hb_threadStart(Self, "AcceptCon")
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogInetPort:Close(cName)
 
@@ -252,11 +252,11 @@ METHOD HB_LogInetPort:Close(cName)
    HB_SYMBOL_UNUSED(cName)
 
    IF ::skIn == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // kind termination request
-   ::bTerminate := .T.
+   ::bTerminate := TRUE
    hb_threadJoin(::nThread)
 
    hb_inetClose(::skIn)
@@ -271,7 +271,7 @@ METHOD HB_LogInetPort:Close(cName)
 
    hb_inetCleanup()
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogInetPort:Send(nStyle, cMessage, cName, nPriority)
 
@@ -289,7 +289,7 @@ METHOD HB_LogInetPort:Send(nStyle, cMessage, cName, nPriority)
       hb_inetSendAll(sk, cMessage + CRLF)
       // if there is an error, we remove the listener
       IF hb_inetErrorCode(sk) != 0
-         hb_ADel(::aListeners, nCount, .T.)
+         hb_ADel(::aListeners, nCount, TRUE)
       ELSE
          nCount++
       ENDIF
@@ -297,7 +297,7 @@ METHOD HB_LogInetPort:Send(nStyle, cMessage, cName, nPriority)
 
    hb_mutexUnlock(::mtxBusy)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogInetPort:AcceptCon()
 
@@ -314,4 +314,4 @@ METHOD HB_LogInetPort:AcceptCon()
       ENDIF
    ENDDO
 
-   RETURN .T.
+   RETURN TRUE

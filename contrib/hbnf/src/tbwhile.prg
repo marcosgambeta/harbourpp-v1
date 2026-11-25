@@ -70,7 +70,7 @@ FUNCTION ft_BrwsWhl(aFields, bWhileCond, cKey, nFreeze, lSaveScrn, cColorList, c
    LOCAL nPassRec
 
    __defaultNIL(@nFreeze, 0)
-   __defaultNIL(@lSaveScrn, .T.)
+   __defaultNIL(@lSaveScrn, TRUE)
    __defaultNIL(@cColorList, "N/W, N/BG, B/W, B/BG, B/W, B/BG, R/W, B/R")
    __defaultNIL(@cColorShad, "N/N")
    __defaultNIL(@nTop, 2)
@@ -154,7 +154,7 @@ FUNCTION ft_BrwsWhl(aFields, bWhileCond, cKey, nFreeze, lSaveScrn, cColorList, c
 
    nCursSave := SetCursor(SC_NONE)
 
-   lMore := .T.
+   lMore := TRUE
    DO WHILE lMore
 
       /* stabilize the display */
@@ -243,12 +243,12 @@ FUNCTION ft_BrwsWhl(aFields, bWhileCond, cKey, nFreeze, lSaveScrn, cColorList, c
 
       CASE K_ESC
          nPassRec := 0
-         lMore := .F.
+         lMore := FALSE
          EXIT
 
       CASE K_ENTER
          nPassRec := RecNo()
-         lMore := .F.
+         lMore := FALSE
          EXIT
 
       ENDSWITCH
@@ -310,7 +310,7 @@ STATIC FUNCTION TbWhileTop(cKey)
 
 STATIC FUNCTION TbWhileBot(cKey)
 
-   dbSeek(Left(cKey, Len(cKey) - 1) + Chr(Asc(Right(cKey, 1)) + 1), .T.)
+   dbSeek(Left(cKey, Len(cKey) - 1) + Chr(Asc(Right(cKey, 1)) + 1), TRUE)
    dbSkip(-1)
 
    RETURN NIL

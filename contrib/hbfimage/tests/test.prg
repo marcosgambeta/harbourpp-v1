@@ -28,7 +28,7 @@ PROCEDURE Main()
 
 #if 0
    ? "Press Alt-D + Enter to activate debug"
-   AltD(.T.)
+   AltD(TRUE)
    Inkey(0)
 #endif
    AltD()
@@ -91,7 +91,7 @@ PROCEDURE Main()
 
    centerx := fi_GetWidth( clone ) / 2
    centery := fi_GetHeight( clone ) / 2
-   ? "Rotate Ex        :", hb_ValToExp( rotatedEx := fi_RotateEx( clone, 15, 0, 0, centerx, centery, .T. ) )
+   ? "Rotate Ex        :", hb_ValToExp( rotatedEx := fi_RotateEx( clone, 15, 0, 0, centerx, centery, TRUE ) )
    ? "Save JPG ?       :", fi_Save( FIF_JPEG, rotatedEx, IMAGES_OUT + "rotateex.jpg", JPEG_DEFAULT )
 
    width   := fi_GetWidth( im )
@@ -145,32 +145,32 @@ PROCEDURE Main()
 
 #if 0
    ? hb_ValToExp( fi_GetInfoHeader( im ) )
-   bmpinfoheader:Buffer( fi_GetInfoHeader( im ), .T. )
+   bmpinfoheader:Buffer( fi_GetInfoHeader( im ), TRUE )
    bmpinfoheader:Pointer( fi_GetInfoHeader( im ) )
    ? "Header           :", hb_ValToExp( bmpinfoheader )
-   ? bmpinfoheader:SayMembers( " ", .T., .T. )
+   ? bmpinfoheader:SayMembers( " ", TRUE, TRUE )
 
    bmpinfo:Pointer( fi_GetInfo( im ) )
    bmpinfo := NIL // To fix warning
    ? "Info           :", hb_ValToExp( bmpinfo )
-   ? bmpinfo:SayMembers( " ", .T., .T. )
+   ? bmpinfo:SayMembers( " ", TRUE, TRUE )
    ? "-----------------------------------------------------"
 
    ? ValType(bmpinfo:Devalue())
    hb_traceLog( "bmpinfoheader", hb_ValToExp( bmpinfoheader ), ;
-      infoheader:SayMembers(, .T. ), bmpinfoheader:Value(), bmpinfoheader:DeValue(), hb_DumpVar( bmpinfoheader:Array() ), hb_DumpVar( bmpinfoheader:acMembers ) )
+      infoheader:SayMembers(, TRUE ), bmpinfoheader:Value(), bmpinfoheader:DeValue(), hb_DumpVar( bmpinfoheader:Array() ), hb_DumpVar( bmpinfoheader:acMembers ) )
 
    hb_traceLog( "line 179" )
    iccprofile:Pointer( fi_GetICCProfile( im ) )
    hb_traceLog( "line 181" )
    ? "Header           :", hb_ValToExp( iccprofile )
    hb_traceLog( "line 183" )
-   ? iccprofile:SayMembers( " ", .T., .T. )
+   ? iccprofile:SayMembers( " ", TRUE, TRUE )
 
    bmpinfoheader:Reset()
    appo := NIL
    bmpinfoheader := NIL
-   hb_gcAll(.T.)
+   hb_gcAll(TRUE)
 #endif
 
    //

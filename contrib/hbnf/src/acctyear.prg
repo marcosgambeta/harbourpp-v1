@@ -34,21 +34,21 @@ FUNCTION ft_AcctYear(dGivenDate)
    aRetVal      := ft_Year(dGivenDate)
    nYTemp       := Val(aRetVal[1])
    aRetVal[2] := ft_AcctAdj(aRetVal[2])
-   aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
+   aRetVal[3] := ft_AcctAdj(aRetVal[3], TRUE)
 
    IF dGivenDate < aRetVal[2]
 
       aRetVal    := ft_Year(ft_MAdd(dGivenDate, -1))
       nYTemp--
       aRetVal[2] := ft_AcctAdj(aRetVal[2])
-      aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
+      aRetVal[3] := ft_AcctAdj(aRetVal[3], TRUE)
 
    ELSEIF dGivenDate > aRetVal[3]
 
       aRetVal    := ft_Year(ft_MAdd(dGivenDate, 1))
       nYTemp++
       aRetVal[2] := ft_AcctAdj(aRetVal[2])
-      aRetVal[3] := ft_AcctAdj(aRetVal[3], .T.)
+      aRetVal[3] := ft_AcctAdj(aRetVal[3], TRUE)
 
    ENDIF
 

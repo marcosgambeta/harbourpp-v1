@@ -17,7 +17,7 @@ PROCEDURE Main()
 
    CLS
 
-   DO WHILE .T.
+   DO WHILE TRUE
       ?
       ? "Select OLE test:"
       ? "1) MS Excel"
@@ -113,7 +113,7 @@ STATIC PROCEDURE Exm_MSExcel()
       oAS:Cells( 4, 2 ):Value++
 
       oAS:Cells( 5, 1 ):Value := "Logical:"
-      oAS:Cells( 5, 2 ):Value := .T.
+      oAS:Cells( 5, 2 ):Value := TRUE
 
       oAS:Cells( 6, 1 ):Value := "Date:"
       oAS:Cells( 6, 2 ):Value := Date()
@@ -122,7 +122,7 @@ STATIC PROCEDURE Exm_MSExcel()
       oAS:Cells( 7, 2 ):Value := hb_DateTime()
 
       // Some formatting
-      oAS:Columns(1):Font:Bold := .T.
+      oAS:Columns(1):Font:Bold := TRUE
       oAS:Columns(2):HorizontalAlignment := - 4152  // xlRight
 
       oAS:Columns(1):AutoFit()
@@ -135,7 +135,7 @@ STATIC PROCEDURE Exm_MSExcel()
       oAS:Range( "A1:B1" ):HorizontalAlignment := 7
       oAS:Range( "A3:A7" ):Select()
 
-      oExcel:Visible := .T.
+      oExcel:Visible := TRUE
 
       oExcel:Quit()
    ELSE
@@ -157,9 +157,9 @@ STATIC PROCEDURE Exm_MSWord()
       oText:Text := "OLE from Harbour" + hb_eol()
       oText:Font:Name := "Arial"
       oText:Font:Size := 48
-      oText:Font:Bold := .T.
+      oText:Font:Bold := TRUE
 
-      oWord:Visible := .T.
+      oWord:Visible := TRUE
       oWord:WindowState := 1 /* Maximize */
    ELSE
       ? "Error. MS Word not available.", win_oleErrorText()
@@ -174,7 +174,7 @@ STATIC PROCEDURE Exm_MSOutlook()
    IF ( oOL := win_oleCreateObject( "Outlook.Application" ) ) != NIL
       oList := oOL:CreateItem( 7 /* olDistributionListItem */ )
       oList:DLName := "Distribution List"
-      oList:Display(.F.)
+      oList:Display(FALSE)
    ELSE
       ? "Error. MS Outlook not available.", win_oleErrorText()
    ENDIF
@@ -197,7 +197,7 @@ STATIC PROCEDURE Exm_MSOutlook2()
 
       oLista := oOL:CreateItem( 7 /* olDistributionListItem */ )
       oLista:DLName := "Test with distribution list"
-      oLista:Display(.F.)
+      oLista:Display(FALSE)
       oLista:AddMembers( oMail:Recipients )
       oLista:Save()
       oLista:Close(0)
@@ -212,7 +212,7 @@ STATIC PROCEDURE Exm_IExplorer()
    LOCAL oIE
 
    IF ( oIE := win_oleCreateObject( "InternetExplorer.Application" ) ) != NIL
-      oIE:Visible := .T.
+      oIE:Visible := TRUE
       oIE:Navigate( hb_Version( HB_VERSION_URL_BASE ) )
    ELSE
       ? "Error. Internet Explorer not available.", win_oleErrorText()
@@ -226,7 +226,7 @@ STATIC PROCEDURE Exm_IExplorer2()
 
    IF ( oIE := win_oleCreateObject( "InternetExplorer.Application" ) ) != NIL
       oIE:__hSink := __axRegisterHandler( oIE:__hObj, {| ... | QOut(...) } )
-      oIE:Visible := .T.
+      oIE:Visible := TRUE
       oIE:Navigate( hb_Version( HB_VERSION_URL_BASE ) )
       DO WHILE oIE:ReadyState != 4
          hb_idleSleep(0)
@@ -256,7 +256,7 @@ STATIC PROCEDURE Exm_OOCalc()
       oSheet:getCellRangeByName( "B4" ):setValue( 1234.56 )
 
       oSheet:getCellRangeByName( "A5" ):setString( "Logical:" )
-      oSheet:getCellRangeByName( "B5" ):setValue(.T.)
+      oSheet:getCellRangeByName( "B5" ):setValue(TRUE)
       oSheet:getCellRangeByName( "B5" ):setPropertyValue( "NumberFormat", 99 ) // BOOLEAN
 
       oSheet:getCellRangeByName( "A6" ):setString( "Date:" )
@@ -267,7 +267,7 @@ STATIC PROCEDURE Exm_OOCalc()
       oSheet:getCellRangeByName( "B7" ):setValue( hb_DateTime() )
       oSheet:getCellRangeByName( "B7" ):setPropertyValue( "NumberFormat", 51 ) // YYYY-MM-DD HH:MM:SS
 
-      oSheet:getCellRangeByName( "A3" ):setPropertyValue( "IsCellBackgroundTransparent", .F. )
+      oSheet:getCellRangeByName( "A3" ):setPropertyValue( "IsCellBackgroundTransparent", FALSE )
       oSheet:getCellRangeByName( "A3" ):setPropertyValue( "CellBackColor", 255 ) // blue
       oSheet:getCellRangeByName( "B3" ):setPropertyValue( "CharColor", 255 * 256 * 256 ) // red
    ELSE
@@ -287,29 +287,29 @@ STATIC PROCEDURE Exm_OOWriter()
       oText := oDoc:getText
       oCursor := oText:createTextCursor
 
-      oText:insertString( oCursor, "OpenOffice Writer scripting from Harbour." + Chr(10), .F. )
+      oText:insertString( oCursor, "OpenOffice Writer scripting from Harbour." + Chr(10), FALSE )
 
-      oText:insertString( oCursor, "This is the second line" + Chr(10), .F. )
+      oText:insertString( oCursor, "This is the second line" + Chr(10), FALSE )
 
       oTable := oDoc:createInstance( "com.sun.star.text.TextTable" )
       oTable:initialize( 2, 4 )
 
-      oText:insertTextContent( oCursor, oTable, .F. )
+      oText:insertTextContent( oCursor, oTable, FALSE )
 
-      oTable:setPropertyValue( "BackTransparent", .F. )
+      oTable:setPropertyValue( "BackTransparent", FALSE )
       oTable:setPropertyValue( "BackColor", ( 255 * 256 + 255 ) * 256 + 192 )
 
       oRows := oTable:getRows
       oRow := oRows:getByIndex(0)
-      oRow:setPropertyValue( "BackTransparent", .F. )
+      oRow:setPropertyValue( "BackTransparent", FALSE )
       oRow:setPropertyValue( "BackColor", ( 192 * 256 + 192 ) * 256 + 128 )
 
       oCell := oTable:getCellByName( "A1" )
-      oCell:insertString( oCell:createTextCursor, "Jan", .F. )
+      oCell:insertString( oCell:createTextCursor, "Jan", FALSE )
       oCell := oTable:getCellByName( "B1" )
-      oCell:insertString( oCell:createTextCursor, "Feb", .F. )
+      oCell:insertString( oCell:createTextCursor, "Feb", FALSE )
       oCell := oTable:getCellByName( "C1" )
-      oCell:insertString( oCell:createTextCursor, "Mar", .F. )
+      oCell:insertString( oCell:createTextCursor, "Mar", FALSE )
 
       // I guess we can set text without cursor creation
       oTable:getCellByName( "D1" ):setString( "SUM" )
@@ -319,10 +319,10 @@ STATIC PROCEDURE Exm_OOWriter()
       oTable:getCellByName( "C2" ):setValue( 106.38 )
       oTable:getCellByName( "D2" ):setFormula("sum <A2:C2>")
 
-      oText:insertControlCharacter( oCursor, 0, .F. )  // PARAGRAPH_BREAK
+      oText:insertControlCharacter( oCursor, 0, FALSE )  // PARAGRAPH_BREAK
 
       oCursor:setPropertyValue( "CharColor", 255 )
-      oText:insertString( oCursor, "Good bye!", .F. )
+      oText:insertString( oCursor, "Good bye!", FALSE )
    ELSE
       ? "Error. OpenOffice not available.", win_oleErrorText()
    ENDIF
@@ -345,7 +345,7 @@ STATIC PROCEDURE Exm_OOOpen()
       ? "About to close OpenOffice"
       WAIT
 
-      oOO_Doc:Close(.T.)
+      oOO_Doc:Close(TRUE)
       oOO_Desktop:Terminate()
    ELSE
       ? "Error: OpenOffice not available.", win_oleErrorText()
@@ -387,7 +387,7 @@ STATIC PROCEDURE Exm_CDO()  /* STARTTLS not supported by CDO */
       oCDOConf:Fields( "http:" + "//schemas.microsoft.com/cdo/configuration/smtpauthenticate" ):Value := 1  // cdoBasic: Basic authentication
       oCDOConf:Fields( "http:" + "//schemas.microsoft.com/cdo/configuration/sendusername" ):Value := cFrom
       oCDOConf:Fields( "http:" + "//schemas.microsoft.com/cdo/configuration/sendpassword" ):Value := "password"
-      oCDOConf:Fields( "http:" + "//schemas.microsoft.com/cdo/configuration/smtpusessl" ):Value := .T.
+      oCDOConf:Fields( "http:" + "//schemas.microsoft.com/cdo/configuration/smtpusessl" ):Value := TRUE
       oCDOConf:Fields:Update()
 
       oCDOMsg:Configuration := oCDOConf
@@ -502,7 +502,7 @@ STATIC PROCEDURE Exm_DownloadHTTPS()
    LOCAL oHTTP
 
    IF ( oHTTP := win_oleCreateObject( "WinHttp.WinHttpRequest.5.1" ) ) != NIL
-      oHTTP:Open( "GET", "https://example.org/index.html", .F. )
+      oHTTP:Open( "GET", "https://example.org/index.html", FALSE )
       oHTTP:Send()
       IF oHTTP:Status() == 200
          ? "Downloaded", hb_ntos(hb_BLen(oHTTP:responseBody)), "byte(s)"

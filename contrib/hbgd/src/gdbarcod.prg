@@ -163,7 +163,7 @@ METHOD GDBarCode:Draw( cText )
 
 METHOD GDBarCode:Draw13( cText )
 
-   LOCAL lError  := .F.
+   LOCAL lError  := FALSE
    LOCAL nChkSum := 0
    LOCAL nChk    := 0
    LOCAL ii, jj
@@ -173,14 +173,14 @@ METHOD GDBarCode:Draw13( cText )
 
    // Valid characters
    IF !::CheckCode()
-      lError := .T.
+      lError := TRUE
    ENDIF
 
    IF !lError
 
       IF ::book .AND. Len(::text) != 10
          ::DrawError( "Must contains 10 chars if ISBN is true." )
-         lError := .T.
+         lError := TRUE
       ENDIF
 
       // book, we changed the code to the right
@@ -191,7 +191,7 @@ METHOD GDBarCode:Draw13( cText )
       //  contain only 12 characters ?
       IF Len(::text) != 12
          ::DrawError( "Must contains 12 chars, the 13th digit is automatically added." )
-         lError := .T.
+         lError := TRUE
       ENDIF
 
       IF !lError
@@ -295,7 +295,7 @@ METHOD GDBarCode:DrawText13()
 
 METHOD GDBarCode:Draw8( cText )
 
-   LOCAL lError := .F.
+   LOCAL lError := FALSE
    LOCAL ii, jj
 
 #if 0
@@ -308,7 +308,7 @@ METHOD GDBarCode:Draw8( cText )
 
    // Valid characters
    IF !::CheckCode()
-      lError := .T.
+      lError := TRUE
    ENDIF
 
    IF !lError
@@ -421,9 +421,9 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
    LOCAL nC         := 0
    LOCAL nPos
 
-   LOCAL lTypeCodeC := .F.
-   LOCAL lTypeCodeA := .F.
-   LOCAL lError     := .F.
+   LOCAL lTypeCodeC := FALSE
+   LOCAL lTypeCodeA := FALSE
+   LOCAL lError     := FALSE
    LOCAL cBarCode   := ""
    LOCAL cConc      := ""
 
@@ -436,7 +436,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
          cModeCode := Upper(cModeCode)
       ELSE
          ::DrawError( "Code 128 Modes are A, B or C character values." )
-         lError := .T.
+         lError := TRUE
       ENDIF
    ENDIF
 
@@ -449,21 +449,21 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
 
          IF nPos == 0
             ::DrawError( "With Code C, you must provide always pair of two integers. Character " + SubStr(::text, i, 1) + SubStr(::text, i + 1, 1) + " not allowed." )
-            lError := .T.
+            lError := TRUE
          ENDIF
 
       ELSEIF cModeCode == "B"
 
          IF ::FindCharCode( ::KeysmodeB, SubStr(::Text, i, 1) ) == 0
             ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
-            lError := .T.
+            lError := TRUE
          ENDIF
 
       ELSEIF cModeCode == "A"
 
          IF ::FindCharCode( ::KeysmodeA, SubStr(::text, i, 1) ) == 0
             ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
-            lError := .T.
+            lError := TRUE
          ENDIF
 
       ENDIF
@@ -475,7 +475,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
       IF Empty(cModeCode)
 
          IF Str(Val(::text), Len(::text)) == ::text
-            lTypeCodeC :=  .T.
+            lTypeCodeC := TRUE
             cConc      := ::aCode[ STARTC ]
             nSum       := STARTB
          ELSE
@@ -484,7 +484,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
             NEXT
 
             IF nC < Len(::text) / 2
-               lTypeCodeA := .T.
+               lTypeCodeA := TRUE
                cConc      := ::aCode[ STARTA ]
                nSum       := FNC1
             ELSE
@@ -494,11 +494,11 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
          ENDIF
       ELSE
          IF cModeCode == "C"
-            lTypeCodeC := .T.
+            lTypeCodeC := TRUE
             cConc      := ::aCode[ STARTC ]
             nSum       := STARTB
          ELSEIF cModeCode == "A"
-            lTypeCodeA := .T.
+            lTypeCodeA := TRUE
             cConc      := ::aCode[ STARTB ]
             nSum       := FNC1
          ELSE
@@ -584,12 +584,12 @@ METHOD GDBarCode:DrawI25( cText )
 
 METHOD GDBarCode:GenCodei25()
 
-   LOCAL lError := .F.
+   LOCAL lError := FALSE
    LOCAL bc_string
 
    IF ( Len(::text) % 2 ) != 0
       ::DrawError( "Invalid barcode lenght" )
-      lError := .T.
+      lError := TRUE
    ENDIF
 
    IF !lError
@@ -608,7 +608,7 @@ METHOD GDBarCode:GenCodei25()
 
       // Draw Text
       IF ::lDrawValue
-         ::DrawText(.T.)
+         ::DrawText(TRUE)
       ENDIF
    ENDIF
 

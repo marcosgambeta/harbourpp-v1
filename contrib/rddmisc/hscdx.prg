@@ -70,7 +70,7 @@ ANNOUNCE HSCDX
 
 STATIC FUNCTION _HSX_NEW( pWA )
 
-   LOCAL aWData := { .F., {}, {} }
+   LOCAL aWData := { FALSE, {}, {} }
 
    /*
     * Set in our private AREA item the array where we will keep HSX indexes
@@ -119,7 +119,7 @@ STATIC FUNCTION _HSX_GOCOLD( nWA )
                ENDIF
             NEXT
          ENDIF
-         aWData[1] := .F.
+         aWData[1] := FALSE
       ENDIF
    ENDIF
 
@@ -131,7 +131,7 @@ STATIC FUNCTION _HSX_GOHOT( nWA )
 
    IF ( nResult := UR_SUPER_GOHOT( nWA ) ) == HB_SUCCESS
       aWData := USRRDD_AREADATA(nWA)
-      aWData[1] := .T.
+      aWData[1] := TRUE
    ENDIF
 
    RETURN nResult
@@ -142,7 +142,7 @@ STATIC FUNCTION _HSX_APPEND( nWA, lUnlockAll )
 
    IF ( nResult := UR_SUPER_APPEND( nWA, lUnlockAll ) ) == HB_SUCCESS
       aWData := USRRDD_AREADATA(nWA)
-      aWData[1] := .T.
+      aWData[1] := TRUE
    ENDIF
 
    RETURN nResult
@@ -203,8 +203,8 @@ PROCEDURE hsx_Close( xHSX )
          nSlot := 0
       ENDCASE
       IF nSlot > 0
-         hb_ADel( aWData[2], nSlot, .T. )
-         hb_ADel( aWData[3], nSlot, .T. )
+         hb_ADel( aWData[2], nSlot, TRUE )
+         hb_ADel( aWData[3], nSlot, TRUE )
       ENDIF
    ENDIF
 

@@ -112,11 +112,11 @@ METHOD TBrowseWvg:SetVisible()
    ::Super:SetVisible()
    ::aColumnsSep := {}
 
-   lFirst := .T.
+   lFirst := TRUE
    FOR EACH aCol IN ::aColData
       IF aCol[_TBCI_COLPOS] != NIL
          IF lFirst
-            lFirst := .F.
+            lFirst := FALSE
 
          ELSE
             nColPos := aCol[_TBCI_COLPOS]

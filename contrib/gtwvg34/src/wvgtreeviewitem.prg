@@ -77,7 +77,7 @@ CREATE CLASS WvgTreeViewItem
    METHOD configure()
    METHOD destroy()
 
-   METHOD Expand(lExpand) INLINE wvg_TreeView_Expand(::hTree, ::hItem, hb_defaultValue(lExpand, .T.))
+   METHOD Expand(lExpand) INLINE wvg_TreeView_Expand(::hTree, ::hItem, hb_defaultValue(lExpand, TRUE))
    METHOD isExpanded()
    METHOD setCaption( cCaption )
    METHOD setExpandedImage( nResIdoBitmap )

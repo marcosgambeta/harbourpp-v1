@@ -67,7 +67,7 @@ PROCEDURE Main()
    ?
    FOR ni := 1 TO NumToken( cStr, ".,!", 1 )
       ? '    Token #' + hb_ntos(ni) + '("' + Token( cStr, ".,!", ni, 1 ) + ;
-         '") is tokenized by "' + TokenSep(.F.) + '" and "' + TokenSep(.T.) + '"'
+         '") is tokenized by "' + TokenSep(FALSE) + '" and "' + TokenSep(TRUE) + '"'
    NEXT
 
    ?
@@ -76,7 +76,7 @@ PROCEDURE Main()
    ?
    FOR ni := 1 TO NumToken( cStr, ".,!", 3 )
       ? '    Token #' + hb_ntos(ni) + '("' + Token( cStr, ".,!", ni, 3 ) + ;
-         '") is tokenized by "' + TokenSep(.F.) + '" and "' + TokenSep(.T.) + '"'
+         '") is tokenized by "' + TokenSep(FALSE) + '" and "' + TokenSep(TRUE) + '"'
    NEXT
 
    ?

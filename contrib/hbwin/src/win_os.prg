@@ -59,13 +59,13 @@
 
 FUNCTION win_osNetRegOk(lSetIt, lDoVista)
 
-   LOCAL bRetVal := .T.
+   LOCAL bRetVal := TRUE
    LOCAL cKeySrv
    LOCAL cKeyWks
 
-   hb_default(@lSetIt, .F.)
+   hb_default(@lSetIt, FALSE)
 
-   IF !hb_defaultValue(lDoVista, .T.) .AND. hb_osIsWinVista()
+   IF !hb_defaultValue(lDoVista, TRUE) .AND. hb_osIsWinVista()
       // do nothing
    ELSEIF hb_osIsWin9x()
       bRetVal := win_regQuery(WIN_HKEY_LOCAL_MACHINE, "System\CurrentControlSet\Services\VxD\VREDIR", "DiscardCacheOnOpen", 1, lSetIt)

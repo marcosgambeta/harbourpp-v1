@@ -167,9 +167,9 @@ METHOD THtmlFrameSet:Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidt
 
    LOCAL cStr
 
-   __defaultNIL(@lBorder, .T.)
-   __defaultNIL(@lResize, .T.)
-   __defaultNIL(@lScrolling, .F.)
+   __defaultNIL(@lBorder, TRUE)
+   __defaultNIL(@lResize, TRUE)
+   __defaultNIL(@lScrolling, FALSE)
    __defaultNIL(@cScrolling, "AUTO")
    __defaultNIL(@cTarget, "_self")
 

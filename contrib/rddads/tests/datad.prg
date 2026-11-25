@@ -134,10 +134,10 @@ PROCEDURE Main()
       NEXT
 
 
-      // AdsUseDictionary(.T.)  this function no longer is needed; the system knows if it's using a Data Dictionary connection
+      // AdsUseDictionary(TRUE)  this function no longer is needed; the system knows if it's using a Data Dictionary connection
 
       // Open the "long table name" for Table2
-      dbUseArea(.T., , "Customer Data", "custom", .T., .F.)
+      dbUseArea(TRUE, , "Customer Data", "custom", TRUE, FALSE)
       ? "Press a key to browse", Alias()
       Inkey(0)
       Browse()

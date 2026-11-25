@@ -84,7 +84,7 @@ PROCEDURE Main()
    // BRAZIL-FEBRABAN
    bar := GDBarCode():New( 25 )
 
-   bar:Configure( 25, black, white, 1, 1,, .T. )
+   bar:Configure( 25, black, white, 1, 1,, TRUE )
 
    bar:CreateBar( 560, 60, IMAGES_OUT + "febraban.gif", white )
    bar:DrawI25( "104995628545723070285700000008218000" )

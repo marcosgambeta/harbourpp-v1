@@ -10,7 +10,7 @@ PROCEDURE Main( cInFile )
    LOCAL nColSkip  := 5
    LOCAL nRMargin  := 132
    LOCAL cExitKeys := PadR("AABBC", 12)
-   LOCAL lBrowse   := .F.
+   LOCAL lBrowse   := FALSE
    LOCAL nStart    := 1
    LOCAL nBuffSize := 4096
    LOCAL GetList := {}

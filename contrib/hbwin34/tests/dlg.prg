@@ -39,18 +39,18 @@ STATIC FUNCTION DialogFunc(hWnd, nMessage, wParam, lParam)
       wapi_ComboBox_AddString( wapi_GetDlgItem( hWnd, IDC_COMBO1 ), "Other" )
 
       wapi_SetFocus( hWnd, wapi_GetDlgItem( hWnd, IDC_EDIT1 ) )
-      RETURN .T.
+      RETURN TRUE
 
    CASE WIN_WM_CLOSE
       wapi_EndDialog( hWnd, 3 )
-      RETURN .T.
+      RETURN TRUE
 
    CASE WIN_WM_COMMAND
       SWITCH WIN_LOWORD( wParam )
       CASE IDC_BUTTON1
          wapi_MessageBox( , "Hello [" + wapi_GetDlgItemText( hWnd, IDC_EDIT1 ) + "]!" + Chr(13) + "How are you?", "Hi!", WIN_MB_ICONASTERISK )
-         RETURN .T.
+         RETURN TRUE
       ENDSWITCH
    ENDSWITCH
 
-   RETURN .F.
+   RETURN FALSE

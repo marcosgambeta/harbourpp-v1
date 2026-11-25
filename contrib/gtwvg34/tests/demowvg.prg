@@ -87,10 +87,10 @@ PROCEDURE Main()
 
    Set( _SET_EVENTMASK, hb_bitOr( INKEY_ALL, HB_INKEY_GTEVENT ) )
 
-   wvt_SetGUI(.T.)
-   WvtSetKeys(.T.)
+   wvt_SetGUI(TRUE)
+   WvtSetKeys(TRUE)
    Popups(1)
-   wvt_SetMouseMove(.T.)
+   wvt_SetMouseMove(TRUE)
    wvt_SetFont("Courier New", 18, 0, 0)
 
    CLS
@@ -121,12 +121,12 @@ PROCEDURE Main()
 
    AAdd(aBlocks, {||wvt_SetIcon( GetResource( "vr_1.ico" ) ) })
    AAdd(aBlocks, {||hb_gtInfo( HB_GTI_WINTITLE, "Vouch" ) })
-   AAdd(aBlocks, {||wvt_DrawLabel( 1, 40, cLabel, 6,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", 26, , , , , .T., .T. ) })
+   AAdd(aBlocks, {||wvt_DrawLabel( 1, 40, cLabel, 6,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", 26, , , , , TRUE, TRUE ) })
    AAdd(aBlocks, {||wvt_DrawBoxRaised(nTop, nLft, nBtm, nRgt) })
    AAdd(aBlocks, {||wvt_DrawBoxRecessed(7, 61, 13, 70) })
    AAdd(aBlocks, {||wvt_DrawBoxGroup( 15, 59, 18, 72 ) })
    AAdd(aBlocks, {||wvt_DrawBoxGroup( 5, 6, 19, 44 ) })
-   AAdd(aBlocks, {||wvt_DrawImage( 8, 62, 12, 69, IMAGE_VOUCH, , .T. ) })
+   AAdd(aBlocks, {||wvt_DrawImage( 8, 62, 12, 69, IMAGE_VOUCH, , TRUE ) })
    AAdd(aBlocks, {||wvt_DrawBoxRecessed(7, 48, 13, 55) })
    AAdd(aBlocks, {||wvt_DrawLine( MaxRow() - 2, 0, MaxRow() - 2, MaxCol(), WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) })
    AAdd(aBlocks, {||wvt_DrawLine( MaxRow() - 1, 41, MaxRow(), 41, WVT_LINE_VERT, WVT_LINE_RECESSED, WVT_LINE_CENTER ) })
@@ -167,10 +167,10 @@ PROCEDURE Main()
    WvtSetObjects( aObjects )
    SetColor(clr)
    RestScreen(0, 0, MaxRow(), MaxCol(), scr)
-   WvtSetKeys(.F.)
+   WvtSetKeys(FALSE)
    wvt_SetPopupMenu( hPopup )
 
-   Popups( 1, .T. )
+   Popups( 1, TRUE )
    SetGT( 1, pGT )
 
    ErrorBlock( oError )
@@ -417,7 +417,7 @@ STATIC FUNCTION BuildMainMenu()
    LOCAL oMenu
    LOCAL g_oMenuBar := WvgSetAppWindow():menuBar()
 
-   oMenu := WvgMenu():new( g_oMenuBar, , .T. ):create()
+   oMenu := WvgMenu():new( g_oMenuBar, , TRUE ):create()
    oMenu:Caption := "Wvt*Classes"
    oMenu:AddItem( "Dialog One . New Window . Threaded"       , {|| DialogWvgClassesOne(1) } )
    oMenu:AddItem( "Dialog One . Main Window . Primary Thread", {|| DialogWvgClassesOne(2) } )
@@ -427,7 +427,7 @@ STATIC FUNCTION BuildMainMenu()
    oMenu:AddItem( "Exit"                        , {|| __Keyboard(K_ESC) } )
    g_oMenuBar:addItem( { oMenu, "Wvt*Classes" } )
 
-   oMenu := WvgMenu():new( g_oMenuBar, , .T. ):create()
+   oMenu := WvgMenu():new( g_oMenuBar, , TRUE ):create()
    oMenu:caption := "Traditional"
    oMenu:AddItem( "Gets . GTWVG . Threaded"     , {|| WvtNextGets()       } )
    oMenu:AddItem( "-" )
@@ -446,14 +446,14 @@ STATIC FUNCTION BuildMainMenu()
    oMenu:AddItem( "Modal Window"                , {|| DoModalWindow()     } )
    g_oMenuBar:addItem( { oMenu, "Traditional" } )
 
-   oMenu := WvgMenu():new( g_oMenuBar, , .T. ):create()
+   oMenu := WvgMenu():new( g_oMenuBar, , TRUE ):create()
    oMenu:Caption := "Common Dialogs"
    oMenu:AddItem( "Fonts"                       , {|| wvt_ChooseFont()  } )
    oMenu:AddItem( "-" )
    oMenu:AddItem( "Colors"                      , {|| wvt_ChooseColor() } )
    g_oMenuBar:addItem( { oMenu, "Common Dialogs" } )
 
-   oMenu := WvgMenu():new( g_oMenuBar, , .T. ):create()
+   oMenu := WvgMenu():new( g_oMenuBar, , TRUE ):create()
    oMenu:Caption := "Functionality"
    oMenu:AddItem( "Expand"                      , {|| WvtWindowExpand(1) } )
    oMenu:AddItem( "Shrink"                      , {|| WvtWindowExpand(-1) } )
@@ -462,7 +462,7 @@ STATIC FUNCTION BuildMainMenu()
    oMenu:AddItem( "Maximize"                    , {|| hb_gtInfo( HB_GTI_SPEC, HB_GTS_WNDSTATE, HB_GTS_WS_MAXIMIZED ) } )
    g_oMenuBar:addItem( { oMenu, "Functionality" } )
 
-   oMenu := WvgMenu():new( g_oMenuBar, , .T. ):create()
+   oMenu := WvgMenu():new( g_oMenuBar, , TRUE ):create()
    oMenu:Caption := "Modeless Dialogs"
    oMenu:AddItem( "Dynamic Dialog . Modeless"   , {|| DynWinDialog(1) } )
    oMenu:AddItem( "Dynamic Dialog . Modal "     , {|| DynWinDialog(2) } )
@@ -470,7 +470,7 @@ STATIC FUNCTION BuildMainMenu()
    oMenu:AddItem( "Slide Show . Modeless"       , {|| DlgSlideShow()   } )
    g_oMenuBar:addItem( { oMenu, "Modeless Dialogs" } )
 
-   oMenu := WvgMenu():new( g_oMenuBar, , .T. ):create()
+   oMenu := WvgMenu():new( g_oMenuBar, , TRUE ):create()
    oMenu:Caption := "~XbpDialog()s"
    oMenu:AddItem( "Pure Xbase++"                , {|| hb_threadStart( {|| demoXbp() } ) } )
    oMenu:AddItem( "-" )
@@ -503,7 +503,7 @@ STATIC PROCEDURE OnlineMap()
    mfrom2 := mto2 := Space(40)
    mfrom3 := mto3 := Space(50)
 
-   DO WHILE .T.
+   DO WHILE TRUE
       @  5, 01 SAY "FROM :"
       @  7, 01 SAY "State ...:" GET mfrom1 PICTURE "@!"
       @  8, 01 SAY "City ....:" GET mfrom2 PICTURE "@!"
@@ -532,48 +532,48 @@ STATIC PROCEDURE BuildButtons()
 
    LOCAL oXbp := WvgPushButton():new()
 
-   oXbp:pointerFocus := .F.
+   oXbp:pointerFocus := FALSE
    oXbp:caption := "Hi"
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -1 }, { -2, -4 } )
    oXbp:activate := {|| wapi_MessageBox( , "Harbour!" ) }
    oXbp:toolTipText := "Harbour CUI/GUI Console"
 
    oXbp := WvgPushButton():new()
-   oXbp:pointerFocus := .F.
+   oXbp:pointerFocus := FALSE
    oXbp:caption := IMAGE_VOUCH
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -6 }, { -2, -4 } )
    oXbp:activate := {|| wvt_Keyboard(K_F2) }
    oXbp:toolTipText := "Open Another GET Screen"
 
    oXbp := WvgPushButton():new()
-   oXbp:pointerFocus := .F.
+   oXbp:pointerFocus := FALSE
    oXbp:caption := IMAGE_BROWSE
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -11 }, { -2, -4 } )
    oXbp:activate := {|| wvt_Keyboard(K_F5) }
    oXbp:toolTipText := "TBrowse + GUI Controls"
 
    oXbp := WvgPushButton():new()
-   oXbp:pointerFocus := .F.
+   oXbp:pointerFocus := FALSE
    oXbp:caption := IMAGE_NOTES
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -16 }, { -2, -4 } )
    oXbp:activate := {|| wvt_Keyboard(K_F3) }
 
    oXbp := WvgPushButton():new()
-   oXbp:pointerFocus := .F.
+   oXbp:pointerFocus := FALSE
    oXbp:caption := IMAGE_TOOLS
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -21 }, { -2, -4 } )
    oXbp:activate := {|| wvt_Keyboard(K_F6) }
 
    oXbp := WvgPushButton():new()
-   oXbp:pointerFocus := .F.
+   oXbp:pointerFocus := FALSE
    oXbp:caption := IMAGE_HELP
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -26 }, { -2, -4 } )
    oXbp:activate := {|| wvt_Keyboard(K_F7) }
 
    oXbp := WvgPushButton():new()
-   oXbp:pointerFocus := .F.
+   oXbp:pointerFocus := FALSE
    oXbp:caption := { "Vouch", WVG_IMAGE_ICONFILE, IMAGE_VR }
-   oXbp:border  := .F.
+   oXbp:border  := FALSE
    oXbp:create( , , { {|| -( MaxRow() - 1 ) }, -31 }, { -2, -4 } )
    oXbp:activate := {|| hb_threadStart( {|| demoXbp() } ) }
    oXbp:toolTipText := "Flat Button . Lines: press ESC when finished."
@@ -598,7 +598,7 @@ PROCEDURE hb_GTSYS()  // must be a public function
 STATIC PROCEDURE ExecGCUI()
 
    IF hb_mtvm()
-      hb_threadStart( {| oCrt | oCrt := WvgCrt():New( , , { 2, 4 }, { 20, 81 }, , .T. ), ;
+      hb_threadStart( {| oCrt | oCrt := WvgCrt():New( , , { 2, 4 }, { 20, 81 }, , TRUE ), ;
          oCrt:icon := GetResource( "dia_excl.ico" ), ;
          oCrt:create(), ;
          GCUIConsole( oCrt ), ;
@@ -619,7 +619,7 @@ STATIC PROCEDURE GCUIConsole( oCrt )
    LOCAL GetList := {}
    LOCAL hBoxR, hTxt
 
-   Set( _SET_SCOREBOARD, .F. )
+   Set( _SET_SCOREBOARD, FALSE )
 
    SetColor("N/W,N/GR*,,,N/W*")
    CLS
@@ -634,22 +634,22 @@ STATIC PROCEDURE GCUIConsole( oCrt )
 
    @  3, nColGet GET dDate  ;
       WHEN  {|| wvg_SetGObjData(hTxt, 1, FetchText(1)) } ;
-      VALID {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(255, 0, 0)), .T. }
+      VALID {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(255, 0, 0)), TRUE }
    @  6, nColGet GET cName  ;
       WHEN  {|| wvg_SetGObjData(hTxt, 1, FetchText(2)) } ;
       VALID {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(255, 255, 0)), ;
-      wvg_SetGObjState( hBoxR, 3 ), .T. }
+      wvg_SetGObjState( hBoxR, 3 ), TRUE }
    @  9, nColGet GET cAdd1  ;
       WHEN  {|| wvg_SetGObjData(hTxt, 1, FetchText(3)) } ;
-      VALID {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(255, 0, 255)), .T. }
+      VALID {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(255, 0, 255)), TRUE }
    @ 11, nColGet GET cAdd2  ;
       WHEN  {|| wvg_SetGObjData(hTxt, 1, FetchText(4)) } ;
       VALID {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(255, 255, 255)), ;
-      wvg_SetGObjState( hBoxR, 1 ), .T. }
+      wvg_SetGObjState( hBoxR, 1 ), TRUE }
    @ 13, nColGet GET cAdd3  ;
-      WHEN  {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(198, 21, 140)), .T. }
+      WHEN  {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(198, 21, 140)), TRUE }
    @ 16, nColGet GET nSlry PICTURE "@Z 9999999.99" ;
-      WHEN  {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(0, 0, 0)), .T. }
+      WHEN  {|| wvg_SetGObjData(hTxt, 6, WIN_RGB(0, 0, 0)), TRUE }
 
    // The only additional calls to render your console GUI
    // The GETLIST  : This can be embedded via  @ GET preprocessor command

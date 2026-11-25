@@ -66,8 +66,8 @@ CREATE CLASS WvtBrowse INHERIT WvtObject
 
    VAR    cAlias
    VAR    oBrw
-   VAR    lHSBar                                  INIT .T.
-   VAR    lVSBar                                  INIT .T.
+   VAR    lHSBar                                  INIT TRUE
+   VAR    lVSBar                                  INIT TRUE
    VAR    oHBar
    VAR    oVBar
    VAR    bTotalRecords
@@ -208,7 +208,7 @@ METHOD WvtBrowse:HandleEvent( nKey )
       RETURN Eval(::bHandleEvent, Self, ::oParent:cPaintBlockID, ::oBrw, nKey)
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD WvtBrowse:NotifyChild(nIndex, nKey, oCurObj)
 

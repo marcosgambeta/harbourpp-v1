@@ -54,13 +54,13 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
       "displine"  => {| c | hbnetiocon_ToConsole( c ) }, ;
       "gethidden" => {|| hbnetiocon_GetHidden() } }
 
-   Set( _SET_CONFIRM, .F. )
-   Set( _SET_SCOREBOARD, .F. )
+   Set( _SET_CONFIRM, FALSE )
+   Set( _SET_SCOREBOARD, FALSE )
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
    Set( _SET_TIMEFORMAT, "hh:mm:ss" )
 
-   SetCancel(.F.)
+   SetCancel(FALSE)
 
    netclictx := Eval(netclictrl["init"], hConIO, { ;
       "--netio.addr=" + cIP + ":" + hb_ntos(nPort), ;
@@ -77,9 +77,9 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
    hCommands  := { ;
       "?"    => { "", "Synonym for 'help'." , {|| ShowHelp( hCommands ), Eval(netclictrl["cmd"], netclictx, "?") } }, ;
       "help" => { "", "Display this help."  , {|| ShowHelp( hCommands ), Eval(netclictrl["cmd"], netclictx, "?") } }, ;
-      "quit" => { "", "Exit console."       , {|| lQuit := .T. } } }
+      "quit" => { "", "Exit console."       , {|| lQuit := TRUE } } }
 
-   lQuit := .F.
+   lQuit := FALSE
 
    DO WHILE !lQuit
 
@@ -104,7 +104,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
              aHistory[ ++nHistIndex ], ;
              ( nHistIndex := Len(aHistory) + 1, "" )), Len(cCommand)), ;
                   ManageCursor( cCommand ) })
-      bKeyPaste := SetKey(K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) })
+      bKeyPaste := SetKey(K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, TRUE ) })
 
       bKeyTab   := SetKey(K_TAB, {|| CompleteCmd(@cCommand, hCommands) })
 
@@ -247,12 +247,12 @@ STATIC FUNCTION hbnetiocon_GetHidden()
    nSavedRow := Row()
 
    AAdd(GetList, hb_Get():New( Row(), Col(), {| v | IIf(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos(MaxCol() - Col() + 1), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ))
-   ATail( GetList ):hideInput(.T.)
+   ATail( GetList ):hideInput(TRUE)
    ATail( GetList ):postBlock := {|| ! Empty(cPassword) }
    ATail( GetList ):display()
 
    SetCursor( IIf(ReadInsert(), SC_INSERT, SC_NORMAL) )
-   bKeyPaste := SetKey(K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) })
+   bKeyPaste := SetKey(K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, TRUE ) })
 
    READ
 

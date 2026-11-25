@@ -57,7 +57,7 @@ PROCEDURE Main( cFileName )
    XML_SetUnknownEncodingHandler( p, {| x, e, i | cb_unknownencoding( x, e, i ) } )
    XML_SetEndDoctypeDeclHandler( p, @cb_enddoctype() )
 
-   IF XML_Parse( p, MemoRead(hb_defaultValue( cFileName, hb_DirBase() + "test.xml" )), .T. ) == HB_XML_STATUS_ERROR
+   IF XML_Parse( p, MemoRead(hb_defaultValue( cFileName, hb_DirBase() + "test.xml" )), TRUE ) == HB_XML_STATUS_ERROR
       ? hb_StrFormat( e"Parse error at line %1$d:\n%2$s", ;
          XML_GetCurrentLineNumber( p ), ;
          XML_ErrorString( XML_GetErrorCode( p ) ) )
@@ -67,8 +67,8 @@ PROCEDURE Main( cFileName )
 
    DUMP( aUserData[_D_aTree], 0 )
 
-   hb_MemoWrit( "json_raw.txt", hb_jsonEncode( aUserData[_D_aTree], .F. ) )
-   hb_MemoWrit( "json_hum.txt", hb_jsonEncode( aUserData[_D_aTree], .T. ) )
+   hb_MemoWrit( "json_raw.txt", hb_jsonEncode( aUserData[_D_aTree], FALSE ) )
+   hb_MemoWrit( "json_hum.txt", hb_jsonEncode( aUserData[_D_aTree], TRUE ) )
 
    RETURN
 

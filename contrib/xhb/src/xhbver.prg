@@ -68,39 +68,39 @@ FUNCTION hb_BuildInfo(n)
    v[_HB_VER_C_USR             ] := hb_Version(HB_VERSION_FLAG_C)
    v[_HB_VER_L_USR             ] := hb_Version(HB_VERSION_FLAG_LINKER)
    v[_HB_VER_PRG_USR           ] := hb_Version(HB_VERSION_FLAG_PRG)
-   v[_HB_EXTENSION             ] := .F.
+   v[_HB_EXTENSION             ] := FALSE
 #ifdef HB_CLP_UNDOC
-   v[_HB_C52_UNDOC             ] := .T.
+   v[_HB_C52_UNDOC             ] := TRUE
 #else
-   v[_HB_C52_UNDOC             ] := .F.
+   v[_HB_C52_UNDOC             ] := FALSE
 #endif
 #ifdef HB_CLP_STRICT
-   v[_HB_C52_STRICT            ] := .T.
+   v[_HB_C52_STRICT            ] := TRUE
 #else
-   v[_HB_C52_STRICT            ] := .F.
+   v[_HB_C52_STRICT            ] := FALSE
 #endif
 #ifdef HB_COMPAT_C53
-   v[_HB_COMPAT_C53            ] := .T.
+   v[_HB_COMPAT_C53            ] := TRUE
 #else
-   v[_HB_COMPAT_C53            ] := .F.
+   v[_HB_COMPAT_C53            ] := FALSE
 #endif
-   v[_HB_COMPAT_XPP            ] := .T. /* Converted to library in Harbour. */
-   v[_HB_COMPAT_VO             ] := .T. /* Converted to library in Harbour. */
+   v[_HB_COMPAT_XPP            ] := TRUE /* Converted to library in Harbour. */
+   v[_HB_COMPAT_VO             ] := TRUE /* Converted to library in Harbour. */
 #ifdef HB_COMPAT_FLAGSHIP
-   v[_HB_COMPAT_FLAGSHIP       ] := .T.
+   v[_HB_COMPAT_FLAGSHIP       ] := TRUE
 #else
-   v[_HB_COMPAT_FLAGSHIP       ] := .F.
+   v[_HB_COMPAT_FLAGSHIP       ] := FALSE
 #endif
 #ifdef HB_COMPAT_FOXPRO
-   v[_HB_COMPAT_FOXPRO         ] := .T.
+   v[_HB_COMPAT_FOXPRO         ] := TRUE
 #else
-   v[_HB_COMPAT_FOXPRO         ] := .F.
+   v[_HB_COMPAT_FOXPRO         ] := FALSE
 #endif
-   v[_HB_COMPAT_DBASE          ] := .T. /* Converted to library in Harbour. */
-   v[_HB_HARBOUR_OBJ_GENERATION] := .F. /* Always off in Harbour */
-   v[_HB_HARBOUR_STRICT_ANSI_C ] := .F. /* Fake value, unlikely it's turned on */
+   v[_HB_COMPAT_DBASE          ] := TRUE /* Converted to library in Harbour. */
+   v[_HB_HARBOUR_OBJ_GENERATION] := FALSE /* Always off in Harbour */
+   v[_HB_HARBOUR_STRICT_ANSI_C ] := FALSE /* Fake value, unlikely it's turned on */
    v[_HB_CPLUSPLUS             ] := hb_Version(HB_VERSION_COMPILER_CPP)
-   v[_HB_HARBOUR_YYDEBUG       ] := .F. /* Fake value, unlikely it's turned on */
+   v[_HB_HARBOUR_YYDEBUG       ] := FALSE /* Fake value, unlikely it's turned on */
    v[_HB_SYMBOL_NAME_LEN       ] := 63  /* Constant in Harbour */
    v[_HB_MULTITHREAD           ] := hb_mtvm()
    v[_HB_VM_OPTIMIZATION       ] := 2   /* Emulate xhb */

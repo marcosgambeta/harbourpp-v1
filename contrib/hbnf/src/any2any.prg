@@ -34,7 +34,7 @@
 
 FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
 
-   __defaultNIL(@lWantYesNo, .F.)
+   __defaultNIL(@lWantYesNo, FALSE)
 
    DO CASE
 
@@ -86,7 +86,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
          ; // Convert from a Number
       xValueToConvert != 0, ;
          ; // Unsupported Type
-      .F.)))
+      FALSE)))
 
    CASE cTypeToConvertTo == "A" .AND. ; // They Want an Array
       !hb_IsArray(xValueToConvert)

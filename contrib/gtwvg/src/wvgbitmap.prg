@@ -67,7 +67,7 @@ CREATE CLASS WvgBitmap
 
    VAR hBitmap
    VAR hDCcompat
-   VAR lDCToDestroy INIT .F.
+   VAR lDCToDestroy INIT FALSE
 
    METHOD new()
    METHOD create(oPScompat)
@@ -95,7 +95,7 @@ METHOD WvgBitmap:create(oPScompat)
 
    IF oPScompat == NIL
       ::hDCComp := wvg_GetDC()
-      ::lDCToDestroy := .T.
+      ::lDCToDestroy := TRUE
    ELSE
       ::hDCComp := oPScompat:hDC
    ENDIF

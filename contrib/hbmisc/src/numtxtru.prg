@@ -474,7 +474,7 @@ FUNCTION DateToTxtRU( dDate, cLang, lWord )
    IF !Empty(dDate)
       nTemp := Day( dDate )
       IF lWord != NIL
-         cRetVal := NumToStrRaw( nTemp, aMsg, NTSR_MIDD, .T. )
+         cRetVal := NumToStrRaw( nTemp, aMsg, NTSR_MIDD, TRUE )
       ELSE
          cRetVal := hb_ntos(nTemp)
       ENDIF
@@ -541,13 +541,13 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
 
    LOCAL nTri := 0, nTemp, nTemp1
    LOCAL cRetVal := "", cTemp
-   LOCAL lLast := .T.
+   LOCAL lLast := TRUE
 
    IF nGender == NIL
       nGender := NTSR_MALE
    ENDIF
    IF lOrd == NIL
-      lOrd := .F.
+      lOrd := FALSE
    ENDIF
 
    DO WHILE nValue != 0
@@ -593,13 +593,13 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
 STATIC FUNCTION TriToStr(nValue, aMsg, nGender, lOrd, lLast, nTri)
 
    LOCAL cRetVal, cTemp, nTemp, nIdx
-   LOCAL l20 := .F.
+   LOCAL l20 := FALSE
 
    IF nValue >= 100
       nTemp := nValue % 100
       IF lOrd .AND. lLast .AND. nTemp == 0
          nIdx := NTSR_CNT
-         lLast := .F.
+         lLast := FALSE
       ELSE
          nIdx := NTSR_MALE
       ENDIF
@@ -611,7 +611,7 @@ STATIC FUNCTION TriToStr(nValue, aMsg, nGender, lOrd, lLast, nTri)
       IF nValue != 0
          cRetVal += " "
       ENDIF
-      l20 := .T.
+      l20 := TRUE
    ELSE
       cRetVal := ""
    ENDIF
@@ -622,10 +622,10 @@ STATIC FUNCTION TriToStr(nValue, aMsg, nGender, lOrd, lLast, nTri)
          nIdx := NTSR_MALE
       ELSEIF lLast .AND. nTemp == 0 .AND. nTri == 0
          nIdx := NTSR_CNT
-         lLast := .F.
+         lLast := FALSE
       ELSE
          nIdx := NTSR_ROD
-         lLast := .F.
+         lLast := FALSE
       ENDIF
       cTemp := aMsg[nIdx, Int(nValue / 10) - 1 + 20]
       IF nIdx == NTSR_CNT
@@ -636,18 +636,18 @@ STATIC FUNCTION TriToStr(nValue, aMsg, nGender, lOrd, lLast, nTri)
       IF nValue != 0
          cRetVal += " "
       ENDIF
-      l20 := .T.
+      l20 := TRUE
    ENDIF
 
    IF nValue > 0
       IF lOrd
          IF nTri >= 1 .AND. lLast .AND. !l20
             nIdx := NTSR_ROD
-            lLast := .F.
+            lLast := FALSE
          ELSE
             IF lLast .AND. nTri == 0
                nIdx := NTSR_CNT
-               lLast := .F.
+               lLast := FALSE
             ELSE
                nIdx := IIf(nValue + 1 <= Len(aMsg[nGender]), nGender, NTSR_MALE)
             ENDIF

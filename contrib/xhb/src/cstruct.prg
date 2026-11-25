@@ -57,7 +57,7 @@ THREAD STATIC t_aActiveStructure
 STATIC s_aClasses := {}
 STATIC s_aArrayClasses := {}
 STATIC s_aSynonyms := {}
-STATIC s_lInitLongs := .T.
+STATIC s_lInitLongs := TRUE
 
 PROCEDURE __init_LONGLONGs()
 
@@ -77,7 +77,7 @@ FUNCTION __ActiveStructure(cStructure, nAlign)
    LOCAL acMembers, aCTypes, hClass, Counter, cMember
 
    IF s_lInitLongs
-      s_lInitLongs := .F.
+      s_lInitLongs := FALSE
       __init_LONGLONGs()
    ENDIF
 
@@ -89,9 +89,9 @@ FUNCTION __ActiveStructure(cStructure, nAlign)
 #if 0
          oErr := ErrorNew()
          oErr:Args := {cStructure, nAlign}
-         oErr:CanDefault    := .F.
-         oErr:CanRetry      := .F.
-         oErr:CanSubstitute := .T.
+         oErr:CanDefault    := FALSE
+         oErr:CanRetry      := FALSE
+         oErr:CanSubstitute := TRUE
          oErr:Description   := "Structure already defined."
          oErr:Operation     := "__ActiveStructure()"
          oErr:Severity      := ES_ERROR
@@ -182,9 +182,9 @@ FUNCTION hb_CStructureId(cStructure, lInplace)
       IF (nID := AScan(s_aSynonyms, {|aSynonym|aSynonym[1] == cStructure})) == 0
          oErr := ErrorNew()
          oErr:Args          := {cStructure, lInplace}
-         oErr:CanDefault    := .F.
-         oErr:CanRetry      := .F.
-         oErr:CanSubstitute := .T.
+         oErr:CanDefault    := FALSE
+         oErr:CanRetry      := FALSE
+         oErr:CanSubstitute := TRUE
          oErr:Description   := "Structure not found: '" + cStructure + "'"
          oErr:Operation     := "hb_CStructureId()"
          oErr:Severity      := ES_ERROR
@@ -221,7 +221,7 @@ PROCEDURE hb_CStructureCSyntax(cStructure, aDefinitions, cTag, cSynonList, nAlig
 
       IF (nAt := At("*", cElem)) > 1
          IF nIndex < Len(aDefinitions)
-            hb_AIns(aDefinitions, nIndex + 1, SubStr(cElem, nAt + 1), .T.)
+            hb_AIns(aDefinitions, nIndex + 1, SubStr(cElem, nAt + 1), TRUE)
          ELSE
             AAdd(aDefinitions, SubStr(cElem, nAt + 1))
          ENDIF
@@ -229,7 +229,7 @@ PROCEDURE hb_CStructureCSyntax(cStructure, aDefinitions, cTag, cSynonList, nAlig
          aDefinitions[nIndex] := StrTran(Left(cElem, nAt), " ")
       ELSEIF (nAt := At("-", cElem)) > 1
          IF nIndex < Len(aDefinitions)
-            hb_AIns(aDefinitions, nIndex + 1, SubStr(cElem, nAt), .T.)
+            hb_AIns(aDefinitions, nIndex + 1, SubStr(cElem, nAt), TRUE)
          ELSE
             AAdd(aDefinitions, SubStr(cElem, nAt))
          ENDIF
@@ -270,16 +270,16 @@ PROCEDURE hb_CStructureCSyntax(cStructure, aDefinitions, cTag, cSynonList, nAlig
          hb_Member(aDefinitions[Counter + 1], Val(aDefinitions[Counter]))
       ELSE
          IF Right(CType, 1) == "*"
-            CType := hb_CStructureId(Left(CType, Len(CType) - 1), .F.)
+            CType := hb_CStructureId(Left(CType, Len(CType) - 1), FALSE)
          ELSE
-            CType := hb_CStructureId(CType, .T.)
+            CType := hb_CStructureId(CType, TRUE)
 
             IF CType == CTYPE_STRUCTURE .OR. CType == CTYPE_STRUCTURE_PTR
                oErr := ErrorNew()
                oErr:Args          := {cStructure, aDefinitions, cTag, cSynonList, nAlign}
-               oErr:CanDefault    := .F.
-               oErr:CanRetry      := .F.
-               oErr:CanSubstitute := .T.
+               oErr:CanDefault    := FALSE
+               oErr:CanRetry      := FALSE
+               oErr:CanSubstitute := TRUE
                oErr:Description   := "Undefined CType: '" + aDefinitions[Counter] + "'"
                oErr:Operation     := "hb_CStructureCSyntax()"
                oErr:Severity      := ES_ERROR
@@ -308,9 +308,9 @@ FUNCTION hb_CStructure(cStructure, nAlign)
    IF (nID := AScan(s_aClasses, {|aClassInfo|aClassInfo[1] == cStructure})) == 0
       oErr := ErrorNew()
       oErr:Args          := {cStructure, nAlign}
-      oErr:CanDefault    := .F.
-      oErr:CanRetry      := .F.
-      oErr:CanSubstitute := .T.
+      oErr:CanDefault    := FALSE
+      oErr:CanRetry      := FALSE
+      oErr:CanSubstitute := TRUE
       oErr:Description   := "Structure not initialized with __ActiveStructure()"
       oErr:Operation     := "hb_CStructure()"
       oErr:Severity      := ES_ERROR
@@ -337,7 +337,7 @@ STATIC PROCEDURE AllocateMembers(oStructure)
 
    FOR EACH CType IN aCTypes
       IF CType > CTYPE_STRUCTURE .AND. CType < CTYPE_STRUCTURE_PTR
-         oStructure[CType:__enumIndex()] := hb_CStructureFromId(CType, , .F.)
+         oStructure[CType:__enumIndex()] := hb_CStructureFromId(CType, , FALSE)
          AllocateMembers(oStructure[CType:__enumIndex()])
       ENDIF
    NEXT
@@ -360,9 +360,9 @@ FUNCTION hb_CStructureFromId(nID, nAlign)
    ELSE
       oErr := ErrorNew()
       oErr:Args          := {nID, nAlign}
-      oErr:CanDefault    := .F.
-      oErr:CanRetry      := .F.
-      oErr:CanSubstitute := .T.
+      oErr:CanDefault    := FALSE
+      oErr:CanRetry      := FALSE
+      oErr:CanSubstitute := TRUE
       oErr:Description   := "ID out of range."
       oErr:Operation     := "hb_CStructureFromId()"
       oErr:Severity      := ES_ERROR
@@ -455,10 +455,10 @@ STATIC FUNCTION SayMembers(cPad, lShowMembers, lReturnString)
       cPad := ""
    ENDIF
    IF lShowMembers == NIL
-      lShowMembers := .F.
+      lShowMembers := FALSE
    ENDIF
    IF lReturnString == NIL
-      lReturnString := .F.
+      lReturnString := FALSE
    ENDIF
 
 #if 0

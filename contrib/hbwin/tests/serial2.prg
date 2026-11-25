@@ -81,10 +81,10 @@ PROCEDURE Main( cPortName )
       Inkey(0)
       ? "Read() ", oWinPort:Read( @cString, 32 ), Len(cString), cString
       ?
-      IF oWinPort:SetDTR(.T.)
-         ? "SetDTR(.T.) succeeded"
+      IF oWinPort:SetDTR(TRUE)
+         ? "SetDTR(TRUE) succeeded"
       ELSE
-         ? "SetDTR(.T.) failed :", oWinPort:ErrorText()
+         ? "SetDTR(TRUE) failed :", oWinPort:ErrorText()
       ENDIF
       ? "Scan something... and press enter (read should work)"
       Inkey(0)
@@ -111,10 +111,10 @@ PROCEDURE Main( cPortName )
          ? "RTSFlow( WIN_RTS_CONTROL_HANDSHAKE ) failed :", oWinPort:ErrorText()
       ENDIF
       ? oWinPort:DebugDCB(HB_WIN_COM_DBGFLOW)
-      IF oWinPort:SetRTS(.F.)
-         ? "SetRTS(.F.) succeeded (it shouldn't according to docs!)"
+      IF oWinPort:SetRTS(FALSE)
+         ? "SetRTS(FALSE) succeeded (it shouldn't according to docs!)"
       ELSE
-         ? "SetRTS(.F.) failed (it should) :", oWinPort:ErrorText()
+         ? "SetRTS(FALSE) failed (it should) :", oWinPort:ErrorText()
       ENDIF
       ?
       IF oWinPort:RTSFlow( WIN_RTS_CONTROL_DISABLE )
@@ -123,10 +123,10 @@ PROCEDURE Main( cPortName )
          ? "RTSFlow( WIN_RTS_CONTROL_DISABLE ) failed :", oWinPort:ErrorText()
       ENDIF
       ? oWinPort:DebugDCB(HB_WIN_COM_DBGFLOW)
-      IF oWinPort:SetRTS(.F.)
-         ? "SetRTS(.F.) succeeded (it should)"
+      IF oWinPort:SetRTS(FALSE)
+         ? "SetRTS(FALSE) succeeded (it should)"
       ELSE
-         ? "SetRTS(.F.) failed :", oWinPort:ErrorText()
+         ? "SetRTS(FALSE) failed :", oWinPort:ErrorText()
       ENDIF
       ?
       ? "Scan something... we'll not read it but purge it, press enter"
@@ -137,7 +137,7 @@ PROCEDURE Main( cPortName )
       ELSE
          ? "QueueStatus() failed :", oWinPort:ErrorText()
       ENDIF
-      IF oWinPort:Purge( .T., .T. )
+      IF oWinPort:Purge( TRUE, TRUE )
          ? "Purge() succeeded"
       ELSE
          ? "Purge() failed :", oWinPort:ErrorText()
@@ -212,10 +212,10 @@ PROCEDURE Main( cPortName )
       ELSE
          ? "DTRFlow( WIN_DTR_CONTROL_HANDSHAKE ) failed :", oWinPort:ErrorText()
       ENDIF
-      IF oWinPort:XonXoffFlow(.T.)
-         ? "XonXoffFlow(.T.) ", oWinPort:XonXoffFlow(.T.)
+      IF oWinPort:XonXoffFlow(TRUE)
+         ? "XonXoffFlow(TRUE) ", oWinPort:XonXoffFlow(TRUE)
       ELSE
-         ? "XonXoffFlow(.T.) failed :", oWinPort:ErrorText()
+         ? "XonXoffFlow(TRUE) failed :", oWinPort:ErrorText()
       ENDIF
       ?
       ? oWinPort:DebugDCB(HB_WIN_COM_DBGFLOW)

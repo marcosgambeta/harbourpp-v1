@@ -20,7 +20,7 @@ PROCEDURE Main()
    // main routine starts here
    SET SCOREBOARD OFF
 
-   lColor := .T.
+   lColor := TRUE
 
    cNormH := IIf(lColor, "W+/BG", "W+/N")
    cNormN := IIf(lColor, "N/BG", "W/N")
@@ -35,7 +35,7 @@ PROCEDURE Main()
    SetColor("W/N")
    CLS
    nMaxRow := MaxRow()
-   SetBlink(.F.)
+   SetBlink(FALSE)
    SetColor(cWindN + "*")
    CLS
    SetColor(cNormN)
@@ -58,7 +58,7 @@ PROCEDURE Main()
 
    SetColor("W/N")
    SetCursor( SC_NORMAL )
-   SetBlink(.T.)
+   SetBlink(TRUE)
    RestScreen(, , , , cDosScrn)
    SetPos(nDosRow, nDosCol)
 

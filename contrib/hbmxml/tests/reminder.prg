@@ -1,6 +1,6 @@
 #require "hbmxml"
 
-STATIC s_mxml_error := .F.
+STATIC s_mxml_error := FALSE
 STATIC s_mxml_error_msg := ""
 
 PROCEDURE Main()
@@ -36,7 +36,7 @@ PROCEDURE Main()
 PROCEDURE my_mxmlError( cErrorMsg )
 
    s_mxml_error_msg := cErrorMsg
-   s_mxml_error := .T.
+   s_mxml_error := TRUE
 
    RETURN
 

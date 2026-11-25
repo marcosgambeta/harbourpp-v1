@@ -55,7 +55,7 @@ STATIC s_cDemoDate := ""
 STATIC s_nDemoMinutes := 0
 STATIC s_nError := 0
 STATIC s_cErrorParam := ""
-STATIC s_lLibOverrides := .F.
+STATIC s_lLibOverrides := FALSE
 
 THREAD STATIC t_nErrorLevel := 0
 THREAD STATIC t_nErrorMaj := 0
@@ -276,19 +276,19 @@ FUNCTION SwpCurDir( lValue )
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION SwpDisMsg( lValue )
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpEms320( lValue )
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpErrLev()
    RETURN t_nErrorLevel
@@ -309,7 +309,7 @@ FUNCTION SwpUseEms( lValue )
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpFreXms( nLimitKB )
 
@@ -321,31 +321,31 @@ FUNCTION SwpUseXms( lValue )
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpUseUmb(lValue)
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpGetKey(lValue)
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpGetPid(cIDString)
 
    HB_SYMBOL_UNUSED(cIDString)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpVidMde( lValue )
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpGetStr()
    RETURN ""
@@ -372,7 +372,7 @@ FUNCTION SwpNobOot( lValue )
 
    HB_SYMBOL_UNUSED(lValue)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION SwpRunCmd(cCommand, nMem, cRunPath, cTempPath)
 
@@ -401,28 +401,28 @@ FUNCTION SwpSetEnv( cString )
       ENDIF
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION SwpSetPid(cIDString)
 
    HB_SYMBOL_UNUSED(cIDString)
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION SwpSetPidBas( cIDString )
 
    HB_SYMBOL_UNUSED(cIDString)
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION SwpSetStr(cString)
 
    HB_SYMBOL_UNUSED(cString)
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION SwpSetStrBas( cString )
 
    HB_SYMBOL_UNUSED(cString)
 
-   RETURN .T.
+   RETURN TRUE

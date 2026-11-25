@@ -57,7 +57,7 @@
 REQUEST Select, Alias, RecNo, DbFilter, DbRelation, IndexOrd, IndexKey
 
 STATIC s_cErrorLog := "error.log"
-STATIC s_lErrorLogAppend := .F.
+STATIC s_lErrorLogAppend := FALSE
 
 FUNCTION xhb_ErrorLog(cErrorLog, lErrorLogAppend)
 
@@ -120,22 +120,22 @@ STATIC FUNCTION xhb_DefError(oError)
    IF oError:genCode == EG_LOCK .AND. ;
          oError:canRetry
       // oError:tries++
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    // Set NetErr() of there was a database open error
    IF oError:genCode == EG_OPEN .AND. ;
          oError:osCode == 32 .AND. ;
          oError:canDefault
-      NetErr(.T.)
-      RETURN .F.
+      NetErr(TRUE)
+      RETURN FALSE
    ENDIF
 
    // Set NetErr() if there was a lock error on dbAppend()
    IF oError:genCode == EG_APPENDLOCK .AND. ;
          oError:canDefault
-      NetErr(.T.)
-      RETURN .F.
+      NetErr(TRUE)
+      RETURN FALSE
    ENDIF
 
    // Making sure we display the error info!
@@ -188,9 +188,9 @@ STATIC FUNCTION xhb_DefError(oError)
          CASE aOptions[nChoice] == "Break"
             Break(oError)
          CASE aOptions[nChoice] == "Retry"
-            RETURN .T.
+            RETURN TRUE
          CASE aOptions[nChoice] == "Default"
-            RETURN .F.
+            RETURN FALSE
          ENDCASE
       ENDIF
    ELSE
@@ -225,7 +225,7 @@ STATIC FUNCTION xhb_DefError(oError)
    ?
    QUIT
 
-   RETURN .F.
+   RETURN FALSE
 
 // [vszakats]
 
@@ -269,7 +269,7 @@ STATIC FUNCTION LogError(oErr)
 
    LOCAL cScreen
    LOCAL cLogFile    := s_cErrorLog       // error log file name
-   LOCAL lAppendLog  := s_lErrorLogAppend // .F. = create a new error log (default) .T. = append to a existing one.
+   LOCAL lAppendLog  := s_lErrorLogAppend // FALSE = create a new error log (default) TRUE = append to a existing one.
    LOCAL nCols
    LOCAL nRows
 
@@ -347,36 +347,36 @@ STATIC FUNCTION LogError(oErr)
       FWriteLine(nHandle, PadC(" Environmental Information ", 79, "-"))
       FWriteLine(nHandle, "")
 
-      FWriteLine(nHandle, "SET ALTERNATE......: " + strvalue(Set(_SET_ALTERNATE), .T.))
+      FWriteLine(nHandle, "SET ALTERNATE......: " + strvalue(Set(_SET_ALTERNATE), TRUE))
       FWriteLine(nHandle, "SET ALTFILE........: " + strvalue(Set(_SET_ALTFILE)))
-      FWriteLine(nHandle, "SET AUTOPEN........: " + strvalue(Set(_SET_AUTOPEN), .T.))
+      FWriteLine(nHandle, "SET AUTOPEN........: " + strvalue(Set(_SET_AUTOPEN), TRUE))
       FWriteLine(nHandle, "SET AUTORDER.......: " + strvalue(Set(_SET_AUTORDER)))
       FWriteLine(nHandle, "SET AUTOSHARE......: " + strvalue(Set(_SET_AUTOSHARE)))
 
 #ifdef __XHARBOUR__
-      FWriteLine(nHandle, "SET BACKGROUNDTASKS: " + strvalue(Set(_SET_BACKGROUNDTASKS), .T.))
-      FWriteLine(nHandle, "SET BACKGROUNDTICK.: " + strvalue(Set(_SET_BACKGROUNDTICK), .T.))
+      FWriteLine(nHandle, "SET BACKGROUNDTASKS: " + strvalue(Set(_SET_BACKGROUNDTASKS), TRUE))
+      FWriteLine(nHandle, "SET BACKGROUNDTICK.: " + strvalue(Set(_SET_BACKGROUNDTICK), TRUE))
 #endif
-      FWriteLine(nHandle, "SET BELL...........: " + strvalue(Set(_SET_BELL), .T.))
+      FWriteLine(nHandle, "SET BELL...........: " + strvalue(Set(_SET_BELL), TRUE))
       FWriteLine(nHandle, "SET BLINK..........: " + strvalue(SetBlink()))
 
-      FWriteLine(nHandle, "SET CANCEL.........: " + strvalue(Set(_SET_CANCEL), .T.))
-      FWriteLine(nHandle, "SET CENTURY........: " + strvalue(__SetCentury(), .T.))
+      FWriteLine(nHandle, "SET CANCEL.........: " + strvalue(Set(_SET_CANCEL), TRUE))
+      FWriteLine(nHandle, "SET CENTURY........: " + strvalue(__SetCentury(), TRUE))
       FWriteLine(nHandle, "SET COLOR..........: " + strvalue(Set(_SET_COLOR)))
-      FWriteLine(nHandle, "SET CONFIRM........: " + strvalue(Set(_SET_CONFIRM), .T.))
-      FWriteLine(nHandle, "SET CONSOLE........: " + strvalue(Set(_SET_CONSOLE), .T.))
+      FWriteLine(nHandle, "SET CONFIRM........: " + strvalue(Set(_SET_CONFIRM), TRUE))
+      FWriteLine(nHandle, "SET CONSOLE........: " + strvalue(Set(_SET_CONSOLE), TRUE))
       FWriteLine(nHandle, "SET COUNT..........: " + strvalue(Set(_SET_COUNT)))
       FWriteLine(nHandle, "SET CURSOR.........: " + strvalue(Set(_SET_CURSOR)))
 
       FWriteLine(nHandle, "SET DATE FORMAT....: " + strvalue(Set(_SET_DATEFORMAT)))
       FWriteLine(nHandle, "SET DBFLOCKSCHEME..: " + strvalue(Set(_SET_DBFLOCKSCHEME)))
-      FWriteLine(nHandle, "SET DEBUG..........: " + strvalue(Set(_SET_DEBUG), .T.))
+      FWriteLine(nHandle, "SET DEBUG..........: " + strvalue(Set(_SET_DEBUG), TRUE))
       FWriteLine(nHandle, "SET DECIMALS.......: " + strvalue(Set(_SET_DECIMALS)))
       FWriteLine(nHandle, "SET DEFAULT........: " + strvalue(Set(_SET_DEFAULT)))
-      FWriteLine(nHandle, "SET DEFEXTENSIONS..: " + strvalue(Set(_SET_DEFEXTENSIONS), .T.))
-      FWriteLine(nHandle, "SET DELETED........: " + strvalue(Set(_SET_DELETED), .T.))
+      FWriteLine(nHandle, "SET DEFEXTENSIONS..: " + strvalue(Set(_SET_DEFEXTENSIONS), TRUE))
+      FWriteLine(nHandle, "SET DELETED........: " + strvalue(Set(_SET_DELETED), TRUE))
       FWriteLine(nHandle, "SET DELIMCHARS.....: " + strvalue(Set(_SET_DELIMCHARS)))
-      FWriteLine(nHandle, "SET DELIMETERS.....: " + strvalue(Set(_SET_DELIMITERS), .T.))
+      FWriteLine(nHandle, "SET DELIMETERS.....: " + strvalue(Set(_SET_DELIMITERS), TRUE))
       FWriteLine(nHandle, "SET DEVICE.........: " + strvalue(Set(_SET_DEVICE)))
       FWriteLine(nHandle, "SET DIRCASE........: " + strvalue(Set(_SET_DIRCASE)))
       FWriteLine(nHandle, "SET DIRSEPARATOR...: " + strvalue(Set(_SET_DIRSEPARATOR)))
@@ -387,51 +387,51 @@ STATIC FUNCTION LogError(oErr)
 #ifdef __XHARBOUR__
       FWriteLine(nHandle, "SET ERRORLOOP......: " + strvalue(Set(_SET_ERRORLOOP)))
 #endif
-      FWriteLine(nHandle, "SET ESCAPE.........: " + strvalue(Set(_SET_ESCAPE), .T.))
+      FWriteLine(nHandle, "SET ESCAPE.........: " + strvalue(Set(_SET_ESCAPE), TRUE))
       FWriteLine(nHandle, "SET EVENTMASK......: " + strvalue(Set(_SET_EVENTMASK)))
-      FWriteLine(nHandle, "SET EXACT..........: " + strvalue(Set(_SET_EXACT), .T.))
-      FWriteLine(nHandle, "SET EXCLUSIVE......: " + strvalue(Set(_SET_EXCLUSIVE), .T.))
-      FWriteLine(nHandle, "SET EXIT...........: " + strvalue(Set(_SET_EXIT), .T.))
-      FWriteLine(nHandle, "SET EXTRA..........: " + strvalue(Set(_SET_EXTRA), .T.))
+      FWriteLine(nHandle, "SET EXACT..........: " + strvalue(Set(_SET_EXACT), TRUE))
+      FWriteLine(nHandle, "SET EXCLUSIVE......: " + strvalue(Set(_SET_EXCLUSIVE), TRUE))
+      FWriteLine(nHandle, "SET EXIT...........: " + strvalue(Set(_SET_EXIT), TRUE))
+      FWriteLine(nHandle, "SET EXTRA..........: " + strvalue(Set(_SET_EXTRA), TRUE))
       FWriteLine(nHandle, "SET EXTRAFILE......: " + strvalue(Set(_SET_EXTRAFILE)))
 
       FWriteLine(nHandle, "SET FILECASE.......: " + strvalue(Set(_SET_FILECASE)))
-      FWriteLine(nHandle, "SET FIXED..........: " + strvalue(Set(_SET_FIXED), .T.))
-      FWriteLine(nHandle, "SET FORCEOPT.......: " + strvalue(Set(_SET_FORCEOPT), .T.))
+      FWriteLine(nHandle, "SET FIXED..........: " + strvalue(Set(_SET_FIXED), TRUE))
+      FWriteLine(nHandle, "SET FORCEOPT.......: " + strvalue(Set(_SET_FORCEOPT), TRUE))
 
-      FWriteLine(nHandle, "SET HARDCOMMIT.....: " + strvalue(Set(_SET_HARDCOMMIT), .T.))
+      FWriteLine(nHandle, "SET HARDCOMMIT.....: " + strvalue(Set(_SET_HARDCOMMIT), TRUE))
 
-      FWriteLine(nHandle, "SET IDLEREPEAT.....: " + strvalue(Set(_SET_IDLEREPEAT), .T.))
-      FWriteLine(nHandle, "SET INSERT.........: " + strvalue(Set(_SET_INSERT), .T.))
-      FWriteLine(nHandle, "SET INTENSITY......: " + strvalue(Set(_SET_INTENSITY), .T.))
+      FWriteLine(nHandle, "SET IDLEREPEAT.....: " + strvalue(Set(_SET_IDLEREPEAT), TRUE))
+      FWriteLine(nHandle, "SET INSERT.........: " + strvalue(Set(_SET_INSERT), TRUE))
+      FWriteLine(nHandle, "SET INTENSITY......: " + strvalue(Set(_SET_INTENSITY), TRUE))
 
       FWriteLine(nHandle, "SET LANGUAGE.......: " + strvalue(Set(_SET_LANGUAGE)))
 
       FWriteLine(nHandle, "SET MARGIN.........: " + strvalue(Set(_SET_MARGIN)))
       FWriteLine(nHandle, "SET MBLOCKSIZE.....: " + strvalue(Set(_SET_MBLOCKSIZE)))
-      FWriteLine(nHandle, "SET MCENTER........: " + strvalue(Set(_SET_MCENTER), .T.))
+      FWriteLine(nHandle, "SET MCENTER........: " + strvalue(Set(_SET_MCENTER), TRUE))
       FWriteLine(nHandle, "SET MESSAGE........: " + strvalue(Set(_SET_MESSAGE)))
       FWriteLine(nHandle, "SET MFILEEXT.......: " + strvalue(Set(_SET_MFILEEXT)))
 
-      FWriteLine(nHandle, "SET OPTIMIZE.......: " + strvalue(Set(_SET_OPTIMIZE), .T.))
+      FWriteLine(nHandle, "SET OPTIMIZE.......: " + strvalue(Set(_SET_OPTIMIZE), TRUE))
 #ifdef __XHARBOUR__
-      FWriteLine(nHandle, "SET OUTPUTSAFETY...: " + strvalue(Set(_SET_OUTPUTSAFETY), .T.))
+      FWriteLine(nHandle, "SET OUTPUTSAFETY...: " + strvalue(Set(_SET_OUTPUTSAFETY), TRUE))
 #endif
 
       FWriteLine(nHandle, "SET PATH...........: " + strvalue(Set(_SET_PATH)))
-      FWriteLine(nHandle, "SET PRINTER........: " + strvalue(Set(_SET_PRINTER), .T.))
+      FWriteLine(nHandle, "SET PRINTER........: " + strvalue(Set(_SET_PRINTER), TRUE))
 #ifdef __XHARBOUR__
       FWriteLine(nHandle, "SET PRINTERJOB.....: " + strvalue(Set(_SET_PRINTERJOB)))
 #endif
       FWriteLine(nHandle, "SET PRINTFILE......: " + strvalue(Set(_SET_PRINTFILE)))
 
-      FWriteLine(nHandle, "SET SCOREBOARD.....: " + strvalue(Set(_SET_SCOREBOARD), .T.))
-      FWriteLine(nHandle, "SET SCROLLBREAK....: " + strvalue(Set(_SET_SCROLLBREAK), .T.))
-      FWriteLine(nHandle, "SET SOFTSEEK.......: " + strvalue(Set(_SET_SOFTSEEK), .T.))
-      FWriteLine(nHandle, "SET STRICTREAD.....: " + strvalue(Set(_SET_STRICTREAD), .T.))
+      FWriteLine(nHandle, "SET SCOREBOARD.....: " + strvalue(Set(_SET_SCOREBOARD), TRUE))
+      FWriteLine(nHandle, "SET SCROLLBREAK....: " + strvalue(Set(_SET_SCROLLBREAK), TRUE))
+      FWriteLine(nHandle, "SET SOFTSEEK.......: " + strvalue(Set(_SET_SOFTSEEK), TRUE))
+      FWriteLine(nHandle, "SET STRICTREAD.....: " + strvalue(Set(_SET_STRICTREAD), TRUE))
 
 #ifdef __XHARBOUR__
-      FWriteLine(nHandle, "SET TRACE..........: " + strvalue(Set(_SET_TRACE), .T.))
+      FWriteLine(nHandle, "SET TRACE..........: " + strvalue(Set(_SET_TRACE), TRUE))
       FWriteLine(nHandle, "SET TRACEFILE......: " + strvalue(Set(_SET_TRACEFILE)))
       FWriteLine(nHandle, "SET TRACESTACK.....: " + strvalue(Set(_SET_TRACESTACK)))
 #endif
@@ -439,11 +439,11 @@ STATIC FUNCTION LogError(oErr)
 
       FWriteLine(nHandle, "SET TYPEAHEAD......: " + strvalue(Set(_SET_TYPEAHEAD)))
 
-      FWriteLine(nHandle, "SET UNIQUE.........: " + strvalue(Set(_SET_UNIQUE), .T.))
+      FWriteLine(nHandle, "SET UNIQUE.........: " + strvalue(Set(_SET_UNIQUE), TRUE))
 
       FWriteLine(nHandle, "SET VIDEOMODE......: " + strvalue(Set(_SET_VIDEOMODE)))
 
-      FWriteLine(nHandle, "SET WRAP...........: " + strvalue(Set(_SET_WRAP), .T.))
+      FWriteLine(nHandle, "SET WRAP...........: " + strvalue(Set(_SET_WRAP), TRUE))
 
 
       FWriteLine(nHandle, "")
@@ -478,7 +478,7 @@ STATIC FUNCTION LogError(oErr)
             FWriteLine(nHandle, "Active Key ........: " + strvalue(Eval(hb_macroBlock("IndexKey(0)"))))
          ENDIF
          FWriteLine(nHandle, "")
-         RETURN .T.
+         RETURN TRUE
          })
 
       FWriteLine(nHandle, "")
@@ -580,13 +580,13 @@ STATIC FUNCTION LogError(oErr)
 
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 STATIC FUNCTION strvalue(c, l)
 
    LOCAL cr := ""
 
-   __defaultNIL(@l, .F.)
+   __defaultNIL(@l, FALSE)
 
    SWITCH ValType(c)
    CASE "C"

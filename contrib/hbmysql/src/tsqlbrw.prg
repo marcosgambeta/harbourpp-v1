@@ -140,7 +140,7 @@ CREATE CLASS TBrowseSQL FROM TBrowse
    METHOD   EditField()                   // Editing of hilighted field, after editing does an update of
                                           // corresponding row inside table
 
-   METHOD   BrowseTable( lCanEdit, aExitKeys ) // Handles standard moving inside table and if lCanEdit == .T.
+   METHOD   BrowseTable( lCanEdit, aExitKeys ) // Handles standard moving inside table and if lCanEdit == TRUE
                                                // allows editing of field. It is the stock ApplyKey() moved inside a table
                                                // if lCanEdit K_DEL deletes current row
                                                // When a key is pressed which is present inside aExitKeys it leaves editing loop
@@ -258,7 +258,7 @@ METHOD TBrowseSQL:EditField()
       // @ 10, ( ( 76 - Len(::oCurRow:FieldName( oCol:nFieldNum )) / 2 ) SAY "  " + ( ::oCurRow:FieldName( oCol:nFieldNum ) ) + "  "
 
       /* edit the memo field */
-      cMemo := MemoEdit( ::oCurRow:FieldGet( oCol:nFieldNum ), 11, 11, 21, 68, .T. )
+      cMemo := MemoEdit( ::oCurRow:FieldGet( oCol:nFieldNum ), 11, 11, 21, 68, TRUE )
 
       IF LastKey() == K_CTRL_END
          ::oCurRow:FieldPut( oCol:nFieldNum, cMemo )
@@ -315,17 +315,17 @@ METHOD TBrowseSQL:EditField()
 METHOD TBrowseSQL:BrowseTable( lCanEdit, aExitKeys )
 
    LOCAL nKey
-   LOCAL lKeepGoing := .T.
+   LOCAL lKeepGoing := TRUE
 
    IF !hb_IsNumeric(nKey)
       nKey := NIL
    ENDIF
-   hb_default(@lCanEdit, .F.)
+   hb_default(@lCanEdit, FALSE)
    hb_default(@aExitKeys, {K_ESC})
 
    DO WHILE lKeepGoing
 
-      DO WHILE .T.
+      DO WHILE TRUE
          nKey := Inkey()
          IF ::Stabilize() .AND. nKey != 0
             EXIT
@@ -337,7 +337,7 @@ METHOD TBrowseSQL:BrowseTable( lCanEdit, aExitKeys )
       ENDIF
 
       IF AScan(aExitKeys, nKey) > 0
-         lKeepGoing := .F.
+         lKeepGoing := FALSE
          LOOP
       ENDIF
 

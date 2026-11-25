@@ -305,7 +305,7 @@ FUNCTION URLDecode( cStr )
 
    LOCAL cRet := "", i, cCar
 
-   // LOCAL lNumeric := .T.
+   // LOCAL lNumeric := TRUE
 
    FOR i := 1 TO Len(cStr)
       cCar := cStr[i]
@@ -326,7 +326,7 @@ FUNCTION URLDecode( cStr )
 
 #if 0
       IF ( cRet[i] > "9" .OR. cRet[i] < "0" ) .AND. !( cRet[i] == "." )
-         lNumeric := .F.
+         lNumeric := FALSE
       ENDIF
 #endif
    NEXT

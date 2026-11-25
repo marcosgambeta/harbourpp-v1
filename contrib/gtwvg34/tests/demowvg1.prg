@@ -30,9 +30,9 @@ PROCEDURE Main()
 
    Set( _SET_EVENTMASK, hb_bitOr( INKEY_ALL, HB_INKEY_GTEVENT ) )
 
-   wvt_SetGUI(.T.)
+   wvt_SetGUI(TRUE)
    wvt_SetFont("Courier New", 18, 0, 0)
-   wvt_SetMouseMove(.T.)
+   wvt_SetMouseMove(TRUE)
 
    SetColor("N/W")
    CLS
@@ -44,7 +44,7 @@ PROCEDURE Main()
 
    aPaint := {}
 
-   AAdd(aPaint, { "Label", {|| wvt_DrawLabel( 1, 40, "Harbour Console GUI Demo", 6, , WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", 26, , , , , .T., .T. ) }, { WVT_BLOCK_LABEL, 1, 10, 3, 50 } })
+   AAdd(aPaint, { "Label", {|| wvt_DrawLabel( 1, 40, "Harbour Console GUI Demo", 6, , WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", 26, , , , , TRUE, TRUE ) }, { WVT_BLOCK_LABEL, 1, 10, 3, 50 } })
    AAdd(aPaint, { "Box_1", {|| wvt_DrawBoxRaised(4, 4, 20, 75) }, { WVT_BLOCK_BOX, 4, 4, 20, 75 } })
    AAdd(aPaint, { "Box_2", {|| wvt_DrawBoxRecessed(7, 61, 13, 70) }, { WVT_BLOCK_BOX, 7, 61, 13, 70 } })
    AAdd(aPaint, { "Box_3", {|| wvt_DrawBoxGroup( 15, 59, 18, 72 ) }, { WVT_BLOCK_BOX, 15, 59, 18, 72 } })
@@ -135,7 +135,7 @@ STATIC FUNCTION DispStatusMsg( cMsg )
    // NOTE: The GUI function used as such is not subject to auto-painting
    wvt_DrawLabel( MaxRow(), 60, cMsg, 6, , 0, WIN_RGB(198, 198, 198), "Arial", 18, , 900 )
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC FUNCTION ClearStatusMsg()
 
@@ -146,7 +146,7 @@ STATIC FUNCTION ClearStatusMsg()
 
    SetPos(nRow, nCol)
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC PROCEDURE DoModalDialog()
 
@@ -154,11 +154,11 @@ STATIC PROCEDURE DoModalDialog()
    LOCAL aPaint := {}
    LOCAL nSel
 
-   LOCAL oCrt := WvgCrt():New( , , { 4, 8 }, { 12, 49 }, , .T. )
+   LOCAL oCrt := WvgCrt():New( , , { 4, 8 }, { 12, 49 }, , TRUE )
 
-   oCrt:lModal      := .T.
-   oCrt:resizable   := .F.
-   oCrt:closable    := .F.
+   oCrt:lModal      := TRUE
+   oCrt:resizable   := FALSE
+   oCrt:closable    := FALSE
    oCrt:title       := "Modal Dialog!"
    oCrt:icon        := hb_DirBase() + "vr_1.ico"
 
@@ -170,7 +170,7 @@ STATIC PROCEDURE DoModalDialog()
 
    SetColor("N/W")
    CLS
-   DO WHILE .T.
+   DO WHILE TRUE
       nSel := Alert("A modal window !;Click on parent window;Move this window", { "OK" })
       IF nSel == 0 .OR. nSel == 1
          EXIT

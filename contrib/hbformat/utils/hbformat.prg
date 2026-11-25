@@ -57,7 +57,7 @@ REQUEST HB_GT_CGI_DEFAULT
 
 PROCEDURE Main(...)
 
-   LOCAL oRef, aParams, cFileName, cInitDir, cParam, lRecursive := .F.
+   LOCAL oRef, aParams, cFileName, cInitDir, cParam, lRecursive := FALSE
 
 #if 0
    AltD(2)
@@ -73,7 +73,7 @@ PROCEDURE Main(...)
    FOR EACH cParam IN aParams
       IF hb_LeftEq( cParam, "-" )
          IF SubStr(cParam, Len("-") + 1) == "r"
-            lRecursive := .T.
+            lRecursive := TRUE
             cParam := "#"
             EXIT
          ENDIF

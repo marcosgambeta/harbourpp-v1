@@ -8,11 +8,11 @@
 #define EOL             e"\r\n"
 #define PEM_CERT_FILE   "inetssl.pem"
 
-STATIC s_lReady := .F.
-STATIC s_lStop := .F.
+STATIC s_lReady := FALSE
+STATIC s_lStop := FALSE
 
-STATIC s_lDelaySrv := .F.
-STATIC s_lDelayCli := .F.
+STATIC s_lDelaySrv := FALSE
+STATIC s_lDelayCli := FALSE
 
 REQUEST HB_MT
 
@@ -48,7 +48,7 @@ PROCEDURE Main(delay)
    Client()
 
    // inform server it should finish and wait for it
-   s_lStop := .T.
+   s_lStop := TRUE
    hb_threadJoin(thrd)
    ?
 
@@ -112,7 +112,7 @@ STATIC FUNCTION Server()
 
       ? "SERVER: waiting for connections..."
       hb_inetTimeout(sockSrv, 100)
-      s_lReady := .T.
+      s_lReady := TRUE
       DO WHILE !s_lStop
          IF !Empty(sockConn := hb_inetAccept(sockSrv))
             ? "SERVER: accepted new connection."
@@ -146,7 +146,7 @@ STATIC FUNCTION Server()
          ENDIF
       ENDDO
 
-      s_lReady := .F.
+      s_lReady := FALSE
    ENDIF
 
    RETURN NIL

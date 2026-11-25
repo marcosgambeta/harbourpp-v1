@@ -31,8 +31,8 @@ PROCEDURE Main()
                                        NIL,              ;
                                        NIL,              ;
                                        WIN_FW_NORMAL,    ;
-                                       .F.,              ;
-                                       .F.,              ;
+                                       FALSE,              ;
+                                       FALSE,              ;
                                        NIL,              ;
                                        WIN_ANSI_CHARSET, ;
                                        NIL,              ;

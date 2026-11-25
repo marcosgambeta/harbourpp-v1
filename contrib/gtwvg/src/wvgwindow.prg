@@ -67,19 +67,19 @@
 CREATE CLASS WvgWindow INHERIT WvgPartHandler
 
    // Configuration
-   VAR animate INIT .F.
-   VAR clipChildren INIT .F.
-   VAR clipParent INIT .F.
-   VAR clipSiblings INIT .T.
+   VAR animate INIT FALSE
+   VAR clipChildren INIT FALSE
+   VAR clipParent INIT FALSE
+   VAR clipSiblings INIT TRUE
    VAR group INIT 0    // XBP_NO_GROUP
-   VAR sizeRedraw INIT .F.
-   VAR tabStop INIT .F.
-   VAR visible INIT .T.
+   VAR sizeRedraw INIT FALSE
+   VAR tabStop INIT FALSE
+   VAR visible INIT TRUE
 
-   VAR pointerFocus INIT .T.
+   VAR pointerFocus INIT TRUE
 
    // Runtime variables
-   VAR dropZone INIT .F.
+   VAR dropZone INIT FALSE
    VAR helpLink
    VAR s_tooltipText INIT ""
    METHOD tooltipText(cText) SETGET
@@ -125,16 +125,16 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    VAR sl_killDisplayFocus
 
    VAR hBrushBG
-   VAR is_hidden INIT .F.
-   VAR is_enabled INIT .T.
+   VAR is_hidden INIT FALSE
+   VAR is_enabled INIT TRUE
    VAR title INIT " "
    VAR icon INIT 0
-   VAR closable INIT .T.
-   VAR resizable INIT .T.
+   VAR closable INIT TRUE
+   VAR resizable INIT TRUE
    VAR resizeMode INIT 0
    VAR style INIT WIN_WS_OVERLAPPEDWINDOW
    VAR exStyle INIT 0
-   VAR lModal INIT .F.
+   VAR lModal INIT FALSE
    VAR pGTp
    VAR pGT
    VAR objType INIT objTypeNone
@@ -145,7 +145,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    VAR aPos INIT {0, 0}
    VAR aSize INIT {0, 0}
    VAR aPresParams INIT {}
-   VAR lHasInputFocus INIT .F.
+   VAR lHasInputFocus INIT FALSE
    VAR nFrameState INIT 0       // normal
 
    VAR maxCol INIT 79
@@ -246,7 +246,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    PROTECTED:
 
    METHOD getPosAndSize(aPs, aSz)
-   METHOD isParentCrt() INLINE (IIf(hb_IsObject(::oParent), ::oParent:objType == objTypeCrt, .F.))
+   METHOD isParentCrt() INLINE (IIf(hb_IsObject(::oParent), ::oParent:objType == objTypeCrt, FALSE))
    METHOD rePosition()
    METHOD createControl()
 
@@ -408,27 +408,27 @@ METHOD WvgWindow:captureMouse()
 
 METHOD WvgWindow:disable()
 
-   IF wvg_EnableWindow(::hWnd, .F.)
-      ::is_enabled := .F.
-      RETURN .T.
+   IF wvg_EnableWindow(::hWnd, FALSE)
+      ::is_enabled := FALSE
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD WvgWindow:enable()
 
-   IF wvg_EnableWindow(::hWnd, .T.)
-      ::is_enabled := .T.
-      RETURN .T.
+   IF wvg_EnableWindow(::hWnd, TRUE)
+      ::is_enabled := TRUE
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD WvgWindow:hide()
 
    IF wvg_IsWindow(::hWnd)
       wvg_ShowWindow(::hWnd, SW_HIDE)
-      ::is_hidden := .T.
+      ::is_hidden := TRUE
    ENDIF
 
    RETURN Self
@@ -478,7 +478,7 @@ METHOD WvgWindow:setPos(aPos, lPaint)
    LOCAL aPosSz
 
    IF hb_IsArray(aPos)
-      __defaultNIL(@lPaint, .T.)
+      __defaultNIL(@lPaint, TRUE)
 
       SWITCH ::objType
 
@@ -505,7 +505,7 @@ METHOD WvgWindow:setPosAndSize(aPos, aSize, lPaint)
    __defaultNIL(@aSize, ::aSize)
 
    IF hb_IsArray(aPos) .AND. hb_IsArray(aSize)
-      __defaultNIL(@lPaint, .T.)
+      __defaultNIL(@lPaint, TRUE)
 
       SWITCH ::objType
 
@@ -526,7 +526,7 @@ METHOD WvgWindow:setSize(aSize, lPaint)
    LOCAL aPosSz
 
    IF hb_IsArray(aSize)
-      __defaultNIL(@lPaint, .T.)
+      __defaultNIL(@lPaint, TRUE)
 
       SWITCH ::objType
 
@@ -544,19 +544,19 @@ METHOD WvgWindow:setSize(aSize, lPaint)
 
 METHOD WvgWindow:isDerivedFrom(cClassORoObject)
 
-   LOCAL lTrue := .F.
+   LOCAL lTrue := FALSE
    LOCAL cCls := __objGetClsName(self)
 
    // Compares without Xbp or Wvg prefixes
 
    IF hb_IsString(cClassORoObject)
       IF Upper(SubStr(cClassORoObject, 4)) == Upper(SubStr(cCls, 4))
-         lTrue := .T.
+         lTrue := TRUE
       ENDIF
 
    ELSEIF hb_IsObject(cClassORoObject)
       IF Upper(SubStr(cClassORoObject:className(), 4)) == Upper(SubStr(cCls, 4))
-         lTrue := .T.
+         lTrue := TRUE
       ENDIF
    ENDIF
 
@@ -565,8 +565,8 @@ METHOD WvgWindow:isDerivedFrom(cClassORoObject)
 METHOD WvgWindow:show()
 
    wvg_ShowWindow(::hWnd, SW_NORMAL)
-   ::is_hidden := .F.
-   ::lHasInputFocus := .T.
+   ::is_hidden := FALSE
+   ::lHasInputFocus := TRUE
 
    RETURN Self
 

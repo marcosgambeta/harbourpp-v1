@@ -52,7 +52,7 @@
 
 FUNCTION AlloFree(lMode)
 
-   hb_default(@lMode, .F.)
+   hb_default(@lMode, FALSE)
 
    RETURN Memory(IIf(lMode, HB_MEM_CHAR, HB_MEM_BLOCK))
 
@@ -72,7 +72,7 @@ FUNCTION Center(c, n, p, lMode)
       p := NIL
    ELSE
       IF !hb_IsLogical(lMode)
-         lMode := .F.
+         lMode := FALSE
       ENDIF
    ENDIF
 

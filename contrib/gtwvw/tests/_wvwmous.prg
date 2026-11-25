@@ -132,7 +132,7 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    hb_default(@nRow2, nRow1)
    hb_default(@nCol2, nCol1 + Max(10, Len(cCaption) + 2) - 1)
    hb_default(@nType, _BUTTON_NORMAL)        // 20040303
-   hb_default(@lDraw, .T.)
+   hb_default(@lDraw, TRUE)
    hb_default(@nWinId, wvw_nNumWindows() - 1)  // 20040303
 
    // TODO: ::nId := IIf(Empty(s_amouseobjlist), 1, s_amouseobjlist[Len(s_amouseobjlist)]:nGetId() + 1)
@@ -147,10 +147,10 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    ::bClickBlock   := IIf(hb_IsBlock(bClickBlock), bClickBlock, NIL)
    ::bPressBlock   := NIL
 
-   ::lRepeatPress  := .F.
+   ::lRepeatPress  := FALSE
 
-   ::lPressed  := .F.
-   ::lHover    := .F.  // 20040303
+   ::lPressed  := FALSE
+   ::lHover    := FALSE  // 20040303
    ::cCaption := cCaption
    ::cCaptionFont := _DEFAULT_CAPTION_FONT
    ::nCaptionHeight := _DEFAULT_CAPTION_HEIGHT
@@ -161,9 +161,9 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    ::cNormalColor := "W"
    ::cPressedColor := "W"
 
-   ::lVisible := .T.
-   ::lEnable  := .T.
-   ::lTight   := .F.
+   ::lVisible := TRUE
+   ::lEnable  := TRUE
+   ::lTight   := FALSE
    ::nType := nType
 
    IF lDraw  // 20040304
@@ -212,14 +212,14 @@ METHOD WVWMouseButton:OnPress()
    ENDIF
 
    lWasPressed := ::lPressed
-   ::lPressed := .T.
+   ::lPressed := TRUE
    ::Draw()
 
    IF ::lRepeatPress // .AND. ::lPressed
       IF !lWasPressed
-         xKeyRepeater(.T.) // init it
+         xKeyRepeater(TRUE) // init it
       ENDIF
-      wvwm_SetKeyRepeater(.T.)   // activate key repeater
+      wvwm_SetKeyRepeater(TRUE)   // activate key repeater
    ENDIF
 
    IF hb_IsBlock(::bPressBlock)
@@ -250,11 +250,11 @@ METHOD WVWMouseButton:OnRelease()
       RETURN Self
    ENDIF
 
-   ::lPressed := .F.
+   ::lPressed := FALSE
    ::Draw()
 
    IF ::lRepeatPress // .AND. ::lPressed
-      wvwm_SetKeyRepeater(.F.)   // deactivate key repeater
+      wvwm_SetKeyRepeater(FALSE)   // deactivate key repeater
    ENDIF
 
    IF lWasPressed
@@ -270,10 +270,10 @@ METHOD WVWMouseButton:OnReleaseOut()
       RETURN Self
    ENDIF
 
-   ::lPressed := .F.
+   ::lPressed := FALSE
    ::Draw()
 
-   // NOTE: no need to do SetKeyRepeater(.F.),
+   // NOTE: no need to do SetKeyRepeater(FALSE),
    //       because it was already handled by onMouseOut
 
    RETURN Self
@@ -288,10 +288,10 @@ METHOD WVWMouseButton:OnMouseOut()
    ENDIF
 
    if ::lRepeatPress .AND. ::lPressed
-      wvwm_SetKeyRepeater(.F.)   // stop key repeater
+      wvwm_SetKeyRepeater(FALSE)   // stop key repeater
    ENDIF
 
-   ::lHover := .F.
+   ::lHover := FALSE
    ::Draw()
 
    RETURN Self
@@ -306,10 +306,10 @@ METHOD WVWMouseButton:OnMouseOver()
    ENDIF
 
    if ::lRepeatPress .AND. ::lPressed
-      wvwm_SetKeyRepeater(.T.)   // activate key repeater
+      wvwm_SetKeyRepeater(TRUE)   // activate key repeater
    ENDIF
 
-   ::lHover := .T.
+   ::lHover := TRUE
    ::Draw()
 
    RETURN Self
@@ -351,7 +351,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(hb_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(hb_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , FALSE, FALSE )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
@@ -375,7 +375,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(hb_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, IIf(hb_IsArray(afontinfo), afontinfo[2], ::nCaptionHeight), 0, , , , FALSE, FALSE )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )
@@ -403,7 +403,7 @@ FUNCTION wvwm_ResetMouseObjects( nWinNum )
    ENDDO
    s_amouseobjlist[nWinNum + 1] := {}
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION wvwm_AddMouseObjects( nWinNum, oMouse, nObjType )
 
@@ -411,7 +411,7 @@ FUNCTION wvwm_AddMouseObjects( nWinNum, oMouse, nObjType )
    hb_default(@nObjType, _MOBJECT_BUTTON)
    AAdd(s_amouseobjlist[nWinNum + 1], { nObjType, oMouse })
 
-   RETURN .T.
+   RETURN TRUE
 
 // returns number of mouse objects in window nWinNum
 FUNCTION wvwm_nNumMouseObjects( nWinNum )
@@ -425,7 +425,7 @@ FUNCTION wvwm_nObjectType( nWinNum, nObjNum )
 
 FUNCTION wvwm_SetKeyRepeater( lSet )
 
-   // returns .T. if KeyRepeater is active
+   // returns TRUE if KeyRepeater is active
    // if lSet is supplied, KeyRepeater is enable/disable accordingly
    LOCAL lWasSet := ( s_nkeyrepeater != NIL )
    IF lSet != NIL
@@ -544,16 +544,16 @@ FUNCTION wvwm_nMouseChecker( nkey )
 STATIC PROCEDURE xKeyRepeater( lInit )
 
    STATIC s_nLastValidCheck := 0
-   STATIC s_lFirstRepeat := .T.
+   STATIC s_lFirstRepeat := TRUE
 
    LOCAL nNow
    LOCAL nRepeatInterval
 
-   hb_default(@lInit, .F.)
+   hb_default(@lInit, FALSE)
 
    IF lInit
       // simply init the locally static var
-      s_lFirstRepeat := .T.
+      s_lFirstRepeat := TRUE
       s_nLastValidCheck := Seconds()
       RETURN
    ENDIF
@@ -579,7 +579,7 @@ STATIC PROCEDURE xKeyRepeater( lInit )
    s_nLastValidCheck := Seconds()   // nNow
 
    // next repeat will be quicker
-   s_lFirstRepeat := .F.
+   s_lFirstRepeat := FALSE
 
    RETURN // xKeyRepeater()
 

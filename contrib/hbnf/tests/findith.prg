@@ -7,7 +7,7 @@ PROCEDURE Main( cCk, cStr, nOcc, xCase )
    IF PCount() != 4
       ? "usage: findith cCk cStr nOcc xCase"
    ELSE
-      xCase := IIf(xCase == "Y", .T., .F.)
+      xCase := IIf(xCase == "Y", TRUE, FALSE)
       nOcc  := Val(nOcc)
       ? IIf(xCase, "Ignoring ", "Observing ") + "case:"
 

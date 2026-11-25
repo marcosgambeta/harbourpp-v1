@@ -89,7 +89,7 @@ STATIC PROCEDURE DrawBarcode( nLineWidth, cType, cCode, nFlags )
          ENDIF
 
          /* and now much faster version */
-         cBitMap := hb_zebra_getbitmap( hZebra, nAlign, .T./*lBottomUp>*/, @nWidth, @nHeight, nLineWidth, nLineHeight, nX )
+         cBitMap := hb_zebra_getbitmap( hZebra, nAlign, TRUE/*lBottomUp>*/, @nWidth, @nHeight, nLineWidth, nLineHeight, nX )
          pBMP := hb_bmp_frombitmap( cBitMap, nAlign, nWidth, nHeight, nDepth, /*nDPI*/, /*aPalette*/, /*@nError*/ )
          cFile := Lower( cType ) + "b.bmp"
          ? "Creating BMP file:", cFile

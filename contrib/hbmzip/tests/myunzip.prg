@@ -87,7 +87,7 @@ PROCEDURE Main(...)
    ENDIF
    cFileName := hb_FNameMerge(cPath, cFileName, cExt)
 
-   hb_ADel(aWild, 1, .T.)
+   hb_ADel(aWild, 1, TRUE)
 
    FOR tmp := 1 TO Len(aWild) - 1
       IF Lower(aWild[tmp]) == "--pass"
@@ -119,7 +119,7 @@ PROCEDURE Main(...)
             ? "comment:", cComment
          ENDIF
 
-         IF AScan(aWild, {|cPattern|hb_WildMatch(cPattern, cFile, .T.)}) > 0
+         IF AScan(aWild, {|cPattern|hb_WildMatch(cPattern, cFile, TRUE)}) > 0
             ?? " Extracting"
             hb_unzipExtractCurrentFile(hUnzip, NIL, cPassword)
          ELSE

@@ -26,47 +26,47 @@ PROCEDURE Main( cCmdLine )
 
    cCmdLine := IIf(cCmdLine == NIL, "", cCmdLine)
 
-   lColor := IIf("MONO" $ Upper(cCmdLine), .F., IsColor())
+   lColor := IIf("MONO" $ Upper(cCmdLine), FALSE, IsColor())
 
    // Border, Box, Bar, Current, Unselected
    aColors := IIf(lColor, { "W+/G", "N/G", "N/G", "N/W", "N+/G" }, ;
       { "W+/N", "W+/N", "W/N", "N/W", "W/N" })
 
-   ft_Fill( aOptions[1], "A. Execute A Dummy Procedure"        , {|| fubar() }, .T. )
-   ft_Fill( aOptions[1], "B. Enter Daily Charge/Credit Slips"  , {|| .T. }, .T. )
-   ft_Fill( aOptions[1], "C. Enter Payments On Accounts"       , {|| .T. }, .F. )
-   ft_Fill( aOptions[1], "D. Edit Daily Transactions"          , {|| .T. }, .T. )
-   ft_Fill( aOptions[1], "E. Enter/Update Member File"         , {|| .T. }, .T. )
-   ft_Fill( aOptions[1], "F. Update Code File"                 , {|| .T. }, .F. )
-   ft_Fill( aOptions[1], "G. Add/Update Auto Charge File"      , {|| .T. }, .T. )
-   ft_Fill( aOptions[1], "H. Post All Transactions To A/R File", {|| .T. }, .T. )
-   ft_Fill( aOptions[1], "I. Increment Next Posting Date"      , {|| .T. }, .T. )
+   ft_Fill( aOptions[1], "A. Execute A Dummy Procedure"        , {|| fubar() }, TRUE )
+   ft_Fill( aOptions[1], "B. Enter Daily Charge/Credit Slips"  , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[1], "C. Enter Payments On Accounts"       , {|| TRUE }, FALSE )
+   ft_Fill( aOptions[1], "D. Edit Daily Transactions"          , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[1], "E. Enter/Update Member File"         , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[1], "F. Update Code File"                 , {|| TRUE }, FALSE )
+   ft_Fill( aOptions[1], "G. Add/Update Auto Charge File"      , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[1], "H. Post All Transactions To A/R File", {|| TRUE }, TRUE )
+   ft_Fill( aOptions[1], "I. Increment Next Posting Date"      , {|| TRUE }, TRUE )
 
-   ft_Fill( aOptions[2], "A. Print Member List"                , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "B. Print Active Auto Charges"        , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "C. Print Edit List"                  , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "D. Print Pro-Usage Report"           , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "E. Print A/R Transaction Report"     , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "F. Aging Report Preparation"         , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "G. Add Interest Charges"             , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "H. Print Aging Report"               , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "I. Print Monthly Statements"         , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "J. Print Mailing Labels"             , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "K. Print Transaction Totals"         , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "L. Print Transaction Codes File"     , {|| .T. }, .T. )
-   ft_Fill( aOptions[2], "M. Print No-Activity List"           , {|| .T. }, .T. )
+   ft_Fill( aOptions[2], "A. Print Member List"                , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "B. Print Active Auto Charges"        , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "C. Print Edit List"                  , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "D. Print Pro-Usage Report"           , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "E. Print A/R Transaction Report"     , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "F. Aging Report Preparation"         , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "G. Add Interest Charges"             , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "H. Print Aging Report"               , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "I. Print Monthly Statements"         , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "J. Print Mailing Labels"             , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "K. Print Transaction Totals"         , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "L. Print Transaction Codes File"     , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[2], "M. Print No-Activity List"           , {|| TRUE }, TRUE )
 
-   ft_Fill( aOptions[3], "A. Transaction Totals Display"       , {|| .T. }, .T. )
-   ft_Fill( aOptions[3], "B. Display Invoice Totals"           , {|| .T. }, .T. )
-   ft_Fill( aOptions[3], "C. Accounts Receivable Display"      , {|| .T. }, .T. )
+   ft_Fill( aOptions[3], "A. Transaction Totals Display"       , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[3], "B. Display Invoice Totals"           , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[3], "C. Accounts Receivable Display"      , {|| TRUE }, TRUE )
 
-   ft_Fill( aOptions[4], "A. Backup Database Files"            , {|| .T. }, .T. )
-   ft_Fill( aOptions[4], "B. Reindex Database Files"           , {|| .T. }, .T. )
-   ft_Fill( aOptions[4], "C. Set System Parameters"            , {|| .T. }, .T. )
-   ft_Fill( aOptions[4], "D. This EXITs Too"                   , {|| .F. }, .T. )
+   ft_Fill( aOptions[4], "A. Backup Database Files"            , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[4], "B. Reindex Database Files"           , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[4], "C. Set System Parameters"            , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[4], "D. This EXITs Too"                   , {|| FALSE }, TRUE )
 
-   ft_Fill( aOptions[5], "A. Does Nothing"                     , {|| .T. }, .T. )
-   ft_Fill( aOptions[5], "B. Exit Application"                 , {|| .F. }, .T. )
+   ft_Fill( aOptions[5], "A. Does Nothing"                     , {|| TRUE }, TRUE )
+   ft_Fill( aOptions[5], "B. Exit Application"                 , {|| FALSE }, TRUE )
 
    // main routine starts here
    SET SCOREBOARD OFF
@@ -86,7 +86,7 @@ PROCEDURE Main( cCmdLine )
       SetMode(50, 80)
    ENDIF
    nMaxRow := MaxRow()
-   SetBlink(.F.)
+   SetBlink(FALSE)
    SetColor(cWindN + "*")
    CLS
    SetColor(cNormN)
@@ -111,7 +111,7 @@ PROCEDURE Main( cCmdLine )
 
    SetColor("W/N")
    SetCursor( SC_NORMAL )
-   SetBlink(.T.)
+   SetBlink(TRUE)
    IF "VGA" $ Upper(cCmdLine)
       SetMode(25, 80)
    ENDIF
@@ -129,4 +129,4 @@ FUNCTION fubar()
    Inkey(0)
    SetColor(OldColor)
 
-   RETURN .T.
+   RETURN TRUE

@@ -94,7 +94,7 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
    IF aLockInfo[UR_LI_METHOD] == DBLM_MULTIPLE      /* RLOCK */
 
       IF aWData[1] > 0
-         aLockInfo[UR_LI_RESULT] := .T.
+         aLockInfo[UR_LI_RESULT] := TRUE
          RETURN HB_SUCCESS
       ENDIF
 
@@ -104,11 +104,11 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
       ENDIF
 
       IF aWData[1] > 0
-         aLockInfo[UR_LI_RESULT] := .T.
+         aLockInfo[UR_LI_RESULT] := TRUE
          RETURN HB_SUCCESS
       ELSEIF ( i := AScan(aWData[2], {| x | x[1] == xRecID }) ) > 0
          ++aWData[2][i][2]
-         aLockInfo[UR_LI_RESULT] := .T.
+         aLockInfo[UR_LI_RESULT] := TRUE
          RETURN HB_SUCCESS
       ENDIF
 
@@ -141,7 +141,7 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
 
    ENDIF
 
-   aLockInfo[UR_LI_RESULT] := .F.
+   aLockInfo[UR_LI_RESULT] := FALSE
 
    RETURN HB_FAILURE
 
@@ -154,7 +154,7 @@ STATIC FUNCTION RLCDX_UNLOCK( nWA, xRecID )
          IF --aWData[2][i][2] > 0
             RETURN HB_SUCCESS
          ENDIF
-         hb_ADel( aWData[2], i, .T. )
+         hb_ADel( aWData[2], i, TRUE )
       ELSE
          RETURN HB_SUCCESS
       ENDIF
@@ -175,7 +175,7 @@ STATIC FUNCTION RLCDX_APPEND( nWA, lUnlockAll )
 
    /* Never unlock other records, they have to be explicitly unlocked */
 
-   lUnlockAll := .F.
+   lUnlockAll := FALSE
 
    IF ( nResult := UR_SUPER_APPEND( nWA, lUnlockAll ) ) == HB_SUCCESS
 

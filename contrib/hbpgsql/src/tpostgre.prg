@@ -59,12 +59,12 @@ CREATE CLASS TPQServer
 
    VAR pDb
    VAR lTrans
-   VAR lAllCols  INIT .T.
-   VAR lNull     INIT .F.
+   VAR lAllCols  INIT TRUE
+   VAR lNull     INIT FALSE
    VAR Schema    INIT "public"
-   VAR lError    INIT .F.
+   VAR lError    INIT FALSE
    VAR cError    INIT ""
-   VAR lTrace    INIT .F.
+   VAR lTrace    INIT FALSE
    VAR pTrace
 
    METHOD New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
@@ -116,7 +116,7 @@ METHOD TPQserver:New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
    ::pDB := PQconnectdb(cConnect)
 
    IF PQstatus(::pDb) != CONNECTION_OK
-      ::lError := .T.
+      ::lError := TRUE
       ::cError := PQerrorMessage(::pDb)
    ELSE
       IF hb_IsString(cSchema)
@@ -148,7 +148,7 @@ METHOD TPQserver:SetSchema(cSchema)
       res := PQexec(::pDB, "SET search_path TO " + cSchema)
       result := (PQresultStatus(res) == PGRES_COMMAND_OK)
    ELSE
-      result := .F.
+      result := FALSE
    ENDIF
 
    RETURN result
@@ -208,7 +208,7 @@ METHOD TPQserver:TableExists(cTable)
 
    IF ::lError := (PQresultStatus(res) != PGRES_TUPLES_OK)
       ::cError := PQresultErrorMessage(res)
-      result := .F.
+      result := FALSE
    ELSE
       ::cError := ""
       result := (PQlastrec(res) != 0)
@@ -427,7 +427,7 @@ METHOD PROCEDURE TPQserver:TraceOn(cFile)
 
    IF ::pTrace != NIL
       PQtrace(::pDb, ::pTrace)
-      ::lTrace := .T.
+      ::lTrace := TRUE
    ENDIF
 
    RETURN
@@ -439,7 +439,7 @@ METHOD PROCEDURE TPQserver:TraceOff()
       ::pTrace := NIL
    ENDIF
 
-   ::lTrace := .F.
+   ::lTrace := FALSE
 
    RETURN
 
@@ -463,10 +463,10 @@ CREATE CLASS TPQQuery
    VAR lBof
    VAR lEof
    VAR lRead
-   VAR lAllCols INIT .T.
-   VAR lNull    INIT .F.
+   VAR lAllCols INIT TRUE
+   VAR lNull    INIT FALSE
 
-   VAR lError   INIT .F.
+   VAR lError   INIT FALSE
    VAR cError   INIT ""
 
    VAR cQuery
@@ -547,7 +547,7 @@ METHOD TPQquery:Destroy()
       ::nResultStatus := -1
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TPQquery:Refresh(lQuery, lMeta)
 
@@ -559,14 +559,14 @@ METHOD TPQquery:Refresh(lQuery, lMeta)
 
    ::Destroy()
 
-   ::lBof     := .T.
-   ::lEof     := .T.
-   ::lRead    := .F.
+   ::lBof     := TRUE
+   ::lEof     := TRUE
+   ::lRead    := FALSE
    ::nRecno   := 0
    ::nLastrec := 0
    ::Rows     := 0
 
-   IF hb_defaultValue(lQuery, .T.)
+   IF hb_defaultValue(lQuery, TRUE)
       res := PQexec(::pDB, ::cQuery)
    ELSE
       res := ::pQuery
@@ -576,7 +576,7 @@ METHOD TPQquery:Refresh(lQuery, lMeta)
 
    IF ::nResultStatus == PGRES_TUPLES_OK
 
-      IF hb_defaultValue(lMeta, .T.)
+      IF hb_defaultValue(lMeta, TRUE)
 
          ::aStruct := {}
          ::nFields := 0
@@ -681,13 +681,13 @@ METHOD TPQquery:Refresh(lQuery, lMeta)
       ENDIF
 
       ::nLastrec := PQlastrec(res)
-      ::lError := .F.
+      ::lError := FALSE
       ::cError := ""
 
       IF ::nLastrec != 0
          ::nRecno := 1
-         ::lBof := .F.
-         ::lEof := .F.
+         ::lBof := FALSE
+         ::lEof := FALSE
       ENDIF
 
    ELSEIF ::lError := (::nResultStatus != PGRES_COMMAND_OK)
@@ -718,7 +718,7 @@ METHOD TPQquery:Read()
       IF ::lRead
          ::Skip(1)
       ELSE
-         ::lRead := .T.
+         ::lRead := TRUE
       ENDIF
    ENDIF
 
@@ -730,30 +730,30 @@ METHOD TPQquery:Skip(nrecno)
 
    IF ::nRecno + nRecno > 0 .AND. ::nRecno + nRecno <= ::nLastrec
       ::nRecno := ::nRecno + nRecno
-      ::lEof := .F.
-      ::lBof := .F.
+      ::lEof := FALSE
+      ::lBof := FALSE
    ELSE
       IF ::nRecno + nRecno > ::nLastRec
          ::nRecno := ::nLastRec + 1
-         ::lEof := .T.
+         ::lEof := TRUE
       ENDIF
 
       IF ::nRecno + nRecno < 1
          ::nRecno := 1
-         ::lBof := .T.
+         ::lBof := TRUE
       ENDIF
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TPQquery:Goto(nRecno)
 
    IF nRecno >= 1 .AND. nRecno <= ::nLastrec
       ::nRecno := nRecno
-      ::lEof := .F.
+      ::lEof := FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD TPQquery:FieldPos(cField)
 
@@ -857,7 +857,7 @@ METHOD TPQquery:Delete(oRow)
          ENDIF
       ENDIF
    ELSE
-      ::lError := .T.
+      ::lError := TRUE
       ::cError := "There is no primary keys or query is a joined table"
    ENDIF
 
@@ -868,7 +868,7 @@ METHOD TPQquery:Append(oRow)
    LOCAL cQuery
    LOCAL i
    LOCAL res
-   LOCAL lChanged := .F.
+   LOCAL lChanged := FALSE
    LOCAL aParams := {}
    LOCAL xParam
 
@@ -880,7 +880,7 @@ METHOD TPQquery:Append(oRow)
 
       FOR i := 1 TO oRow:FCount()
          IF ::lAllCols .OR. oRow:Changed(i)
-            lChanged := .T.
+            lChanged := TRUE
             IF !(xParam := ValueToString(oRow:FieldGet(i))) == NIL
                AAdd(aParams, xParam)
                cQuery += oRow:FieldName(i) + ","
@@ -914,7 +914,7 @@ METHOD TPQquery:Append(oRow)
          ENDIF
       ENDIF
    ELSE
-      ::lError := .T.
+      ::lError := TRUE
       ::cError := "Cannot insert in a joined table, or unknown error"
    ENDIF
 
@@ -928,7 +928,7 @@ METHOD TPQquery:Update(oRow)
    LOCAL xField
    LOCAL cWhere
    LOCAL res
-   LOCAL lChanged := .F.
+   LOCAL lChanged := FALSE
    LOCAL aParams := {}
    LOCAL nParams := 0
    LOCAL xParam
@@ -955,7 +955,7 @@ METHOD TPQquery:Update(oRow)
 
       FOR i := 1 TO oRow:FCount()
          IF ::lAllCols .OR. oRow:Changed(i)
-            lChanged := .T.
+            lChanged := TRUE
             IF (xParam := ValueToString(oRow:FieldGet(i))) == NIL
                cQuery += oRow:FieldName(i) + " = NULL,"
             ELSE
@@ -981,7 +981,7 @@ METHOD TPQquery:Update(oRow)
          ENDIF
       ENDIF
    ELSE
-      ::lError := .T.
+      ::lError := TRUE
       ::cError := "Cannot insert in a joined table, or unknown error"
    ENDIF
 
@@ -1035,7 +1035,7 @@ METHOD TPQquery:FieldGet(nField, nRow)
          IF result != NIL
             result := (result == "t")
          ELSEIF !::lNull
-            result := .F.
+            result := FALSE
          ENDIF
          EXIT
       ENDSWITCH
@@ -1093,8 +1093,8 @@ METHOD TPQquery:GetBlankRow()
          aOld[i] := 0
          EXIT
       CASE "L"
-         aRow[i] := .F.
-         aOld[i] := .F.
+         aRow[i] := FALSE
+         aOld[i] := FALSE
          EXIT
       CASE "D"
          aRow[i] := hb_SToD()

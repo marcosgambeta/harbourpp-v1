@@ -87,7 +87,7 @@ METHOD Signal:signal()
 CREATE CLASS Thread
 
 EXPORTED:
-   VAR active           AS LOGICAL READONLY  INIT .F.
+   VAR active           AS LOGICAL READONLY  INIT FALSE
    VAR atEnd            AS USUAL             INIT NIL
    VAR atStart          AS USUAL             INIT NIL
    VAR cargo            AS USUAL
@@ -175,10 +175,10 @@ METHOD Thread:setInterval(nHSeconds)
       ::interval := NIL
    ELSE
       /* TODO: RT Error */
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD Thread:setPriority( nPriority )
 
@@ -187,28 +187,28 @@ METHOD Thread:setPriority( nPriority )
       ::priority := nPriority
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD Thread:setStartTime( nSeconds )
 
    IF hb_IsNumeric(nSeconds)
       IF nSeconds < 0 .OR. nSeconds > 86400
-         RETURN .F.
+         RETURN FALSE
       ENDIF
       ::startTime := nSeconds
    ELSEIF PCount() > 0 .OR. nSeconds == NIL
       ::startTime := NIL
    ELSE
       /* TODO: RT Error */
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD Thread:start(xAction, ...)
 
    IF ::active
-      RETURN .F.
+      RETURN FALSE
    ELSE
       ::pThreadID := hb_threadStart(HB_THREAD_INHERIT_PUBLIC, ;
             {| ... |
@@ -216,7 +216,7 @@ METHOD Thread:start(xAction, ...)
 
                ThreadObject( Self )
 
-               ::active := .T.
+               ::active := TRUE
                ::startCount++
 
                IF hb_IsNumeric(::startTime)
@@ -233,7 +233,7 @@ METHOD Thread:start(xAction, ...)
                   Eval(::_atStart, ...)
                ENDIF
 
-               DO WHILE .T.
+               DO WHILE TRUE
 
                   nTime := hb_MilliSeconds()
 
@@ -271,7 +271,7 @@ METHOD Thread:start(xAction, ...)
                IF hb_IsBlock(::_atEnd)
                   Eval(::_atEnd, ...)
                ENDIF
-               ::active := .F.
+               ::active := FALSE
 
                RETURN NIL
             }, ...)
@@ -279,7 +279,7 @@ METHOD Thread:start(xAction, ...)
       ::threadID := IIf(::pThreadID == NIL, 0, hb_threadID( ::pThreadID ))
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD Thread:synchronize( nTimeOut )
 
@@ -291,7 +291,7 @@ METHOD Thread:synchronize( nTimeOut )
          nTimeOut / 100, NIL) )
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD Thread:threadSelf()
    RETURN ::pThreadID

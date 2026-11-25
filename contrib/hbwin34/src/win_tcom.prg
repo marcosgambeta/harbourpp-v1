@@ -69,7 +69,7 @@ CREATE CLASS win_Com
    ACCESS PortName() INLINE ::cPortName
 
    PROTECT nPort     INIT -1
-   PROTECT lOpen     INIT .F.
+   PROTECT lOpen     INIT FALSE
    PROTECT cPortName INIT ""
 
    METHOD Init(cPortName, nBaudRate, nParity, nByteSize, nStopBits)
@@ -102,7 +102,7 @@ METHOD win_Com:Init(cPortName, nBaudRate, nParity, nByteSize, nStopBits)
    IF hb_LeftEq(::cPortName, "COM")
       ::nPort := Val(SubStr(::cPortName, 4)) - 1
       IF win_comOpen(::nPort, nBaudRate, nParity, nByteSize, nStopBits) != -1
-         ::lOpen := .T.
+         ::lOpen := TRUE
       ENDIF
    ENDIF
 
@@ -129,7 +129,7 @@ METHOD win_Com:RecvTo(cDelim, nMaxlen)
    LOCAL cRecv := ""
    LOCAL cString
 
-   DO WHILE .T.
+   DO WHILE TRUE
       cString := Space(1)
       IF (nResult := win_comRead(::nPort, @cString)) != -1
          IF nResult == 0
@@ -178,10 +178,10 @@ METHOD win_Com:Purge(lRXBuffer, lTXBuffer)
    RETURN win_comPurge(::nPort, lRXBuffer, lTXBuffer)
 
 METHOD win_Com:PurgeRX()
-   RETURN win_comPurge(::nPort, .T., .F.)
+   RETURN win_comPurge(::nPort, TRUE, FALSE)
 
 METHOD win_Com:PurgeTX()
-   RETURN win_comPurge(::nPort, .F., .T.)
+   RETURN win_comPurge(::nPort, FALSE, TRUE)
 
 METHOD win_Com:Close(nDrain)
    RETURN win_comClose(::nPort, hb_defaultValue(nDrain, 0))

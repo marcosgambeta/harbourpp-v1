@@ -41,7 +41,7 @@ FUNCTION BubbleBabbleEncode_Prg( cString )
    LOCAL nSeed := 1
 
    i := 1
-   DO WHILE .T.
+   DO WHILE TRUE
 
       IF i > Len(cString)
          cResult += ;

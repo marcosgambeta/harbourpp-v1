@@ -52,13 +52,13 @@ FUNCTION _dbExport( cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, cXPP_Dr
       RETURN __dbCopy( cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "SDF" )
 #if 0
       /* Alternate CA-Cl*pper compatible call: */
-      RETURN __dbSDF( .T., cFile, aFields, bFor, bWhile, nNext, nRecord, lRest )
+      RETURN __dbSDF( TRUE, cFile, aFields, bFor, bWhile, nNext, nRecord, lRest )
 #endif
    CASE "DELDBE"
       RETURN __dbCopy( cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "DELIM", , , cDelimiter )
 #if 0
       /* Alternate CA-Cl*pper compatible call: */
-      RETURN __dbDelim( .T., cFile, cDelimiter, aFields, bFor, bWhile, nNext, nRecord, lRest )
+      RETURN __dbDelim( TRUE, cFile, cDelimiter, aFields, bFor, bWhile, nNext, nRecord, lRest )
 #endif
    ENDSWITCH
 

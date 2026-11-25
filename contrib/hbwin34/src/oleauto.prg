@@ -80,7 +80,7 @@ METHOD win_oleAuto:__enumStart(enum, lDescend)
       RETURN ::__enumSkip(@enum, lDescend)
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD win_oleAuto:__enumSkip(enum, lDescend)
 

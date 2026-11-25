@@ -138,7 +138,7 @@ METHOD xhb_TMemoEditor:MemoInit(xUDF)
          // of values returned by ::xUserFunction, so I pass these value on both
          // parameters of ::HandleUdf()
          //
-         ::HandleUdf(nUdfReturn, nUdfReturn, .F.)
+         ::HandleUdf(nUdfReturn, nUdfReturn, FALSE)
 
       ENDDO
 
@@ -275,7 +275,7 @@ METHOD xhb_TMemoEditor:KeyboardHook(nKey)
 
    IF ::ExistUdf()
       nUdfReturn := ::CallUdf(IIf(::lChanged, ME_UNKEYX, ME_UNKEY))
-      ::HandleUdf(nKey, nUdfReturn, .F.)
+      ::HandleUdf(nKey, nUdfReturn, FALSE)
    ENDIF
 
    RETURN Self
@@ -289,7 +289,7 @@ METHOD xhb_TMemoEditor:HandleUdf(nKey, nUdfReturn, lEdited)
    */
 
    __defaultNIL(@nUdfReturn, ME_DEFAULT)
-   __defaultNIL(@lEdited, .F.)
+   __defaultNIL(@lEdited, FALSE)
 
    // I won't reach this point during ME_INIT since ME_DEFAULT ends
    // initialization phase of MemoEdit()
@@ -417,7 +417,7 @@ FUNCTION xhb_MemoEdit( ;
    __defaultNIL(@nLeft, 0)
    __defaultNIL(@nBottom, MaxRow())
    __defaultNIL(@nRight, MaxCol())
-   __defaultNIL(@lEditMode, .T.)
+   __defaultNIL(@lEditMode, TRUE)
    __defaultNIL(@nLineLength, NIL)
    /* 2005-10-24 - <maurilio.longo@libero.it>
                    NG says 4, but clipper 5.2e inserts 3 spaces when pressing K_TAB
@@ -499,18 +499,18 @@ FUNCTION xhb_MemoEdit( ;
    oEd:MemoInit(xUDF)
    oEd:RefreshWindow()
 
-   // 2006-08-06 - E.F. Clipper's  <cUserFunction> in .T. or. F. is samething.
+   // 2006-08-06 - E.F. Clipper's  <cUserFunction> in TRUE or. F. is samething.
    //
    IF !hb_IsLogical(xUDF) // .OR. cUserFunction
 
       oEd:Edit()
 
       IF oEd:lSaved
-         cString := oEd:GetText(.T.)  // Clipper inserts Soft CR
+         cString := oEd:GetText(TRUE)  // Clipper inserts Soft CR
       ENDIF
 
    ELSE
-      // 2006-07-24 - E.F. - If xUDF is in .F. or .T. cause diplay memo content and exit,
+      // 2006-07-24 - E.F. - If xUDF is in .F. or TRUE cause diplay memo content and exit,
       //                     so we have to repos the cursor at bottom of memoedit
       //                     screen after that.
       SetPos(Min(nBottom, MaxRow()), 0)

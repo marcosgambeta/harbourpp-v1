@@ -31,7 +31,7 @@ PROCEDURE Main()
    SET EXCLUSIVE OFF
    rddSetDefault( "DBFCDX" )
 
-   pSockSrv := netio_MTServer( DBPORT,,, /* RPC */ .T., DBPASSWD )
+   pSockSrv := netio_MTServer( DBPORT,,, /* RPC */ TRUE, DBPASSWD )
    IF Empty(pSockSrv)
       ? "Cannot start NETIO server !!!"
       WAIT "Press any key to exit..."
@@ -104,7 +104,7 @@ PROCEDURE Main()
    hb_idleSleep(2)
    ?
    ? "stopping the server..."
-   netio_ServerStop( pSockSrv, .T. )
+   netio_ServerStop( pSockSrv, TRUE )
 
    RETURN
 
@@ -185,7 +185,7 @@ FUNCTION reg_charstream( pConnSock, nStream )
 
 STATIC FUNCTION rpc_timer( pConnSock, nStream )
 
-   DO WHILE .T.
+   DO WHILE TRUE
       IF !netio_SrvSendItem( pConnSock, nStream, Time() )
          ? "CLOSED STREAM:", nStream
          EXIT
@@ -199,7 +199,7 @@ STATIC FUNCTION rpc_charstream( pConnSock, nStream )
 
    LOCAL n := 0
 
-   DO WHILE .T.
+   DO WHILE TRUE
       IF !netio_SrvSendData(pConnSock, nStream, Chr(Asc("A") + n))
          ? "CLOSED STREAM:", nStream
          EXIT

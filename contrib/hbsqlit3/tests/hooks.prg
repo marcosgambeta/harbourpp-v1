@@ -157,7 +157,7 @@ FUNCTION HookRollback()
 */
 STATIC FUNCTION cErrorMsg(nError, lShortMsg)
 
-   hb_default(@lShortMsg, .T.)
+   hb_default(@lShortMsg, TRUE)
 
    RETURN IIf(lShortMsg, hb_sqlite3_errstr_short(nError), sqlite3_errstr(nError))
 
@@ -179,7 +179,7 @@ STATIC FUNCTION PrepareDB(cFile)
       }
   LOCAL enum
 
-   pDb := sqlite3_open(cFile, .T.)
+   pDb := sqlite3_open(cFile, TRUE)
    IF Empty(pDb)
       ? "Can't open/create database : ", cFile
 

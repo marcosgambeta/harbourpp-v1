@@ -58,11 +58,11 @@
 
 CREATE CLASS WvgListBox INHERIT WvgWindow, WvgDataRef
 
-   VAR    adjustHeight                          INIT .F.
-   VAR    horizScroll                           INIT .F.
+   VAR    adjustHeight                          INIT FALSE
+   VAR    horizScroll                           INIT FALSE
    VAR    markMode                              INIT WVGLISTBOX_MM_SINGLE
-   VAR    multiColumn                           INIT .F.
-   VAR    vertScroll                            INIT .T.
+   VAR    multiColumn                           INIT FALSE
+   VAR    vertScroll                            INIT TRUE
    VAR    drawMode                              INIT WVG_DRAW_NORMAL
 
    METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )

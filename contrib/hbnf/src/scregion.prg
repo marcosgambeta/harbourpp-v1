@@ -43,7 +43,7 @@ FUNCTION ft_RstRgn(cScreen, nTop, nLeft)
    RETURN NIL
 
 /* NOTE: original NF accepted "pop all" if it contained
-         extra character and _SET_EXACT was set to .F.
+         extra character and _SET_EXACT was set to FALSE
          Harbour version accepts "pop all" only. [vszakats] */
 
 FUNCTION ft_RgnStack(cAction, nTop, nLeft, nBottom, nRight)

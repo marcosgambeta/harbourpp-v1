@@ -9,7 +9,7 @@ PROCEDURE Main()
    CLS
    ? "Press any key, ESCape to exit:"
 
-   DO WHILE .T.
+   DO WHILE TRUE
       cKey := ft_ScanCode()
       ? Str(hb_BCode( hb_BSubStr(cKey, 1, 1) ), 3) + ", " + Str(hb_BCode( hb_BSubStr(cKey, 2, 1) ), 3)
       IF cKey == SCANCODE_ESCAPE

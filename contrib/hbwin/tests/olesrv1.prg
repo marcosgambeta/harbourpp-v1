@@ -38,7 +38,7 @@ PROCEDURE DllMain()
    // contains values which are neither codeblock nor symbol items
    // so they are not used as method but rather as instance variables
    // because such instance variables are shared between OLE objects.
-   // Setting 4-th parameter <lHashClone> to .T. causes that each
+   // Setting 4-th parameter <lHashClone> to TRUE causes that each
    // objects receives it's own copy of <hAction> item so instance
    // variables inside hash array are also local to OLE object.
    // Alternatively programmer can use <bAction> or <sAction> to create
@@ -79,7 +79,7 @@ PROCEDURE DllMain()
    // OLE object.
    //
    // If the 3-rd parameter is <oAction>, <bAction> or <sAction> then
-   // it's possible to also set 4-th parameter <lAcceptAll> to .T. and
+   // it's possible to also set 4-th parameter <lAcceptAll> to TRUE and
    // in such case <xAction> parameter is used in different way. Newly
    // created OLE object accepts any massage names invoking for each
    // of them Eval() message which is sent to <xAction> with OLE message
@@ -87,7 +87,7 @@ PROCEDURE DllMain()
    // It allows to create OLE server which will accept unknown messages
    // redirecting them to some other code, i.e.:
    //    if netio_Connect( cServer,,, cPasswd )
-   //       win_oleServerInit( cClassID, cServerName, @netio_FuncExec(), .T. )
+   //       win_oleServerInit( cClassID, cServerName, @netio_FuncExec(), TRUE )
    //    endif
    // initialize OLE server which redirects all messages to default netio
    // connection established by netio_Connect().
@@ -99,7 +99,7 @@ PROCEDURE DllMain()
    // OLE server described at
    // http://xharbour.com/index.asp?page=add_on_oleserver&show_sub=7&show_i=1
 
-   win_oleServerInit( CLS_ID, CLS_Name, {|| OleNetioSrv():new() }, .T. )
+   win_oleServerInit( CLS_ID, CLS_Name, {|| OleNetioSrv():new() }, TRUE )
 
    RETURN
 
@@ -127,7 +127,7 @@ METHOD OleNetioSrv:Eval(cMethodName, ...)
          EXIT
       CASE "DISCONNECT"
          ::pConn := NIL
-         xRetVal := .T.
+         xRetVal := TRUE
          EXIT
       CASE "PROCEXISTS"
          xRetVal := netio_ProcExists(::pConn, ...)

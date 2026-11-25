@@ -64,7 +64,7 @@
 #define F_BLOCK   512
 
 THREAD STATIC t_hSrcFile := F_ERROR
-THREAD STATIC t_lSetDaTi := .T.
+THREAD STATIC t_lSetDaTi := TRUE
 THREAD STATIC t_fileTime
 
 // This is a replacement for the CA-T*ols III function of the
@@ -73,10 +73,10 @@ FUNCTION FileCopy(cSource, cDest, lMode)
 
    LOCAL hDstFile
    LOCAL cBuffer := Space(F_BLOCK)
-   LOCAL lDone := .F.
+   LOCAL lDone := FALSE
    LOCAL nSrcBytes, nDstBytes, nTotBytes := 0
 
-   hb_default(@lMode, .F.)
+   hb_default(@lMode, FALSE)
 
    IF t_hSrcFile != F_ERROR
       FClose(t_hSrcFile)
@@ -85,10 +85,10 @@ FUNCTION FileCopy(cSource, cDest, lMode)
    IF t_hSrcFile != F_ERROR
       hDstFile := FCreate(cDest)
       IF hDstFile != F_ERROR
-         DO WHILE .T.
+         DO WHILE TRUE
             nSrcBytes := FRead(t_hSrcFile, @cBuffer, F_BLOCK)
             IF nSrcBytes == 0
-               lDone := .T.
+               lDone := TRUE
                EXIT
             ENDIF
             nDstBytes := FWrite(hDstFile, cBuffer, nSrcBytes)
@@ -137,16 +137,16 @@ FUNCTION FileCCont(cDest)
 
    LOCAL hDstFile
    LOCAL cBuffer := Space(F_BLOCK)
-   LOCAL lDone := .F.
+   LOCAL lDone := FALSE
    LOCAL nSrcBytes, nDstBytes, nTotBytes := 0
 
    IF t_hSrcFile != F_ERROR
       hDstFile := FCreate(cDest)
       IF hDstFile != F_ERROR
-         DO WHILE .T.
+         DO WHILE TRUE
             nSrcBytes := FRead(t_hSrcFile, @cBuffer, F_BLOCK)
             IF nSrcBytes == 0
-               lDone := .T.
+               lDone := TRUE
                EXIT
             ENDIF
             nDstBytes := FWrite(hDstFile, cBuffer, nSrcBytes)
@@ -175,10 +175,10 @@ FUNCTION FileCCLose()
    IF t_hSrcFile != F_ERROR
       FClose(t_hSrcFile)
       t_hSrcFile := F_ERROR
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION FileAppend(cSrc, cDest)
 
@@ -196,7 +196,7 @@ FUNCTION FileAppend(cSrc, cDest)
       ENDIF
 
       IF hDstFile != F_ERROR
-         DO WHILE .T.
+         DO WHILE TRUE
             nSrcBytes := FRead(hSrcFile, @cBuffer, F_BLOCK)
             IF nSrcBytes == 0
                EXIT

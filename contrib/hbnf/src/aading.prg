@@ -23,8 +23,8 @@ FUNCTION ft_AAddition(aList1, aList2, lTrimmer, lCaseSens)
    LOCAL bScanCode
    LOCAL aNewArray := AClone(aList1)
 
-   __defaultNIL(@lCaseSens, .T.)
-   __defaultNIL(@lTrimmer, .T.)
+   __defaultNIL(@lCaseSens, TRUE)
+   __defaultNIL(@lTrimmer, TRUE)
 
    // Assign code blocks according to case sensitivity and trim.
    IF lCaseSens

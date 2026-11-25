@@ -720,7 +720,7 @@ STATIC PROCEDURE Page_TextScaling( pdf )
       /* measure the number of characters which included in the page. */
       buf := samp_text
       HPDF_Page_MeasureText( page, samp_text, ;
-         HPDF_Page_GetWidth( page ) - 120, .F., NIL )
+         HPDF_Page_GetWidth( page ) - 120, FALSE, NIL )
 
       HPDF_Page_ShowText( page, buf )
 
@@ -986,7 +986,7 @@ STATIC FUNCTION Page_CodePages( pdf )
 
    /* create outline root. */
    root := HPDF_CreateOutline( pdf, NIL, "Encoding list", NIL )
-   HPDF_Outline_SetOpened(root, .T.)
+   HPDF_Outline_SetOpened(root, TRUE)
 
    FOR i := 1 TO Len(encodings)
       page := HPDF_AddPage( pdf )

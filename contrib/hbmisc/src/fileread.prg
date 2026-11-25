@@ -29,9 +29,9 @@ CREATE CLASS TFileRead
    METHOD Close()              // Close the file when done
    METHOD ReadLine()           // Read a line from the file
    METHOD Name()               // Retunrs the file name
-   METHOD IsOpen()             // Returns .T. if file is open
-   METHOD MoreToRead()         // Returns .T. if more to be read
-   METHOD Error()              // Returns .T. if error occurred
+   METHOD IsOpen()             // Returns TRUE if file is open
+   METHOD MoreToRead()         // Returns TRUE if more to be read
+   METHOD Error()              // Returns TRUE if error occurred
    METHOD ErrorNo()            // Returns current error code
    METHOD ErrorMsg( cText )    // Returns formatted error message
 
@@ -51,7 +51,7 @@ METHOD TFileRead:New( cFile, nSize )
 
    ::cFile     := cFile             // Save the file name
    ::nHan      := F_ERROR           // It's not open yet
-   ::lEOF      := .T.               // So it must be at EOF
+   ::lEOF      := TRUE               // So it must be at EOF
    ::nError    := 0                 // But there haven't been any errors
    ::nLastOp   := oF_CREATE_OBJECT  // Because we just created the class
    ::cBuffer   := ""                // and nothing has been read yet
@@ -70,15 +70,15 @@ METHOD TFileRead:Open( nMode )
       ::nHan := FOpen( ::cFile, nMode )   // Try to open the file
       IF ::nHan == F_ERROR
          ::nError := FError()       // It didn't work
-         ::lEOF   := .T.            // So force EOF
+         ::lEOF   := TRUE            // So force EOF
       ELSE
          ::nError := 0              // It worked
-         ::lEOF   := .F.            // So clear EOF
+         ::lEOF   := FALSE            // So clear EOF
       ENDIF
    ELSE
       // The file is already open, so rewind to the beginning.
       IF FSeek( ::nHan, 0 ) == 0
-         ::lEOF := .F.              // Definitely not at EOF
+         ::lEOF := FALSE              // Definitely not at EOF
       ELSE
          ::nError := FError()       // Save error code if not at BOF
       ENDIF
@@ -110,7 +110,7 @@ METHOD TFileRead:ReadLine()
             ::nError := FError()
             IF ::nError == 0
                // Because the file is at EOF.
-               ::lEOF := .T.
+               ::lEOF := TRUE
             ENDIF
          ELSE
             // Add what was read to the readahead buffer.
@@ -178,7 +178,7 @@ METHOD TFileRead:EOL_pos()
 METHOD TFileRead:Close()
 
    ::nLastOp := oF_CLOSE_FILE
-   ::lEOF := .T.
+   ::lEOF := TRUE
    // Is the file already closed.
    IF ::nHan == F_ERROR
       // Yes, so indicate an unknown error.
@@ -188,7 +188,7 @@ METHOD TFileRead:Close()
       FClose( ::nHan )
       ::nError := FError()
       ::nHan   := F_ERROR           // The file is no longer open
-      ::lEOF   := .T.               // So force an EOF condition
+      ::lEOF   := TRUE               // So force an EOF condition
    ENDIF
 
    RETURN Self
@@ -201,20 +201,20 @@ METHOD TFileRead:Name()
 
 METHOD TFileRead:IsOpen()
 
-   // Returns .T. if the file is open.
+   // Returns TRUE if the file is open.
 
    RETURN ::nHan != F_ERROR
 
 METHOD TFileRead:MoreToRead()
 
-   // Returns .T. if there is more to be read from either the file or the
+   // Returns TRUE if there is more to be read from either the file or the
    // readahead buffer. Only when both are exhausted is there no more to read.
 
    RETURN ! ::lEOF .OR. !Empty(::cBuffer)
 
 METHOD TFileRead:Error()
 
-   // Returns .T. if an error was recorded.
+   // Returns TRUE if an error was recorded.
 
    RETURN ::nError != 0
 

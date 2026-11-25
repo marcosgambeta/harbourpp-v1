@@ -13,7 +13,7 @@ PROCEDURE Main()
 
    rddSetDefault("SQLMIX")
 
-   dbCreate("persons", {{"NAME", "C", 20, 0}, {"FAMILYNAME", "C", 20, 0}, {"BIRTH", "D", 8, 0}, {"AMOUNT", "N", 9, 2}}, , .T., "persons")
+   dbCreate("persons", {{"NAME", "C", 20, 0}, {"FAMILYNAME", "C", 20, 0}, {"BIRTH", "D", 8, 0}, {"AMOUNT", "N", 9, 2}}, , TRUE, "persons")
 
    dbAppend()
    AEval({PadR("Bil", 20), PadR("Gatwick", 20), hb_SToD("19650124"), 123456.78}, {|X, Y|FieldPut(Y, X)})

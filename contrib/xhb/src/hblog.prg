@@ -299,7 +299,7 @@ METHOD PROCEDURE HB_Logger:Log(cMessage, nPriority)
 
 CREATE CLASS HB_LogChannel
 
-   VAR lOpened                   INIT .F.
+   VAR lOpened                   INIT FALSE
 
    METHOD New(nLevel)          CONSTRUCTOR
    METHOD Open(cName)          VIRTUAL
@@ -315,7 +315,7 @@ CREATE CLASS HB_LogChannel
 
    HIDDEN:
    VAR nLevel
-   VAR lActive                  INIT .T.
+   VAR lActive                  INIT TRUE
 
 ENDCLASS
 
@@ -419,7 +419,7 @@ CREATE CLASS HB_LogConsole FROM HB_LogChannel
 
    PROTECTED:
    METHOD Send(nStyle, cMessage, cName, nPriority)
-   VAR lRealConsole    INIT .T.
+   VAR lRealConsole    INIT TRUE
 
 ENDCLASS
 
@@ -432,24 +432,24 @@ METHOD HB_LogConsole:New(nLevel)
 METHOD HB_LogConsole:Open(cName)
 
    IF ::lOpened
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::Out(hb_LogDateStamp(), Time(), "--", cName, "start --")
-   ::lOpened := .T.
+   ::lOpened := TRUE
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogConsole:close(cName)
 
    IF !::lOpened
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    ::Out(hb_LogDateStamp(), Time(), "--", cName, "end --")
-   ::lOpened := .F.
+   ::lOpened := FALSE
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD PROCEDURE HB_LogConsole:Send(nStyle, cMessage, cName, nPriority)
 
@@ -514,7 +514,7 @@ METHOD HB_LogFile:New(nLevel, cFilename, nMaxSize, nBackup)
 METHOD HB_LogFile:Open(cProgName)
 
    IF ::lOpened
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF hb_FileExists(::cFileName)
@@ -527,20 +527,20 @@ METHOD HB_LogFile:Open(cProgName)
    ENDIF
 
    IF ::nFileHandle == F_ERROR
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    FWrite(::nFileHandle, hb_BldLogMsg(hb_LogDateStamp(), Time(), "--", cProgName, "start --", hb_eol()))
 
    hb_FCommit(::nFileHandle)
-   ::lOpened := .T.
+   ::lOpened := TRUE
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogFile:close(cProgName)
 
    IF !::lOpened
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    FWrite(::nFileHandle, hb_BldLogMsg(hb_LogDateStamp(), Time(), "--", cProgName, "end --", hb_eol()))
@@ -548,9 +548,9 @@ METHOD HB_LogFile:close(cProgName)
    FClose(::nFileHandle)
    ::nFileHandle := F_ERROR
 
-   ::lOpened := .F.
+   ::lOpened := FALSE
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogFile:Send(nStyle, cMessage, cProgName, nPriority)
 
@@ -648,23 +648,23 @@ METHOD HB_LogDbf:New(nLevel, cDBFName, cIndexName, aStruct, cDriver)
 METHOD HB_LogDbf:Open(cProgName)
 
    IF ::lOpened
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF !hb_FileExists(::cDBFName)
       dbCreate(::cDBFName, ::aStruct)
-      dbUseArea(.T., ::cDriver, ::cDBFName, "LogDbf", .T.)
+      dbUseArea(TRUE, ::cDriver, ::cDBFName, "LogDbf", TRUE)
       INDEX ON DToS(FIELD->date) + FIELD->time + Str(FIELD->priority, 2) + FIELD->MESSAGE TAG "datetime" TO (::cIndexName)
       INDEX ON Str(FIELD->priority, 2) + DToS(FIELD->date) + FIELD->time + FIELD->MESSAGE TAG "priority" TO (::cIndexName)
       LogDbf->(dbCloseArea())
    ELSEIF !hb_FileExists(::cIndexName)
-      dbUseArea(.T., ::cDriver, ::cDBFName, "LogDbf", .T.)
+      dbUseArea(TRUE, ::cDriver, ::cDBFName, "LogDbf", TRUE)
       INDEX ON DToS(FIELD->date) + FIELD->time + Str(FIELD->priority, 2) + FIELD->MESSAGE TAG "datetime" TO (::cIndexName)
       INDEX ON Str(FIELD->priority, 2) + DToS(FIELD->date) + FIELD->time + FIELD->MESSAGE TAG "priority" TO (::cIndexName)
       LogDbf->(dbCloseArea())
    ENDIF
    // __OutDebug("::cDriver, ::cDBFName", ::cDriver, ::cDBFName)
-   dbUseArea(.T., ::cDriver, ::cDBFName, "LogDbf", .T.)
+   dbUseArea(TRUE, ::cDriver, ::cDBFName, "LogDbf", TRUE)
    SET INDEX TO (::cIndexName)
 
    LogDbf->(dbAppend())
@@ -675,14 +675,14 @@ METHOD HB_LogDbf:Open(cProgName)
    LogDbf->message  := "-- start --"
    LogDbf->(dbCommit())
 
-   ::lOpened := .T.
+   ::lOpened := TRUE
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogDbf:close(cProgName)
 
    IF !::lOpened
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    LogDbf->(dbAppend())
@@ -693,9 +693,9 @@ METHOD HB_LogDbf:close(cProgName)
    LogDbf->message  := "-- end --"
    LogDbf->(dbCommit())
 
-   ::lOpened := .F.
+   ::lOpened := FALSE
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HB_LogDbf:Send(nStyle, cMessage, cProgName, nPriority)
 
@@ -709,7 +709,7 @@ METHOD HB_LogDbf:Send(nStyle, cMessage, cProgName, nPriority)
 
    HB_SYMBOL_UNUSED(nStyle)
 
-   RETURN .T.
+   RETURN TRUE
 
 
 /*****
@@ -740,28 +740,28 @@ METHOD HB_LogSysLog:New(nLevel, nId)
 METHOD HB_LogSysLog:Open(cName)
 
    IF ::lOpened
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF hb_SysLogOpen(cName)
-      ::lOpened := .T.
-      RETURN .T.
+      ::lOpened := TRUE
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD HB_LogSysLog:close(cName)
 
    IF !::lOpened
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF hb_SysLogClose(cName)
-      ::lOpened := .F.
-      RETURN .T.
+      ::lOpened := FALSE
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD HB_LogSysLog:Send(nType, cMessage, cName, nPriority)
 
@@ -781,8 +781,8 @@ CREATE CLASS HB_LogDebug FROM HB_LogChannel
 
    METHOD New(nLevel, nMaxLevel)
    // Nothing to do in this version
-   METHOD Open()    INLINE .T.
-   METHOD close()   INLINE .T.
+   METHOD Open()    INLINE TRUE
+   METHOD close()   INLINE TRUE
    PROTECTED:
    METHOD Send(nStyle, cMessage, cName, nPriority)
 

@@ -51,7 +51,7 @@ PROCEDURE __hbformat_BuildListOfFunctions( /* @ */ cFunctions, cHBXList )
 
    LOCAL aFile
    LOCAL cName
-   LOCAL lContribHBR := .F.
+   LOCAL lContribHBR := FALSE
 
    /* from built-in core .hbx file */
    HBXToFuncList( @cFunctions, __harbour_hbx() )
@@ -59,7 +59,7 @@ PROCEDURE __hbformat_BuildListOfFunctions( /* @ */ cFunctions, cHBXList )
    /* from .hbr container files */
    FOR EACH aFile IN Directory( hb_DirBase() + "*.hbr" )
       IF hb_FileMatch( hb_FNameName( aFile[F_NAME] ), "contrib" )
-         lContribHBR := .T.
+         lContribHBR := TRUE
       ENDIF
       FOR EACH cName IN hb_Deserialize( hb_ZUncompress( hb_MemoRead(hb_DirBase() + aFile[F_NAME]) ) )
          cFunctions += "," + cName:__enumKey()

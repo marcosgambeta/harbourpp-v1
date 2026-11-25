@@ -38,10 +38,10 @@ FUNCTION ft_SaveArr(aArray, cFileName, /* @ */ nErrorCode)
       FClose(nHandle)
       IF lRet .AND. FError() != 0
          nErrorCode := FError()
-         lRet := .F.
+         lRet := FALSE
       ENDIF
    ELSE
-      lRet := .F.
+      lRet := FALSE
    ENDIF
 
    RETURN lRet
@@ -52,7 +52,7 @@ STATIC FUNCTION _ftsavesub(xMemVar, nHandle, /* @ */ nErrorCode)
    LOCAL nLen
    LOCAL cString
 
-   LOCAL lRet := .T.
+   LOCAL lRet := TRUE
 
    cValType := ValType(xMemVar)
    FWrite(nHandle, cValType, 1)
@@ -64,11 +64,11 @@ STATIC FUNCTION _ftsavesub(xMemVar, nHandle, /* @ */ nErrorCode)
          IF FError() == 0
             AEval(xMemVar, {|xMemVar1|lRet := _ftsavesub(xMemVar1, nHandle)})
          ELSE
-            lRet := .F.
+            lRet := FALSE
          ENDIF
          EXIT
       CASE "B"
-         lRet := .F.
+         lRet := FALSE
          EXIT
       CASE "C"
          nLen := Len(xMemVar)
@@ -93,7 +93,7 @@ STATIC FUNCTION _ftsavesub(xMemVar, nHandle, /* @ */ nErrorCode)
          EXIT
       ENDSWITCH
    ELSE
-      lRet := .F.
+      lRet := FALSE
    ENDIF
    nErrorCode := FError()
 

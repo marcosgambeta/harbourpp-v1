@@ -79,7 +79,7 @@ ENDCLASS
 
 METHOD TIPClientPOP:New( oUrl, xTrace, oCredentials )
 
-   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, .F. ), "pop3", xTrace), oCredentials )
+   ::super:new( oUrl, IIf(hb_defaultValue( xTrace, FALSE ), "pop3", xTrace), oCredentials )
 
    ::nDefaultPort := IIf(::oUrl:cProto == "pop3s" .OR. ::oUrl:cProto == "pops", 995, 110)
    ::nConnTimeout := 10000
@@ -89,11 +89,11 @@ METHOD TIPClientPOP:New( oUrl, xTrace, oCredentials )
 METHOD TIPClientPOP:Open( cUrl )
 
    IF !::super:Open( cUrl )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF Empty(::oUrl:cUserid) .OR. Empty(::oUrl:cPassword)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::GetOk()
@@ -101,24 +101,24 @@ METHOD TIPClientPOP:Open( cUrl )
       IF ::GetOK()
          ::inetSendAll( ::SocketCon, "PASS " + ::oUrl:cPassword + ::cCRLF )
          IF ::GetOK()
-            ::isOpen := .T.
-            RETURN .T.
+            ::isOpen := TRUE
+            RETURN TRUE
          ENDIF
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientPOP:OpenDigest( cUrl )
 
    LOCAL nPos, nPos2, cDigest
 
    IF !::super:Open( cUrl )
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF Empty(::oUrl:cUserid) .OR. Empty(::oUrl:cPassword)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF ::GetOk()
@@ -127,20 +127,20 @@ METHOD TIPClientPOP:OpenDigest( cUrl )
             cDigest := hb_MD5( SubStr(::cReply, nPos, ( nPos2 - nPos ) + 1) + ::oUrl:cPassword )
             ::inetSendAll( ::SocketCon, "APOP " + ::oUrl:cUserid + " " + cDigest + ::cCRLF )
             IF ::GetOK()
-               ::isOpen := .T.
-               RETURN .T.
+               ::isOpen := TRUE
+               RETURN TRUE
             ENDIF
          ENDIF
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD TIPClientPOP:Close( lAutoQuit )
 
    ::InetTimeOut( ::SocketCon )
 
-   IF hb_defaultValue( lAutoQuit, .T. )
+   IF hb_defaultValue( lAutoQuit, TRUE )
       ::Quit()
    ENDIF
 
@@ -166,7 +166,7 @@ METHOD TIPClientPOP:List()
    DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
       cStr := ::inetRecvLine( ::SocketCon, @nPos, 256 )
       IF !hb_IsString(cStr) .OR. cStr == "."
-         ::bEof := .T.
+         ::bEof := TRUE
       ELSE
          cRet += cStr + ::cCRLF
       ENDIF
@@ -193,10 +193,10 @@ METHOD TIPClientPOP:Retrieve( nId, nLen )
    IF !::bInitialized
       ::inetSendAll( ::SocketCon, "RETR " + hb_ntos(Int(nId)) + ::cCRLF )
       IF !::GetOk()
-         ::bEof := .T.
+         ::bEof := TRUE
          RETURN NIL
       ENDIF
-      ::bInitialized := .T.
+      ::bInitialized := TRUE
    ENDIF
 
    cRet := ""
@@ -221,7 +221,7 @@ METHOD TIPClientPOP:Retrieve( nId, nLen )
       IF ( nPos := hb_BAt( cEOM, cRet, Max(nRetLen - hb_BLen(cEOM), 1) ) ) > 0
          // Remove ".CRLF"
          cRet := hb_BLeft(cRet, nPos + 1)
-         ::bEof := .T.
+         ::bEof := TRUE
 
       ELSEIF hb_IsNumeric(nLen) .AND. nLen < hb_BLen(cRet)  /* FIXME: might break UTF-8 chars */
          EXIT
@@ -266,7 +266,7 @@ METHOD TIPClientPOP:Top( nMsgId )
    DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
       cStr := ::inetRecvLine( ::SocketCon, @nPos, 512 )
       IF !hb_IsString(cStr) .OR. cStr == "."
-         ::bEof := .T.
+         ::bEof := TRUE
       ELSE
          cRet += cStr + ::cCRLF
       ENDIF
@@ -304,7 +304,7 @@ METHOD TIPClientPOP:UIDL( nMsgId )
       DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
          cStr := ::inetRecvLine( ::SocketCon, @nPos, 256 )
          IF !hb_IsString(cStr) .OR. cStr == "."
-            ::bEof := .T.
+            ::bEof := TRUE
          ELSE
             cRet += cStr + ::cCRLF
          ENDIF
@@ -360,7 +360,7 @@ METHOD TIPClientPOP:retrieveAll( lDelete )
 
    IF ::isOpen
 
-      hb_default(@lDelete, .F.)
+      hb_default(@lDelete, FALSE)
 
       FOR EACH oMail IN aMails := Array( ::countMail() )
          ::reset()
@@ -420,7 +420,7 @@ METHOD TIPClientPOP:getBody( nMsgId )
 
    LOCAL xRet, n, n1, i, nBoundary, cBoundary, aMsg
 
-   IF Empty(aMsg := ::getMessageRaw( nMsgId, .T. ))
+   IF Empty(aMsg := ::getMessageRaw( nMsgId, TRUE ))
       RETURN NIL
    ENDIF
 
@@ -449,7 +449,7 @@ METHOD TIPClientPOP:getSubject( nMsgId )
 
    LOCAL cHeader
 
-   FOR EACH cHeader IN ::getTop( nMsgId, .T. )
+   FOR EACH cHeader IN ::getTop( nMsgId, TRUE )
       IF hb_LeftEqI( cHeader, "subject: " )
          RETURN SubStr(cHeader, Len("subject: ") + 1)
       ENDIF
