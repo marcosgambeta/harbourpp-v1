@@ -592,6 +592,19 @@ int32_t hb_macro_yylex(YYSTYPE *yylval_ptr, PHB_MACRO pMacro)
           } else if (yylval_ptr->string[0] == 'N' && yylval_ptr->string[1] == 'I' && yylval_ptr->string[2] == 'L') {
             return NIL;
           }
+        } else if (nLen == 4 && memcmp(yylval_ptr->string, "TRUE", 4) == 0) {
+          // yylval_ptr->string[0] == 'T' &&
+          // yylval_ptr->string[1] == 'R' &&
+          // yylval_ptr->string[2] == 'U' &&
+          // yylval_ptr->string[3] == 'E'
+          return TRUEVALUE;
+        } else if (nLen == 5 && memcmp(yylval_ptr->string, "FALSE", 5) == 0) {
+          // yylval_ptr->string[0] == 'F' &&
+          // yylval_ptr->string[1] == 'A' &&
+          // yylval_ptr->string[2] == 'L' &&
+          // yylval_ptr->string[3] == 'S' &&
+          // yylval_ptr->string[4] == 'E' )
+          return FALSEVALUE;
         } else { /* nLen >= 4 */
           switch (yylval_ptr->string[0]) {
           case '_':
