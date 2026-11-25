@@ -78,7 +78,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    LOCAL aCol
 
    IF !Used()
-      RETURN FALSE
+      Return False
    ELSEIF Eof()
       dbGoBottom()
    ENDIF
@@ -117,7 +117,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    ENDIF
 
    IF nColCount == 0
-      RETURN FALSE
+      Return False
    ENDIF
 
    // Generate the TBrowse columns
@@ -284,7 +284,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
    SetCursor(nOldCUrsor)
 
-   RETURN TRUE
+   Return True
 
 
 // NOTE: CA-Cl*pper uses intermediate function CallUser()
@@ -327,7 +327,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
          oBrowse:refreshAll():forceStable()
       ENDIF
       lFlag := FALSE
-      RETURN TRUE
+      Return True
    ENDIF
 #endif
 

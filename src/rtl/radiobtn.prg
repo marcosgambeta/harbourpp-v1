@@ -188,7 +188,7 @@ METHOD RadioButtn:isAccel(xKey)
    CASE hb_IsNumeric(xKey)
       cKey := hb_keyChar(xKey)
    OTHERWISE
-      RETURN FALSE
+      Return False
    ENDCASE
 
    RETURN Len(cKey) > 0 .AND. hb_AtI("&" + cKey, ::cCaption) > 0

@@ -74,7 +74,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
    LOCAL bError
 
    IF Empty(cObjectText)
-      RETURN FALSE
+      Return False
    ENDIF
 
    bError := IIf(hb_defaultValue(lIgnoreErrors, FALSE), {|e|Break(e)}, ErrorBlock())
@@ -138,7 +138,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
       ENDIF
    NEXT
 
-   RETURN TRUE
+   Return True
 
 METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 

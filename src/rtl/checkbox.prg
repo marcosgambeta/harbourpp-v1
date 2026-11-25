@@ -309,7 +309,7 @@ METHOD CheckBox:style(cStyle)
    RETURN ::cStyle
 
 METHOD CheckBox:typeOut()
-   RETURN FALSE
+   Return False
 
 METHOD CheckBox:Init(nRow, nCol, cCaption)
 

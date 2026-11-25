@@ -64,7 +64,7 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
    IF Empty(aStruct := __FieldTwo(cAlias, aFields))
       // NOTE: CA-Cl*pper will leave the wrong workarea (cAlias) selected here.
       //       Harbour is bug compatible. [vszakats]
-      RETURN FALSE
+      Return False
    ENDIF
 
    BEGIN SEQUENCE
@@ -109,7 +109,7 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
       Break(oError)
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 STATIC FUNCTION __FieldTwo(cAlias, aFields)
 

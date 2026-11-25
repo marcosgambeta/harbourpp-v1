@@ -566,14 +566,14 @@ METHOD HBGetList:GetPostValidate(oGet, aMsg)
    hb_default(@oGet, ::oGet)
 
    IF oGet:exitState == GE_ESCAPE
-      RETURN TRUE
+      Return True
    ENDIF
 
    IF oGet:badDate
       oGet:home()
       ::DateMsg()
       ::ShowScoreboard()
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF oGet:changed
@@ -1154,7 +1154,7 @@ METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
    hb_default(@oGet, ::oGet)
 
    IF oGet:exitState == GE_ESCAPE
-      RETURN TRUE                   // NOTE
+      Return True                   // NOTE
    ENDIF
 
    IF !oGUI:ClassName() == "TBROWSE"

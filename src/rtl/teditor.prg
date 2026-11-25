@@ -402,7 +402,7 @@ METHOD HBEditor:MoveCursor(nKey)
    CASE K_CTRL_RIGHT
       // Resolve K_CTRL_B and K_CTRL_RIGHT Cl*pper keycode collision
       IF nKey != K_CTRL_RIGHT .AND. hb_keyVal(nKey) != HB_KX_RIGHT
-         RETURN FALSE
+         Return False
       ENDIF
       ::Goto(::nRow, NextWord(::GetLine(::nRow), ::nCol))
       EXIT
@@ -431,7 +431,7 @@ METHOD HBEditor:MoveCursor(nKey)
    CASE K_CTRL_END
       // Resolve K_CTRL_W and K_CTRL_END Cl*pper keycode collision
       IF nKey != K_CTRL_END .AND. hb_keyVal(nKey) != HB_KX_END
-         RETURN FALSE
+         Return False
       ENDIF
       ::Goto(::nFirstRow + ::nNumRows - 1, -1)
       EXIT
@@ -445,10 +445,10 @@ METHOD HBEditor:MoveCursor(nKey)
       EXIT
 
    OTHERWISE
-      RETURN FALSE
+      Return False
    ENDSWITCH
 
-   RETURN TRUE
+   Return True
 
 // Edits text
 METHOD HBEditor:Edit(nPassedKey)

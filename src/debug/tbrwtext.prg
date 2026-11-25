@@ -269,13 +269,13 @@ METHOD HBBrwText:GoFirst()
 
    ::nRow := 1
 
-   RETURN TRUE
+   Return True
 
 METHOD HBBrwText:GoLast()
 
    ::nRow := ::nRows
 
-   RETURN TRUE
+   Return True
 
 METHOD HBBrwText:Skip(n)
 

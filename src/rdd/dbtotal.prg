@@ -109,7 +109,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
    aNewDbStruct := {}
    AEval(dbStruct(), {| aField | IIf(aField[DBS_TYPE] == "M", NIL, AAdd(aNewDbStruct, aField)) })
    IF Empty(aNewDbStruct)
-      RETURN FALSE
+      Return False
    ENDIF
 
    BEGIN SEQUENCE
@@ -182,7 +182,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
       Break(oError)
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 STATIC FUNCTION __GetField(cField)
 

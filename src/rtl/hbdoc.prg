@@ -354,11 +354,11 @@ FUNCTION __hbdoc_SaveHBD(cFileName, aEntry)
          FWrite(fhnd, _HBDOC_SIGNATURE)
          FWrite(fhnd, hb_Serialize(aEntry, HB_SERIALIZE_COMPRESS))
          FClose(fhnd)
-         RETURN TRUE
+         Return True
       ENDIF
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 FUNCTION __hbdoc_LoadHBD(cFileName)
 

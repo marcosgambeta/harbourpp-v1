@@ -87,7 +87,7 @@ METHOD ScalarObject:Copy()
    RETURN Self
 
 METHOD ScalarObject:IsScalar()
-   RETURN TRUE
+   Return True
 
 METHOD ScalarObject:AsString()
 
@@ -229,7 +229,7 @@ METHOD Array:Add(x)
 
    AAdd(Self, x)
 
-   RETURN TRUE
+   Return True
 
 METHOD Array:Collect(b)
 
@@ -268,7 +268,7 @@ METHOD Array:InsertAt(n, x)
    RETURN Self
 
 METHOD Array:IsScalar()
-   RETURN TRUE
+   Return True
 
 METHOD Array:Do(b)
 

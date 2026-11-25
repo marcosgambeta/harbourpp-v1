@@ -2005,20 +2005,20 @@ METHOD HBDebugger:OpenMenu(cName)
    LOCAL nPopup := ::oPullDown:GetHotKeyPos(Left(cName, 1))
 
    IF nPopup == 0
-      RETURN FALSE
+      Return False
    ENDIF
    IF ::oPullDown:nOpenPopup != nPopup
       ::oPullDown:ShowPopup(nPopup)
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 METHOD HBDebugger:OpenPPO()
 
    LOCAL lSuccess
 
    IF Empty(::cPrgName)
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF Lower(hb_FNameExt(::cPrgName)) == ".ppo"

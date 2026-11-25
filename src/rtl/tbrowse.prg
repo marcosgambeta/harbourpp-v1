@@ -769,7 +769,7 @@ METHOD TBrowse:stabilize()
          FOR EACH lStat, lDisp IN ::aCellStatus, ::aDispStatus DESCEND
             IF !lStat
                IF lRead
-                  RETURN FALSE
+                  Return False
                ENDIF
                lRead := ::readRecord(lStat:__enumIndex())
             ENDIF
@@ -781,7 +781,7 @@ METHOD TBrowse:stabilize()
          FOR EACH lStat, lDisp IN ::aCellStatus, ::aDispStatus
             IF !lStat
                IF lRead
-                  RETURN FALSE
+                  Return False
                ENDIF
                lRead := ::readRecord(lStat:__enumIndex())
             ENDIF
@@ -826,7 +826,7 @@ METHOD TBrowse:stabilize()
       ::setCursorPos()
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 
 METHOD TBrowse:forceStable()
@@ -1012,10 +1012,10 @@ METHOD TBrowse:setCursorPos()
          EndDo
       ENDIF
       SetPos(::n_Row, ::n_Col)
-      RETURN TRUE
+      Return True
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 
 METHOD TBrowse:setUnstable()
@@ -2018,7 +2018,7 @@ METHOD TBrowse:setTopFlag(lTop)
    ENDIF
 
    IF !hb_IsLogical(lTop)
-      RETURN TRUE
+      Return True
    ENDIF
 
    ::lHitTop := lTop
@@ -2042,7 +2042,7 @@ METHOD TBrowse:setBottomFlag(lBottom)
    ENDIF
 
    IF !hb_IsLogical(lBottom)
-      RETURN TRUE
+      Return True
    ENDIF
 
    ::lHitBottom := lBottom
@@ -2066,7 +2066,7 @@ METHOD TBrowse:setAutoLite(lAutoLite)
    ENDIF
 
    IF !hb_IsLogical(lAutoLite)
-      RETURN TRUE
+      Return True
    ENDIF
 
    ::lAutoLite := lAutoLite
@@ -2090,7 +2090,7 @@ METHOD TBrowse:setStableFlag(lStable)
    ENDIF
 
    IF !hb_IsLogical(lStable)
-      RETURN TRUE
+      Return True
    ENDIF
 
    ::lStable := lStable

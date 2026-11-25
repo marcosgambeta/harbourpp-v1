@@ -44,7 +44,7 @@ FUNCTION __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
    // put this prompt on the screen right now
    DispOutAt(nRow, nCol, cPrompt, cColor)
 
-   RETURN FALSE
+   Return False
 
 FUNCTION __MenuTo(bBlock, cVariable)
 

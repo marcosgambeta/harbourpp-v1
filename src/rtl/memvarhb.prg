@@ -202,7 +202,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
       EndDo
 
       IF fhnd == F_ERROR
-         RETURN FALSE
+         Return False
       ENDIF
 
       xValue := NIL

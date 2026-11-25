@@ -299,11 +299,11 @@ STATIC FUNCTION __i18n_IsBOM_UTF8(cFileName)
       cBuffer := hb_FReadLen(fhnd, hb_BLen(_UTF8_BOM))
       FClose(fhnd)
       IF cBuffer == _UTF8_BOM
-         RETURN TRUE
+         Return True
       ENDIF
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 FUNCTION __i18n_potArraySort(aTrans)
    RETURN ASort(aTrans, NIL, NIL, {|item1, item2|__i18n_ItemToStr(item1) < __i18n_ItemToStr(item2)})

@@ -63,12 +63,12 @@ STATIC FUNCTION _sx_INIlogical(cVal)
    CASE "TRUE"
    CASE "YES"
    CASE "ON"
-      RETURN TRUE
+      Return True
    CASE ".F."
    CASE "FALSE"
    CASE "NO"
    CASE "OFF"
-      RETURN FALSE
+      Return False
    ENDSWITCH
 
    RETURN NIL
@@ -97,7 +97,7 @@ FUNCTION _sx_IniInit(nArea)
    ENDIF
 
    IF nArea == NIL
-      RETURN FALSE
+      Return False
    ENDIF
 
    hIni := hb_iniRead(hb_FNameExtSet((nArea)->(dbInfo(DBI_FULLPATH)), ".ini"), FALSE, NIL, FALSE)
@@ -141,7 +141,7 @@ FUNCTION _sx_IniInit(nArea)
 
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 FUNCTION sx_IniHeader(cHeaderName, nArea)
 

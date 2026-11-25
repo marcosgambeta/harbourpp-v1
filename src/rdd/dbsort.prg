@@ -57,7 +57,7 @@ FUNCTION __dbSort(cToFileName, aFields, bFor, bWhile, nNext, nRecord, lRest, cRD
    LOCAL lError := FALSE
 
    IF Empty(aStruct := dbStruct())
-      RETURN FALSE
+      Return False
    ENDIF
 
    nOldArea := Select()
@@ -84,4 +84,4 @@ FUNCTION __dbSort(cToFileName, aFields, bFor, bWhile, nNext, nRecord, lRest, cRD
       Break(oError)
    ENDIF
 
-   RETURN TRUE
+   Return True

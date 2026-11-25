@@ -274,7 +274,7 @@ FUNCTION hb_DirBuild(cDir)
    LOCAL tmp
 
    IF !hb_IsString(cDir)
-      RETURN FALSE
+      Return False
    ENDIF
 
    cDir := hb_PathNormalize(cDir)
@@ -306,24 +306,24 @@ FUNCTION hb_DirBuild(cDir)
          IF !cDirItem == ""  // Skip root path, if any
             cDirTemp += cDirItem
             IF hb_FileExists(cDirTemp)
-               RETURN FALSE
+               Return False
             ELSEIF !hb_DirExists(cDirTemp)
                IF hb_DirCreate(cDirTemp) != 0
-                  RETURN FALSE
+                  Return False
                ENDIF
             ENDIF
          ENDIF
       NEXT
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 FUNCTION hb_DirUnbuild(cDir)
 
    LOCAL tmp
 
    IF !hb_IsString(cDir)
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF hb_DirExists(cDir)
@@ -333,7 +333,7 @@ FUNCTION hb_DirUnbuild(cDir)
       DO WHILE !Empty(cDir)
          IF hb_DirExists(cDir) .AND. ;
             hb_DirDelete(cDir) != 0
-            RETURN FALSE
+            Return False
          ENDIF
          IF (tmp := RAt(hb_ps(), cDir)) == 0  // FIXME: use hb_URAt() function
             EXIT
@@ -346,4 +346,4 @@ FUNCTION hb_DirUnbuild(cDir)
       ENDDO
    ENDIF
 
-   RETURN TRUE
+   Return True

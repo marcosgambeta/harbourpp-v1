@@ -566,11 +566,11 @@ FUNCTION sx_IsLocked(xRec)
       IF sx_Rlock(xRecord)
          sx_Unlock(xRecord)
       ELSE
-         RETURN TRUE
+         Return True
       ENDIF
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 FUNCTION sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
 

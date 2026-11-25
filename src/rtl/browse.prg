@@ -63,7 +63,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
    LOCAL bAction
 
    IF !Used()
-      RETURN FALSE
+      Return False
    ENDIF
 
    lAppend := lKeyPressed := lRefresh := FALSE
@@ -284,7 +284,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
    RestScreen(nTop, nLeft, nBottom, nRight, cOldScreen)
    SetCursor(nOldCursor)
 
-   RETURN TRUE
+   Return True
 
 STATIC PROCEDURE StatLine(oBrw, lAppend)
 

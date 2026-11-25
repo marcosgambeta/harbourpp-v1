@@ -93,4 +93,4 @@ FUNCTION __dbUpdate(cAlias, bKey, lRandom, bAssign)
       Break(oError)
    ENDIF
 
-   RETURN TRUE
+   Return True

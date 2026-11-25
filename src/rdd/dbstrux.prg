@@ -58,7 +58,7 @@ FUNCTION __dbCopyXStruct(cFileName)
    LOCAL lError := FALSE
 
    IF Empty(aStruct := dbStruct())
-      RETURN FALSE
+      Return False
    ENDIF
 
    nOldArea := Select()
@@ -92,7 +92,7 @@ FUNCTION __dbCopyXStruct(cFileName)
       Break(oError)
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 // NOTE: Compared to CA-Cl*pper, Harbour:
 //       (cCodePage, nConnection).

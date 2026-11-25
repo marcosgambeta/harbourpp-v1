@@ -221,7 +221,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
             ::super:Edit(nKey)
          ENDIF
       ELSE
-         RETURN FALSE
+         Return False
       ENDIF
       EXIT
 
@@ -232,7 +232,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
             ::super:Edit(nKey)
          ENDIF
       ELSE
-         RETURN FALSE
+         Return False
       ENDIF
       EXIT
 
@@ -268,12 +268,12 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
       IF (nUdfReturn >= 1 .AND. nUdfReturn <= 31) .OR. nUdfReturn == K_ALT_W
          ::super:Edit(nUdfReturn)
       ELSE
-         RETURN FALSE
+         Return False
       ENDIF
 
    ENDSWITCH
 
-   RETURN TRUE
+   Return True
 
 METHOD HBMemoEditor:xDo(nStatus)
 
@@ -292,7 +292,7 @@ METHOD HBMemoEditor:MoveCursor(nKey)
    IF nKey == K_CTRL_W
       ::lSaved := TRUE
       ::lExitEdit := TRUE
-      RETURN FALSE
+      Return False
    ENDIF
 
    RETURN ::super:MoveCursor(nKey)

@@ -234,7 +234,7 @@ FUNCTION hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
    cBuffer := hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
    IF !hb_IsString(cBuffer)
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF hb_IsString(xFileName)
@@ -244,25 +244,25 @@ FUNCTION hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
       hFile := xFileName
       lClose := FALSE
    ELSE
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF hFile == F_ERROR
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF FWrite(hFile, cBuffer) != hb_BLen(cBuffer)
       IF lClose
          FClose(hFile)
       ENDIF
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF lClose
       FClose(hFile)
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 

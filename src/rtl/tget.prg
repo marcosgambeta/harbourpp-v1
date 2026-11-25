@@ -1439,7 +1439,7 @@ METHOD Get:badDate()
       ENDSWITCH
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 #ifdef HB_CLP_UNDOC
 
@@ -1524,7 +1524,7 @@ METHOD Get:rightLow()
 
    IF ::nPos == ::nMaxEdit
       ::typeOut := TRUE
-      RETURN FALSE
+      Return False
    ENDIF
 
    nPos := ::nPos + 1
@@ -1539,7 +1539,7 @@ METHOD Get:rightLow()
       ::typeOut := TRUE
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 METHOD Get:leftLow()
 
@@ -1550,7 +1550,7 @@ METHOD Get:leftLow()
 
    IF ::nPos == ::FirstEditable()
       ::typeOut := TRUE
-      RETURN FALSE
+      Return False
    ENDIF
 
    nPos := ::nPos - 1
@@ -1565,7 +1565,7 @@ METHOD Get:leftLow()
       ::typeOut := TRUE
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 METHOD Get:backSpaceLow()
 
@@ -1583,7 +1583,7 @@ METHOD Get:backSpaceLow()
          ::lEdit := TRUE
          ::lChanged := TRUE
 
-         RETURN TRUE
+         Return True
       ENDIF
    ENDIF
 
@@ -1591,10 +1591,10 @@ METHOD Get:backSpaceLow()
 
    IF ::nPos < nPos
       ::deleteLow()
-      RETURN TRUE
+      Return True
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 METHOD Get:deleteLow()
 
@@ -1662,7 +1662,7 @@ METHOD Get:IsEditable(nPos)
    LOCAL cChar
 
    IF Empty(::cPicMask)
-      RETURN TRUE
+      Return True
    ENDIF
 
    /* This odd behaviour helps to be more compatible with CA-Cl*pper in some rare situations.
@@ -1670,7 +1670,7 @@ METHOD Get:IsEditable(nPos)
       We're still not 100% compatible in slighly different situations because the CA-Cl*pper
       behaviour is pretty much undefined here. [vszakats] */
    IF nPos > Len(::cPicMask) .AND. nPos <= ::nMaxLen
-      RETURN TRUE
+      Return True
    ENDIF
 
    IF ::cType != NIL
@@ -1684,7 +1684,7 @@ METHOD Get:IsEditable(nPos)
       ENDSWITCH
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 METHOD Get:Input(cChar)
 
@@ -1810,7 +1810,7 @@ METHOD Get:setChanged(lChanged)
       RETURN IIf(::hasFocus, ::lChanged := lChanged, lChanged)
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 METHOD Get:getClear()
    RETURN ::lClear
@@ -1821,7 +1821,7 @@ METHOD Get:setClear(lClear)
       RETURN IIf(::hasFocus, ::lClear := lClear, lClear)
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 METHOD Get:getMinus()
    RETURN ::lMinus
@@ -1832,7 +1832,7 @@ METHOD Get:setMinus(lMinus)
       RETURN IIf(::hasFocus, ::lMinus := lMinus, lMinus)
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 /* NOTE: CA-Cl*pper has a bug where negative nRow value will be translated to 16bit unsigned int,
          so the behaviour will be different in this case. [vszakats] */

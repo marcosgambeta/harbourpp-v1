@@ -69,19 +69,19 @@ STATIC FUNCTION DefError(oError)
    // By default, retry on RDD lock error failure
    IF oError:genCode == EG_LOCK .AND. oError:canRetry
       // oError:tries++
-      RETURN TRUE
+      Return True
    ENDIF
 
    // Set NetErr() of there was a database open error
    IF oError:genCode == EG_OPEN .AND. oError:osCode == 32 .AND. oError:canDefault
       NetErr(TRUE)
-      RETURN FALSE
+      Return False
    ENDIF
 
    // Set NetErr() if there was a lock error on dbAppend()
    IF oError:genCode == EG_APPENDLOCK .AND. oError:canDefault
       NetErr(TRUE)
-      RETURN FALSE
+      Return False
    ENDIF
 
    cMessage := ErrorMessage(oError)
@@ -113,9 +113,9 @@ STATIC FUNCTION DefError(oError)
       CASE "Break"
          Break(oError)
       CASE "Retry"
-         RETURN TRUE
+         Return True
       CASE "Default"
-         RETURN FALSE
+         Return False
       ENDSWITCH
    ENDIF
 
@@ -137,7 +137,7 @@ STATIC FUNCTION DefError(oError)
    ErrorLevel(1)
    QUIT
 
-   RETURN FALSE
+   Return False
 
 STATIC FUNCTION ErrorMessage(oError)
 

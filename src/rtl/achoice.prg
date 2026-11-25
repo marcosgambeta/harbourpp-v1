@@ -650,4 +650,4 @@ STATIC FUNCTION Ach_Select(alSelect, nPos)
       ENDIF
    ENDIF
 
-   RETURN TRUE
+   Return True

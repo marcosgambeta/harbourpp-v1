@@ -318,7 +318,7 @@ METHOD PushButton:sBlock(bSBlock)
    RETURN ::bSBlock
 
 METHOD PushButton:typeOut()
-   RETURN FALSE
+   Return False
 
 METHOD PushButton:style(cStyle)
 

@@ -64,7 +64,7 @@ FUNCTION ReadModal(GetList)
 
    IF Empty(GetList)
       SetPos(MaxRow() - 1, 0)
-      RETURN FALSE
+      Return False
    ENDIF
 
    oGetList := HBGetList():New(GetList)
@@ -188,7 +188,7 @@ FUNCTION GetPreValidate(oGet)
 #endif
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 #ifdef HB_COMPAT_C53
 FUNCTION GetPostValidate(oGet, aMsg)
@@ -206,7 +206,7 @@ FUNCTION GetPostValidate(oGet)
 #endif
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 FUNCTION ReadExit(lExit)
    RETURN Set(_SET_EXIT, lExit)
@@ -242,7 +242,7 @@ FUNCTION ReadUpdated(lUpdated)
       ENDIF
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 FUNCTION ReadKill(lKill)
 
@@ -256,7 +256,7 @@ FUNCTION ReadKill(lKill)
       ENDIF
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 FUNCTION ReadFormat(bFormat)
 
@@ -301,13 +301,13 @@ FUNCTION RangeCheck(oGet, xDummy, xLow, xHigh)
    HB_SYMBOL_UNUSED(xDummy)
 
    IF !oGet:changed
-      RETURN TRUE
+      Return True
    ENDIF
 
    xValue := oGet:varGet()
 
    IF xValue >= xLow .AND. xValue <= xHigh
-      RETURN TRUE
+      Return True
    ENDIF
 
    IF Set(_SET_SCOREBOARD)
@@ -324,4 +324,4 @@ FUNCTION RangeCheck(oGet, xDummy, xLow, xHigh)
 
    ENDIF
 
-   RETURN FALSE
+   Return False

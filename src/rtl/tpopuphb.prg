@@ -137,7 +137,7 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
       Eval(oItem:data, oItem)
       nID := oItem:id
 
-      RETURN TRUE
+      Return True
 
    // Test and assignment for TopBar MenuItem:
    CASE nShortCut == 0
@@ -150,7 +150,7 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
       // Loop to wrap around through TopMenu from Current Item:
       FOR i := 1 TO nTotal
          IF (oItem := ::getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
-            RETURN TRUE
+            Return True
          ENDIF
          IF ++nItem > nTotal
             nItem := 1
@@ -159,7 +159,7 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
 
    ENDCASE
 
-   RETURN FALSE
+   Return False
 
 METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
 
@@ -170,7 +170,7 @@ METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
 
       FOR EACH oItem IN ::aItems
          IF oItem:Enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
-            RETURN TRUE
+            Return True
          ENDIF
       NEXT
 
@@ -180,11 +180,11 @@ METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
          ::select(nShortCut)
          Eval(oItem:data, oItem)
          nID := oItem:id
-         RETURN TRUE
+         Return True
       ENDIF
 
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 #endif

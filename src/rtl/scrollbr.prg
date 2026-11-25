@@ -148,10 +148,10 @@ METHOD ScrollBar:display()
 
       DispEnd()
 
-      RETURN TRUE
+      Return True
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 METHOD ScrollBar:update()
 
@@ -175,10 +175,10 @@ METHOD ScrollBar:update()
 
       DispEnd()
 
-      RETURN TRUE
+      Return True
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 METHOD ScrollBar:hitTest(nMRow, nMCol)
 
@@ -359,14 +359,14 @@ METHOD ScrollBar:CalcThumbPos()
    LOCAL nTotal := ::nTotal
 
    IF nBarLength < 2 .OR. nTotal < 2
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF !::lOverride
       ::nThumbPos := Min(Max(Round(::nCurrent * ((nBarLength - 1) / nTotal) + 1, 0), 1), nBarLength)
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 // New definitions for better coding. These are screen codepage dependent,
 // but can be changed with the setStyle method.

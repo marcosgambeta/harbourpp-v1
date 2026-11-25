@@ -449,10 +449,10 @@ METHOD HBMenuSys:PushMenu()
          ::oMenu:open()
       ENDIF
 
-      RETURN TRUE
+      Return True
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 /* Close SubMenuItem and Return to the upper MenuItem level. */
 METHOD HBMenuSys:PopMenu()
@@ -461,10 +461,10 @@ METHOD HBMenuSys:PopMenu()
       ::oMenu:select(0)
       ::oMenu:close(TRUE)
       ::oMenu := ::aMenuList[--::nMenuLevel] // Decrement MenuItem level and assign
-      RETURN TRUE
+      Return True
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 /* Close PopUp Child MenuItem and Return to the upper MenuItem level. */
 METHOD HBMenuSys:PopChild(nNewLevel)
@@ -477,11 +477,11 @@ METHOD HBMenuSys:PopChild(nNewLevel)
       IF oOldMenuItem:isPopUp
          oOldMenuItem:data:close()
          ::nMenuLevel := nNewLevel
-         RETURN TRUE
+         Return True
       ENDIF
    ENDIF
 
-   RETURN FALSE
+   Return False
 
 /* Close all Menus below Top Menu and Return to upper MenuItem level. */
 METHOD HBMenuSys:PopAll()
@@ -493,7 +493,7 @@ METHOD HBMenuSys:PopAll()
    ::nMenuLevel := 1
    ::oMenu      := ::aMenuList[1]
 
-   RETURN TRUE
+   Return True
 
 /* Eval() the Data block if selected MenuItem is !IsPopUp. */
 METHOD HBMenuSys:Execute()
@@ -545,13 +545,13 @@ METHOD HBMenuSys:MHitTest(oNewMenu, nNewLevel, nNewItem)
 
       DO CASE
       CASE nNewItem < 0
-         RETURN FALSE  // Test for the mouse on Menu separator or border
+         Return False  // Test for the mouse on Menu separator or border
       CASE nNewItem > 0 .AND. oNewMenu:getItem(nNewItem):enabled
-         RETURN TRUE  // Test for the mouse on an enabled item in the menu
+         Return True  // Test for the mouse on an enabled item in the menu
       ENDCASE
    NEXT
 
-   RETURN FALSE
+   Return False
 
 /* Erase and Show Messages.
    Erase Message then ::ShowMsg() if lMode is TRUE
@@ -581,7 +581,7 @@ METHOD HBMenuSys:ShowMsg(lMode)
       ::lOldMsgFlag := ::lMsgFlag
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 /* NOTE: Generates the somewhat internal, yet widely used message line format of CA-Cl*pper 5.3
          This format contradicts the one in the official docs. */

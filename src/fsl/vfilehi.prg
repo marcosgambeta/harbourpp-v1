@@ -52,7 +52,7 @@ FUNCTION hb_vfDirBuild(cDir)
    LOCAL tmp
 
    IF !hb_IsString(cDir)
-      RETURN FALSE
+      Return False
    ENDIF
 
    cDir := hb_PathNormalize(cDir)
@@ -84,24 +84,24 @@ FUNCTION hb_vfDirBuild(cDir)
          IF !cDirItem == ""  // Skip root path, if any
             cDirTemp += cDirItem
             IF hb_vfExists(cDirTemp)
-               RETURN FALSE
+               Return False
             ELSEIF !hb_vfDirExists(cDirTemp)
                IF hb_vfDirMake(cDirTemp) != 0
-                  RETURN FALSE
+                  Return False
                ENDIF
             ENDIF
          ENDIF
       NEXT
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 FUNCTION hb_vfDirUnbuild(cDir)
 
    LOCAL tmp
 
    IF !hb_IsString(cDir)
-      RETURN FALSE
+      Return False
    ENDIF
 
    IF hb_vfDirExists(cDir)
@@ -111,7 +111,7 @@ FUNCTION hb_vfDirUnbuild(cDir)
       DO WHILE !cDir == ""
          IF hb_vfDirExists(cDir) .AND. ;
             hb_vfDirRemove(cDir) != 0
-            RETURN FALSE
+            Return False
          ENDIF
          IF (tmp := RAt(hb_ps(), cDir)) == 0  // FIXME: use hb_URAt() function
             EXIT
@@ -124,7 +124,7 @@ FUNCTION hb_vfDirUnbuild(cDir)
       ENDDO
    ENDIF
 
-   RETURN TRUE
+   Return True
 
 FUNCTION hb_vfNameExists(cName)
    RETURN ;
