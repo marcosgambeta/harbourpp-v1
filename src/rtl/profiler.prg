@@ -258,7 +258,7 @@ METHOD HBProfile:gatherMethods()
    LOCAL nMember
 
    // For each class in the environment...
-   DO WHILE !Empty(cClass := __className(n))
+   Do While !Empty(cClass := __className(n))
 
       // If we're not ignoring the class' methods...
       IF !::ignoreSymbol(cClass)
@@ -277,7 +277,7 @@ METHOD HBProfile:gatherMethods()
       ENDIF
 
       ++n
-   ENDDO
+   EndDo
 
    __SetProfiler(lProfile)
 

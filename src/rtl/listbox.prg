@@ -579,7 +579,7 @@ METHOD ListBox:scroll(nMethod)
 
          nPrevMRow := MRow()
 
-         DO WHILE ((nKey := Inkey(0)) != K_LBUTTONUP)
+         Do While ((nKey := Inkey(0)) != K_LBUTTONUP)
 
             IF nKey == K_MOUSEMOVE
 
@@ -611,7 +611,7 @@ METHOD ListBox:scroll(nMethod)
                   nPrevMRow := nMRow
                ENDIF
             ENDIF
-         ENDDO
+         EndDo
          EXIT
 
       CASE HTSCROLLUNITDEC

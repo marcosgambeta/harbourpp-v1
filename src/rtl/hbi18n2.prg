@@ -189,9 +189,9 @@ FUNCTION __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
                   cErrorMsg := "wrong plural form index"
                   EXIT
                ENDIF
-               DO WHILE IsDigit(SubStr(cLine, n, 1))
+               Do While IsDigit(SubStr(cLine, n, 1))
                   ++n
-               ENDDO
+               EndDo
             ENDIF
             IF nIndex != nOldIndex + 1
                cErrorMsg := "wrong plural form index"
@@ -221,13 +221,13 @@ FUNCTION __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
             n := 8
             IF IsDigit(SubStr(cLine, n, 1))
                nIndex := Val(SubStr(cLine, n))
-               DO WHILE IsDigit(SubStr(cLine, n, 1))
+               Do While IsDigit(SubStr(cLine, n, 1))
                   ++n
-               ENDDO
+               EndDo
             ENDIF
-            DO WHILE SubStr(cLine, n, 1) == " "
+            Do While SubStr(cLine, n, 1) == " "
                ++n
-            ENDDO
+            EndDo
             IF !SubStr(cLine, n, 1) == "]"
                nIndex := -1
             ENDIF

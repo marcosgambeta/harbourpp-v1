@@ -107,7 +107,7 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
       NEXT
 
       nRetries := 0
-      DO WHILE TRUE
+      Do While TRUE
          IF (fhnd := hb_FCreate(cFileName, FC_NORMAL, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE)) == F_ERROR
             oError := ErrorNew()
 
@@ -126,7 +126,7 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
             ENDIF
          ENDIF
          EXIT
-      ENDDO
+      EndDo
 
       IF fhnd != F_ERROR
          FWrite(fhnd, _HBMEM_SIGNATURE)
@@ -179,7 +179,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
       hb_default(@lIncludeMask, TRUE)
 
       nRetries := 0
-      DO WHILE TRUE
+      Do While TRUE
 
          IF (fhnd := FOpen(cFileName)) == F_ERROR
             oError := ErrorNew()
@@ -199,7 +199,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
             ENDIF
          ENDIF
          EXIT
-      ENDDO
+      EndDo
 
       IF fhnd == F_ERROR
          RETURN FALSE

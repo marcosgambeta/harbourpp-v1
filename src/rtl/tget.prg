@@ -595,9 +595,9 @@ METHOD Get:overStrike(cChar)
                ::pos := 1
             ENDIF
 
-            DO WHILE !::IsEditable(::nPos) .AND. ::nPos <= ::nMaxEdit .AND. !::typeOut
+            Do While !::IsEditable(::nPos) .AND. ::nPos <= ::nMaxEdit .AND. !::typeOut
                ::pos++
-            ENDDO
+            EndDo
 
             IF ::nPos > ::nMaxEdit
                ::pos := ::FirstEditable()
@@ -651,9 +651,9 @@ METHOD Get:insert(cChar)
                ::pos := 1
             ENDIF
 
-            DO WHILE !::IsEditable(::nPos) .AND. ::nPos <= ::nMaxEdit .AND. !::typeOut
+            Do While !::IsEditable(::nPos) .AND. ::nPos <= ::nMaxEdit .AND. !::typeOut
                ::pos++
-            ENDDO
+            EndDo
 
             IF ::nPos > ::nMaxEdit
                ::pos := ::FirstEditable()
@@ -718,12 +718,12 @@ METHOD Get:wordLeft()
 
          nPos := IIf(SubStr(::cBuffer, ::nPos, 1) == " ", ::nPos, ::nPos - 1)
 
-         DO WHILE nPos > 1 .AND. SubStr(::cBuffer, nPos, 1) == " "
+         Do While nPos > 1 .AND. SubStr(::cBuffer, nPos, 1) == " "
             nPos--
-         ENDDO
-         DO WHILE nPos > 1 .AND. !(SubStr(::cBuffer, nPos, 1) == " ")
+         EndDo
+         Do While nPos > 1 .AND. !(SubStr(::cBuffer, nPos, 1) == " ")
             nPos--
-         ENDDO
+         EndDo
 
          ::pos := IIf(nPos > 1, nPos + 1, 1)
 
@@ -749,12 +749,12 @@ METHOD Get:wordRight()
 
          nPos := ::nPos
 
-         DO WHILE nPos < ::nMaxEdit .AND. !(SubStr(::cBuffer, nPos, 1) == " ")
+         Do While nPos < ::nMaxEdit .AND. !(SubStr(::cBuffer, nPos, 1) == " ")
             nPos++
-         ENDDO
-         DO WHILE nPos < ::nMaxEdit .AND. SubStr(::cBuffer, nPos, 1) == " "
+         EndDo
+         Do While nPos < ::nMaxEdit .AND. SubStr(::cBuffer, nPos, 1) == " "
             nPos++
-         ENDDO
+         EndDo
 
          ::pos := nPos
 
@@ -815,9 +815,9 @@ METHOD Get:delEnd()
       ::pos := ::nMaxEdit
 
       ::deleteLow()
-      DO WHILE ::nPos > nPos
+      Do While ::nPos > nPos
          ::backSpaceLow()
-      ENDDO
+      EndDo
 
       ::display()
    ENDIF
@@ -860,9 +860,9 @@ METHOD Get:delWordLeft()
          ::deleteLow()
       ENDIF
 
-      DO WHILE ::nPos > 1 .AND. !(SubStr(::cBuffer, ::nPos - 1, 1) == " ")
+      Do While ::nPos > 1 .AND. !(SubStr(::cBuffer, ::nPos - 1, 1) == " ")
          ::backSpaceLow()
-      ENDDO
+      EndDo
 
       ::display()
    ENDIF
@@ -880,9 +880,9 @@ METHOD Get:delWordRight()
       ELSE
          ::typeOut := FALSE
 
-         DO WHILE ::nPos <= ::nMaxEdit .AND. !(SubStr(::cBuffer, ::nPos, 1) == " ")
+         Do While ::nPos <= ::nMaxEdit .AND. !(SubStr(::cBuffer, ::nPos, 1) == " ")
             ::deleteLow()
-         ENDDO
+         EndDo
 
          IF ::nPos <= ::nMaxEdit
             ::deleteLow()
@@ -1529,9 +1529,9 @@ METHOD Get:rightLow()
 
    nPos := ::nPos + 1
 
-   DO WHILE !::IsEditable(nPos) .AND. nPos <= ::nMaxEdit
+   Do While !::IsEditable(nPos) .AND. nPos <= ::nMaxEdit
       nPos++
-   ENDDO
+   EndDo
 
    IF nPos <= ::nMaxEdit
       ::pos := nPos
@@ -1555,9 +1555,9 @@ METHOD Get:leftLow()
 
    nPos := ::nPos - 1
 
-   DO WHILE !::IsEditable(nPos) .AND. nPos > 0
+   Do While !::IsEditable(nPos) .AND. nPos > 0
       nPos--
-   ENDDO
+   EndDo
 
    IF nPos > 0
       ::pos := nPos

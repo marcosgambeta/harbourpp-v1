@@ -296,7 +296,7 @@ METHOD HBLabelForm:SampleLabels()
       Space(::aLabelData[LBL_SPACES]), ::aLabelData[LBL_ACROSS]))
 
    // Prints sample labels
-   DO WHILE lMoreSamples
+   Do While lMoreSamples
 
       // Print the samples
       AEval(aBand, {|BandLine|PrintIt(BandLine)})
@@ -319,7 +319,7 @@ METHOD HBLabelForm:SampleLabels()
       IF __natIsNegative(cKey)    // Don't give sample labels
          lMoreSamples := FALSE
       ENDIF
-   ENDDO
+   EndDo
 
    RETURN Self
 

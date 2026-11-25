@@ -183,7 +183,7 @@ METHOD HBGetList:ReadModal()
    ::nPos := ::Settle(0)
 #endif
 
-   DO WHILE ::nPos != 0
+   Do While ::nPos != 0
 
       ::oGet := ::aGetList[::nPos]
       ::PostActiveGet()
@@ -204,7 +204,7 @@ METHOD HBGetList:ReadModal()
 
       ::nPos := ::Settle(::nPos)
 
-   ENDDO
+   EndDo
 
 #ifdef HB_COMPAT_C53
    IF lMsgFlag
@@ -252,7 +252,7 @@ METHOD HBGetList:Reader(oMenu, aMsg)
       ::nLastExitState := 0
       oGet:setFocus()
 
-      DO WHILE oGet:exitState == GE_NOEXIT .AND. !::lKillRead
+      Do While oGet:exitState == GE_NOEXIT .AND. !::lKillRead
          IF oGet:typeOut
             oGet:exitState := GE_ENTER
          ENDIF
@@ -261,7 +261,7 @@ METHOD HBGetList:Reader(oMenu, aMsg)
 //          oGet:exitState := GE_ENTER
 //       ENDIF
 
-         DO WHILE oGet:exitState == GE_NOEXIT .AND. !::lKillRead
+         Do While oGet:exitState == GE_NOEXIT .AND. !::lKillRead
 #ifdef HB_COMPAT_C53
             SetCursor(IIf(::nSaveCursor == SC_NONE, SC_NORMAL, ::nSaveCursor))
             nKey := Inkey(0)
@@ -274,7 +274,7 @@ METHOD HBGetList:Reader(oMenu, aMsg)
             nCol := Col()
             ::ShowGetMsg(oGet, aMsg)
             SetPos(nRow, nCol)
-         ENDDO
+         EndDo
 
 #ifdef HB_COMPAT_C53
          IF !::nLastExitState == GE_SHORTCUT .AND. !::nLastExitState == GE_MOUSEHIT .AND. !::GetPostValidate(oGet, aMsg)
@@ -283,7 +283,7 @@ METHOD HBGetList:Reader(oMenu, aMsg)
 #endif
             oGet:exitState := GE_NOEXIT
          ENDIF
-      ENDDO
+      EndDo
 
 #ifdef HB_COMPAT_C53
       nRow := Row()
@@ -407,7 +407,7 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
       IF nButton != 0
       ELSEIF (nButton := oGet:hitTest(nMRow, nMCol)) == HTCLIENT
 
-         DO WHILE oGet:col + oGet:pos - 1 > nMCol
+         Do While oGet:col + oGet:pos - 1 > nMCol
             oGet:left()
 
             // Handle editing buffer if first character is non-editable:
@@ -417,9 +417,9 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
                EXIT
             ENDIF
 
-         ENDDO
+         EndDo
 
-         DO WHILE oGet:col + oGet:pos - 1 < nMCol
+         Do While oGet:col + oGet:pos - 1 < nMCol
             oGet:right()
 
             // Handle editing buffer if last character is non-editable:
@@ -429,7 +429,7 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
                EXIT
             ENDIF
 
-         ENDDO
+         EndDo
 
       ELSEIF nButton != HTNOWHERE
       ELSEIF ::aGetList != NIL .AND. ::hitTest(nMRow, nMCol, aMsg) != 0
@@ -801,8 +801,8 @@ METHOD HBGetList:DateMsg()
 
       hb_DispOutAt(SCORE_ROW, SCORE_COL, __natMsg(_GET_INVD_DATE))
 
-      DO WHILE (nKey := Inkey(0)) == 0
-      ENDDO
+      Do While (nKey := Inkey(0)) == 0
+      EndDo
       hb_keyIns(nKey)
 
       hb_DispOutAt(SCORE_ROW, SCORE_COL, Space(Len(__natMsg(_GET_INVD_DATE))))
@@ -865,7 +865,7 @@ METHOD HBGetList:GUIReader(oGet, oMenu, aMsg)
 
       ::nHitCode := 0
 
-      DO WHILE oGet:exitState == GE_NOEXIT .AND. !::lKillRead
+      Do While oGet:exitState == GE_NOEXIT .AND. !::lKillRead
 
          // Check for initial typeout (no editable positions)
          IF oGUI:typeOut
@@ -873,16 +873,16 @@ METHOD HBGetList:GUIReader(oGet, oMenu, aMsg)
          ENDIF
 
          // Apply keystrokes until exit
-         DO WHILE oGet:exitState == GE_NOEXIT .AND. !::lKillRead
+         Do While oGet:exitState == GE_NOEXIT .AND. !::lKillRead
             ::GUIApplyKey(oGet, oGUI, Inkey(0), oMenu, aMsg)
 
             ::ShowGetMsg(oGet, aMsg)
-         ENDDO
+         EndDo
 
          IF ::nLastExitState != GE_SHORTCUT .AND. ::nLastExitState != GE_MOUSEHIT .AND. !::GetPostValidate(oGet, aMsg)
             oGet:exitState := GE_NOEXIT
          ENDIF
-      ENDDO
+      EndDo
 
       // De-activate the GET
       SWITCH oGUI:ClassName()
@@ -1337,15 +1337,15 @@ METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
 
       ::nHitcode := 0
 
-      DO WHILE oGet:exitState == GE_NOEXIT .AND. !::lKillRead
+      Do While oGet:exitState == GE_NOEXIT .AND. !::lKillRead
 
          // Apply keystrokes until exit
-         DO WHILE oGet:exitState == GE_NOEXIT .AND. !::lKillRead
+         Do While oGet:exitState == GE_NOEXIT .AND. !::lKillRead
             nKey := 0
 
-            DO WHILE !oTB:Stabilize() .AND. nKey == 0
+            Do While !oTB:Stabilize() .AND. nKey == 0
                nKey := Inkey()
-            ENDDO
+            EndDo
 
             IF nKey == 0
                nKey := Inkey(0)
@@ -1363,7 +1363,7 @@ METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
 
             ENDIF
 
-         ENDDO
+         EndDo
 
          // Disallow exit if the VALID condition is not satisfied
          IF ::nLastExitState == GE_SHORTCUT
@@ -1372,7 +1372,7 @@ METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
             oGet:exitState := GE_NOEXIT
          ENDIF
 
-      ENDDO
+      EndDo
 
       // De-activate the GET
       oTB:Autolite := lAutoLite
@@ -1473,7 +1473,7 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
       ENDIF
    NEXT
 
-   // DO WHILE ::nNextGet != 0  // Commented out.
+   // Do While ::nNextGet != 0  // Commented out.
 
    IF ::nNextGet != 0  // Changed.
 
@@ -1513,7 +1513,7 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
 
       // EXIT  // Commented out.
       RETURN ::nNextGet  // Changed.
-   // ENDDO  // Commented out.
+   // EndDo  // Commented out.
 
    ENDIF
 

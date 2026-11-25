@@ -279,9 +279,9 @@ METHOD HBEditor:Display()
    nRow := ::nTop
    nLine := ::nFirstRow
    nCount := ::nNumRows
-   DO WHILE --nCount >= 0
+   Do While --nCount >= 0
       hb_DispOutAt(nRow++, ::nLeft, SubStrPad(::GetLine(nLine), ::nFirstCol, ::nNumCols), ::LineColor(nLine++))
-   ENDDO
+   EndDo
    DispEnd()
 
    RETURN Self
@@ -464,7 +464,7 @@ METHOD HBEditor:Edit(nPassedKey)
       RETURN ::BrowseText(nPassedKey)
    ENDIF
 
-   DO WHILE !::lExitEdit
+   Do While !::lExitEdit
 
       IF nPassedKey == NIL
          IF (nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))) == 0
@@ -587,7 +587,7 @@ METHOD HBEditor:Edit(nPassedKey)
       IF nPassedKey != NIL
          EXIT
       ENDIF
-   ENDDO
+   EndDo
 
    RETURN Self
 
@@ -598,7 +598,7 @@ METHOD HBEditor:BrowseText(nPassedKey)
    LOCAL nKeyStd
    LOCAL bKeyBlock
 
-   DO WHILE !::lExitEdit
+   Do While !::lExitEdit
       IF nPassedKey == NIL
          IF (nKey := Inkey(NIL, hb_bitOr(Set(_SET_EVENTMASK), HB_INKEY_EXT))) == 0
             ::IdleHook()
@@ -620,7 +620,7 @@ METHOD HBEditor:BrowseText(nPassedKey)
       IF nPassedKey != NIL
          EXIT
       ENDIF
-   ENDDO
+   EndDo
 
    RETURN Self
 
@@ -648,11 +648,11 @@ METHOD HBEditor:ReformParagraph()
    LOCAL nCol
 
    nCol := Min(hb_ULen(::aText[::nRow]:cText) + 1, ::nCol)
-   DO WHILE lNext .AND. ::nRow <= Len(::aText)
+   Do While lNext .AND. ::nRow <= Len(::aText)
       cText += ::aText[::nRow]:cText
       lNext := ::aText[::nRow]:lSoftCR
       ::RemoveLine(::nRow)
-   ENDDO
+   EndDo
 
    nLine := ::nRow
    hb_MLEval(cText, {|cLine, lSoftCR|::InsertLine(cLine, lSoftCR, nLine++)}, ::nWordWrapCol + 1, ::nTabWidth, NIL, nCol, @nRow, @nCol)
@@ -752,9 +752,9 @@ STATIC FUNCTION TabCount(nTabWidth, nCol)
 
 STATIC FUNCTION SkipWord(cText, nPos)
 
-   DO WHILE nPos < hb_ULen(cText) .AND. hb_USubStr(cText, nPos, 1) == " "
+   Do While nPos < hb_ULen(cText) .AND. hb_USubStr(cText, nPos, 1) == " "
       ++nPos
-   ENDDO
+   EndDo
    IF (nPos := hb_UAt(" ", cText, nPos)) == 0
       nPos := hb_ULen(cText) + 1
    ENDIF
@@ -766,18 +766,18 @@ STATIC FUNCTION NextWord(cText, nPos)
    IF (nPos := hb_UAt(" ", cText, nPos)) == 0
       nPos := hb_ULen(cText) + 1
    ELSE
-      DO WHILE hb_USubStr(cText, ++nPos, 1) == " "
-      ENDDO
+      Do While hb_USubStr(cText, ++nPos, 1) == " "
+      EndDo
    ENDIF
 
    RETURN nPos
 
 STATIC FUNCTION PrevWord(cText, nPos)
 
-   DO WHILE nPos > 1 .AND. hb_USubStr(cText, --nPos, 1) == " "
-   ENDDO
-   DO WHILE nPos > 1 .AND. !hb_USubStr(cText, nPos - 1, 1) == " "
+   Do While nPos > 1 .AND. hb_USubStr(cText, --nPos, 1) == " "
+   EndDo
+   Do While nPos > 1 .AND. !hb_USubStr(cText, nPos - 1, 1) == " "
       --nPos
-   ENDDO
+   EndDo
 
    RETURN nPos

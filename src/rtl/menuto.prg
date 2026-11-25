@@ -29,9 +29,9 @@ FUNCTION __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
    ENDIF
 
    // add the current level empty array.
-   DO WHILE Len(t_aLevel) < t_nPointer
+   Do While Len(t_aLevel) < t_nPointer
       AAdd(t_aLevel, {})
-   ENDDO
+   EndDo
 
    // add to the static array
    AAdd(t_aLevel[t_nPointer], { ;
@@ -120,7 +120,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
       lMsgCenter := Set(_SET_MCENTER)
       lExit := FALSE
 
-      DO WHILE n != 0
+      Do While n != 0
 
          // should we display messages?
          IF nMsgRow > 0
@@ -173,7 +173,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
          ENDIF
 
          nKey := 0
-         DO WHILE nKey == 0
+         Do While nKey == 0
 
             // wait for a keystroke
             nKey := Inkey(0)
@@ -193,7 +193,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
                nKey := 0
 
             ENDIF
-         ENDDO
+         EndDo
 
          // check for keystrokes
          SWITCH nKey
@@ -263,7 +263,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
 #endif
          ENDIF
 
-      ENDDO
+      EndDo
 
       ReadVar(cSaveReadVar)
       SetCursor(nSaveCursor)

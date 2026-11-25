@@ -765,7 +765,7 @@ METHOD ExecuteReport() CLASS HBReportForm
          IF Len(aRecordToPrint) > ::nMaxLinesAvail
             // This record is HUGE!  Break it up...
             nLine := 1
-            DO WHILE nLine < Len(aRecordToPrint)
+            Do While nLine < Len(aRecordToPrint)
                ::PrintIt(Space(::aReportData[RPT_LMARGIN]) + aRecordToPrint[nLine])
                nLine++
                ::nLinesLeft--
@@ -777,7 +777,7 @@ METHOD ExecuteReport() CLASS HBReportForm
                      ::ReportHeader()
                   ENDIF
                ENDIF
-            ENDDO
+            EndDo
          ELSE
             ::EjectPage()
             IF ::aReportData[RPT_PLAIN]
@@ -929,12 +929,12 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
 
             // certain that we have retrieved all heading entries from the .frm file, we
             // now retract the empty headings
-            DO WHILE nHeaderIndex > 0
+            Do While nHeaderIndex > 0
                IF !Empty(aHeader[nHeaderIndex])
                   EXIT
                ENDIF
                nHeaderIndex--
-            ENDDO
+            EndDo
 
             aReport[RPT_HEADER] := IIf(nHeaderIndex == 0, {}, ASize(aHeader, nHeaderIndex))
 
@@ -1043,7 +1043,7 @@ STATIC FUNCTION Occurs(cSearch, cTarget)
    LOCAL nPos
    LOCAL nCount := 0
 
-   DO WHILE !Empty(cTarget)
+   Do While !Empty(cTarget)
       IF (nPos := At(cSearch, cTarget)) > 0
          nCount++
          cTarget := SubStr(cTarget, nPos + 1)
@@ -1051,7 +1051,7 @@ STATIC FUNCTION Occurs(cSearch, cTarget)
          // End of string
          cTarget := ""
       ENDIF
-   ENDDO
+   EndDo
 
    RETURN nCount
 
@@ -1085,7 +1085,7 @@ STATIC FUNCTION ParseHeader(cHeaderString, nFields)
    LOCAL nHeaderLen := 254
    LOCAL nPos
 
-   DO WHILE ++nItemCount <= nFields
+   Do While ++nItemCount <= nFields
 
       cItem := Left(cHeaderString, nHeaderLen)
 
@@ -1102,7 +1102,7 @@ STATIC FUNCTION ParseHeader(cHeaderString, nFields)
 
       cHeaderString := SubStr(cHeaderString, nPos + 1)
 
-   ENDDO
+   EndDo
 
    RETURN aPageHeader
 

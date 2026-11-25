@@ -145,7 +145,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
 
    IF nSelection <= 0
 
-      DO WHILE nSelection <= 0
+      Do While nSelection <= 0
 
          nKey := Inkey(0, hb_bitOr(INKEY_KEYBOARD, INKEY_LDOWN))
 
@@ -159,7 +159,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
          ELSE
             nSelection := 1
          ENDIF
-      ENDDO
+      EndDo
 
       oTopMenu:select(nSelection)
       oTopMenu:display()
@@ -177,7 +177,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
 
    ::ShowMsg(TRUE)
 
-   DO WHILE TRUE
+   Do While TRUE
 
       nKey := Inkey(0)
 
@@ -420,7 +420,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
          ENDIF
 
       ENDCASE
-   ENDDO
+   EndDo
 
    IF ::lMsgFlag
       RestScreen(::nMsgRow, ::nMsgLeft, ::nMsgRow, ::nMsgRight, ::cMsgSaveS)

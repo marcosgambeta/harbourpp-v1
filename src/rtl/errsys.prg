@@ -105,8 +105,8 @@ STATIC FUNCTION DefError(oError)
 
    // Show alert box
 
-   DO WHILE (nChoice := Alert(cMessage + IIf(cOSError == NIL, "", ";" + cOSError), aOptions)) == 0
-   ENDDO
+   Do While (nChoice := Alert(cMessage + IIf(cOSError == NIL, "", ";" + cOSError), aOptions)) == 0
+   EndDo
 
    IF !Empty(nChoice)  // Alert() may return NIL
       SWITCH aOptions[nChoice]
@@ -129,10 +129,10 @@ STATIC FUNCTION DefError(oError)
    OutErr(cMessage)
 
    n := 1
-   DO WHILE !Empty(ProcName(++n))
+   Do While !Empty(ProcName(++n))
       OutErr(hb_eol())
       OutErr(hb_StrFormat("Called from %1$s(%2$d)  ", ProcName(n), ProcLine(n)))
-   ENDDO
+   EndDo
 
    ErrorLevel(1)
    QUIT

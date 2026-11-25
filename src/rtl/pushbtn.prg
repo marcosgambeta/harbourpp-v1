@@ -137,12 +137,12 @@ METHOD PushButton:select(nPos)
          IF nPos == 32
 
             Inkey(0.4)
-            DO WHILE nCurPos == 32
+            Do While nCurPos == 32
                nCurPos := Inkey(0.1)
-            ENDDO
+            EndDo
          ELSE
-            DO WHILE nPos == Inkey(0)
-            ENDDO
+            Do While nPos == Inkey(0)
+            EndDo
          ENDIF
       ENDIF
 

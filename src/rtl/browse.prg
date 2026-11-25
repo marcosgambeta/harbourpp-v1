@@ -108,11 +108,11 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
    lContinue := TRUE
 
-   DO WHILE lContinue
+   Do While lContinue
 
-      DO WHILE !lKeyPressed .AND. !oBrw:Stabilize()
+      Do While !lKeyPressed .AND. !oBrw:Stabilize()
          lKeyPressed := (nKey := Inkey()) != 0
-      ENDDO
+      EndDo
 
       IF lKeyPressed
          lKeyPressed := FALSE
@@ -279,7 +279,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
          SetCursor(SC_NONE)
       ENDIF
 
-   ENDDO
+   EndDo
 
    RestScreen(nTop, nLeft, nBottom, nRight, cOldScreen)
    SetCursor(nOldCursor)
@@ -396,10 +396,10 @@ STATIC PROCEDURE FreshOrder(oBrw)
    oBrw:ForceStable()
 
    IF nRec != LastRec() + 1
-      DO WHILE RecNo() != nRec .AND. !Bof()
+      Do While RecNo() != nRec .AND. !Bof()
          oBrw:Up()
          oBrw:ForceStable()
-      ENDDO
+      EndDo
    ENDIF
 
    RETURN
@@ -413,7 +413,7 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
       CASE nRecs == 0
          dbSkip(0)
       CASE nRecs > 0 .AND. RecNo() != LastRec() + 1
-         DO WHILE nSkipped < nRecs
+         Do While nSkipped < nRecs
             dbSkip()
             IF Eof()
                IF lAppend
@@ -424,15 +424,15 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
                EXIT
             ENDIF
             ++nSkipped
-         ENDDO
+         EndDo
       CASE nRecs < 0
-         DO WHILE nSkipped > nRecs
+         Do While nSkipped > nRecs
             dbSkip(-1)
             IF Bof()
                EXIT
             ENDIF
             --nSkipped
-         ENDDO
+         EndDo
       ENDCASE
    ENDIF
 

@@ -194,9 +194,9 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    lDoIdleCall := TRUE
    lContinue := TRUE
 
-   DO WHILE lContinue
+   Do While lContinue
 
-      DO WHILE TRUE
+      Do While TRUE
          nKey := Inkey()
          IF oBrowse:stabilize()
             EXIT
@@ -210,7 +210,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
             EXIT
          ENDIF
 #endif
-      ENDDO
+      EndDo
 
       IF nKey == 0
          IF lDoIdleCall
@@ -220,8 +220,8 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          IF lContinue .AND. lFlag
             oBrowse:hiLite()
 #ifdef HB_COMPAT_C53
-            DO WHILE (nKey := Inkey(0)) == K_MOUSEMOVE
-            ENDDO
+            Do While (nKey := Inkey(0)) == K_MOUSEMOVE
+            EndDo
 #else
             nKey := Inkey(0)
 #endif
@@ -280,7 +280,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
             lDoIdleCall := FALSE
          ENDSWITCH
       ENDIF
-   ENDDO
+   EndDo
 
    SetCursor(nOldCUrsor)
 
@@ -346,9 +346,9 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
          nPrevRecNo := RecNo()
          oBrowse:refreshAll():forceStable()
-         DO WHILE nPrevRecNo != RecNo()
+         Do While nPrevRecNo != RecNo()
             oBrowse:Up():forceStable()
-         ENDDO
+         EndDo
 
          lFlag := FALSE
 
@@ -380,7 +380,7 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
             dbSkip(0)
          ENDIF
       CASE nRecs > 0 .AND. RecNo() != LastRec() + 1
-         DO WHILE nSkipped < nRecs
+         Do While nSkipped < nRecs
             dbSkip()
             IF Eof()
                IF lAppend
@@ -391,15 +391,15 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
                EXIT
             ENDIF
             nSkipped++
-         ENDDO
+         EndDo
       CASE nRecs < 0
-         DO WHILE nSkipped > nRecs
+         Do While nSkipped > nRecs
             dbSkip(-1)
             IF Bof()
                EXIT
             ENDIF
             nSkipped--
-         ENDDO
+         EndDo
       ENDCASE
    ENDIF
 

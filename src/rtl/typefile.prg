@@ -89,9 +89,9 @@ PROCEDURE __TypeFile(cFile, lPrint)
       cTmp := StrTran(Set(_SET_DEFAULT) + ";" + Set(_SET_PATH), ",", ";")
 
       i := Len(cTmp)
-      DO WHILE SubStr(cTmp, i, 1) == ";"            // remove last ";"
+      Do While SubStr(cTmp, i, 1) == ";"            // remove last ";"
          cTmp := Left(cTmp, --i)
-      ENDDO
+      EndDo
 
       FOR EACH cPath IN hb_ATokens(cTmp, ";")
          IF hb_FileExists(cTmp := hb_FNameMerge(cPath, cName, cExt))
@@ -102,7 +102,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
    ENDIF
 
    nRetries := 0
-   DO WHILE (nHandle := FOpen(cFile, FO_READWRITE)) == F_ERROR
+   Do While (nHandle := FOpen(cFile, FO_READWRITE)) == F_ERROR
       oErr := ErrorNew()
       oErr:severity    := ES_ERROR
       oErr:genCode     := EG_OPEN
@@ -116,7 +116,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
       IF !hb_defaultValue(Eval(ErrorBlock(), oErr), TRUE)  // user select "Default"
          RETURN
       ENDIF
-   ENDDO
+   EndDo
 
    // NOTE: the NG say you should explicitly SET CONSOLE OFF if you wish to
    //       suppress output to screen. [ckedem]
@@ -138,12 +138,12 @@ PROCEDURE __TypeFile(cFile, lPrint)
    nHasRead := 0
    cBuffer := Space(nBuffer)
    QOut()  // starting a new line
-   DO WHILE (nRead := FRead(nHandle, @cBuffer, nBuffer)) > 0
+   Do While (nRead := FRead(nHandle, @cBuffer, nBuffer)) > 0
       nHasRead += nRead
       QQOut(cBuffer)
       nBuffer := Min(nSize - nHasRead, nBuffer)
       cBuffer := Space(nBuffer)
-   ENDDO
+   EndDo
 
    FClose(nHandle)
 

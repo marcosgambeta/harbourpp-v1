@@ -92,9 +92,9 @@ FUNCTION __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
       IF FieldPos(cVarName) > 0
          bGetArray := FieldWBlock(cVarName, Select())
       ELSE
-         DO WHILE (bGetArray := MemVarBlock(cVarName)) == NIL
+         Do While (bGetArray := MemVarBlock(cVarName)) == NIL
             __mvGet(cVarName)
-         ENDDO
+         EndDo
       ENDIF
    ENDIF
 

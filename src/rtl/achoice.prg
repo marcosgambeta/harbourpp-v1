@@ -116,7 +116,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
    IF lFinished .AND. lUserFunc
       Do(xUserFunc, nMode, nPos, nPos - nAtTop)
    ENDIF
-   DO WHILE !lFinished
+   Do While !lFinished
 
       IF nMode != AC_EXCEPT .AND. nMode != AC_NOITEM
          nKey  := Inkey(0)
@@ -138,9 +138,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             nPos := 0
             nAtTop := Max(1, nPos - nNumRows + 1)
          ELSE
-            DO WHILE nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
+            Do While nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
                nPos++
-            ENDDO
+            EndDo
 
             IF nPos > nLastItem
                nPos := BETWEEN(nFrstItem, nPos, nLastItem)
@@ -196,9 +196,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             ENDIF
          ELSE
             nNewPos := nPos - 1
-            DO WHILE !Ach_Select(alSelect, nNewPos)
+            Do While !Ach_Select(alSelect, nNewPos)
                nNewPos--
-            ENDDO
+            EndDo
             IF INRANGE(nAtTop, nNewPos, nAtTop + nNumRows - 1)
                DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), FALSE, nNumCols)
                nPos := nNewPos
@@ -209,12 +209,12 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                Scroll(nTop, nLeft, nBottom, nRight, nNewPos - (nAtTop + nNumRows - 1))
                nAtTop := nNewPos
                nPos   := Max(nPos, nAtTop + nNumRows - 1)
-               DO WHILE nPos > nNewPos
+               Do While nPos > nNewPos
                   IF nTop + nPos - nAtTop <= nBottom
                      DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), FALSE, nNumCols)
                   ENDIF
                   nPos--
-               ENDDO
+               EndDo
                DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), TRUE, nNumCols)
                DispEnd()
             ENDIF
@@ -237,9 +237,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
             nNewPos := nPos + 1
 
-            DO WHILE !Ach_Select(alSelect, nNewPos)
+            Do While !Ach_Select(alSelect, nNewPos)
                nNewPos++
-            ENDDO
+            EndDo
 
             IF INRANGE(nAtTop, nNewPos, nAtTop + nNumRows - 1)
                DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), FALSE, nNumCols)
@@ -251,10 +251,10 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                Scroll(nTop, nLeft, nBottom, nRight, nNewPos - (nAtTop + nNumRows - 1))
                nAtTop := nNewPos - nNumRows + 1
                nPos   := Max(nPos, nAtTop)
-               DO WHILE nPos < nNewPos
+               Do While nPos < nNewPos
                   DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), FALSE, nNumCols)
                   nPos++
-               ENDDO
+               EndDo
                DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), TRUE, nNumCols)
                DispEnd()
             ENDIF
@@ -307,9 +307,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             ENDIF
          ELSE
             nNewPos := nAtTop
-            DO WHILE !Ach_Select(alSelect, nNewPos)
+            Do While !Ach_Select(alSelect, nNewPos)
                nNewPos++
-            ENDDO
+            EndDo
             IF nNewPos != nPos
                DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), FALSE, nNumCols)
                nPos := nNewPos
@@ -328,9 +328,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             ENDIF
          ELSE
             nNewPos := Min(nAtTop + nNumRows - 1, nItems)
-            DO WHILE !Ach_Select(alSelect, nNewPos)
+            Do While !Ach_Select(alSelect, nNewPos)
                nNewPos--
-            ENDDO
+            EndDo
             IF nNewPos != nPos
                DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, Ach_Select(alSelect, nPos), FALSE, nNumCols)
                nPos := nNewPos
@@ -358,10 +358,10 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                ELSE
                   nPos   := Max(nFrstItem, nPos - nNumRows + 1)
                   nAtTop := Max(1, nAtTop - nNumRows + 1)
-                  DO WHILE nPos > nFrstItem .AND. !Ach_Select(alSelect, nPos)
+                  Do While nPos > nFrstItem .AND. !Ach_Select(alSelect, nPos)
                      nPos--
                      nAtTop--
-                  ENDDO
+                  EndDo
                   nAtTop := Max(1, nAtTop)
                   IF nAtTop < nNumRows .AND. nPos < nNumRows
                      nPos := nNumRows
@@ -398,14 +398,14 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                   nAtTop := nPos - nGap
                ENDIF
                // Make sure that the item is selectable
-               DO WHILE nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
+               Do While nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
                   nPos++
                   nAtTop++
-               ENDDO
+               EndDo
                // Don't leave blank space on the page
-               DO WHILE (nAtTop + nNumRows - 1) > nItems
+               Do While (nAtTop + nNumRows - 1) > nItems
                   nAtTop--
-               ENDDO
+               EndDo
                DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos, nAtTop, nItems)
             ENDIF
          ENDIF
@@ -522,9 +522,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                   nPos := 0
                   nAtTop := Max(1, nPos - nNumRows + 1)
                ELSE
-                  DO WHILE nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
+                  Do While nPos < nLastItem .AND. !Ach_Select(alSelect, nPos)
                      nPos++
-                  ENDDO
+                  EndDo
 
                   IF nPos > nLastItem
                      nPos := BETWEEN(nFrstItem, nPos, nLastItem)
@@ -551,7 +551,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             lFinished := TRUE
          ENDIF
       ENDIF
-   ENDDO
+   EndDo
 
    SetCursor(nSaveCsr)
 

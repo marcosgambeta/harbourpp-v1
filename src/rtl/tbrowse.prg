@@ -560,7 +560,7 @@ METHOD TBrowse:scrollBuffer(nRows)
                 ::n_Bottom - ::nFootHeight - IIf(::lFootSep, 1, 0), ::n_Right, ;
                 nRows, NIL, ::colorValue(_TBC_CLR_STANDARD))
       IF nRows > 0
-         DO WHILE --nRows >= 0
+         Do While --nRows >= 0
             aValues := ::aCellValues[1]
             aColors := ::aCellColors[1]
             ADel(::aCellValues, 1)
@@ -571,14 +571,14 @@ METHOD TBrowse:scrollBuffer(nRows)
             ::aCellColors[nRowCount] := aColors
             ::aCellStatus[nRowCount] := FALSE
             ::aDispStatus[nRowCount] := TRUE
-         ENDDO
+         EndDo
       ELSEIF nRows < 0
-         DO WHILE ++nRows <= 0
+         Do While ++nRows <= 0
             hb_AIns(::aCellValues, 1, ATail(::aCellValues), FALSE)
             hb_AIns(::aCellColors, 1, ATail(::aCellColors), FALSE)
             hb_AIns(::aCellStatus, 1, FALSE, FALSE)
             hb_AIns(::aDispStatus, 1, TRUE, FALSE)
-         ENDDO
+         EndDo
       ENDIF
    ENDIF
 
@@ -837,15 +837,15 @@ METHOD TBrowse:forceStable()
     *       be changed. I'll change it in the future but first I will have
     *       to revert my stupid modifications in Harbour core code. Looking
     *       at old TBrowse implementation I replaced some:
-    *             DO WHILE !oBrw:stabilize(); ENDDO
+    *             Do While !oBrw:stabilize(); EndDo
     *       with:
     *             oBrw:forceStable()
     *       In Clipper it's not the same because oBrw:forceStable()
     *       may not set cursor position and only ::stabilize() does it.
     *       [druzus]
     */
-   DO WHILE !::stabilize()
-   ENDDO
+   Do While !::stabilize()
+   EndDo
 
    RETURN Self
 
@@ -918,9 +918,9 @@ STATIC FUNCTION _DECODECOLORS(cColorSpec)
    IF Len(aColors) < 2
       AAdd(aColors, "N/W")
    ENDIF
-   DO WHILE Len(aColors) < _TBC_CLR_MAX
+   Do While Len(aColors) < _TBC_CLR_MAX
       AAdd(aColors, aColors[_TBC_CLR_STANDARD])
-   ENDDO
+   EndDo
 
    RETURN aColors
 
@@ -1004,12 +1004,12 @@ METHOD TBrowse:setCursorPos()
       ::n_Row := ::n_Top + ::nHeadHeight + IIf(::lHeadSep, 0, -1) + nRow
       ::n_Col := ::aColData[nCol][_TBCI_COLPOS] + ::aColData[nCol][_TBCI_CELLPOS]
       IF aCol[_TBCI_SEPWIDTH] > 0
-         DO WHILE --nCol >= 1
+         Do While --nCol >= 1
             IF ::aColData[nCol][_TBCI_COLPOS] != NIL
                ::n_Col += aCol[_TBCI_SEPWIDTH]
                EXIT
             ENDIF
-         ENDDO
+         EndDo
       ENDIF
       SetPos(::n_Row, ::n_Col)
       RETURN TRUE
@@ -1107,12 +1107,12 @@ METHOD TBrowse:pageDown()
 METHOD TBrowse:left()
 
    ::setUnstable()
-   DO WHILE TRUE
+   Do While TRUE
       ::nColPos--
       IF ::nColPos < 1 .OR. ::nColPos > ::colCount .OR. ::aColData[::nColPos][_TBCI_CELLWIDTH] != 0
          EXIT
       ENDIF
-   ENDDO
+   EndDo
 
    RETURN Self
 
@@ -1120,12 +1120,12 @@ METHOD TBrowse:left()
 METHOD TBrowse:right()
 
    ::setUnstable()
-   DO WHILE TRUE
+   Do While TRUE
       ::nColPos++
       IF ::nColPos < 1 .OR. ::nColPos > ::colCount .OR. ::aColData[::nColPos][_TBCI_CELLWIDTH] != 0
          EXIT
       ENDIF
-   ENDDO
+   EndDo
 
    RETURN Self
 
@@ -1562,13 +1562,13 @@ STATIC FUNCTION _NEXTCOLUMN(aColData, nCol)
 
    LOCAL aCol
 
-   DO WHILE nCol <= Len(aColData)
+   Do While nCol <= Len(aColData)
       aCol := aColData[nCol]
       IF aCol[_TBCI_CELLWIDTH] > 0
          RETURN nCol
       ENDIF
       ++nCol
-   ENDDO
+   EndDo
 
    RETURN 0
 
@@ -1577,13 +1577,13 @@ STATIC FUNCTION _PREVCOLUMN(aColData, nCol)
 
    LOCAL aCol
 
-   DO WHILE nCol >= 1
+   Do While nCol >= 1
       aCol := aColData[nCol]
       IF aCol[_TBCI_CELLWIDTH] > 0
          RETURN nCol
       ENDIF
       --nCol
-   ENDDO
+   EndDo
 
    RETURN 0
 
@@ -2439,7 +2439,7 @@ METHOD TBrowse:hitTest(mRow, mCol)
 #endif
          lFirst := TRUE
          nCol := 1
-         DO WHILE nCol <= ::nRightVisible
+         Do While nCol <= ::nRightVisible
             aCol := ::aColData[nCol]
             IF aCol[_TBCI_COLPOS] != NIL
                IF lFirst
@@ -2465,7 +2465,7 @@ METHOD TBrowse:hitTest(mRow, mCol)
             ELSE
                nCol++
             ENDIF
-         ENDDO
+         EndDo
       ENDIF
    ENDIF
 
@@ -2498,7 +2498,7 @@ STATIC PROCEDURE _mBrwPos(oBrw, mRow, mCol)
 
       nPos := 0
       nCol := 1
-      DO WHILE nCol <= oBrw:nRightVisible
+      Do While nCol <= oBrw:nRightVisible
          aCol := oBrw:aColData[nCol]
          IF aCol[_TBCI_COLPOS] != NIL
             IF nPos != 0
@@ -2516,7 +2516,7 @@ STATIC PROCEDURE _mBrwPos(oBrw, mRow, mCol)
          ELSE
             nCol++
          ENDIF
-      ENDDO
+      EndDo
       mCol := nPos
       IF nPos == 0
          mRow := 0
@@ -2692,24 +2692,24 @@ FUNCTION TBMouse(oBrw, nMRow, nMCol)
 
       DO CASE
       CASE (n := oBrw:mRowPos - oBrw:rowPos) < 0
-         DO WHILE ++n <= 0
+         Do While ++n <= 0
             oBrw:up()
-         ENDDO
+         EndDo
       CASE n > 0
-         DO WHILE --n >= 0
+         Do While --n >= 0
             oBrw:down()
-         ENDDO
+         EndDo
       ENDCASE
 
       DO CASE
       CASE (n := oBrw:mColPos - oBrw:colPos) < 0
-         DO WHILE ++n <= 0
+         Do While ++n <= 0
             oBrw:left()
-         ENDDO
+         EndDo
       CASE n > 0
-         DO WHILE --n >= 0
+         Do While --n >= 0
             oBrw:right()
-         ENDDO
+         EndDo
       ENDCASE
 
       RETURN TBR_CONTINUE

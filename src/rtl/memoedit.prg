@@ -92,7 +92,7 @@ METHOD HBMemoEditor:MemoInit(xUserFunction)
 
    IF ::UserFunctionIsValid()
 
-      DO WHILE TRUE
+      Do While TRUE
          SWITCH nUdfReturn := ::xDo(ME_INIT)
          // Tested with CL52 that only these 3 actions are processed and
          // then ME_INIT call repeated
@@ -105,7 +105,7 @@ METHOD HBMemoEditor:MemoInit(xUserFunction)
             LOOP
          ENDSWITCH
          EXIT
-      ENDDO
+      EndDo
    ENDIF
 
    RETURN Self
@@ -123,7 +123,7 @@ METHOD HBMemoEditor:Edit()
    // user function if handle them the standard way or not
    IF ::lEditAllow .AND. ::UserFunctionIsValid()
 
-      DO WHILE !::lExitEdit
+      Do While !::lExitEdit
 
          // I need to test this condition here since I never block inside HBEditor:Edit()
          // if there is an user function
@@ -144,7 +144,7 @@ METHOD HBMemoEditor:Edit()
          ELSE
             ::super:Edit(nKey)
          ENDIF
-      ENDDO
+      EndDo
    ELSE
       // If I can't edit text buffer or there is not a user function enter standard HBEditor
       // ::Edit() method which is able to handle everything
