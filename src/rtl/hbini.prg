@@ -88,7 +88,7 @@ FUNCTION hb_iniNew(lAutoMain)
 
    LOCAL hIni := {=>}
 
-   IF hb_defaultValue(lAutoMain, .T.)
+   IF hb_defaultValue(lAutoMain, TRUE)
       hIni["MAIN"] := {=>}
    ENDIF
 
@@ -102,8 +102,8 @@ FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
    LOCAL hIni := {=>}
 
    // Default case sensitiveness for keys
-   hb_default(@lKeyCaseSens, .T.)
-   hb_default(@lAutoMain, .T.)
+   hb_default(@lKeyCaseSens, TRUE)
+   hb_default(@lAutoMain, TRUE)
 
    hb_HCaseMatch(hIni, lKeyCaseSens)
 
@@ -166,7 +166,7 @@ STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
    hCurrentSection := IIf(lAutoMain, hIni["MAIN"], hIni)
 
    cLine := ""
-   FOR EACH cData IN hb_ATokens(cData, .T.)
+   FOR EACH cData IN hb_ATokens(cData, TRUE)
       cLine += AllTrim(cData)
 
       // Sum up lines terminating with "<space>||" ...
@@ -234,35 +234,35 @@ FUNCTION hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
    cBuffer := hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
    IF !hb_IsString(cBuffer)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF hb_IsString(xFileName)
       hFile := FCreate(xFileName)
-      lClose := .T.
+      lClose := TRUE
    ELSEIF hb_IsNumeric(xFileName)
       hFile := xFileName
-      lClose := .F.
+      lClose := FALSE
    ELSE
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF hFile == F_ERROR
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF FWrite(hFile, cBuffer) != hb_BLen(cBuffer)
       IF lClose
          FClose(hFile)
       ENDIF
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF lClose
       FClose(hFile)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
@@ -278,11 +278,11 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       cBuffer += cCommentBegin + cNewLine
    ENDIF
 
-   hb_default(@lAutoMain, .T.)
+   hb_default(@lAutoMain, TRUE)
 
-   // Fix if lAutoMain is .T. but I haven't a MAIN section
+   // Fix if lAutoMain is TRUE but I haven't a MAIN section
    IF lAutoMain .AND. !("MAIN" $ hIni)
-      lAutoMain := .F.
+      lAutoMain := FALSE
    ENDIF
 
    // Write top-level section

@@ -38,7 +38,7 @@ RETURN was_NMHDR():new()
 CLASS WAS_NMHDR
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

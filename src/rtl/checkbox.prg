@@ -92,14 +92,14 @@ CREATE CLASS CheckBox FUNCTION HBCheckBox
    PROTECTED:
 
    VAR aBitmaps   INIT {"check_f.bmu", "check_e.bmu"}
-   VAR lBuffer    INIT .F.
+   VAR lBuffer    INIT FALSE
    VAR nCapCol
    VAR nCapRow
    VAR cCaption
    VAR nCol
    VAR cColorSpec
    VAR bFBlock
-   VAR lHasFocus  INIT .F.
+   VAR lHasFocus  INIT FALSE
    VAR cMessage   INIT ""
    VAR nRow
    VAR bSBlock
@@ -113,7 +113,7 @@ METHOD CheckBox:setFocus()
 
    IF !::lHasFocus
       ::nCursor := SetCursor(SC_NONE)
-      ::lHasFocus := .T.
+      ::lHasFocus := TRUE
       ::display()
 
       IF hb_IsEvalItem(::bFBlock)
@@ -142,7 +142,7 @@ METHOD CheckBox:select(lState)
 METHOD CheckBox:killFocus()
 
    IF ::lHasFocus
-      ::lHasFocus := .F.
+      ::lHasFocus := FALSE
 
       IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
@@ -309,7 +309,7 @@ METHOD CheckBox:style(cStyle)
    RETURN ::cStyle
 
 METHOD CheckBox:typeOut()
-   RETURN .F.
+   RETURN FALSE
 
 METHOD CheckBox:Init(nRow, nCol, cCaption)
 

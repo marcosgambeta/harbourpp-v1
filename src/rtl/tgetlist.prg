@@ -73,7 +73,7 @@ CREATE CLASS HBGetList
 
    EXPORTED:
 
-   VAR HasFocus        AS LOGICAL   INIT .F.
+   VAR HasFocus        AS LOGICAL   INIT FALSE
 
 #ifdef HB_COMPAT_C53
    METHOD ReadModal(nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor)
@@ -120,11 +120,11 @@ CREATE CLASS HBGetList
    VAR oGet
    VAR aGetList
 
-   VAR lUpdated        AS LOGICAL   INIT .F.
+   VAR lUpdated        AS LOGICAL   INIT FALSE
    VAR bFormat
-   VAR lKillRead       AS LOGICAL   INIT .F.
-   VAR lBumpTop        AS LOGICAL   INIT .F.
-   VAR lBumpBot        AS LOGICAL   INIT .F.
+   VAR lKillRead       AS LOGICAL   INIT FALSE
+   VAR lBumpTop        AS LOGICAL   INIT FALSE
+   VAR lBumpBot        AS LOGICAL   INIT FALSE
    VAR nLastExitState               INIT 0
    VAR nLastPos        AS NUMERIC   INIT 0
    VAR oActiveGet
@@ -161,7 +161,7 @@ METHOD HBGetList:ReadModal()
    ::nReadProcLine := ProcLine(2)
 
 #ifdef HB_COMPAT_C53
-   ::nPos := ::Settle(hb_defaultValue(nPos, 0), .T.)
+   ::nPos := ::Settle(hb_defaultValue(nPos, 0), TRUE)
 
    IF (lMsgFlag := hb_IsNumeric(nMsgRow) .AND. hb_IsNumeric(nMsgLeft) .AND. hb_IsNumeric(nMsgRight))
 
@@ -523,7 +523,7 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
 METHOD HBGetList:GetPreValidate(oGet, aMsg)
 
    LOCAL lUpdated
-   LOCAL lWhen := .T.
+   LOCAL lWhen := TRUE
 
    hb_default(@oGet, ::oGet)
 
@@ -545,7 +545,7 @@ METHOD HBGetList:GetPreValidate(oGet, aMsg)
    ENDIF
 
    IF ::lKillRead
-      lWhen := .F.
+      lWhen := FALSE
       oGet:exitState := GE_ESCAPE
    ELSEIF !lWhen
       oGet:exitState := GE_WHEN
@@ -558,7 +558,7 @@ METHOD HBGetList:GetPreValidate(oGet, aMsg)
 METHOD HBGetList:GetPostValidate(oGet, aMsg)
 
    LOCAL lUpdated
-   LOCAL lValid := .T.
+   LOCAL lValid := TRUE
 #ifdef HB_COMPAT_C53
    LOCAL nOldCursor
 #endif
@@ -566,19 +566,19 @@ METHOD HBGetList:GetPostValidate(oGet, aMsg)
    hb_default(@oGet, ::oGet)
 
    IF oGet:exitState == GE_ESCAPE
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    IF oGet:badDate
       oGet:home()
       ::DateMsg()
       ::ShowScoreboard()
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF oGet:changed
       oGet:assign()
-      ::lUpdated := .T.
+      ::lUpdated := TRUE
    ENDIF
 
 #ifdef HB_COMPAT_C53
@@ -603,7 +603,7 @@ METHOD HBGetList:GetPostValidate(oGet, aMsg)
       oGet:updateBuffer()
 
 #ifdef HB_COMPAT_C53
-      ::lUpdated := IIf(oGet:changed, .T., lUpdated)
+      ::lUpdated := IIf(oGet:changed, TRUE, lUpdated)
 #else
       ::lUpdated := lUpdated
 #endif
@@ -612,7 +612,7 @@ METHOD HBGetList:GetPostValidate(oGet, aMsg)
 
       IF ::lKillRead
          oGet:exitState := GE_ESCAPE
-         lValid := .T.
+         lValid := TRUE
       ENDIF
    ENDIF
 
@@ -627,7 +627,7 @@ METHOD HBGetList:GetDoSetKey(bKeyBlock, oGet)
 
    IF oGet:changed
       oGet:assign()
-      ::lUpdated := .T.
+      ::lUpdated := TRUE
    ENDIF
 
    lUpdated := ::lUpdated
@@ -645,7 +645,7 @@ METHOD HBGetList:GetDoSetKey(bKeyBlock, oGet)
       oGet:exitState := GE_ESCAPE
    ENDIF
 
-   RETURN hb_defaultValue(lSetKey, .T.)
+   RETURN hb_defaultValue(lSetKey, TRUE)
 
 METHOD HBGetList:Settle(nPos, lInit)
 
@@ -655,7 +655,7 @@ METHOD HBGetList:Settle(nPos, lInit)
 
    IF nPos == 0
       nExitState := GE_DOWN
-   ELSEIF nPos > 0 .AND. hb_defaultValue(lInit, .F.)  // NOTE: Never .T. in C5.2 mode.
+   ELSEIF nPos > 0 .AND. hb_defaultValue(lInit, FALSE)  // NOTE: Never TRUE in C5.2 mode.
       nExitState := GE_NOEXIT
    ELSE
       nExitState := ::aGetList[nPos]:exitState
@@ -667,8 +667,8 @@ METHOD HBGetList:Settle(nPos, lInit)
 
    IF nExitState != GE_WHEN
       ::nLastPos := nPos
-      ::lBumpTop := .F.
-      ::lBumpBot := .F.
+      ::lBumpTop := FALSE
+      ::lBumpBot := FALSE
    ELSE
       IF ::nLastExitState != 0
          nExitState := ::nLastExitState
@@ -691,13 +691,13 @@ METHOD HBGetList:Settle(nPos, lInit)
 
    CASE GE_TOP
       nPos := 1
-      ::lBumpTop := .T.
+      ::lBumpTop := TRUE
       nExitState := GE_DOWN
       EXIT
 
    CASE GE_BOTTOM
       nPos := Len(::aGetList)
-      ::lBumpBot := .T.
+      ::lBumpBot := TRUE
       nExitState := GE_UP
       EXIT
 
@@ -715,14 +715,14 @@ METHOD HBGetList:Settle(nPos, lInit)
 
    IF nPos == 0
       IF !Set(_SET_EXIT) .AND. !::lBumpBot
-         ::lBumpTop := .T.
+         ::lBumpTop := TRUE
          nPos       := ::nLastPos
          nExitState := GE_DOWN
       ENDIF
 
    ELSEIF nPos == Len(::aGetList) + 1
       IF !Set(_SET_EXIT) .AND. nExitState != GE_ENTER .AND. !::lBumpTop
-         ::lBumpBot := .T.
+         ::lBumpBot := TRUE
          nPos       := ::nLastPos
          nExitState := GE_UP
       ELSE
@@ -988,7 +988,7 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
             nKey := 0
          ENDIF
 
-      ELSEIF !((cKey := hb_keyChar(nKey)) == "") .AND. (nButton := oGUI:FindText(cKey, oGUI:Value + 1, .F., .F.)) != 0
+      ELSEIF !((cKey := hb_keyChar(nKey)) == "") .AND. (nButton := oGUI:FindText(cKey, oGUI:Value + 1, FALSE, FALSE)) != 0
          oGUI:Select(nButton)
 
       ENDIF
@@ -1070,7 +1070,7 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
          nButton := 1
       ENDIF
 
-      lClose := .T.
+      lClose := TRUE
 
       IF nButton != 0
       ELSEIF (nButton := oGUI:hitTest(nMRow, nMCol)) == HTNOWHERE
@@ -1087,12 +1087,12 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
       ELSEIF nButton == HTDROPBUTTON
          IF !oGUI:IsOpen
             oGUI:Open()
-            lClose := .F.
+            lClose := FALSE
          ENDIF
 
       ELSEIF nButton >= HTSCROLLFIRST .AND. nButton <= HTSCROLLLAST
          oGUI:Scroll(nButton)
-         lClose := .F.
+         lClose := FALSE
 
       ENDIF
 
@@ -1113,7 +1113,7 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
 METHOD HBGetList:GUIPreValidate(oGet, oGUI, aMsg)
 
    LOCAL lUpdated
-   LOCAL lWhen := .T.
+   LOCAL lWhen := TRUE
 
    hb_default(@oGet, ::oGet)
 
@@ -1134,7 +1134,7 @@ METHOD HBGetList:GUIPreValidate(oGet, oGUI, aMsg)
    ENDIF
 
    IF ::lKillRead
-      lWhen := .F.
+      lWhen := FALSE
       oGet:exitState := GE_ESCAPE
    ELSEIF !lWhen
       oGet:exitState := GE_WHEN
@@ -1147,14 +1147,14 @@ METHOD HBGetList:GUIPreValidate(oGet, oGUI, aMsg)
 METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
 
    LOCAL lUpdated
-   LOCAL lValid := .T.
+   LOCAL lValid := TRUE
    LOCAL xOldValue
    LOCAL xNewValue
 
    hb_default(@oGet, ::oGet)
 
    IF oGet:exitState == GE_ESCAPE
-      RETURN .T.                   // NOTE
+      RETURN TRUE                   // NOTE
    ENDIF
 
    IF !oGUI:ClassName() == "TBROWSE"
@@ -1174,7 +1174,7 @@ METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
 
    IF !xOldValue == xNewValue
       oGet:varPut(xNewValue)
-      ::lUpdated := .T.
+      ::lUpdated := TRUE
    ENDIF
 
    // Check VALID condition if specified
@@ -1198,7 +1198,7 @@ METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
 
       IF ::lKillRead
          oGet:exitState := GE_ESCAPE  // Provokes ReadModal() exit
-         lValid := .T.
+         lValid := TRUE
       ENDIF
 
    ENDIF
@@ -1323,7 +1323,7 @@ METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
       oTB := oGet:control
 
       lAutoLite := oTB:Autolite
-      oTB:Autolite := .T.
+      oTB:Autolite := TRUE
       oTB:Hilite()
 
       IF oGet:exitState == GE_NOEXIT
@@ -1603,7 +1603,7 @@ METHOD HBGetList:ShowGetMsg(oGet, aMsg)
       cMsg := IIf(hb_IsObject(oGet:control), oGet:control:message, oGet:message)
 
       IF !Empty(cMsg)
-         lMOldState := MSetCursor(.F.)
+         lMOldState := MSetCursor(FALSE)
          hb_DispOutAt(aMsg[MSGROW], aMsg[MSGLEFT], PadC(cMsg, aMsg[MSGRIGHT] - aMsg[MSGLEFT] + 1), aMsg[MSGCOLOR])
          MSetCursor(lMOldState)
       ENDIF
@@ -1623,7 +1623,7 @@ METHOD HBGetList:EraseGetMsg(aMsg)
    LOCAL lMOldState
 
    IF !Empty(aMsg) .AND. aMsg[MSGFLAG]
-      lMOldState := MSetCursor(.F.)
+      lMOldState := MSetCursor(FALSE)
       RestScreen(aMsg[MSGROW], aMsg[MSGLEFT], aMsg[MSGROW], aMsg[MSGRIGHT], ::cMsgSaveS)
       MSetCursor(lMOldState)
    ENDIF

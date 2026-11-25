@@ -91,7 +91,7 @@ CREATE CLASS RadioButtn FUNCTION HBRadioButton
    PROTECTED:
 
    VAR aBitmaps   INIT {"radio_f.bmu", "radio_e.bmu"}
-   VAR lBuffer    INIT .F.
+   VAR lBuffer    INIT FALSE
    VAR cData
    VAR nCapCol
    VAR nCapRow
@@ -99,7 +99,7 @@ CREATE CLASS RadioButtn FUNCTION HBRadioButton
    VAR nCol
    VAR cColorSpec
    VAR bFBlock
-   VAR lHasFocus  INIT .F.
+   VAR lHasFocus  INIT FALSE
    VAR nRow
    VAR bSBlock
    VAR cStyle     INIT "(* )"
@@ -109,7 +109,7 @@ ENDCLASS
 METHOD RadioButtn:setFocus()
 
    IF !::lHasFocus
-      ::lHasFocus := .T.
+      ::lHasFocus := TRUE
       ::display()
 
       IF hb_IsEvalItem(::bFBlock)
@@ -135,7 +135,7 @@ METHOD RadioButtn:select(lState)
 METHOD RadioButtn:killFocus()
 
    IF ::lHasFocus
-      ::lHasFocus := .F.
+      ::lHasFocus := FALSE
 
       IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
@@ -188,7 +188,7 @@ METHOD RadioButtn:isAccel(xKey)
    CASE hb_IsNumeric(xKey)
       cKey := hb_keyChar(xKey)
    OTHERWISE
-      RETURN .F.
+      RETURN FALSE
    ENDCASE
 
    RETURN Len(cKey) > 0 .AND. hb_AtI("&" + cKey, ::cCaption) > 0

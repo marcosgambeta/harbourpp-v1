@@ -71,7 +71,7 @@ CREATE CLASS TBColumn
 #ifdef HB_COMPAT_C53
    VAR bPreBlock    PROTECTED                        /* 12. */
    VAR bPostBlock   PROTECTED                        /* 13. */
-   VAR aSetStyle    PROTECTED INIT {.F., .F., .F.}   /* 14. TBC_READWRITE, TBC_MOVE, TBC_SIZE */
+   VAR aSetStyle    PROTECTED INIT {FALSE, FALSE, FALSE}   /* 14. TBC_READWRITE, TBC_MOVE, TBC_SIZE */
 #endif
    /* --- End of CA-Cl*pper compatible TBColumn instance area --- */
 

@@ -113,7 +113,7 @@ CREATE CLASS RadioGroup FUNCTION HBRadioGroup
    VAR cColdBox   INIT HB_B_SINGLE_UNI
    VAR cColorSpec
    VAR bFBlock
-   VAR lHasFocus  INIT .F.
+   VAR lHasFocus  INIT FALSE
    VAR cHotBox    INIT HB_B_DOUBLE_UNI
    VAR nItemCount INIT 0
    VAR nLeft
@@ -142,7 +142,7 @@ METHOD RadioGroup:addItem(oRadioButton)
 METHOD RadioGroup:delItem(nPos)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
-      hb_ADel(::aItems, nPos, .T.)
+      hb_ADel(::aItems, nPos, TRUE)
       ::nItemCount--
    ENDIF
 
@@ -297,7 +297,7 @@ METHOD RadioGroup:insItem(nPos, oRadioButton)
 
    IF hb_IsObject(oRadioButton) .AND. oRadioButton:ClassName() == "RADIOBUTTN" .AND. nPos < ::nItemCount
 
-      hb_AIns(::aItems, nPos, oRadioButton, .T.)
+      hb_AIns(::aItems, nPos, oRadioButton, TRUE)
       ::nItemCount++
    ENDIF
 
@@ -310,13 +310,13 @@ METHOD RadioGroup:killFocus()
 
    IF ::lHasFocus
 
-      ::lHasFocus := .F.
+      ::lHasFocus := FALSE
 
       IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 
-      nOldMCur := MSetCursor(.F.)
+      nOldMCur := MSetCursor(FALSE)
 
       DispBegin()
 
@@ -342,9 +342,9 @@ METHOD RadioGroup:setFocus()
    IF !::lHasFocus
 
       ::nCursor := SetCursor(SC_NONE)
-      ::lHasFocus := .T.
+      ::lHasFocus := TRUE
 
-      nOldMCur := MSetCursor(.F.)
+      nOldMCur := MSetCursor(FALSE)
 
       DispBegin()
 
@@ -459,18 +459,18 @@ METHOD RadioGroup:setStyle(cStyle)
 
 METHOD RadioGroup:changeButton(nUnselect, nSelect)
 
-   LOCAL nOldMCur := MSetCursor(.F.)
+   LOCAL nOldMCur := MSetCursor(FALSE)
 
    IF nUnselect != nSelect
 
       DispBegin()
 
       IF nUnselect > 0
-         ::aItems[nUnselect]:select(.F.)
+         ::aItems[nUnselect]:select(FALSE)
          ::aItems[nUnselect]:display()
       ENDIF
       IF nSelect > 0
-         ::aItems[nSelect]:select(.T.)
+         ::aItems[nSelect]:select(TRUE)
          ::aItems[nSelect]:display()
       ENDIF
 

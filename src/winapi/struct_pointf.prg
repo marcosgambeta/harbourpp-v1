@@ -38,7 +38,7 @@ RETURN was_POINTF():new()
 CLASS WAS_POINTF
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

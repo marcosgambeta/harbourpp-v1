@@ -68,19 +68,19 @@ FUNCTION __dbDelim(lExport, cFile, cDelimArg, aFields, bFor, bWhile, nNext, nRec
    ENDIF
 
    IF Empty(aStruct := __dbStructFilter(dbStruct(), aFields))
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF lExport
-      dbCreate(cFile, aStruct, cRDD, .T., "", cDelimArg)
+      dbCreate(cFile, aStruct, cRDD, TRUE, "", cDelimArg)
       nDstArea := Select()
       IF nDstArea == nSrcArea
          nDstArea := NIL
       ENDIF
       dbSelectArea(nSrcArea)
    ELSE
-      IF !__dbOpenSDF(cFile, aStruct, cRDD, .T., "", cDelimArg)
-         RETURN .F.
+      IF !__dbOpenSDF(cFile, aStruct, cRDD, TRUE, "", cDelimArg)
+         RETURN FALSE
       ENDIF
       nSrcArea := Select()
    ENDIF
@@ -101,7 +101,7 @@ FUNCTION __dbDelim(lExport, cFile, cDelimArg, aFields, bFor, bWhile, nNext, nRec
       dbSelectArea(nDstArea)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 #else
 

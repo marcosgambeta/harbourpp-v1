@@ -66,7 +66,7 @@ FUNCTION ShowMsg(aMsg, lMode)
    HB_SYMBOL_UNUSED(aMsg)
    HB_SYMBOL_UNUSED(lMode)
 
-   RETURN .F.
+   RETURN FALSE
 
 // ShortCut processing for initial Get or Menu Item.
 FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
@@ -91,7 +91,7 @@ FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
       Eval(oItem:data, oItem)
       nID := oItem:ID
 
-      RETURN .T.
+      RETURN TRUE
 
    // Test and assignment for TopBar MenuItem:
    CASE nShortCut == 0
@@ -108,7 +108,7 @@ FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
 
          IF (oItem := oMenu:getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
 
-            RETURN .T.
+            RETURN TRUE
          ENDIF
 
          IF ++nItem > nTotal
@@ -118,7 +118,7 @@ FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
 
    ENDCASE
 
-   RETURN .F.
+   RETURN FALSE
 
 // Navigates to the next Get or Menu Item from the
 // Current if more than one uses the same ShortCut.
@@ -137,7 +137,7 @@ FUNCTION IsQuick(oMenu, nKey, /* @ */ nID)
 
          IF (oItem := oMenu:getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
 
-            RETURN .T.
+            RETURN TRUE
          ENDIF
       NEXT
 
@@ -147,10 +147,10 @@ FUNCTION IsQuick(oMenu, nKey, /* @ */ nID)
       Eval(oItem:data, oItem)
       nID := oItem:ID
 
-      RETURN .T.
+      RETURN TRUE
 
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 #endif

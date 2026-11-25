@@ -148,7 +148,7 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 
 PROCEDURE __NoNoAlert()
 
-   s_lNoAlert := .F.
+   s_lNoAlert := FALSE
 
    RETURN
 

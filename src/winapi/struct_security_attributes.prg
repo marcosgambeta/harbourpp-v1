@@ -38,7 +38,7 @@ RETURN was_SECURITY_ATTRIBUTES():new()
 CLASS WAS_SECURITY_ATTRIBUTES
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

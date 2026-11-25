@@ -99,7 +99,7 @@ CREATE CLASS ScrollBar FUNCTION HBScrollBar
    VAR nTotal     INIT 100
    VAR bSBlock
 
-   VAR lOverride  INIT .F.
+   VAR lOverride  INIT FALSE
 
    METHOD CalcThumbPos()
 
@@ -148,10 +148,10 @@ METHOD ScrollBar:display()
 
       DispEnd()
 
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD ScrollBar:update()
 
@@ -175,10 +175,10 @@ METHOD ScrollBar:update()
 
       DispEnd()
 
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD ScrollBar:hitTest(nMRow, nMCol)
 
@@ -359,14 +359,14 @@ METHOD ScrollBar:CalcThumbPos()
    LOCAL nTotal := ::nTotal
 
    IF nBarLength < 2 .OR. nTotal < 2
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF !::lOverride
       ::nThumbPos := Min(Max(Round(::nCurrent * ((nBarLength - 1) / nTotal) + 1, 0), 1), nBarLength)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 // New definitions for better coding. These are screen codepage dependent,
 // but can be changed with the setStyle method.

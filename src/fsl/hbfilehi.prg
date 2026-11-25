@@ -69,7 +69,7 @@ FUNCTION hb_PathNormalize(cPath)
             (cDir:__enumIndex() > 2 .OR. ;
             (cDir:__enumIndex() == 2 .AND. !Empty(aDir[1]))))
 
-            hb_ADel(aDir, cDir:__enumIndex(), .T.)
+            hb_ADel(aDir, cDir:__enumIndex(), TRUE)
 
          ELSEIF !(cDir == "..") .AND. ;
             !Empty(cDir) .AND. ;
@@ -77,8 +77,8 @@ FUNCTION hb_PathNormalize(cPath)
 
             IF !cDir:__enumIsLast() .AND. ;
                aDir[cDir:__enumIndex() + 1] == ".."
-               hb_ADel(aDir, cDir:__enumIndex() + 1, .T.)
-               hb_ADel(aDir, cDir:__enumIndex(), .T.)
+               hb_ADel(aDir, cDir:__enumIndex() + 1, TRUE)
+               hb_ADel(aDir, cDir:__enumIndex(), TRUE)
             ENDIF
          ENDIF
       NEXT
@@ -176,7 +176,7 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
    ENDIF
 
    // Force to return relative paths even when base is different.
-   IF hb_defaultValue(lForceRelative, .T.) .AND. ;
+   IF hb_defaultValue(lForceRelative, TRUE) .AND. ;
       hb_DirExists(cPathBase + (cTestTarget := s_FN_FromArray(aPathTarget, tmp, cTargetFileName, Replicate(".." + hb_ps(), Len(aPathBase) - tmp))))
       RETURN cTestTarget
    ENDIF
@@ -274,7 +274,7 @@ FUNCTION hb_DirBuild(cDir)
    LOCAL tmp
 
    IF !hb_IsString(cDir)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    cDir := hb_PathNormalize(cDir)
@@ -306,24 +306,24 @@ FUNCTION hb_DirBuild(cDir)
          IF !cDirItem == ""  // Skip root path, if any
             cDirTemp += cDirItem
             IF hb_FileExists(cDirTemp)
-               RETURN .F.
+               RETURN FALSE
             ELSEIF !hb_DirExists(cDirTemp)
                IF hb_DirCreate(cDirTemp) != 0
-                  RETURN .F.
+                  RETURN FALSE
                ENDIF
             ENDIF
          ENDIF
       NEXT
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION hb_DirUnbuild(cDir)
 
    LOCAL tmp
 
    IF !hb_IsString(cDir)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    IF hb_DirExists(cDir)
@@ -333,7 +333,7 @@ FUNCTION hb_DirUnbuild(cDir)
       DO WHILE !Empty(cDir)
          IF hb_DirExists(cDir) .AND. ;
             hb_DirDelete(cDir) != 0
-            RETURN .F.
+            RETURN FALSE
          ENDIF
          IF (tmp := RAt(hb_ps(), cDir)) == 0  // FIXME: use hb_URAt() function
             EXIT
@@ -346,4 +346,4 @@ FUNCTION hb_DirUnbuild(cDir)
       ENDDO
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE

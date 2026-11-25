@@ -38,7 +38,7 @@ RETURN was_COMBOBOXINFO():new()
 CLASS WAS_COMBOBOXINFO
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

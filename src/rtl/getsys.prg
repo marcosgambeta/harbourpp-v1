@@ -64,14 +64,14 @@ FUNCTION ReadModal(GetList)
 
    IF Empty(GetList)
       SetPos(MaxRow() - 1, 0)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    oGetList := HBGetList():New(GetList)
 
    oSaveGetList := __GetListActive()
 #ifdef HB_COMPAT_C53
-// oSaveGetList:ReadStats(SLUPDATED, .F.)
+// oSaveGetList:ReadStats(SLUPDATED, FALSE)
 // oSaveGetList:ReadStats(SXREADVAR, ReadVar(""))
 // oSaveGetList:ReadStats(SOACTIVEGET, GetActive(NIL))
 #endif
@@ -188,7 +188,7 @@ FUNCTION GetPreValidate(oGet)
 #endif
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 #ifdef HB_COMPAT_C53
 FUNCTION GetPostValidate(oGet, aMsg)
@@ -206,7 +206,7 @@ FUNCTION GetPostValidate(oGet)
 #endif
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION ReadExit(lExit)
    RETURN Set(_SET_EXIT, lExit)
@@ -218,14 +218,14 @@ FUNCTION Updated()
 
    LOCAL oGetList := __GetListLast()
 
-   RETURN IIf(oGetList != NIL, oGetList:Updated(), .F.)
+   RETURN IIf(oGetList != NIL, oGetList:Updated(), FALSE)
 
 PROCEDURE __KillRead()
 
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
-      oGetList:KillRead(.T.)
+      oGetList:KillRead(TRUE)
    ENDIF
 
    RETURN
@@ -242,7 +242,7 @@ FUNCTION ReadUpdated(lUpdated)
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION ReadKill(lKill)
 
@@ -256,7 +256,7 @@ FUNCTION ReadKill(lKill)
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION ReadFormat(bFormat)
 
@@ -301,13 +301,13 @@ FUNCTION RangeCheck(oGet, xDummy, xLow, xHigh)
    HB_SYMBOL_UNUSED(xDummy)
 
    IF !oGet:changed
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    xValue := oGet:varGet()
 
    IF xValue >= xLow .AND. xValue <= xHigh
-      RETURN .T.
+      RETURN TRUE
    ENDIF
 
    IF Set(_SET_SCOREBOARD)
@@ -324,4 +324,4 @@ FUNCTION RangeCheck(oGet, xDummy, xLow, xHigh)
 
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE

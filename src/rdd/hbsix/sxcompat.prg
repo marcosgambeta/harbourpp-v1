@@ -166,10 +166,10 @@ FUNCTION sxLog(/* @ */ xKeyVal)
       SWITCH xKeyVal
       CASE  "T";  CASE  "t";  CASE  "Y";  CASE  "y"
       CASE ".T."; CASE ".t."; CASE ".Y."; CASE ".y."
-         xKeyVal := .T.
+         xKeyVal := TRUE
          EXIT
       OTHERWISE
-         xKeyVal := .F.
+         xKeyVal := FALSE
          EXIT
       ENDSWITCH
       EXIT
@@ -177,7 +177,7 @@ FUNCTION sxLog(/* @ */ xKeyVal)
       xKeyVal := xKeyVal != 0
       EXIT
    OTHERWISE
-      xKeyVal := .F.
+      xKeyVal := FALSE
       EXIT
    ENDSWITCH
 
@@ -294,7 +294,7 @@ FUNCTION sx_Tags(xIndex)
 
 FUNCTION sx_SetTag(xTag, xIndex)
 
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
    LOCAL nOrder := 0
    LOCAL nOldOrd
    LOCAL cIndex
@@ -336,7 +336,7 @@ FUNCTION sx_SetTag(xTag, xIndex)
          ENDIF
       ELSEIF Empty(xTag)
          ordSetFocus(0)
-         lRet := .T.
+         lRet := TRUE
       ENDIF
    ENDIF
 
@@ -344,7 +344,7 @@ FUNCTION sx_SetTag(xTag, xIndex)
 
 FUNCTION sx_KillTag(xTag, xIndex)
 
-   LOCAL lRet := .F.
+   LOCAL lRet := FALSE
    LOCAL nOrder
    LOCAL cIndex
 
@@ -449,7 +449,7 @@ FUNCTION rdd_Info(xID)
 
    RETURN { ;
       cRDD, ;
-      .T., ;
+      TRUE, ;
       hb_rddInfo(RDDI_TABLEEXT, NIL, cRDD), ;
       hb_rddInfo(RDDI_ORDBAGEXT, NIL, cRDD), ;
       hb_rddInfo(RDDI_ORDEREXT, NIL, cRDD), ;
@@ -566,11 +566,11 @@ FUNCTION sx_IsLocked(xRec)
       IF sx_Rlock(xRecord)
          sx_Unlock(xRecord)
       ELSE
-         RETURN .T.
+         RETURN TRUE
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
 
@@ -585,10 +585,10 @@ FUNCTION sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
          cPrevTrigger := dbInfo(DBI_TRIGGER)
          SWITCH nAction
          CASE TRIGGER_ENABLE
-            dbInfo(DBI_TRIGGER, .T.)
+            dbInfo(DBI_TRIGGER, TRUE)
             EXIT
          CASE TRIGGER_DISABLE
-            dbInfo(DBI_TRIGGER, .F.)
+            dbInfo(DBI_TRIGGER, FALSE)
             EXIT
          CASE TRIGGER_REMOVE
             dbInfo(DBI_TRIGGER, "")

@@ -73,7 +73,7 @@ METHOD HBDbArray:New(aArray, cVarName, lEditable)
 
    ::arrayName := cVarName
    ::TheArray := aArray
-   ::lEditable := hb_defaultValue(lEditable, .T.)
+   ::lEditable := hb_defaultValue(lEditable, TRUE)
 
    ::addWindows(::TheArray)
 
@@ -98,7 +98,7 @@ METHOD HBDbArray:addWindows(aArray, nRow)
    ENDIF
 
    ::nCurWindow++
-   oWndSets:lFocused := .T.
+   oWndSets:lFocused := TRUE
    AAdd(::aWindows, oWndSets)
 
    oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
@@ -190,12 +190,12 @@ METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
             __dbgAlert("Array is empty")
          ELSE
             SetPos(oWnd:nBottom, oWnd:nLeft)
-            ::aWindows[::nCurWindow]:lFocused := .F.
+            ::aWindows[::nCurWindow]:lFocused := FALSE
             ::arrayname := ::arrayname + "[" + hb_ntos(nSet) + "]"
             ::AddWindows(aArray[nSet], oBrwSets:RowPos + oBrwSets:nTop)
             ::arrayname := cOldName
 
-            hb_ADel(::aWindows, ::nCurWindow, .T.)
+            hb_ADel(::aWindows, ::nCurWindow, TRUE)
             IF ::nCurWindow == 0
                ::nCurWindow := 1
             ELSE

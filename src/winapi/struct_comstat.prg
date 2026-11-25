@@ -38,7 +38,7 @@ RETURN was_COMSTAT():new()
 CLASS WAS_COMSTAT
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

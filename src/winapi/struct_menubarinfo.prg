@@ -38,7 +38,7 @@ RETURN was_MENUBARINFO():new()
 CLASS WAS_MENUBARINFO
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

@@ -167,7 +167,7 @@ METHOD HBBrwText:SetActiveLine(n)
 
 METHOD HBBrwText:GetLine()
    RETURN IIf(::lLineNumbers, PadR(hb_ntos(::nRow) + ":", ::nLineNoLen), "") + ;
-      MemoLine(::aRows[::nRow], ::nMaxLineLen, 1, ::nTabWidth, .F.)
+      MemoLine(::aRows[::nRow], ::nMaxLineLen, 1, ::nTabWidth, FALSE)
 
 METHOD HBBrwText:GetLineText()
    RETURN PadR(SubStr(::GetLine(), ::nLineOffset), ::nWidth)
@@ -195,7 +195,7 @@ METHOD PROCEDURE HBBrwText:LoadFile(cFileName)
    ::nLineNoLen := Len(hb_ntos(::nRows)) + 2
 
    FOR EACH cLine IN ::aRows
-      nMaxLineLen := Max(nMaxLineLen, Len(RTrim(MemoLine(cLine, Len(cLine) + 256, 1, ::nTabWidth, .F.))))
+      nMaxLineLen := Max(nMaxLineLen, Len(RTrim(MemoLine(cLine, Len(cLine) + 256, 1, ::nTabWidth, FALSE))))
    NEXT
    ::nMaxLineLen := nMaxLineLen
    ::nLineOffset := 1
@@ -204,23 +204,23 @@ METHOD PROCEDURE HBBrwText:LoadFile(cFileName)
 
 METHOD HBBrwText:Resize(nTop, nLeft, nBottom, nRight)
 
-   LOCAL lResize := .F.
+   LOCAL lResize := FALSE
 
    IF hb_IsNumeric(nTop) .AND. nTop != ::nTop
       ::nTop := nTop
-      lResize := .T.
+      lResize := TRUE
    ENDIF
    IF hb_IsNumeric(nLeft) .AND. nLeft != ::nLeft
       ::nLeft := nLeft
-      lResize := .T.
+      lResize := TRUE
    ENDIF
    IF hb_IsNumeric(nBottom) .AND. nBottom != ::nBottom
       ::nBottom := nBottom
-      lResize := .T.
+      lResize := TRUE
    ENDIF
    IF hb_IsNumeric(nRight) .AND. nRight != ::nRight
       ::nRight := nRight
-      lResize := .T.
+      lResize := TRUE
    ENDIF
    IF lResize
       ::oBrw:Resize(nTop, nLeft, nBottom, nRight)
@@ -232,7 +232,7 @@ METHOD HBBrwText:Resize(nTop, nLeft, nBottom, nRight)
 METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
 
    LOCAL bMove
-   LOCAL lFound := .F.
+   LOCAL lFound := FALSE
    LOCAL n
 
    IF !lCaseSensitive
@@ -256,7 +256,7 @@ METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
 
    DO WHILE Eval(bMove) != 0
       IF cString $ IIf(lCaseSensitive, ::aRows[::nRow], Upper(::aRows[::nRow]))
-         lFound := .T.
+         lFound := TRUE
          ::oBrw:MoveCursor(::nRow - n)
          ::RefreshAll()
          EXIT
@@ -269,13 +269,13 @@ METHOD HBBrwText:GoFirst()
 
    ::nRow := 1
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBBrwText:GoLast()
 
    ::nRow := ::nRows
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBBrwText:Skip(n)
 
@@ -297,22 +297,22 @@ METHOD HBBrwText:Skip(n)
 
 METHOD HBBrwText:GoPrev()
 
-   LOCAL lMoved := .F.
+   LOCAL lMoved := FALSE
 
    IF ::nRow > 1
       ::nRow--
-      lMoved := .T.
+      lMoved := TRUE
    ENDIF
 
    RETURN lMoved
 
 METHOD HBBrwText:GoNext()
 
-   LOCAL lMoved := .F.
+   LOCAL lMoved := FALSE
 
    IF ::nRow < ::nRows
       ::nRow++
-      lMoved := .T.
+      lMoved := TRUE
    ENDIF
 
    RETURN lMoved

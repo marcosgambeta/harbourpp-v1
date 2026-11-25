@@ -38,7 +38,7 @@ RETURN was_TRACKMOUSEEVENT():new()
 CLASS WAS_TRACKMOUSEEVENT
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

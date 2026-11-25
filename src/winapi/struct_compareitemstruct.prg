@@ -38,7 +38,7 @@ RETURN was_COMPAREITEMSTRUCT():new()
 CLASS WAS_COMPAREITEMSTRUCT
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

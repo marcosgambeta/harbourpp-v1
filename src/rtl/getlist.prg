@@ -52,13 +52,13 @@ THREAD STATIC t_oGetListActive
 PROCEDURE __GetListSetActive(oGetList)
 
    IF t_oGetListActive != NIL
-      t_oGetListActive:HasFocus := .F.
+      t_oGetListActive:HasFocus := FALSE
    ENDIF
 
    t_oGetListActive := oGetList
 
    IF t_oGetListActive != NIL
-      t_oGetListActive:HasFocus := .T.
+      t_oGetListActive:HasFocus := TRUE
    ENDIF
 
    RETURN

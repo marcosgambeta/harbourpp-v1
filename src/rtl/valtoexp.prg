@@ -54,7 +54,7 @@ FUNCTION hb_CStr(xVal)
    CASE "M" ; RETURN xVal
    CASE "N" ; RETURN Str(xVal)
    CASE "D" ; RETURN IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
-   CASE "T" ; RETURN 't"' + hb_TSToStr(xVal, .T.) + '"'
+   CASE "T" ; RETURN 't"' + hb_TSToStr(xVal, TRUE) + '"'
    CASE "L" ; RETURN IIf(xVal, ".T.", ".F.")
    CASE "S" ; RETURN "@" + xVal:name + "()"
    CASE "B" ; RETURN "{|| ... }"
@@ -72,7 +72,7 @@ FUNCTION hb_CStr(xVal)
 
 FUNCTION hb_ValToExp(xVal, lRaw)
 
-   RETURN s_valToExp(xVal, hb_defaultValue(lRaw, .F.))
+   RETURN s_valToExp(xVal, hb_defaultValue(lRaw, FALSE))
 
 STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
@@ -87,7 +87,7 @@ STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
    CASE "M" ; RETURN hb_StrToExp(xVal)
    CASE "N" ; RETURN hb_ntos(xVal)
    CASE "D" ; RETURN IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
-   CASE "T" ; RETURN 't"' + hb_TSToStr(xVal, .T.) + '"'
+   CASE "T" ; RETURN 't"' + hb_TSToStr(xVal, TRUE) + '"'
    CASE "L" ; RETURN IIf(xVal, ".T.", ".F.")
    CASE "S" ; RETURN "@" + xVal:name + "()"
    CASE "O"

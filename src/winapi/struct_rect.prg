@@ -38,7 +38,7 @@ RETURN was_RECT():new()
 CLASS WAS_RECT
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

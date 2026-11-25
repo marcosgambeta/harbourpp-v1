@@ -63,10 +63,10 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
    LOCAL bAction
 
    IF !Used()
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   lAppend := lKeyPressed := lRefresh := .F.
+   lAppend := lKeyPressed := lRefresh := FALSE
 
    IF PCount() < 4
       nTop    := 1
@@ -103,10 +103,10 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
    IF LastRec() == 0
       nKey := K_DOWN
-      lKeyPressed := .T.
+      lKeyPressed := TRUE
    ENDIF
 
-   lContinue := .T.
+   lContinue := TRUE
 
    DO WHILE lContinue
 
@@ -115,7 +115,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
       ENDDO
 
       IF lKeyPressed
-         lKeyPressed := .F.
+         lKeyPressed := FALSE
       ELSE
          IF oBrw:HitBottom .AND. (!lAppend .OR. RecNo() != LastRec() + 1)
             IF lAppend
@@ -123,7 +123,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
                oBrw:ForceStable()
                dbGoBottom()
             ELSE
-               lAppend := .T.
+               lAppend := TRUE
                SetCursor(IIf(ReadInsert(), SC_INSERT, SC_NORMAL))
             ENDIF
             oBrw:Down()
@@ -155,7 +155,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 #endif
       CASE K_UP
          IF lAppend
-            lRefresh := .T.
+            lRefresh := TRUE
          ELSE
             oBrw:Up()
          ENDIF
@@ -166,7 +166,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 #endif
       CASE K_DOWN
          IF lAppend
-            oBrw:HitBottom := .T.
+            oBrw:HitBottom := TRUE
          ELSE
             oBrw:Down()
          ENDIF
@@ -174,7 +174,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
       CASE K_PGUP
          IF lAppend
-            lRefresh := .T.
+            lRefresh := TRUE
          ELSE
             oBrw:PageUp()
          ENDIF
@@ -182,7 +182,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
       CASE K_PGDN
          IF lAppend
-            oBrw:HitBottom := .T.
+            oBrw:HitBottom := TRUE
          ELSE
             oBrw:PageDown()
          ENDIF
@@ -190,7 +190,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
       CASE K_CTRL_PGUP
          IF lAppend
-            lRefresh := .T.
+            lRefresh := TRUE
          ELSE
             oBrw:GoTop()
          ENDIF
@@ -198,7 +198,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
       CASE K_CTRL_PGDN
          IF lAppend
-            lRefresh := .T.
+            lRefresh := TRUE
          ELSE
             oBrw:GoBottom()
          ENDIF
@@ -257,24 +257,24 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
             lKeyPressed := (nKey := DoGet(oBrw, lAppend)) != 0
          ELSE
             nKey := K_DOWN
-            lKeyPressed := .T.
+            lKeyPressed := TRUE
          ENDIF
          EXIT
 
       CASE K_ESC
-         lContinue := .F.
+         lContinue := FALSE
          EXIT
 
       OTHERWISE
          IF !hb_keyChar(nKey) == ""
             hb_keyIns(nKey)
             nKey := K_ENTER
-            lKeyPressed := .T.
+            lKeyPressed := TRUE
          ENDIF
       ENDSWITCH
 
       IF lRefresh
-         lRefresh := lAppend := .F.
+         lRefresh := lAppend := FALSE
          FreshOrder(oBrw)
          SetCursor(SC_NONE)
       ENDIF
@@ -284,7 +284,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
    RestScreen(nTop, nLeft, nBottom, nRight, cOldScreen)
    SetCursor(nOldCursor)
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC PROCEDURE StatLine(oBrw, lAppend)
 
@@ -323,12 +323,12 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
    LOCAL nKey
    LOCAL xValue
 
-   oBrw:HitTop := .F.
+   oBrw:HitTop := FALSE
    StatLine(oBrw, lAppend)
    oBrw:ForceStable()
 
-   lScore := Set(_SET_SCOREBOARD, .F.)
-   lExit := Set(_SET_EXIT, .T.)
+   lScore := Set(_SET_SCOREBOARD, FALSE)
+   lExit := Set(_SET_EXIT, TRUE)
    bIns := SetKey(K_INS, {||SetCursor(IIf(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))})
    nCursor := SetCursor(IIf(ReadInsert(), SC_INSERT, SC_NORMAL))
    IF !Empty(cIndexKey := IndexKey(0))
@@ -338,7 +338,7 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
    oCol := oBrw:GetColumn(oBrw:ColPos)
    xValue := Eval(oCol:Block)
    oGet := GetNew(Row(), Col(), {|xNewVal|IIf(PCount() == 0, xValue, xValue := xNewVal)}, "mGetVar", NIL, oBrw:ColorSpec)
-   lSuccess := .F.
+   lSuccess := FALSE
    IF ReadModal({oGet})
       IF lAppend .AND. RecNo() == LastRec() + 1
          dbAppend()
@@ -349,7 +349,7 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
          dbGoTop()
       ENDIF
       IF !lAppend .AND. !Empty(bIndexKey) .AND. !xKeyValue == Eval(bIndexKey)
-         lSuccess := .T.
+         lSuccess := TRUE
       ENDIF
    ENDIF
 

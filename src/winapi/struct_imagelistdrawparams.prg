@@ -38,7 +38,7 @@ RETURN was_IMAGELISTDRAWPARAMS():new()
 CLASS WAS_IMAGELISTDRAWPARAMS
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

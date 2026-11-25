@@ -44,7 +44,7 @@ FUNCTION __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
    // put this prompt on the screen right now
    DispOutAt(nRow, nCol, cPrompt, cColor)
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION __MenuTo(bBlock, cVariable)
 
@@ -118,7 +118,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
       nMsgCol := 0
       nMsgRow := Set(_SET_MESSAGE)
       lMsgCenter := Set(_SET_MCENTER)
-      lExit := .F.
+      lExit := FALSE
 
       DO WHILE n != 0
 
@@ -208,7 +208,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
             // QUESTION: Clipper does this, but shouldn't we only
             //           exit when HitTest() was successful?
             IF nKey == K_LDBLCLK
-               lExit := .T.
+               lExit := TRUE
             ENDIF
             EXIT
 #endif
@@ -233,7 +233,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
          CASE K_ENTER
          CASE K_PGUP
          CASE K_PGDN
-            lExit := .T.
+            lExit := TRUE
             EXIT
          CASE K_ESC
             n := 0
@@ -244,7 +244,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
                FOR y := 1 TO nArrLen
                   IF hb_LeftEqI(LTrim(t_aLevel[nPointer - 1][y][_ITM_PROMPT]), cKey)
                      n := y
-                     lExit := .T.
+                     lExit := TRUE
                      EXIT
                   ENDIF
                NEXT

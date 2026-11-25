@@ -56,7 +56,7 @@ FUNCTION __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
    LOCAL lError
 
    IF ValType(xValue) == cType
-      lError := .F.
+      lError := FALSE
       IF xMin != NIL
          lError := !xValue >= xMin
       ENDIF
@@ -66,7 +66,7 @@ FUNCTION __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
          lError := !xValue <= xMax
       ENDIF
    ELSE
-      lError := .T.
+      lError := TRUE
    ENDIF
 
    IF lError
@@ -74,7 +74,7 @@ FUNCTION __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
       oError:description := hb_langErrMsg(EG_ARG)
       oError:gencode := EG_ARG
       oError:severity := ES_ERROR
-      oError:cansubstitute := .T.
+      oError:cansubstitute := TRUE
       oError:subsystem := oVar:className
 #ifdef HB_CLP_STRICT
       HB_SYMBOL_UNUSED(cMethod)

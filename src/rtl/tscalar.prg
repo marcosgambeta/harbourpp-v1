@@ -87,7 +87,7 @@ METHOD ScalarObject:Copy()
    RETURN Self
 
 METHOD ScalarObject:IsScalar()
-   RETURN .T.
+   RETURN TRUE
 
 METHOD ScalarObject:AsString()
 
@@ -229,7 +229,7 @@ METHOD Array:Add(x)
 
    AAdd(Self, x)
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD Array:Collect(b)
 
@@ -250,7 +250,7 @@ METHOD Array:Copy()
 METHOD Array:DeleteAt(n)
 
    IF n >= 1 .AND. n <= Len(Self)
-      hb_ADel(Self, n, .T.)
+      hb_ADel(Self, n, TRUE)
    ENDIF
 
    RETURN Self
@@ -262,13 +262,13 @@ METHOD Array:InsertAt(n, x)
       ASize(Self, n)
       Self[n] := x
    CASE n >= 1
-      hb_AIns(Self, n, x, .T.)
+      hb_AIns(Self, n, x, TRUE)
    ENDCASE
 
    RETURN Self
 
 METHOD Array:IsScalar()
-   RETURN .T.
+   RETURN TRUE
 
 METHOD Array:Do(b)
 

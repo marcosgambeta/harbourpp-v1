@@ -60,7 +60,7 @@ FUNCTION hb_GetReadVar(oGet)
             cName += "[0d" + DToS(xSubScript) + "]"
             EXIT
          CASE "T"
-            cName += '[t"' + hb_TSToStr(xSubScript, .T.) + '"]'
+            cName += '[t"' + hb_TSToStr(xSubScript, TRUE) + '"]'
             EXIT
          OTHERWISE
             cName += "[" + hb_ntos(xSubScript) + "]"

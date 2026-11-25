@@ -38,7 +38,7 @@ RETURN was_KERNINGPAIR():new()
 CLASS WAS_KERNINGPAIR
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

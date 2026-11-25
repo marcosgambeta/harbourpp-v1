@@ -179,7 +179,7 @@ STATIC FUNCTION New(cClassName, xSuper, sClassFunc, lModuleFriendly)
 
    ::cName         := hb_asciiUpper(cClassName)
    ::sClassFunc    := sClassFunc
-   ::lModFriendly  := hb_defaultValue(lModuleFriendly, .F.)
+   ::lModFriendly  := hb_defaultValue(lModuleFriendly, FALSE)
 
    ::aDatas        := {}
    ::aMethods      := {}
@@ -282,12 +282,12 @@ STATIC FUNCTION Instance()
 STATIC PROCEDURE AddData(cData, xInit, cType, nScope, lNoinit)
 
    /* Default Init for Logical and numeric */
-   IF !hb_defaultValue(lNoInit, .F.) .AND. cType != NIL .AND. xInit == NIL
+   IF !hb_defaultValue(lNoInit, FALSE) .AND. cType != NIL .AND. xInit == NIL
 
       SWITCH Asc(cType)
       CASE Asc("L")   /* Logical */
       CASE Asc("l")   /* Logical */
-         xInit := .F.
+         xInit := FALSE
          EXIT
       CASE Asc("I")   /* Numeric or Integer */
       CASE Asc("i")   /* Numeric or Integer */
@@ -325,12 +325,12 @@ STATIC PROCEDURE AddMultiData(cType, xInit, nScope, aData, lNoInit)
 STATIC PROCEDURE AddClassData(cData, xInit, cType, nScope, lNoInit)
 
    /* Default Init for Logical and numeric */
-   IF !hb_defaultValue(lNoInit, .F.) .AND. cType != NIL .AND. xInit == NIL
+   IF !hb_defaultValue(lNoInit, FALSE) .AND. cType != NIL .AND. xInit == NIL
 
       SWITCH Asc(cType)
       CASE Asc("L")   /* Logical */
       CASE Asc("l")   /* Logical */
-         xInit := .F.
+         xInit := FALSE
          EXIT
       CASE Asc("I")   /* Numeric or Integer */
       CASE Asc("i")   /* Numeric or Integer */

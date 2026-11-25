@@ -91,4 +91,4 @@ FUNCTION sx_DefTrigger(nEvent, nArea, nFieldPos, xTrigVal)
       EXIT
    ENDSWITCH
 
-   RETURN .T.
+   RETURN TRUE

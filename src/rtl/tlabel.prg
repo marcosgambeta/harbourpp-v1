@@ -71,7 +71,7 @@
 // Field array definitions ( one array per field )
 #define LF_EXP          1       // Block, field expression
 #define LF_TEXT         2       // Character, text of field expression
-#define LF_BLANK        3       // Logical, compress blank fields, .T.=Yes .F.=No
+#define LF_BLANK        3       // Logical, compress blank fields, TRUE=Yes FALSE=No
 
 #define LF_COUNT        3       // Numeric, number of elements in field array
 
@@ -98,7 +98,7 @@ CREATE CLASS HBLabelForm
    VAR aLabelData   AS ARRAY   INIT {}
    VAR aBandToPrint AS ARRAY
    VAR cBlank       AS STRING  INIT ""
-   VAR lOneMoreBand AS LOGICAL INIT .T.
+   VAR lOneMoreBand AS LOGICAL INIT TRUE
    VAR nCurrentCol  AS NUMERIC // The current column in the band
 
    METHOD Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
@@ -111,12 +111,12 @@ ENDCLASS
 
 METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
-   LOCAL lPrintOn := .F.               // PRINTER status
+   LOCAL lPrintOn := FALSE               // PRINTER status
    LOCAL lConsoleOn                    // CONSOLE status
    LOCAL cExtraFile
    LOCAL lExtraState       // EXTRA file status
    LOCAL xBreakVal
-   LOCAL lBroke := .F.
+   LOCAL lBroke := FALSE
    LOCAL err
    LOCAL OldMargin
 
@@ -138,8 +138,8 @@ METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, 
       ENDIF
    ENDIF
 
-   __defaultNIL(@lPrinter, .F.)
-   __defaultNIL(@lSample, .F.)
+   __defaultNIL(@lPrinter, FALSE)
+   __defaultNIL(@lSample, FALSE)
 
    // Set output devices
    IF lPrinter             // To the printer
@@ -150,7 +150,7 @@ METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, 
    Set(_SET_CONSOLE, !lNoConsole .AND. lConsoleOn)
 
    IF !Empty(cAltFile)         // To file
-      lExtraState := Set(_SET_EXTRA, .T.)
+      lExtraState := Set(_SET_EXTRA, TRUE)
       cExtraFile  := Set(_SET_EXTRAFILE, cAltFile)
    ENDIF
 
@@ -185,7 +185,7 @@ METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, 
 
    RECOVER USING xBreakVal
 
-      lBroke := .T.
+      lBroke := TRUE
 
    END SEQUENCE
 
@@ -194,7 +194,7 @@ METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, 
    ::aBandToPrint := {}
    ::nCurrentCol  := 1
    ::cBlank       := ""
-   ::lOneMoreBand := .T.
+   ::lOneMoreBand := TRUE
 
    // clean up
    Set(_SET_PRINTER, lPrintOn) // Set the printer back to prior state
@@ -256,7 +256,7 @@ METHOD HBLabelForm:ExecuteLabel()
          item := RTrim(item)
       NEXT
 
-      ::lOneMoreBand := .F.
+      ::lOneMoreBand := FALSE
       ::nCurrentCol := 1
 
       // Print the band
@@ -275,7 +275,7 @@ METHOD HBLabelForm:ExecuteLabel()
       // Clear out the band
       AFill(::aBandToPrint, Space(::aLabelData[LBL_LMARGIN]))
    ELSE
-      ::lOneMoreBand := .T.
+      ::lOneMoreBand := TRUE
       ::nCurrentCol++
    ENDIF
 
@@ -284,7 +284,7 @@ METHOD HBLabelForm:ExecuteLabel()
 METHOD HBLabelForm:SampleLabels()
 
    LOCAL cKey
-   LOCAL lMoreSamples := .T.
+   LOCAL lMoreSamples := TRUE
    LOCAL nField
    LOCAL aBand := {}
 
@@ -317,7 +317,7 @@ METHOD HBLabelForm:SampleLabels()
          SetPos(Row() + 1, 0)
       ENDIF
       IF __natIsNegative(cKey)    // Don't give sample labels
-         lMoreSamples := .F.
+         lMoreSamples := FALSE
       ENDIF
    ENDDO
 
@@ -387,7 +387,7 @@ METHOD HBLabelForm:LoadLabel(cLblFile)
                AAdd(aLabel[LBL_FIELDS], { ;
                   /* LF_EXP */ hb_macroBlock(cFieldText), ;
                   /* LF_TEXT */ cFieldText, ;
-                  /* LF_BLANK */ .T.})
+                  /* LF_BLANK */ TRUE})
             ENDIF
          NEXT
       ENDIF

@@ -38,7 +38,7 @@ RETURN was_BITMAPINFOHEADER():new()
 CLASS WAS_BITMAPINFOHEADER
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

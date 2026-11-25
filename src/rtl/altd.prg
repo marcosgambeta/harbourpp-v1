@@ -61,10 +61,10 @@ PROCEDURE AltD(nAction)
 
       SWITCH nAction
       CASE ALTD_DISABLE
-         Set(_SET_DEBUG, .F.)
+         Set(_SET_DEBUG, FALSE)
          EXIT
       CASE ALTD_ENABLE
-         Set(_SET_DEBUG, .T.)
+         Set(_SET_DEBUG, TRUE)
          EXIT
       ENDSWITCH
 

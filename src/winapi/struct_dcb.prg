@@ -38,7 +38,7 @@ RETURN was_DCB():new()
 CLASS WAS_DCB
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

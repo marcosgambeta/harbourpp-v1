@@ -53,7 +53,7 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
    LOCAL lOldExtra
    LOCAL cOldExtraFile
    LOCAL oError
-   LOCAL lError := .F.
+   LOCAL lError := FALSE
    LOCAL bOutBlock
 
    // Choose the output style
@@ -65,11 +65,11 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
 
    // Save SETs
 
-   IF !Empty(lToPrint)  // => hb_defaultValue(lToPrint, .F.)
-      lOldPrinter := Set(_SET_PRINTER, .T.)
+   IF !Empty(lToPrint)  // => hb_defaultValue(lToPrint, FALSE)
+      lOldPrinter := Set(_SET_PRINTER, TRUE)
    ENDIF
    IF !Empty(cToFileName)
-      lOldExtra := Set(_SET_EXTRA, .T.)
+      lOldExtra := Set(_SET_EXTRA, TRUE)
       cOldExtraFile := Set(_SET_EXTRAFILE, IIf(Set(_SET_DEFEXTENSIONS), hb_FNameExtSetDef(cToFileName, ".txt"), cToFileName))
    ENDIF
 
@@ -77,12 +77,12 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
 
    BEGIN SEQUENCE
 
-      IF Empty(lAll) .AND. ;  // => hb_defaultValue(lAll, .F.)
+      IF Empty(lAll) .AND. ;  // => hb_defaultValue(lAll, FALSE)
          Empty(bFor) .AND. ;
          Empty(bWhile) .AND. ;
          Empty(nNext) .AND. ;  // => nNext == NIL .OR. nNext == 0
          Empty(nRecord) .AND. ;  // => nRecord == NIL .OR. nRecord == 0
-         Empty(lRest)  // => hb_defaultValue(lRest, .F.)
+         Empty(lRest)  // => hb_defaultValue(lRest, FALSE)
 
          Eval(bOutBlock)
       ELSE
@@ -90,7 +90,7 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
       ENDIF
 
    RECOVER USING oError
-      lError := .T.
+      lError := TRUE
    END SEQUENCE
 
    // Restore SETs

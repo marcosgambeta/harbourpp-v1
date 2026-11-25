@@ -89,7 +89,7 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
          cMask := "*"
       ENDIF
 
-      hb_default(@lIncludeMask, .T.)
+      hb_default(@lIncludeMask, TRUE)
 
       aVars := {}
 
@@ -107,7 +107,7 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
       NEXT
 
       nRetries := 0
-      DO WHILE .T.
+      DO WHILE TRUE
          IF (fhnd := hb_FCreate(cFileName, FC_NORMAL, FO_CREAT + FO_TRUNC + FO_READWRITE + FO_EXCLUSIVE)) == F_ERROR
             oError := ErrorNew()
 
@@ -115,13 +115,13 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
             oError:genCode     := EG_OPEN
             oError:subSystem   := "BASE"
             oError:subCode     := 2006
-            oError:canRetry    := .T.
-            oError:canDefault  := .T.
+            oError:canRetry    := TRUE
+            oError:canDefault  := TRUE
             oError:fileName    := cFileName
             oError:osCode      := FError()
             oError:tries       := ++nRetries
 
-            IF hb_defaultValue(Eval(ErrorBlock(), oError), .F.)
+            IF hb_defaultValue(Eval(ErrorBlock(), oError), FALSE)
                LOOP
             ENDIF
          ENDIF
@@ -140,8 +140,8 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
       oError:genCode     := EG_ARG
       oError:subSystem   := "BASE"
       oError:subCode     := 2008
-      oError:canRetry    := .F.
-      oError:canDefault  := .F.
+      oError:canRetry    := FALSE
+      oError:canDefault  := FALSE
       oError:Args        := hb_AParams()
       oError:operation   := ProcName()
 
@@ -164,7 +164,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
 
    IF hb_IsString(cFileName)
 
-      IF !hb_defaultValue(lAdditive, .T.)
+      IF !hb_defaultValue(lAdditive, TRUE)
          __mvClear()
       ENDIF
 
@@ -176,10 +176,10 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
          cMask := "*"
       ENDIF
 
-      hb_default(@lIncludeMask, .T.)
+      hb_default(@lIncludeMask, TRUE)
 
       nRetries := 0
-      DO WHILE .T.
+      DO WHILE TRUE
 
          IF (fhnd := FOpen(cFileName)) == F_ERROR
             oError := ErrorNew()
@@ -188,13 +188,13 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
             oError:genCode     := EG_OPEN
             oError:subSystem   := "BASE"
             oError:subCode     := 2005
-            oError:canRetry    := .T.
-            oError:canDefault  := .T.
+            oError:canRetry    := TRUE
+            oError:canDefault  := TRUE
             oError:fileName    := cFileName
             oError:osCode      := FError()
             oError:tries       := ++nRetries
 
-            IF hb_defaultValue(Eval(ErrorBlock(), oError), .F.)
+            IF hb_defaultValue(Eval(ErrorBlock(), oError), FALSE)
                LOOP
             ENDIF
          ENDIF
@@ -202,7 +202,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
       ENDDO
 
       IF fhnd == F_ERROR
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
       xValue := NIL
@@ -245,8 +245,8 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
       oError:genCode     := EG_ARG
       oError:subSystem   := "BASE"
       oError:subCode     := 2007
-      oError:canRetry    := .F.
-      oError:canDefault  := .F.
+      oError:canRetry    := FALSE
+      oError:canDefault  := FALSE
       oError:Args        := hb_AParams()
       oError:operation   := ProcName()
 

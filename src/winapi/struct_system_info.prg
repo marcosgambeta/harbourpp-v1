@@ -38,7 +38,7 @@ RETURN was_SYSTEM_INFO():new()
 CLASS WAS_SYSTEM_INFO
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

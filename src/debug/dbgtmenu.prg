@@ -116,9 +116,9 @@ METHOD HBDbMenu:New()
 
    IF ::aMenus == NIL
       ::aMenus := {}
-      ::lPopup := .F.
+      ::lPopup := FALSE
    ELSE
-      ::lPopup := .T.
+      ::lPopup := TRUE
    ENDIF
 
    ::nTop         := 0

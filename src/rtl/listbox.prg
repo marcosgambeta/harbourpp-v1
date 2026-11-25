@@ -83,7 +83,7 @@ CREATE CLASS ListBox FUNCTION HBListBox
    VAR aItems     INIT {}
    VAR lDropDown
    VAR bFBlock
-   VAR lHasFocus  INIT .F.
+   VAR lHasFocus  INIT FALSE
    VAR cHotBox    INIT HB_B_DOUBLE_UNI
    VAR nItemCount INIT 0
    VAR nLeft
@@ -182,7 +182,7 @@ METHOD ListBox:close()
 
    IF ::lIsOpen
       RestScreen(::aSaveScr[1], ::aSaveScr[2], ::aSaveScr[3], ::aSaveScr[4], ::aSaveScr[5])
-      ::lIsOpen := .F.
+      ::lIsOpen := FALSE
       ::aSaveScr := NIL
    ENDIF
 
@@ -192,7 +192,7 @@ METHOD ListBox:delItem(nPos)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
 
-      hb_ADel(::aItems, nPos, .T.)
+      hb_ADel(::aItems, nPos, TRUE)
       ::nItemCount--
 
       IF ::nValue > ::nItemCount
@@ -318,7 +318,7 @@ METHOD ListBox:findText(cText, nPos, lCaseSensitive, lExact)
 #endif
 
    hb_default(@nPos, 1)
-   hb_default(@lCaseSensitive, .T.)
+   hb_default(@lCaseSensitive, TRUE)
    IF !hb_IsLogical(lExact)
       lExact := Set(_SET_EXACT)
    ENDIF
@@ -354,7 +354,7 @@ METHOD ListBox:findData(xData, nPos, lCaseSensitive, lExact)
    LOCAL bSearch
 
    hb_default(@nPos, 1)
-   hb_default(@lCaseSensitive, .T.)
+   hb_default(@lCaseSensitive, TRUE)
    IF !hb_IsLogical(lExact)
       lExact := Set(_SET_EXACT)
    ENDIF
@@ -479,7 +479,7 @@ METHOD ListBox:insItem(nPos, cText, xData)
 
    IF hb_IsString(cText) .AND. hb_IsNumeric(nPos) .AND. nPos < ::nItemCount
 
-      hb_AIns(::aItems, nPos, {cText, xData}, .T.)
+      hb_AIns(::aItems, nPos, {cText, xData}, TRUE)
       ::nItemCount++
 
       IF ::nItemCount == 1
@@ -498,13 +498,13 @@ METHOD ListBox:killFocus()
    LOCAL nOldMCur
 
    IF ::lHasFocus
-      ::lHasFocus := .F.
+      ::lHasFocus := FALSE
 
       IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 
-      nOldMCur := MSetCursor(.F.)
+      nOldMCur := MSetCursor(FALSE)
       DispBegin()
 
       IF ::lDropDown .AND. ::lIsOpen
@@ -536,7 +536,7 @@ METHOD ListBox:open()
 
       ::aSaveScr := {::nTop + 1, ::nLeft, ::nBottom, ::nRight, SaveScreen(::nTop + 1, ::nLeft, ::nBottom, ::nRight)}
 
-      ::lIsOpen := .T.
+      ::lIsOpen := TRUE
       ::display()
    ENDIF
 
@@ -736,7 +736,7 @@ METHOD ListBox:setFocus()
    IF !::lHasFocus
 
       ::nCursor := SetCursor(SC_NONE)
-      ::lHasFocus := .T.
+      ::lHasFocus := TRUE
 
       ::display()
 
@@ -899,7 +899,7 @@ METHOD ListBox:dropDown(lDropDown)
       ::lDropDown := __eInstVar53(Self, "DROPDOWN", lDropDown, "L", 1001)
 
       IF !::lDropDown .AND. !::lIsOpen
-         ::lIsOpen := .T.
+         ::lIsOpen := TRUE
       ENDIF
 
       ::display()
@@ -1039,7 +1039,7 @@ METHOD ListBox:Init(nTop, nLeft, nBottom, nRight, lDropDown)
       RETURN NIL
    ENDIF
 
-   hb_default(@lDropDown, .F.)
+   hb_default(@lDropDown, FALSE)
 
    ::nBottom   := nBottom
    ::nRight    := nRight
@@ -1102,8 +1102,8 @@ FUNCTION _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessag
          ENDCASE
       NEXT
 
-      IF hb_defaultValue(lScrollBar, .F.)
-         IF hb_defaultValue(lDropDown, .F.)
+      IF hb_defaultValue(lScrollBar, FALSE)
+         IF hb_defaultValue(lDropDown, FALSE)
             nTop++
          ENDIF
          o:VScroll := ScrollBar(nTop + 1, nBottom - 1, nRight)

@@ -55,9 +55,9 @@ PROCEDURE __TextSave(cFile)
    t_cFile := cFile
 
    IF t_cFile == "PRINTER"
-      t_lOldPrinter := Set(_SET_PRINTER, .T.)
+      t_lOldPrinter := Set(_SET_PRINTER, TRUE)
    ELSE
-      t_lOldExtra := Set(_SET_EXTRA, .T.)
+      t_lOldExtra := Set(_SET_EXTRA, TRUE)
       t_cOldExtraFile := Set(_SET_EXTRAFILE, cFile)
    ENDIF
 

@@ -113,7 +113,7 @@ METHOD hb_PopupMenu:setCoors(nRow, nCol, lTop)
 
       FOR EACH oItem IN ::aItems
          IF oItem:isPopup()
-            oItem:data:setCoors(nRow + oItem:__enumIndex(), ::nRight + 1, .F.)
+            oItem:data:setCoors(nRow + oItem:__enumIndex(), ::nRight + 1, FALSE)
          ENDIF
       NEXT
    ENDIF
@@ -137,7 +137,7 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
       Eval(oItem:data, oItem)
       nID := oItem:id
 
-      RETURN .T.
+      RETURN TRUE
 
    // Test and assignment for TopBar MenuItem:
    CASE nShortCut == 0
@@ -150,7 +150,7 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
       // Loop to wrap around through TopMenu from Current Item:
       FOR i := 1 TO nTotal
          IF (oItem := ::getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
-            RETURN .T.
+            RETURN TRUE
          ENDIF
          IF ++nItem > nTotal
             nItem := 1
@@ -159,7 +159,7 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
 
    ENDCASE
 
-   RETURN .F.
+   RETURN FALSE
 
 METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
 
@@ -170,7 +170,7 @@ METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
 
       FOR EACH oItem IN ::aItems
          IF oItem:Enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
-            RETURN .T.
+            RETURN TRUE
          ENDIF
       NEXT
 
@@ -180,11 +180,11 @@ METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
          ::select(nShortCut)
          Eval(oItem:data, oItem)
          nID := oItem:id
-         RETURN .T.
+         RETURN TRUE
       ENDIF
 
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 #endif

@@ -38,7 +38,7 @@ RETURN was_COLORMAP():new()
 CLASS WAS_COLORMAP
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

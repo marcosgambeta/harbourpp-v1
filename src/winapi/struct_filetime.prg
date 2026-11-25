@@ -38,7 +38,7 @@ RETURN was_FILETIME():new()
 CLASS WAS_FILETIME
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

@@ -63,12 +63,12 @@ STATIC FUNCTION _sx_INIlogical(cVal)
    CASE "TRUE"
    CASE "YES"
    CASE "ON"
-      RETURN .T.
+      RETURN TRUE
    CASE ".F."
    CASE "FALSE"
    CASE "NO"
    CASE "OFF"
-      RETURN .F.
+      RETURN FALSE
    ENDSWITCH
 
    RETURN NIL
@@ -92,15 +92,15 @@ FUNCTION _sx_IniInit(nArea)
 
    IF hb_LeftEq(Type("SxIniInfo"), "U")
       PUBLIC SxIniInfo := { => }
-      hb_HCaseMatch(SxIniInfo, .F.)
+      hb_HCaseMatch(SxIniInfo, FALSE)
       hb_HAutoAdd(SxIniInfo, HB_HAUTOADD_ASSIGN)
    ENDIF
 
    IF nArea == NIL
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   hIni := hb_iniRead(hb_FNameExtSet((nArea)->(dbInfo(DBI_FULLPATH)), ".ini"), .F., NIL, .F.)
+   hIni := hb_iniRead(hb_FNameExtSet((nArea)->(dbInfo(DBI_FULLPATH)), ".ini"), FALSE, NIL, FALSE)
 
    IF !Empty(hIni)
       IF HB_SIX_SECTION $ hIni
@@ -141,7 +141,7 @@ FUNCTION _sx_IniInit(nArea)
 
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION sx_IniHeader(cHeaderName, nArea)
 

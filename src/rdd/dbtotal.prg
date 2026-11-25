@@ -68,17 +68,17 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
    LOCAL bForBlock
    LOCAL bKeyBlock
    LOCAL oError
-   LOCAL lError := .F.
+   LOCAL lError := FALSE
 
    DO CASE
    CASE hb_IsEvalItem(xWhile)
       bWhileBlock := xWhile
-      lRest := .T.
+      lRest := TRUE
    CASE hb_IsString(xWhile) .AND. !Empty(xWhile)
       bWhileBlock := hb_macroBlock(xWhile)
-      lRest := .T.
+      lRest := TRUE
    OTHERWISE
-      bWhileBlock := {|| .T. }
+      bWhileBlock := {|| TRUE }
    ENDCASE
 
    DO CASE
@@ -87,10 +87,10 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
    CASE hb_IsString(xFor) .AND. !Empty(xFor)
       bForBlock := hb_macroBlock(xFor)
    OTHERWISE
-      bForBlock := {|| .T. }
+      bForBlock := {|| TRUE }
    ENDCASE
 
-   __defaultNIL(@lRest, .F.)
+   __defaultNIL(@lRest, FALSE)
 
    IF nRec != NIL
       dbGoto(nRec)
@@ -101,7 +101,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
          dbGoTop()
       ENDIF
    ELSE
-      lRest := .T.
+      lRest := TRUE
    ENDIF
 
    nOldArea := Select()
@@ -109,7 +109,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
    aNewDbStruct := {}
    AEval(dbStruct(), {| aField | IIf(aField[DBS_TYPE] == "M", NIL, AAdd(aNewDbStruct, aField)) })
    IF Empty(aNewDbStruct)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    BEGIN SEQUENCE
@@ -132,13 +132,13 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
       aFieldsSum := Array(Len(aGetField))
 
       // Keep it open after creating it.
-      dbCreate(cFile, aNewDbStruct, cRDD, .T., "", NIL, cCodePage, nConnection)
+      dbCreate(cFile, aNewDbStruct, cRDD, TRUE, "", NIL, cCodePage, nConnection)
       nNewArea := Select()
 
       dbSelectArea(nOldArea)
       DO WHILE !Eof() .AND. nNext != 0 .AND. Eval(bWhileBlock)
 
-         lDbTransRecord := .F.
+         lDbTransRecord := FALSE
 
          AFill(aFieldsSum, 0)
 
@@ -151,7 +151,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
                IF !lDbTransRecord
                   __dbTransRec(nNewArea, aNewDbStruct)
                   dbSelectArea(nOldArea)
-                  lDbTransRecord := .T.
+                  lDbTransRecord := TRUE
                ENDIF
                AEval(aGetField, {| bFieldBlock, nFieldPos | aFieldsSum[nFieldPos] += Eval(bFieldBlock) })
             ENDIF
@@ -168,7 +168,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
       ENDDO
 
    RECOVER USING oError
-      lError := .T.
+      lError := TRUE
    END SEQUENCE
 
    IF nNewArea != NIL
@@ -182,7 +182,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
       Break(oError)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC FUNCTION __GetField(cField)
 
@@ -199,11 +199,11 @@ STATIC FUNCTION __GetField(cField)
          oError:severity   := ES_ERROR
          oError:genCode    := EG_SYNTAX
          oError:subSystem  := "DBCMD"
-         oError:canDefault := .T.
+         oError:canDefault := TRUE
          oError:operation  := cField
          oError:subCode    := 1101
 
-         IF hb_defaultValue(Eval(ErrorBlock(), oError), .T.)
+         IF hb_defaultValue(Eval(ErrorBlock(), oError), TRUE)
             __errInHandler()
          ENDIF
 

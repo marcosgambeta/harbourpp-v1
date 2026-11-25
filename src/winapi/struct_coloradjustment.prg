@@ -38,7 +38,7 @@ RETURN was_COLORADJUSTMENT():new()
 CLASS WAS_COLORADJUSTMENT
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

@@ -38,7 +38,7 @@ RETURN was_MOUSEMOVEPOINT():new()
 CLASS WAS_MOUSEMOVEPOINT
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

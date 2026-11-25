@@ -91,20 +91,20 @@ METHOD HBDbObject:New(oObject, cVarName, lEditable)
    aMethods := {}
    FOR EACH cMsg IN aMessages
       IF hb_LeftEq(cMsg, "_") .AND. ;
-         hb_AScan(aMessages, cMsgAcc := SubStr(cMsg, 2), NIL, NIL, .T.) > 0
+         hb_AScan(aMessages, cMsgAcc := SubStr(cMsg, 2), NIL, NIL, TRUE) > 0
          xValue := __dbgObjGetValue(oObject, cMsgAcc)
-         AAdd(::pItems, {cMsgAcc, xValue, .T.})
-      ELSEIF hb_AScan(aMessages, "_" + cMsg, NIL, NIL, .T.) == 0
+         AAdd(::pItems, {cMsgAcc, xValue, TRUE})
+      ELSEIF hb_AScan(aMessages, "_" + cMsg, NIL, NIL, TRUE) == 0
          AAdd(aMethods, cMsg)
       ENDIF
    NEXT
    FOR EACH cMsg IN aMethods
-      AAdd(::pItems, {Lower(cMsg), "Method", .F.})
+      AAdd(::pItems, {Lower(cMsg), "Method", FALSE})
    NEXT
 
    ::objname := cVarName
    ::TheObj := oObject
-   ::lEditable := hb_defaultValue(lEditable, .T.)
+   ::lEditable := hb_defaultValue(lEditable, TRUE)
 
    ::addWindows()
 
@@ -130,7 +130,7 @@ METHOD HBDbObject:addWindows(nRow)
    ENDIF
 
    ::nCurWindow++
-   oWndSets:lFocused := .T.
+   oWndSets:lFocused := TRUE
    AAdd(::aWindows, oWndSets)
 
    oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
@@ -270,15 +270,15 @@ STATIC FUNCTION __dbgObjGetValue(oObject, cVar, lCanAcc)
 
    BEGIN SEQUENCE WITH {|| Break() }
       xResult := __dbgSendMsg(nProcLevel, oObject, cVar)
-      lCanAcc := .T.
+      lCanAcc := TRUE
    RECOVER
       BEGIN SEQUENCE WITH __BreakBlock()
          // Try to access variables using class code level
          xResult := __dbgSendMsg(0, oObject, cVar)
-         lCanAcc := .T.
+         lCanAcc := TRUE
       RECOVER USING oErr
          xResult := oErr:description
-         lCanAcc := .F.
+         lCanAcc := FALSE
       END SEQUENCE
    END SEQUENCE
 

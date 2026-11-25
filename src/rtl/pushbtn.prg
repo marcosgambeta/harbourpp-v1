@@ -97,24 +97,24 @@ CREATE CLASS PushButton FUNCTION HBPushButton
    PROTECTED:
 
    VAR cBitmap    INIT ""
-   VAR lBuffer    INIT .F.
+   VAR lBuffer    INIT FALSE
    VAR cCaption
    VAR nCol
    VAR cColorSpec
    VAR bFBlock
-   VAR lHasFocus  INIT .F.
+   VAR lHasFocus  INIT FALSE
    VAR cMessage   INIT ""
    VAR nRow
    VAR bSBlock
    VAR cStyle     INIT "<>"
-   VAR lTypeOut   INIT .F.
+   VAR lTypeOut   INIT FALSE
 
 ENDCLASS
 
 METHOD PushButton:setFocus()
 
    IF !::lHasFocus
-      ::lHasFocus := .T.
+      ::lHasFocus := TRUE
       ::display()
 
       IF hb_IsEvalItem(::bFBlock)
@@ -129,7 +129,7 @@ METHOD PushButton:select(nPos)
    LOCAL nCurPos := nPos
 
    IF ::lHasFocus
-      ::lbuffer := .T.
+      ::lbuffer := TRUE
       ::display()
 
       IF hb_IsNumeric(nPos)
@@ -150,7 +150,7 @@ METHOD PushButton:select(nPos)
          Eval(::bSBlock)
       ENDIF
 
-      ::lBuffer := .F.
+      ::lBuffer := FALSE
       ::display()
    ENDIF
 
@@ -159,7 +159,7 @@ METHOD PushButton:select(nPos)
 METHOD PushButton:killFocus()
 
    IF ::lHasFocus
-      ::lHasFocus := .F.
+      ::lHasFocus := FALSE
 
       IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
@@ -318,7 +318,7 @@ METHOD PushButton:sBlock(bSBlock)
    RETURN ::bSBlock
 
 METHOD PushButton:typeOut()
-   RETURN .F.
+   RETURN FALSE
 
 METHOD PushButton:style(cStyle)
 

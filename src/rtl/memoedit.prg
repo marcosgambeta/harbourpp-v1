@@ -55,7 +55,7 @@
 // A specialized HBEditor which can simulate MemoEdit() behaviour
 CREATE CLASS HBMemoEditor INHERIT HBEditor
 
-   VAR lCallKeyboardHook AS LOGICAL INIT .F. // To avoid recursive calls in endless loop. [jarabal]
+   VAR lCallKeyboardHook AS LOGICAL INIT FALSE // To avoid recursive calls in endless loop. [jarabal]
 
    VAR xUserFunction                         // User Function called to change default MemoEdit() behaviour
 
@@ -92,7 +92,7 @@ METHOD HBMemoEditor:MemoInit(xUserFunction)
 
    IF ::UserFunctionIsValid()
 
-      DO WHILE .T.
+      DO WHILE TRUE
          SWITCH nUdfReturn := ::xDo(ME_INIT)
          // Tested with CL52 that only these 3 actions are processed and
          // then ME_INIT call repeated
@@ -164,9 +164,9 @@ METHOD HBMemoEditor:KeyboardHook(nKey)
 
    IF ::UserFunctionIsValid() .AND. !::lCallKeyboardHook  // To avoid recursive calls in endless loop. [jarabal]
 
-      ::lCallKeyboardHook := .T.
+      ::lCallKeyboardHook := TRUE
       ::HandleUserKey(nKey, ::xDo(IIf(::lDirty, ME_UNKEYX, ME_UNKEY)))
-      ::lCallKeyboardHook := .F.
+      ::lCallKeyboardHook := FALSE
 
    ELSEIF hb_keyStd(nKey) == K_ESC
 
@@ -185,12 +185,12 @@ METHOD HBMemoEditor:KeyboardHook(nKey)
 
          IF Upper(hb_keyChar(nYesNoKey)) == "Y"
             hb_keySetLast(K_ESC)  // Cl*pper compatibility
-            ::lSaved := .F.
-            ::lExitEdit := .T.
+            ::lSaved := FALSE
+            ::lExitEdit := TRUE
          ENDIF
       ELSE
-         ::lSaved := .F.
-         ::lExitEdit := .T.
+         ::lSaved := FALSE
+         ::lExitEdit := TRUE
       ENDIF
    ENDIF
 
@@ -215,13 +215,13 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
          // HBEditor is not able to handle keys with a value higher than 256, but I have to tell him
          // that user wants to save text
          IF hb_keyStd(nKey) == K_ESC
-            ::lSaved := .F.
-            ::lExitEdit := .T.
+            ::lSaved := FALSE
+            ::lExitEdit := TRUE
          ELSE
             ::super:Edit(nKey)
          ENDIF
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
       EXIT
 
@@ -232,7 +232,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
             ::super:Edit(nKey)
          ENDIF
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
       EXIT
 
@@ -254,7 +254,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
 
 #ifndef HB_CLP_STRICT
    CASE ME_PASTE  // Xbase++ compatibility
-      hb_gtInfo(HB_GTI_CLIPBOARDPASTE, .T.)
+      hb_gtInfo(HB_GTI_CLIPBOARDPASTE, TRUE)
       EXIT
 #endif
 
@@ -268,12 +268,12 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
       IF (nUdfReturn >= 1 .AND. nUdfReturn <= 31) .OR. nUdfReturn == K_ALT_W
          ::super:Edit(nUdfReturn)
       ELSE
-         RETURN .F.
+         RETURN FALSE
       ENDIF
 
    ENDSWITCH
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBMemoEditor:xDo(nStatus)
 
@@ -290,9 +290,9 @@ METHOD HBMemoEditor:xDo(nStatus)
 METHOD HBMemoEditor:MoveCursor(nKey)
 
    IF nKey == K_CTRL_W
-      ::lSaved := .T.
-      ::lExitEdit := .T.
-      RETURN .F.
+      ::lSaved := TRUE
+      ::lExitEdit := TRUE
+      RETURN FALSE
    ENDIF
 
    RETURN ::super:MoveCursor(nKey)
@@ -328,7 +328,7 @@ FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunctio
       nLeft, ;
       hb_defaultValue(nBottom, MaxRow()), ;
       nRight, ;
-      hb_defaultValue(lEditMode, .T.), ;
+      hb_defaultValue(lEditMode, TRUE), ;
       nLineLength, ;
       hb_defaultValue(nTabSize, 4), ;
       hb_defaultValue(nTextBuffRow, 1), ;
@@ -345,7 +345,7 @@ FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunctio
       oEd:InsertState(Set(_SET_INSERT))
       oEd:Edit()
       IF oEd:Saved()
-         cString := oEd:GetText(.T.)
+         cString := oEd:GetText(TRUE)
       ENDIF
       SetCursor(nOldCursor)
    ENDIF

@@ -68,7 +68,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
    LOCAL cPath
    LOCAL i
 
-   hb_default(@lPrint, .F.)
+   hb_default(@lPrint, FALSE)
 
    IF !hb_IsString(cFile)
       oErr := ErrorNew()
@@ -108,12 +108,12 @@ PROCEDURE __TypeFile(cFile, lPrint)
       oErr:genCode     := EG_OPEN
       oErr:subSystem   := "BASE"
       oErr:SubCode     := 2011
-      oErr:canDefault  := .T.
-      oErr:canRetry    := .T.
+      oErr:canDefault  := TRUE
+      oErr:canRetry    := TRUE
       oErr:fileName    := cFile
       oErr:OsCode      := FError()
       oErr:tries       := ++nRetries
-      IF !hb_defaultValue(Eval(ErrorBlock(), oErr), .T.)  // user select "Default"
+      IF !hb_defaultValue(Eval(ErrorBlock(), oErr), TRUE)  // user select "Default"
          RETURN
       ENDIF
    ENDDO
@@ -123,7 +123,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
 
    IF lPrint
       aSaveSet[1] := Set(_SET_DEVICE, "PRINTER")
-      aSaveSet[2] := Set(_SET_PRINTER, .T.)
+      aSaveSet[2] := Set(_SET_PRINTER, TRUE)
    ENDIF
 
    nSize   := FSeek(nHandle, 0, FS_END)

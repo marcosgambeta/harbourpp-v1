@@ -58,18 +58,18 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
    LOCAL aStruct
    LOCAL aJoinList
    LOCAL oError
-   LOCAL lError := .F.
+   LOCAL lError := FALSE
 
    dbSelectArea(nMaster)
    IF Empty(aStruct := __FieldTwo(cAlias, aFields))
       // NOTE: CA-Cl*pper will leave the wrong workarea (cAlias) selected here.
       //       Harbour is bug compatible. [vszakats]
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    BEGIN SEQUENCE
 
-      dbCreate(cFile, aStruct, cRDD, .T., "", NIL, cCodePage, nConnection)
+      dbCreate(cFile, aStruct, cRDD, TRUE, "", NIL, cCodePage, nConnection)
       nResult := Select()
       aJoinList := __JoinList(nMaster, nDetail, nResult, aStruct)
 
@@ -95,7 +95,7 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
       ENDDO
 
    RECOVER USING oError
-      lError := .T.
+      lError := TRUE
    END SEQUENCE
 
    IF nResult != NIL
@@ -109,7 +109,7 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
       Break(oError)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 STATIC FUNCTION __FieldTwo(cAlias, aFields)
 

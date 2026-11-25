@@ -38,7 +38,7 @@ RETURN was_INITCOMMONCONTROLSEX():new()
 CLASS WAS_INITCOMMONCONTROLSEX
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

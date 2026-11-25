@@ -69,15 +69,15 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
    LOCAL cInd
    LOCAL uValue
    LOCAL aWords
-   LOCAL lStart := .T.
+   LOCAL lStart := TRUE
    LOCAL aObjects := {Self}
    LOCAL bError
 
    IF Empty(cObjectText)
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
-   bError := IIf(hb_defaultValue(lIgnoreErrors, .F.), {|e|Break(e)}, ErrorBlock())
+   bError := IIf(hb_defaultValue(lIgnoreErrors, FALSE), {|e|Break(e)}, ErrorBlock())
 
    FOR EACH cLine IN hb_ATokens(StrTran(cObjectText, Chr(13)), Chr(10))
 
@@ -103,7 +103,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
             SWITCH aWords[1]
             CASE "OBJECT"
                IF lStart
-                  lStart := .F.
+                  lStart := FALSE
                ELSEIF aWords[Len(aWords) - 1] == "AS" .AND. hb_LeftEq(aWords[2], "::")
                   cProp := SubStr(AllTrim(SubStr(cLine, 7, RAt(" AS ", cLine) - 7)), 3)
                   uValue := &(aTail(aWords))():CreateNew()
@@ -138,7 +138,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
       ENDIF
    NEXT
 
-   RETURN .T.
+   RETURN TRUE
 
 METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
@@ -148,7 +148,7 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
    LOCAL uNewValue
    LOCAL cObject
    LOCAL cType
-   LOCAL lSpacer := .T.
+   LOCAL lSpacer := TRUE
 
    IF !hb_IsString(cObjectName)
       cObjectName := "o" + ::ClassName()
@@ -174,13 +174,13 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
          SWITCH cType
          CASE "A"
             cObject += ArrayToText(uValue, cProp, nIndent + _INDENT)
-            lSpacer := .T.
+            lSpacer := TRUE
             EXIT
 
          CASE "O"
             IF __objDerivedFrom(uValue, "HBPersistent")
                cObject += uValue:SaveToText(cProp, nIndent)
-               lSpacer := .T.
+               lSpacer := TRUE
             ENDIF
             EXIT
 
@@ -191,7 +191,7 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
          OTHERWISE
             IF lSpacer
-               lSpacer := .F.
+               lSpacer := FALSE
                cObject += hb_eol()
             ENDIF
             cObject += Space(nIndent + _INDENT) + "::" + cProp + " := " + hb_ValToExp(uValue) + hb_eol()

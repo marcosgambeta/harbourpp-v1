@@ -56,7 +56,7 @@ FUNCTION __Wait(xPrompt)
    // TODO: Here we can use Lang API to localize default message
    QOut(IIf(xPrompt == NIL, "Press any key to continue...", xPrompt))
 
-   DO WHILE .T.
+   DO WHILE TRUE
 
       nKey := Inkey(0)
 

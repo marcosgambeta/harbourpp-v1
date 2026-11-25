@@ -78,7 +78,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    LOCAL aCol
 
    IF !Used()
-      RETURN .F.
+      RETURN FALSE
    ELSEIF Eof()
       dbGoBottom()
    ENDIF
@@ -101,7 +101,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    oBrowse:colSep    := IIf(hb_IsString(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox(" │ "))
    oBrowse:footSep   := hb_defaultValue(xFootingSeparators, "")
    oBrowse:skipBlock := {|nRecs|Skipped(nRecs, lAppend)}
-   oBrowse:autoLite  := .F.  // Set to .F. just like in CA-Cl*pper. [vszakats]
+   oBrowse:autoLite  := FALSE  // Set to FALSE just like in CA-Cl*pper. [vszakats]
 
    IF hb_IsArray(acColumns)
       nColCount := 0
@@ -117,7 +117,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    ENDIF
 
    IF nColCount == 0
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    // Generate the TBrowse columns
@@ -189,14 +189,14 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
    // Go into the processing loop
 
-   lAppend := .F.
-   lFlag := .T.
-   lDoIdleCall := .T.
-   lContinue := .T.
+   lAppend := FALSE
+   lFlag := TRUE
+   lDoIdleCall := TRUE
+   lContinue := TRUE
 
    DO WHILE lContinue
 
-      DO WHILE .T.
+      DO WHILE TRUE
          nKey := Inkey()
          IF oBrowse:stabilize()
             EXIT
@@ -231,11 +231,11 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
                LOOP
             ENDIF
          ELSE
-            lFlag := .T.
+            lFlag := TRUE
          ENDIF
       ENDIF
 
-      lDoIdleCall := .T.
+      lDoIdleCall := TRUE
 
       IF nKey != 0
 #ifdef HB_CLP_UNDOC
@@ -244,12 +244,12 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
             CASE K_DOWN
             CASE K_PGDN
             CASE K_CTRL_PGDN
-               oBrowse:hitBottom := .T.
+               oBrowse:hitBottom := TRUE
                LOOP
             CASE K_UP
             CASE K_PGUP
             CASE K_CTRL_PGUP
-               oBrowse:hitTop := .T.
+               oBrowse:hitTop := TRUE
                LOOP
             ENDSWITCH
          ENDIF
@@ -277,14 +277,14 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          CASE K_CTRL_END      ; oBrowse:panEnd()   ; EXIT
          OTHERWISE
             lContinue := CallUser(oBrowse, xUserFunc, nKey, @lAppend, @lFlag)
-            lDoIdleCall := .F.
+            lDoIdleCall := FALSE
          ENDSWITCH
       ENDIF
    ENDDO
 
    SetCursor(nOldCUrsor)
 
-   RETURN .T.
+   RETURN TRUE
 
 
 // NOTE: CA-Cl*pper uses intermediate function CallUser()
@@ -326,8 +326,8 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
       ELSE
          oBrowse:refreshAll():forceStable()
       ENDIF
-      lFlag := .F.
-      RETURN .T.
+      lFlag := FALSE
+      RETURN TRUE
    ENDIF
 #endif
 
@@ -335,7 +335,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
       IF nAction != DE_ABORT
 
-         lAppend := .F.
+         lAppend := FALSE
 
          IF (Set(_SET_DELETED) .AND. Deleted()) .OR. (!Empty(dbFilter()) .AND. !Eval(hb_macroBlock(dbFilter())))
             dbSkip()
@@ -350,7 +350,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
             oBrowse:Up():forceStable()
          ENDDO
 
-         lFlag := .F.
+         lFlag := FALSE
 
       ENDIF
    ELSE

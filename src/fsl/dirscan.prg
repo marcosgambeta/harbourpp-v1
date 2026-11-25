@@ -95,7 +95,7 @@ FUNCTION hb_DirRemoveAll(cDir)
          IF "D" $ aFile[F_ATTR] .AND. !"L" $ aFile[F_ATTR]
             IF !(aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "")
                IF !hb_DirRemoveAll(cPath + aFile[F_NAME])
-                  RETURN .F.
+                  RETURN FALSE
                ENDIF
             ENDIF
          ELSE
@@ -104,18 +104,18 @@ FUNCTION hb_DirRemoveAll(cDir)
                hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot(HB_FA_READONLY)))
             ENDIF
             IF !hb_vfErase(cFile) == 0
-               RETURN .F.
+               RETURN FALSE
             ENDIF
          ENDIF
       NEXT
       RETURN hb_vfDirRemove(cDir) == 0
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 FUNCTION hb_FileDelete(cFileMask, cAttr)
 
-   LOCAL lAny := .F.
+   LOCAL lAny := FALSE
    LOCAL aFile
    LOCAL cPath
    LOCAL cFile
@@ -131,7 +131,7 @@ FUNCTION hb_FileDelete(cFileMask, cAttr)
             hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot(HB_FA_READONLY)))
          ENDIF
          IF hb_vfErase(cFile) == 0
-            lAny := .T.
+            lAny := TRUE
          ENDIF
       NEXT
    ENDIF

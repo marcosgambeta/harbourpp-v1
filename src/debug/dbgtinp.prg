@@ -139,7 +139,7 @@ METHOD HBDbInput:showCursor()
 
 METHOD HBDbInput:applyKey(nKey)
 
-   LOCAL lUpdate := .T.
+   LOCAL lUpdate := TRUE
 
    SWITCH nKey
    CASE K_HOME
@@ -179,7 +179,7 @@ METHOD HBDbInput:applyKey(nKey)
       EXIT
    OTHERWISE
       IF hb_keyChar(nKey) == ""
-         lUpdate := .F.
+         lUpdate := FALSE
       ELSE
          IF Set(_SET_INSERT)
             ::cValue := Left(Stuff(::cValue, ::nPos, 0, hb_keyChar(nKey)), ::nSize)

@@ -111,7 +111,7 @@ CREATE CLASS PopupMenu FUNCTION HBPopupMenu
    VAR aItems     INIT {}
    VAR aSaveScr
 
-   VAR lShadowed  INIT .F. // Harbour extension
+   VAR lShadowed  INIT FALSE // Harbour extension
 
    METHOD setMetrics()
 
@@ -132,7 +132,7 @@ METHOD PopupMenu:addItem(oItem)
 
 METHOD PopupMenu:close(lCloseChild)
 
-   __defaultNIL(@lCloseChild, .T.)
+   __defaultNIL(@lCloseChild, TRUE)
 
    IF ::isOpen()
 
@@ -161,7 +161,7 @@ METHOD PopupMenu:delItem(nPos)
 
       nLen := Len(::aItems[nPos]:caption)
 
-      hb_ADel(::aItems, nPos, .T.)
+      hb_ADel(::aItems, nPos, TRUE)
       ::nItemCount--
 
       IF ::nWidth == nLen + 2
@@ -411,7 +411,7 @@ METHOD PopupMenu:insItem(nPos, oItem)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. hb_IsObject(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
-      hb_AIns(::aItems, nPos, oItem, .T.)
+      hb_AIns(::aItems, nPos, oItem, TRUE)
       ::nItemCount++
 
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)

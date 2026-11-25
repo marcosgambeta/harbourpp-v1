@@ -38,7 +38,7 @@ RETURN was_DRAWITEMSTRUCT():new()
 CLASS WAS_DRAWITEMSTRUCT
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

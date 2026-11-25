@@ -38,7 +38,7 @@ RETURN was_SCROLLBARINFO():new()
 CLASS WAS_SCROLLBARINFO
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

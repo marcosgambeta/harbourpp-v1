@@ -73,7 +73,7 @@ METHOD HBDbHash:New(hHash, cVarName, lEditable)
 
    ::hashName := cVarName
    ::TheHash := hHash
-   ::lEditable := hb_defaultValue(lEditable, .T.)
+   ::lEditable := hb_defaultValue(lEditable, TRUE)
 
    ::addWindows(::TheHash)
 
@@ -98,7 +98,7 @@ METHOD HBDbHash:addWindows(hHash, nRow)
       oWndSets := HBDbWindow():New(1, 5, MaxRow() - 2, MaxCol() - 5, ::hashName + "[1.." + hb_ntos(nSize) + "]", "N/W")
    ENDIF
    ::nCurWindow++
-   oWndSets:lFocused := .T.
+   oWndSets:lFocused := TRUE
    AAdd(::aWindows, oWndSets)
 
    oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
@@ -197,13 +197,13 @@ METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
             __dbgAlert("Hash is empty")
          ELSE
             SetPos(ownd:nBottom, ownd:nLeft)
-            ::aWindows[::nCurwindow]:lFocused := .F.
+            ::aWindows[::nCurwindow]:lFocused := FALSE
 
             ::hashName := ::hashName + "[" + HashKeyString(hHash, nSet) + "]"
             ::AddWindows(hb_HValueAt(hHash, nSet), oBrwSets:RowPos + oBrwSets:nTop)
             ::hashName := cOldName
 
-            hb_ADel(::aWindows, ::nCurWindow, .T.)
+            hb_ADel(::aWindows, ::nCurWindow, TRUE)
             IF ::nCurwindow == 0
                ::nCurwindow := 1
             ELSE

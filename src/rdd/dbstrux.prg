@@ -55,10 +55,10 @@ FUNCTION __dbCopyXStruct(cFileName)
    LOCAL nOldArea
    LOCAL aStruct
    LOCAL oError
-   LOCAL lError := .F.
+   LOCAL lError := FALSE
 
    IF Empty(aStruct := dbStruct())
-      RETURN .F.
+      RETURN FALSE
    ENDIF
 
    nOldArea := Select()
@@ -66,7 +66,7 @@ FUNCTION __dbCopyXStruct(cFileName)
    BEGIN SEQUENCE
 
       dbSelectArea(0)
-      __dbCreate(cFileName, NIL, NIL, .F.)
+      __dbCreate(cFileName, NIL, NIL, FALSE)
 
       AEval(aStruct, {| aField | ;
          IIf(aField[DBS_TYPE] == "C" .AND. aField[DBS_LEN] > 255, ;
@@ -80,7 +80,7 @@ FUNCTION __dbCopyXStruct(cFileName)
    // NOTE: CA-Cl*pper has a bug, where only a plain RECOVER statement is
    //       used here (without the USING keyword), so oError will always be NIL.
    RECOVER USING oError
-      lError := .T.
+      lError := TRUE
    END SEQUENCE
 
    IF Select() != nOldArea
@@ -92,7 +92,7 @@ FUNCTION __dbCopyXStruct(cFileName)
       Break(oError)
    ENDIF
 
-   RETURN .T.
+   RETURN TRUE
 
 // NOTE: Compared to CA-Cl*pper, Harbour:
 //       (cCodePage, nConnection).
@@ -103,7 +103,7 @@ FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
    LOCAL aStruct := {}
    LOCAL oError
 
-   __defaultNIL(@lNew, .F.)
+   __defaultNIL(@lNew, FALSE)
 
    IF cAlias == NIL
       hb_FNameSplit(cFileName, NIL, @cAlias)
@@ -122,7 +122,7 @@ FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
             { "FIELD_TYPE", "C",  1, 0 }, ;
             { "FIELD_LEN" , "N",  3, 0 }, ;
             { "FIELD_DEC" , "N",  3, 0 } }, ;
-            cRDD, .F., cAlias, NIL, cCodePage, nConnection)
+            cRDD, FALSE, cAlias, NIL, cCodePage, nConnection)
       ELSE
          dbUseArea(lNew, NIL, cFileFrom, "")
 

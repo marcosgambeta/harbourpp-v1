@@ -73,7 +73,7 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
 
    VAR __col      INIT -1  AS NUMERIC                   // NOTE: This is a Harbour extension.
    VAR __row      INIT -1  AS NUMERIC                   // NOTE: This is a Harbour extension.
-   VAR __issep    INIT .F. AS LOGICAL                   // NOTE: This is a Harbour extension.
+   VAR __issep    INIT FALSE AS LOGICAL                   // NOTE: This is a Harbour extension.
 
    METHOD isPopUp()
 
@@ -82,9 +82,9 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
    PROTECTED:
 
    VAR cCaption   INIT ""
-   VAR lChecked   INIT .F.
+   VAR lChecked   INIT FALSE
    VAR boData
-   VAR lEnabled   INIT .T.
+   VAR lEnabled   INIT TRUE
    VAR nID
    VAR cMessage
    VAR nShortcut
@@ -99,11 +99,11 @@ METHOD MenuItem:caption(cCaption)
       ::cCaption := __eInstVar53(Self, "CAPTION", cCaption, "C", 1001)
 
       IF ::cCaption == HB_MENU_SEPARATOR_UNI
-         ::__issep  := .T.
+         ::__issep  := TRUE
          ::boData   := NIL
-         ::lChecked := ::lEnabled := .F.
+         ::lChecked := ::lEnabled := FALSE
       ELSE
-         ::__issep  := .F.
+         ::__issep  := FALSE
       ENDIF
    ENDIF
 

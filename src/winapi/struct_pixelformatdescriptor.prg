@@ -38,7 +38,7 @@ RETURN was_PIXELFORMATDESCRIPTOR():new()
 CLASS WAS_PIXELFORMATDESCRIPTOR
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

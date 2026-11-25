@@ -70,15 +70,15 @@ CREATE CLASS HBDbWindow // Debugger windows and dialogs
    VAR cCaption
    VAR cBackImage
    VAR cColor
-   VAR lFocused     INIT .F.
+   VAR lFocused     INIT FALSE
    VAR bGotFocus
    VAR bLostFocus
    VAR bKeyPressed
    VAR bPainted
    VAR bLButtonDown
    VAR bLDblClick
-   VAR lShadow      INIT .F.
-   VAR lVisible     INIT .F.
+   VAR lShadow      INIT FALSE
+   VAR lVisible     INIT FALSE
    VAR Cargo
    VAR Browser
 
@@ -126,7 +126,7 @@ METHOD PROCEDURE HBDbWindow:Hide()
 
    __dbgRestScreen(::nTop, ::nLeft, ::nBottom + IIf(::lShadow, 1, 0), ::nRight + IIf(::lShadow, 2, 0), ::cBackImage)
    ::cBackImage := NIL
-   ::lVisible := .F.
+   ::lVisible := FALSE
 
    RETURN
 
@@ -196,16 +196,16 @@ METHOD PROCEDURE HBDbWindow:Show(lFocused)
    ENDIF
 
    ::Refresh()
-   ::lVisible := .T.
+   ::lVisible := TRUE
 
    RETURN
 
 METHOD PROCEDURE HBDbWindow:ShowModal()
 
-   LOCAL lExit := .F.
+   LOCAL lExit := FALSE
    LOCAL nKey
 
-   ::lShadow := .T.
+   ::lShadow := TRUE
    ::Show()
 
    DO WHILE !lExit
@@ -217,13 +217,13 @@ METHOD PROCEDURE HBDbWindow:ShowModal()
 
       SWITCH nKey
       CASE K_ESC
-         lExit := .T.
+         lExit := TRUE
          EXIT
 
       CASE K_LBUTTONDOWN
          IF MRow() == ::nTop .AND. MCol() >= ::nLeft + 1 .AND. ;
             MCol() <= ::nLeft + 3
-            lExit := .T.
+            lExit := TRUE
          ENDIF
          EXIT
 
@@ -258,7 +258,7 @@ METHOD PROCEDURE HBDbWindow:Move()
    LOCAL nOldRight  := ::nright
    LOCAL nKey
 
-   DO WHILE .T.
+   DO WHILE TRUE
       __dbgRestScreen(NIL, NIL, NIL, NIL, ::cBackImage)
       hb_DispBox(::nTop, ::nLeft, ::nRight, ::nBottom, Replicate(hb_UTF8ToStrBox("░"), 8) + " ", ::cColor)
 

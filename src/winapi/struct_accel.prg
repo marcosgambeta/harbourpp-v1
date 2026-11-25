@@ -38,7 +38,7 @@ RETURN was_ACCEL():new()
 CLASS WAS_ACCEL
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

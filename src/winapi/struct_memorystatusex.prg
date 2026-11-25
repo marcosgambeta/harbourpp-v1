@@ -38,7 +38,7 @@ RETURN was_MEMORYSTATUSEX():new()
 CLASS WAS_MEMORYSTATUSEX
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

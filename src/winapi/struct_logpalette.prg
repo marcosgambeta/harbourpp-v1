@@ -38,7 +38,7 @@ RETURN was_LOGPALETTE():new()
 CLASS WAS_LOGPALETTE
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete

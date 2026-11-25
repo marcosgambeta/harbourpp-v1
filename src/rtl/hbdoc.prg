@@ -283,7 +283,7 @@ FUNCTION __hbdoc_ToSource(aEntry)
 
 FUNCTION __hbdoc_FilterOut(cFile)
 
-   LOCAL lEntry := .F.
+   LOCAL lEntry := FALSE
    LOCAL cLine
    LOCAL cOK := ""
    LOCAL nToSkip := 0
@@ -296,10 +296,10 @@ FUNCTION __hbdoc_FilterOut(cFile)
 
       SWITCH AllTrim(SubStr(cLine, 4))
       CASE "$DOC$"
-         lEntry := .T.
+         lEntry := TRUE
          EXIT
       CASE "$END$"
-         lEntry := .F.
+         lEntry := FALSE
          nToSkip := 1
          EXIT
       OTHERWISE
@@ -354,11 +354,11 @@ FUNCTION __hbdoc_SaveHBD(cFileName, aEntry)
          FWrite(fhnd, _HBDOC_SIGNATURE)
          FWrite(fhnd, hb_Serialize(aEntry, HB_SERIALIZE_COMPRESS))
          FClose(fhnd)
-         RETURN .T.
+         RETURN TRUE
       ENDIF
    ENDIF
 
-   RETURN .F.
+   RETURN FALSE
 
 FUNCTION __hbdoc_LoadHBD(cFileName)
 

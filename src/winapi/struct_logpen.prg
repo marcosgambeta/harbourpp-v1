@@ -38,7 +38,7 @@ RETURN was_LOGPEN():new()
 CLASS WAS_LOGPEN
 
    DATA ptr
-   DATA self_destruction INIT .F.
+   DATA self_destruction INIT FALSE
 
    METHOD new
    METHOD delete
