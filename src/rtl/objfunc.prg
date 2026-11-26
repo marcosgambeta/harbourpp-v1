@@ -85,7 +85,7 @@ Function __objGetMsgList(oObject, lDataMethod, nClassType)
    aData := {}
    nFirst := AScan(aInfo, {|n|hb_LeftEq(n, "_")})
 
-   FOR EACH cName IN aInfo
+   For Each cName In aInfo
 
       // Set functions begin with a leading underscore
       IF !hb_LeftEq(cName, "_")
@@ -96,7 +96,7 @@ Function __objGetMsgList(oObject, lDataMethod, nClassType)
             AAdd(aData, cName)
          ENDIF
       ENDIF
-   NEXT
+   Next
 
    RETURN aData
 
@@ -120,11 +120,11 @@ Function __objGetValueList(oObject, aExcept)
    hb_default(@aExcept, {})
 
    aData := {}
-   FOR EACH cSymbol IN __objGetMsgList(oObject)
+   For Each cSymbol In __objGetMsgList(oObject)
       IF hb_AScan(aExcept, cSymbol, NIL, NIL, True) == 0
          AAdd(aData, {cSymbol, __objSendMsg(oObject, cSymbol)})
       ENDIF
-   NEXT
+   Next
 
    RETURN aData
 
@@ -243,8 +243,8 @@ Function __objGetProperties(oObject, lAllExported)
    LOCAL msg
    LOCAL aMsgList := __clsGetProperties(oObject:classH, lAllExported)
 
-   FOR EACH msg IN aMsgList
+   For Each msg In aMsgList
       msg := {msg, __objSendMsg(oObject, msg)}
-   NEXT
+   Next
 
    RETURN aMsgList

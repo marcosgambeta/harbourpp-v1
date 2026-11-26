@@ -104,7 +104,7 @@ Function _sx_IniInit(nArea)
 
    IF !Empty(hIni)
       IF HB_SIX_SECTION $ hIni
-         FOR EACH item IN hIni[HB_SIX_SECTION]
+         For Each item In hIni[HB_SIX_SECTION]
             Switch item:__enumKey()
             Case "SHARED"
                xShared := _sx_INIlogical(item)
@@ -119,7 +119,7 @@ Function _sx_IniInit(nArea)
                xTrigger := item
                EXIT
             EndSwitch
-         NEXT
+         Next
          IF xTrigger != NIL
             (nArea)->(sx_SetTrigger(TRIGGER_INSTALL, xTrigger))
          ENDIF
@@ -127,15 +127,15 @@ Function _sx_IniInit(nArea)
       ENDIF
 
       /* convert hash array into normal array */
-      FOR EACH item IN hIni
+      For Each item In hIni
          IF hb_IsHash(item)
             sect := Array(Len(item))
-            FOR EACH h, a IN item, sect
+            For Each h, a In item, sect
                a := { h:__enumKey(), h }
-            NEXT
+            Next
             item := sect
          ENDIF
-      NEXT
+      Next
 
       SxIniInfo[nArea] := hIni
 

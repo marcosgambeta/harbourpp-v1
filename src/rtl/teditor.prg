@@ -254,12 +254,12 @@ METHOD HBEditor:GetText(lSoftCR)
    cEOL := hb_eol()
    cSoftCR := IIf(::lWordWrap, IIf(hb_defaultValue(lSoftCR, False), Chr(141) + Chr(10), ""), cEOL)
    cText := ""
-   FOR EACH oLine IN ::aText
+   For Each oLine In ::aText
       cText += oLine:cText
       IF !oLine:__enumIsLast()
          cText += IIf(oLine:lSoftCR, cSoftCR, cEOL)
       ENDIF
-   NEXT
+   Next
 
    RETURN cText
 

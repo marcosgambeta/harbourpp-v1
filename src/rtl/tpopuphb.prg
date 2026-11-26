@@ -111,11 +111,11 @@ METHOD hb_PopupMenu:setCoors(nRow, nCol, lTop)
          ::nTop    -= nDif
       ENDIF
 
-      FOR EACH oItem IN ::aItems
+      For Each oItem In ::aItems
          IF oItem:isPopup()
             oItem:data:setCoors(nRow + oItem:__enumIndex(), ::nRight + 1, False)
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    Return Self
@@ -168,11 +168,11 @@ METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
 
    IF (nShortCut := ::getShortCt(nKey)) == 0
 
-      FOR EACH oItem IN ::aItems
+      For Each oItem In ::aItems
          IF oItem:Enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
             Return True
          ENDIF
-      NEXT
+      Next
 
    ELSEIF !(oItem := ::getItem(nShortCut)):IsPopUp()
 

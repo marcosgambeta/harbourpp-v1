@@ -1087,7 +1087,7 @@ Function _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessag
       o:fBlock    := bFBlock
       o:sBlock    := bSBlock
 
-      FOR EACH xItem IN aItems
+      For Each xItem In aItems
          Do Case
          Case !hb_IsArray(xItem)
             o:addItem(xItem)
@@ -1100,7 +1100,7 @@ Function _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessag
 #endif
             o:addItem(xItem[_ITEM_cText], xItem[_ITEM_xData])
          EndCase
-      NEXT
+      Next
 
       IF hb_defaultValue(lScrollBar, False)
          IF hb_defaultValue(lDropDown, False)

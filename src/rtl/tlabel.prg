@@ -224,7 +224,7 @@ METHOD HBLabelForm:ExecuteLabel()
 
    // Load the current record into aBuffer
 
-   FOR EACH aField IN ::aLabelData[LBL_FIELDS]
+   For Each aField In ::aLabelData[LBL_FIELDS]
 
       IF aField != NIL
 
@@ -240,7 +240,7 @@ METHOD HBLabelForm:ExecuteLabel()
       ELSE
          AAdd(aBuffer, NIL)
       ENDIF
-   NEXT
+   Next
 
    ASize(aBuffer, Len(::aLabelData[LBL_FIELDS]))
 
@@ -252,9 +252,9 @@ METHOD HBLabelForm:ExecuteLabel()
    IF ::nCurrentCol == ::aLabelData[LBL_ACROSS]
 
       // trim
-      FOR EACH item IN ::aBandToPrint
+      For Each item In ::aBandToPrint
          item := RTrim(item)
-      NEXT
+      Next
 
       ::lOneMoreBand := False
       ::nCurrentCol := 1
@@ -348,11 +348,11 @@ METHOD HBLabelForm:LoadLabel(cLblFile)
    IF (nHandle := FOpen(cLblFile)) == F_ERROR .AND. Empty(hb_FNameDir(cLblFile))
 
       // Search through default path; attempt to open label file
-      FOR EACH cPath IN hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
+      For Each cPath In hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
          IF (nHandle := FOpen(hb_DirSepAdd(cPath) + cLblFile)) != F_ERROR
             EXIT
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    // File error

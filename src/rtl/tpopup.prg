@@ -166,9 +166,9 @@ METHOD PopupMenu:delItem(nPos)
 
       IF ::nWidth == nLen + 2
          nWidth := 0
-         FOR EACH item IN ::aItems
+         For Each item In ::aItems
             nWidth := Max(__CapMetrics(item), nWidth)
-         NEXT
+         Next
          ::nWidth := nWidth
       ENDIF
    ENDIF
@@ -205,7 +205,7 @@ METHOD PopupMenu:display()
       ENDIF
 
       nLeft++
-      FOR EACH item IN ::aItems
+      For Each item In ::aItems
 
          nTop++
 
@@ -257,7 +257,7 @@ METHOD PopupMenu:display()
                hb_DispOutAt(nTop, nLeft + nHotKeyPos - 1, SubStr(cCaption, nHotKeyPos, 1), hb_ColorIndex(::cColorSpec, IIf(item:__enumIndex() == nCurrent, 3, 2)))
             ENDIF
          ENDIF
-      NEXT
+      Next
 
       DispEnd()
 
@@ -281,11 +281,11 @@ METHOD PopupMenu:getAccel(xKey)
 
    IF Len(cKey) > 0
       cKey := "&" + cKey
-      FOR EACH item in ::aItems
+      For Each item In ::aItems
          IF hb_AtI(cKey, item:caption) > 0
             RETURN item:__enumIndex()
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    RETURN 0
@@ -294,11 +294,11 @@ METHOD PopupMenu:getFirst()
 
    LOCAL item
 
-   FOR EACH item IN ::aItems
+   For Each item In ::aItems
       IF item:enabled
          RETURN item:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -309,11 +309,11 @@ METHOD PopupMenu:getLast()
 
    LOCAL item
 
-   FOR EACH item IN ::aItems DESCEND
+   For Each item In ::aItems DESCEND
       IF item:enabled
          RETURN item:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -348,11 +348,11 @@ METHOD PopupMenu:getShortCt(nKey)
 
    LOCAL item
 
-   FOR EACH item IN ::aItems
+   For Each item In ::aItems
       IF item:shortcut == nKey
          RETURN item:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 

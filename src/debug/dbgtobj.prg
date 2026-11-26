@@ -89,7 +89,7 @@ METHOD HBDbObject:New(oObject, cVarName, lEditable)
    aMessages := oObject:classSel()
    ASort(aMessages, NIL, NIL, {| x, y | x + Chr(0) < y + Chr(0) })
    aMethods := {}
-   FOR EACH cMsg IN aMessages
+   For Each cMsg In aMessages
       IF hb_LeftEq(cMsg, "_") .AND. ;
          hb_AScan(aMessages, cMsgAcc := SubStr(cMsg, 2), NIL, NIL, True) > 0
          xValue := __dbgObjGetValue(oObject, cMsgAcc)
@@ -97,10 +97,10 @@ METHOD HBDbObject:New(oObject, cVarName, lEditable)
       ELSEIF hb_AScan(aMessages, "_" + cMsg, NIL, NIL, True) == 0
          AAdd(aMethods, cMsg)
       ENDIF
-   NEXT
-   FOR EACH cMsg IN aMethods
+   Next
+   For Each cMsg In aMethods
       AAdd(::pItems, {Lower(cMsg), "Method", False})
-   NEXT
+   Next
 
    ::objname := cVarName
    ::TheObj := oObject

@@ -80,18 +80,18 @@ Function __hbdoc_DirLastModified(cDir)
 
       IF hb_DirExists(cDir + _HBDOC_SRC_SUBDIR)
 
-         FOR EACH aFile IN Directory(cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D")
+         For Each aFile In Directory(cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D")
             IF "D" $ aFile[F_ATTR] .AND. !(aFile[F_NAME] == ".") .AND. !(aFile[F_NAME] == "..")
 
                cDocDir := cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME]
 
-               FOR EACH aDocFile IN Directory(cDocDir + hb_ps() + "*" + _HBDOC_SRC_EXT)
+               For Each aDocFile In Directory(cDocDir + hb_ps() + "*" + _HBDOC_SRC_EXT)
                   IF hb_FGetDateTime(cDocDir + hb_ps() + aDocFile[F_NAME], @tDoc) .AND. tLast < tDoc
                      tLast := tDoc
                   ENDIF
-               NEXT
+               Next
             ENDIF
-         NEXT
+         Next
       ENDIF
    ENDIF
 
@@ -118,13 +118,13 @@ Function __hbdoc_LoadDir(cDir, cName, aErrMsg)
          ENDIF
 
          nCount := 0
-         FOR EACH aFile IN Directory(cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D")
+         For Each aFile In Directory(cDir + _HBDOC_SRC_SUBDIR + hb_ps() + hb_osFileMask(), "D")
             IF "D" $ aFile[F_ATTR] .AND. !(aFile[F_NAME] == ".") .AND. !(aFile[F_NAME] == "..")
 
                __hbdoc__read_langdir(aEntry, cDir + _HBDOC_SRC_SUBDIR + hb_ps() + aFile[F_NAME], hMeta, aErrMsg)
                ++nCount
             ENDIF
-         NEXT
+         Next
 
          IF nCount == 0
             _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no language subdirs", cDir))
@@ -142,10 +142,10 @@ Static Procedure __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
    hMeta["_LANG"] := hb_FNameName(hb_DirSepDel(cDir))
 
    nCount := 0
-   FOR EACH aFile IN Directory(cDir + hb_ps() + "*" + _HBDOC_SRC_EXT)
+   For Each aFile In Directory(cDir + hb_ps() + "*" + _HBDOC_SRC_EXT)
       __hbdoc__read_file(aEntry, cDir + hb_ps() + aFile[F_NAME], hMeta, aErrMsg)
       ++nCount
-   NEXT
+   Next
 
    IF nCount == 0
       _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no documentation files", cDir))
@@ -168,11 +168,11 @@ Static Procedure __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
    ENDIF
 
    // Preselect the default template based on source filename
-   FOR EACH tmp IN aFilenameTemplateMap
+   For Each tmp In aFilenameTemplateMap
       IF hb_LeftEqI(cFileName, tmp)
          hMeta["TEMPLATE"] := tmp:__enumKey()
       ENDIF
-   NEXT
+   Next
 
    hMeta["_DOCSOURCE"] := cFileName
 
@@ -193,7 +193,7 @@ Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
    cFile := StrTran(cFile, Chr(9), " ")
 
    nLine := 0
-   FOR EACH cLine IN hb_ATokens(cFile, Chr(10))
+   For Each cLine In hb_ATokens(cFile, Chr(10))
 
       cLine := SubStr(cLine, 4)
       ++nLine
@@ -207,9 +207,9 @@ Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
          ENDIF
          hEntry := {=>}
          IF hb_IsHash(hMeta)
-            FOR EACH tmp IN hMeta
+            For Each tmp In hMeta
                hEntry[tmp:__enumKey()] := tmp
-            NEXT
+            Next
          ENDIF
          EXIT
       Case "$END$"
@@ -245,7 +245,7 @@ Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
             _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: Content outside section", cFileName, nLine))
          ENDIF
       EndSwitch
-   NEXT
+   Next
 
    IF hEntry != NIL
       _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine))
@@ -262,13 +262,13 @@ Function __hbdoc_ToSource(aEntry)
    LOCAL cLineOut
 
    IF hb_IsArray(aEntry)
-      FOR EACH hEntry IN aEntry
+      For Each hEntry In aEntry
          cSource += hb_eol()
          cSource += "/* $DOC$" + hb_eol()
-         FOR EACH item IN hEntry
+         For Each item In hEntry
             IF hb_IsString(item) .AND. !hb_LeftEq(item:__enumKey(), "_")
                cSource += "   $" + item:__enumKey() + "$" + hb_eol()
-               FOR EACH cLine IN hb_ATokens(StrTran(item, Chr(13)), Chr(10))
+               For Each cLine In hb_ATokens(StrTran(item, Chr(13)), Chr(10))
                   cLineOut := IIf(Len(cLine) == 0, "", Space(4) + cLine)
                   cSource += IIf(Empty(cLineOut), "", "  " + cLineOut) + hb_eol()
                NEXT
@@ -276,7 +276,7 @@ Function __hbdoc_ToSource(aEntry)
          NEXT
          cSource += "   $END$" + hb_eol()
          cSource += " */" + hb_eol()
-      NEXT
+      Next
    ENDIF
 
    RETURN cSource
@@ -292,7 +292,7 @@ Function __hbdoc_FilterOut(cFile)
    cFile := StrTran(cFile, Chr(13))
    cFile := StrTran(cFile, Chr(9), " ")
 
-   FOR EACH cLine IN hb_ATokens(cFile, Chr(10))
+   For Each cLine In hb_ATokens(cFile, Chr(10))
 
       Switch AllTrim(SubStr(cLine, 4))
       Case "$DOC$"
@@ -321,7 +321,7 @@ Function __hbdoc_FilterOut(cFile)
             ENDIF
          ENDIF
       EndSwitch
-   NEXT
+   Next
 
    RETURN cOK
 

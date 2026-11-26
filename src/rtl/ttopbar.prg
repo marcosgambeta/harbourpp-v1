@@ -127,9 +127,9 @@ METHOD TopBarMenu:delItem(nPos)
 
       IF ::nWidth == nLen + 2
          nWidth := 0
-         FOR EACH item IN ::aItems
+         For Each item In ::aItems
             nWidth := Max(__CapMetrics(item), nWidth)
-         NEXT
+         Next
          ::nWidth := nWidth
       ENDIF
    ENDIF
@@ -154,7 +154,7 @@ METHOD TopBarMenu:display()
 
    hb_DispOutAt(nRow, nLeft, Space(nRight - nLeft + 1), cColor1)
 
-   FOR EACH item IN ::aItems
+   For Each item In ::aItems
 
       cCaption := " " + RTrim(item:caption) + " "
       nCaptionLen := Len(cCaption)
@@ -194,7 +194,7 @@ METHOD TopBarMenu:display()
       ENDIF
 
       nLeft += nCaptionLen
-   NEXT
+   Next
 
    IF nCurrent != 0 .AND. ::aItems[nCurrent]:isPopUp() .AND. ::aItems[nCurrent]:data:isOpen
 
@@ -209,11 +209,11 @@ METHOD TopBarMenu:getFirst()
 
    LOCAL item
 
-   FOR EACH item IN ::aItems
+   For Each item In ::aItems
       IF item:enabled
          RETURN item:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -224,11 +224,11 @@ METHOD TopBarMenu:getLast()
 
    LOCAL item
 
-   FOR EACH item IN ::aItems DESCEND
+   For Each item In ::aItems DESCEND
       IF item:enabled
          RETURN item:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -275,11 +275,11 @@ METHOD TopBarMenu:getAccel(nKey)
 
    IF nIndex > 0
       cKey := "&" + SubStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1)
-      FOR EACH item IN ::aItems
+      For Each item In ::aItems
          IF hb_AtI(cKey, item:caption) > 0
             RETURN item:__enumIndex()
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    RETURN 0
@@ -288,11 +288,11 @@ METHOD TopBarMenu:getShortCt(nKey)
 
    LOCAL item
 
-   FOR EACH item IN ::aItems
+   For Each item In ::aItems
       IF item:shortcut == nKey
          RETURN item:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -310,14 +310,14 @@ METHOD TopBarMenu:hitTest(nMRow, nMCol)
 
    IF nMRow == ::nRow
 
-      FOR EACH item IN ::aItems
+      For Each item In ::aItems
 
          nColumn := item:__col
 
          IF nMCol >= nColumn .AND. nMCol <= nColumn + Len(item:caption)
             RETURN item:__enumIndex()
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    RETURN HTNOWHERE

@@ -105,13 +105,13 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
    IF hb_IsArray(acColumns)
       nColCount := 0
-      FOR EACH aCol IN acColumns
+      For Each aCol In acColumns
          IF hb_IsString(aCol) .AND. !Empty(aCol)
             nColCount++
          ELSE
             EXIT
          ENDIF
-      NEXT
+      Next
    ELSE
       nColCount := FCount()
    ENDIF

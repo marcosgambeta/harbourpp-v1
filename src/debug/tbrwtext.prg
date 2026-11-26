@@ -194,9 +194,9 @@ METHOD PROCEDURE HBBrwText:LoadFile(cFileName)
    ::nRows := Len(::aRows)
    ::nLineNoLen := Len(hb_ntos(::nRows)) + 2
 
-   FOR EACH cLine IN ::aRows
+   For Each cLine In ::aRows
       nMaxLineLen := Max(nMaxLineLen, Len(RTrim(MemoLine(cLine, Len(cLine) + 256, 1, ::nTabWidth, False))))
-   NEXT
+   Next
    ::nMaxLineLen := nMaxLineLen
    ::nLineOffset := 1
 

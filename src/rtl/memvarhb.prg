@@ -93,7 +93,7 @@ Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
 
       aVars := {}
 
-      FOR EACH nScope IN {HB_MV_PUBLIC, HB_MV_PRIVATE}
+      For Each nScope In {HB_MV_PUBLIC, HB_MV_PRIVATE}
          nCount := __mvDbgInfo(nScope)
          FOR tmp := 1 TO nCount
             xValue := __mvDbgInfo(nScope, tmp, @cName)
@@ -104,7 +104,7 @@ Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
                ENDIF
             ENDIF
          NEXT
-      NEXT
+      Next
 
       nRetries := 0
       Do While True
@@ -218,7 +218,7 @@ Function hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
          cBuffer := NIL
 
          IF hb_IsArray(aVars)
-            FOR EACH item IN aVars
+            For Each item In aVars
                IF hb_IsArray(item) .AND. Len(item) == 2 .AND. hb_IsString(item[1]) .AND. !Empty(item[1])
 
                   cName := item[1]
@@ -230,7 +230,7 @@ Function hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
                      __mvPut(cName, item[2])
                   ENDIF
                ENDIF
-            NEXT
+            Next
             __mvSetBase()
          ENDIF
       ELSE

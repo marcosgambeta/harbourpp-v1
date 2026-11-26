@@ -337,7 +337,7 @@ Static Procedure _DISP_FHSEP(nRow, nType, cColor, aColData)
    LOCAL lFirst := True
    LOCAL lFirstVisible := True
 
-   FOR EACH aCol IN aColData
+   For Each aCol In aColData
       IF aCol[_TBCI_COLPOS] != NIL
          cSep := aCol[nType]
          nWidth := aCol[_TBCI_COLWIDTH]
@@ -385,7 +385,7 @@ Static Procedure _DISP_FHSEP(nRow, nType, cColor, aColData)
       ELSEIF aCol[_TBCI_CELLWIDTH] > 0
          lFirst := False
       ENDIF
-   NEXT
+   Next
 
    RETURN
 
@@ -401,7 +401,7 @@ Static Procedure _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColo
 
    hb_DispBox(nRow, nLeft, nRow + nHeight - 1, nRight, Space(9), aColors[_TBC_CLR_STANDARD])
 
-   FOR EACH aCol IN aColData
+   For Each aCol In aColData
       IF aCol[_TBCI_COLPOS] != NIL
          cName := aCol[nType]
          nCol := aCol[_TBCI_COLPOS]
@@ -420,7 +420,7 @@ Static Procedure _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColo
                           IIf(aCol[_TBCI_DEFCOLOR][nColor] == 0, "N/N", aColors[aCol[_TBCI_DEFCOLOR][nColor]]))
          NEXT
       ENDIF
-   NEXT
+   Next
 
    RETURN
 
@@ -478,7 +478,7 @@ METHOD TBrowse:dispRow(nRow)
       hb_DispBox(nRowPos, ::n_Left, nRowPos, ::n_Right, Space(9), cStdColor)
 
       lFirst := True
-      FOR EACH aCol, cValue, aColors IN ::aColData, ::aCellValues[nRow], ::aCellColors[nRow]
+      For Each aCol, cValue, aColors In ::aColData, ::aCellValues[nRow], ::aCellColors[nRow]
          IF aCol[_TBCI_COLPOS] != NIL
             nColPos := aCol[_TBCI_COLPOS]
             IF lFirst
@@ -499,7 +499,7 @@ METHOD TBrowse:dispRow(nRow)
 #endif
             ENDIF
          ENDIF
-      NEXT
+      Next
 
       ::aDispStatus[nRow] := False
 
@@ -628,7 +628,7 @@ METHOD TBrowse:readRecord(nRow)
 
       nColors := Len(::aColors)
       IF nRow <= ::nLastRow
-         FOR EACH aCol, cValue, aColor IN ::aColData, ::aCellValues[nRow], ::aCellColors[nRow]
+         For Each aCol, cValue, aColor In ::aColData, ::aCellValues[nRow], ::aCellColors[nRow]
             oCol := aCol[_TBCI_COLOBJECT]
             cValue := Eval(oCol:block)
             aColor := _CELLCOLORS(aCol, cValue, nColors)
@@ -637,12 +637,12 @@ METHOD TBrowse:readRecord(nRow)
             ELSE
                cValue := Space(aCol[_TBCI_CELLWIDTH])
             ENDIF
-         NEXT
+         Next
       ELSE
-         FOR EACH aCol, cValue, aColor IN ::aColData, ::aCellValues[nRow], ::aCellColors[nRow]
+         For Each aCol, cValue, aColor In ::aColData, ::aCellValues[nRow], ::aCellColors[nRow]
             aColor := {aCol[_TBCI_DEFCOLOR][1], aCol[_TBCI_DEFCOLOR][2]}
             cValue := Space(aCol[_TBCI_CELLWIDTH])
-         NEXT
+         Next
       ENDIF
 
       ::aCellStatus[nRow] := True
@@ -766,7 +766,7 @@ METHOD TBrowse:stabilize()
       ENDIF
 
       IF ::nLastScroll > 0
-         FOR EACH lStat, lDisp IN ::aCellStatus, ::aDispStatus DESCEND
+         For Each lStat, lDisp In ::aCellStatus, ::aDispStatus DESCEND
             IF !lStat
                IF lRead
                   Return False
@@ -776,9 +776,9 @@ METHOD TBrowse:stabilize()
             IF lDisp
                ::dispRow(lDisp:__enumIndex())
             ENDIF
-         NEXT
+         Next
       ELSE
-         FOR EACH lStat, lDisp IN ::aCellStatus, ::aDispStatus
+         For Each lStat, lDisp In ::aCellStatus, ::aDispStatus
             IF !lStat
                IF lRead
                   Return False
@@ -788,7 +788,7 @@ METHOD TBrowse:stabilize()
             IF lDisp
                ::dispRow(lDisp:__enumIndex())
             ENDIF
-         NEXT
+         Next
       ENDIF
 
       IF ::nRowPos > ::nLastRow
@@ -1284,7 +1284,7 @@ METHOD TBrowse:doConfigure()
    lHeadSep := lFootSep := False
    nColCount := Len(::columns)
    ASize(::aColData, nColCount)
-   FOR EACH oCol, aCol IN ::columns, ::aColData
+   For Each oCol, aCol In ::columns, ::aColData
       /* CA-Cl*pper always evaluates column block even if column is
        * hidden by setting :width to 0. [druzus]
        */
@@ -1372,7 +1372,7 @@ METHOD TBrowse:doConfigure()
          ENDIF
 #endif
       ENDIF
-   NEXT
+   Next
 
    nHeight := Max(_TBR_COORD(::n_Bottom) - _TBR_COORD(::n_Top), 0)
    IF lHeadSep .AND. nHeight > 0
@@ -1401,7 +1401,7 @@ METHOD TBrowse:doConfigure()
    ::lFootSep := lFootSep
 
    /* update headings to maximum size and missing head/foot separators */
-   FOR EACH aCol IN ::aColData
+   For Each aCol In ::aColData
       aCol[_TBCI_HEADING] := Replicate(_TBR_CHR_LINEDELIMITER, nHeadHeight - hb_tokenCount(aCol[_TBCI_HEADING], _TBR_CHR_LINEDELIMITER)) + aCol[_TBCI_HEADING]
       IF lHeadSep .AND. aCol[_TBCI_HEADSEP] == ""
          aCol[_TBCI_HEADSEP] := " "
@@ -1409,7 +1409,7 @@ METHOD TBrowse:doConfigure()
       IF lFootSep .AND. aCol[_TBCI_FOOTSEP] == ""
          aCol[_TBCI_FOOTSEP] := " "
       ENDIF
-   NEXT
+   Next
 
    nRowCount := ::rowCount
    IF nRowCount == 0
@@ -1423,7 +1423,7 @@ METHOD TBrowse:doConfigure()
    ASize(::aCellColors, nRowCount)
    AFill(::aCellStatus, False)
    AFill(::aDispStatus, True)
-   FOR EACH aVal, aCol IN ::aCellValues, ::aCellColors
+   For Each aVal, aCol In ::aCellValues, ::aCellColors
       IF aVal == NIL
          aVal := Array(nColCount)
       ELSE
@@ -1434,7 +1434,7 @@ METHOD TBrowse:doConfigure()
       ELSE
          ASize(aCol, nColCount)
       ENDIF
-   NEXT
+   Next
 
    ::lStable := False
    ::lFrames := True

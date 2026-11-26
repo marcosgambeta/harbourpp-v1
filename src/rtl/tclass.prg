@@ -167,14 +167,14 @@ Static Function New(cClassName, xSuper, sClassFunc, lModuleFriendly)
       ::asSuper := {__dynsN2Sym(xSuper)}
    Case hb_IsArray(xSuper)
       ::asSuper := {}
-      FOR EACH i IN xSuper
+      For Each i In xSuper
          Do Case
          Case hb_IsSymbol(i)
             AAdd(::asSuper, i)
          Case hb_IsString(i) .AND. !Empty(i)
             AAdd(::asSuper, __dynsN2Sym(i))
          EndCase
-      NEXT
+      Next
    EndCase
 
    ::cName         := hb_asciiUpper(cClassName)
@@ -205,11 +205,11 @@ Static Procedure Create(/* MetaClass */)
    ::Class := MetaClass
 #endif
 
-   FOR EACH n IN ::asSuper
+   For Each n In ::asSuper
       IF (hClass := __clsInstSuper(n)) != 0  /* Super handle available */
          AAdd(ahSuper, hClass)
       ENDIF
-   NEXT
+   Next
 
    ::hClass := hClass := __clsNew(::cName, Len(::aDatas), ahSuper, ::sClassFunc, ::lModFriendly)
 
@@ -222,39 +222,39 @@ Static Procedure Create(/* MetaClass */)
 #if 0
    /* We will work here on the MetaClass object to add the Class Method
       as needed */
-   FOR EACH n IN ::aClsMethods
+   For Each n In ::aClsMethods
       // do it
-   NEXT
+   Next
 #endif
 
    /* Local messages */
 
-   FOR EACH n IN ::aDatas
+   For Each n In ::aDatas
       __clsAddMsg(hClass, n[HB_OO_DATA_SYMBOL], n:__enumIndex(), HB_OO_MSG_ACCESS, n[HB_OO_DATA_VALUE], n[HB_OO_DATA_SCOPE])
       __clsAddMsg(hClass, "_" + n[HB_OO_DATA_SYMBOL], n:__enumIndex(), HB_OO_MSG_ASSIGN, n[HB_OO_DATA_TYPE], n[HB_OO_DATA_SCOPE])
-   NEXT
+   Next
 
-   FOR EACH n IN ::aMethods
+   For Each n In ::aMethods
       __clsAddMsg(hClass, n[HB_OO_MTHD_SYMBOL], n[HB_OO_MTHD_PFUNCTION], HB_OO_MSG_METHOD, NIL, n[HB_OO_MTHD_SCOPE])
-   NEXT
+   Next
 
    nClassBegin := __cls_CntClsData(hClass)
-   FOR EACH n IN ::aClsDatas
+   For Each n In ::aClsDatas
       __clsAddMsg(hClass, n[HB_OO_CLSD_SYMBOL], n:__enumIndex() + nClassBegin, HB_OO_MSG_CLSACCESS, n[HB_OO_CLSD_VALUE], n[HB_OO_CLSD_SCOPE])
       __clsAddMsg(hClass, "_" + n[HB_OO_CLSD_SYMBOL], n:__enumIndex() + nClassBegin, HB_OO_MSG_CLSASSIGN, NIL, n[HB_OO_CLSD_SCOPE])
-   NEXT
+   Next
 
-   FOR EACH n IN ::aInlines
+   For Each n In ::aInlines
       __clsAddMsg(hClass, n[HB_OO_MTHD_SYMBOL], n[HB_OO_MTHD_PFUNCTION], HB_OO_MSG_INLINE, NIL, n[HB_OO_MTHD_SCOPE])
-   NEXT
+   Next
 
-   FOR EACH n IN ::aVirtuals
+   For Each n In ::aVirtuals
       __clsAddMsg(hClass, n, n:__enumIndex(), HB_OO_MSG_VIRTUAL)
-   NEXT
+   Next
 
-   FOR EACH n IN ::aDelegates
+   For Each n In ::aDelegates
       __clsAddMsg(::hClass, n[HB_OO_DELEG_SYMBOL], n[HB_OO_DELEG_MESSAGE], HB_OO_MSG_DELEGATE, n[HB_OO_DELEG_OBJECT], n[HB_OO_DELEG_SCOPE])
-   NEXT
+   Next
 
    IF ::sOnError != NIL
       __clsAddMsg(hClass, "__OnError", ::sOnError, HB_OO_MSG_ONERROR)
@@ -265,14 +265,14 @@ Static Procedure Create(/* MetaClass */)
    ENDIF
 
    /* Friend Classes */
-   FOR EACH n IN ::asFriendClass
+   For Each n In ::asFriendClass
       __clsAddFriend(::hClass, n)
-   NEXT
+   Next
 
    /* Friend Functions */
-   FOR EACH n IN ::asFriendFunc
+   For Each n In ::asFriendFunc
       __clsAddFriend(::hClass, n)
-   NEXT
+   Next
 
    RETURN
 
@@ -314,11 +314,11 @@ Static Procedure AddMultiData(cType, xInit, nScope, aData, lNoInit)
 
    LOCAL cData
 
-   FOR EACH cData IN aData
+   For Each cData In aData
       IF hb_IsString(cData)
          QSelf():AddData(cData, xInit, cType, nScope, lNoInit)
       ENDIF
-   NEXT
+   Next
 
    RETURN
 
@@ -357,11 +357,11 @@ Static Procedure AddMultiClsData(cType, xInit, nScope, aData, lNoInit)
 
    LOCAL cData
 
-   FOR EACH cData IN aData
+   For Each cData In aData
       IF hb_IsString(cData)
          QSelf():AddClassData(cData, xInit, cType, nScope, lNoInit)
       ENDIF
-   NEXT
+   Next
 
    RETURN
 
@@ -397,9 +397,9 @@ Static Procedure AddDelegate(xMethod, cDelegMsg, cObject, nScope)
    Case hb_IsString(xMethod)
       AAdd(QSelf():aDelegates, {xMethod, cDelegMsg, cObject, nScope})
    Case hb_IsArray(xMethod)
-      FOR EACH mth IN xMethod
+      For Each mth In xMethod
          AAdd(QSelf():aDelegates, {mth, cDelegMsg, cObject, nScope})
-      NEXT
+      Next
    EndCase
 
    RETURN

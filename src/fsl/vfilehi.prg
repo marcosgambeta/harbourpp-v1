@@ -77,7 +77,7 @@ Function hb_vfDirBuild(cDir)
          cDirTemp := ""
       ENDIF
 
-      FOR EACH cDirItem IN hb_ATokens(cDir, hb_ps())
+      For Each cDirItem In hb_ATokens(cDir, hb_ps())
          IF !Right(cDirTemp, 1) == hb_ps() .AND. !cDirTemp == ""
             cDirTemp += hb_ps()
          ENDIF
@@ -91,7 +91,7 @@ Function hb_vfDirBuild(cDir)
                ENDIF
             ENDIF
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    Return True

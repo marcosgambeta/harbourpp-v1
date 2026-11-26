@@ -1038,16 +1038,16 @@ METHOD Get:picture(cPicture)
                IF "D" $ ::cPicFunc
 
                   ::cPicMask := Set(_SET_DATEFORMAT)
-                  FOR EACH cChar IN "yYmMdD"
+                  For Each cChar In "yYmMdD"
                      ::cPicMask := StrTran(::cPicMask, cChar, "9")
-                  NEXT
+                  Next
 
                ELSEIF "T" $ ::cPicFunc
 
                   ::cPicMask := Set(_SET_TIMEFORMAT)
-                  FOR EACH cChar IN "yYmMdDhHsSfF"
+                  For Each cChar In "yYmMdDhHsSfF"
                      ::cPicMask := StrTran(::cPicMask, cChar, "9")
-                  NEXT
+                  Next
 
                ENDIF
 
@@ -1093,17 +1093,17 @@ METHOD Get:picture(cPicture)
          Case "D"
 
             ::cPicMask := Set(_SET_DATEFORMAT)
-            FOR EACH cChar IN "yYmMdD"
+            For Each cChar In "yYmMdD"
                ::cPicMask := StrTran(::cPicMask, cChar, "9")
-            NEXT
+            Next
             EXIT
 
          Case "T"
 
             ::cPicMask := Set(_SET_DATEFORMAT) + " " + Set(_SET_TIMEFORMAT)
-            FOR EACH cChar IN "yYmMdDhHsSfF"
+            For Each cChar In "yYmMdDhHsSfF"
                ::cPicMask := StrTran(::cPicMask, cChar, "9")
-            NEXT
+            Next
             EXIT
 
          Case "N"
@@ -1137,12 +1137,12 @@ METHOD Get:picture(cPicture)
 
       ::lPicComplex := False
       IF !Empty(::cPicMask)
-         FOR EACH cChar IN hb_asciiUpper(::cPicMask)
+         For Each cChar In hb_asciiUpper(::cPicMask)
             IF !(cChar $ "!ANX9#")
                ::lPicComplex := True
                EXIT
             ENDIF
-         NEXT
+         Next
       ENDIF
    ENDIF
 

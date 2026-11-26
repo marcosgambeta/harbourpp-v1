@@ -61,7 +61,7 @@ Function hb_PathNormalize(cPath)
 
       aDir := hb_ATokens(cPath, hb_ps())
 
-      FOR EACH cDir IN aDir DESCEND
+      For Each cDir In aDir DESCEND
 
          IF cDir == "." .OR. ;
             (Empty(cDir) .AND. ;
@@ -81,15 +81,15 @@ Function hb_PathNormalize(cPath)
                hb_ADel(aDir, cDir:__enumIndex(), True)
             ENDIF
          ENDIF
-      NEXT
+      Next
 
       cPath := ""
-      FOR EACH cDir IN aDir
+      For Each cDir In aDir
          cPath += cDir
          IF !cDir:__enumIsLast()
             cPath += hb_ps()
          ENDIF
-      NEXT
+      Next
 
       IF Empty(cPath)
          cPath := "." + hb_ps()
@@ -299,7 +299,7 @@ Function hb_DirBuild(cDir)
          cDirTemp := ""
       ENDIF
 
-      FOR EACH cDirItem IN hb_ATokens(cDir, hb_ps())
+      For Each cDirItem In hb_ATokens(cDir, hb_ps())
          IF !Right(cDirTemp, 1) == hb_ps() .AND. !cDirTemp == ""
             cDirTemp += hb_ps()
          ENDIF
@@ -313,7 +313,7 @@ Function hb_DirBuild(cDir)
                ENDIF
             ENDIF
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    Return True

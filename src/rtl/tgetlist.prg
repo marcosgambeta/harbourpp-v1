@@ -1466,12 +1466,12 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
 
    ::nNextGet := 0
 
-   FOR EACH oGet IN ::aGetList
+   For Each oGet In ::aGetList
       IF (::nHitCode := oGet:hitTest(nMRow, nMCol)) != HTNOWHERE
          ::nNextGet := oGet:__enumIndex()
          EXIT
       ENDIF
-   NEXT
+   Next
 
    // Do While ::nNextGet != 0  // Commented out.
 

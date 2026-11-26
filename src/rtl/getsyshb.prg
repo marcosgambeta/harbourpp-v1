@@ -51,7 +51,7 @@ Function hb_GetReadVar(oGet)
    LOCAL xSubScript
 
    IF oGet:subScript != NIL
-      FOR EACH xSubScript IN oGet:subScript
+      For Each xSubScript In oGet:subScript
          Switch ValType(xSubScript)
          Case "C"
             cName += '["' + xSubScript + '"]'
@@ -65,7 +65,7 @@ Function hb_GetReadVar(oGet)
          Otherwise
             cName += "[" + hb_ntos(xSubScript) + "]"
          EndSwitch
-      NEXT
+      Next
    ENDIF
 
    RETURN cName

@@ -1202,13 +1202,13 @@ METHOD PROCEDURE HBDebugger:DoScript(cFileName)
    LOCAL cLine
 
    IF hb_FileExists(cFileName)
-      FOR EACH cLine IN __dbgTextToArray(MemoRead(cFileName))
+      For Each cLine In __dbgTextToArray(MemoRead(cFileName))
          cLine := AllTrim(cLine)
          IF ::lActive .OR. ((nPos := At(" ", cLine)) > 0 .AND. hb_LeftEqI("OPTIONS", Left(cLine, nPos - 1)))
             // In inactive debugger, only "OPTIONS" commands can be executed safely
             ::DoCommand(cLine)
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    RETURN
@@ -1390,7 +1390,7 @@ METHOD PROCEDURE HBDebugger:HandleEvent()
 
                nMRow := MRow()
                nMCol := MCol()
-               FOR EACH oWnd IN ::aWindows
+               For Each oWnd In ::aWindows
                   IF oWnd:IsOver(nMRow, nMCol)
                      IF !oWnd:lFocused
                         ::aWindows[::nCurrentWindow]:Show(False)
@@ -1400,7 +1400,7 @@ METHOD PROCEDURE HBDebugger:HandleEvent()
                      oWnd:LDblClick(nMRow, nMCol)
                      EXIT
                   ENDIF
-               NEXT
+               Next
             ENDIF
             EXIT
 
@@ -1416,7 +1416,7 @@ METHOD PROCEDURE HBDebugger:HandleEvent()
 
                nMRow := MRow()
                nMCol := MCol()
-               FOR EACH oWnd IN ::aWindows
+               For Each oWnd In ::aWindows
                   IF oWnd:IsOver(nMRow, nMCol)
                      IF !oWnd:lFocused
                         ::aWindows[::nCurrentWindow]:Show(False)
@@ -1426,7 +1426,7 @@ METHOD PROCEDURE HBDebugger:HandleEvent()
                      oWnd:LButtonDown(nMRow, nMCol)
                      EXIT
                   ENDIF
-               NEXT
+               Next
             ENDIF
             EXIT
 
@@ -1765,12 +1765,12 @@ METHOD PROCEDURE HBDebugger:LoadColors()
       ::oPullDown:Refresh()
       ::BarDisplay()
    ENDIF
-   FOR EACH oWnd IN ::aWindows
+   For Each oWnd In ::aWindows
       oWnd:LoadColors()
       IF ::lActive
          oWnd:Refresh()
       ENDIF
-   NEXT
+   Next
 
    RETURN
 
@@ -1821,37 +1821,37 @@ METHOD PROCEDURE HBDebugger:LoadVars() // updates monitored variables
    IF ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_LINE] != NIL
       IF ::lShowGlobals
          cName := ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_MODULE]
-         FOR EACH n IN ::aModules
+         For Each n In ::aModules
             IF !::lShowAllGlobals
                IF !::ModuleMatch(n[HB_DBG_MOD_NAME], cName)
                   LOOP
                ENDIF
             ENDIF
-            FOR EACH m IN n[HB_DBG_MOD_GLOBALS]
+            For Each m In n[HB_DBG_MOD_GLOBALS]
                AAdd(aBVars, m)
-            NEXT
+            Next
             IF !::lShowAllGlobals
-               FOR EACH m IN n[HB_DBG_MOD_EXTGLOBALS]
+               For Each m In n[HB_DBG_MOD_EXTGLOBALS]
                   AAdd(aBVars, m)
-               NEXT
+               Next
             ENDIF
-         NEXT
+         Next
       ENDIF
 
       IF ::lShowStatics
          cName := ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_MODULE]
          IF (n := AScan(::aModules, {|a|::ModuleMatch(a[HB_DBG_MOD_NAME], cName)})) > 0
-            FOR EACH m IN ::aModules[n][HB_DBG_MOD_STATICS]
+            For Each m In ::aModules[n][HB_DBG_MOD_STATICS]
                AAdd(aBVars, m)
-            NEXT
+            Next
          ENDIF
-         FOR EACH n IN ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_STATICS]
+         For Each n In ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_STATICS]
             AAdd(aBVars, n)
-         NEXT
+         Next
       ENDIF
 
       IF ::lShowLocals
-         FOR EACH n IN ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_LOCALS]
+         For Each n In ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_LOCALS]
             cName := n[HB_DBG_VAR_NAME]
             // Is there another var with this name ?
             IF (m := AScan(aBVars, {|aVar|aVar[HB_DBG_VAR_NAME] == cName .AND. aVar[HB_DBG_VAR_TYPE] == "S"})) > 0
@@ -1859,7 +1859,7 @@ METHOD PROCEDURE HBDebugger:LoadVars() // updates monitored variables
             ELSE
                AAdd(aBVars, n)
             ENDIF
-         NEXT
+         Next
       ENDIF
    ENDIF
 
@@ -1902,12 +1902,12 @@ METHOD HBDebugger:LocatePrgPath(cPrgName)
    LOCAL cRetPrgName
    LOCAL cDir
 
-   FOR EACH cDir IN ::aPathDirs
+   For Each cDir In ::aPathDirs
       cRetPrgName := cDir + hb_ps() + cPrgName
       IF hb_FileExists(cRetPrgName)
          RETURN cRetPrgName
       ENDIF
-   NEXT
+   Next
 
    Return Nil
 
@@ -2337,12 +2337,12 @@ METHOD PROCEDURE HBDebugger:SaveSettings(cFileName)
    ENDIF
 
    cInfo += "Options Colors {"
-   FOR EACH n IN ::aColors
+   For Each n In ::aColors
       cInfo += '"' + n + '"'
       IF !n:__enumIsLast()
          cInfo += ","
       ENDIF
-   NEXT
+   Next
    cInfo += "}" + hb_eol()
 
    IF ::lMonoDisplay
@@ -2393,24 +2393,24 @@ METHOD PROCEDURE HBDebugger:SaveSettings(cFileName)
       cInfo += "Num Off" + hb_eol()
    ENDIF
 
-   FOR EACH aBreak IN __dbgGetBreakPoints(::pInfo)
+   For Each aBreak In __dbgGetBreakPoints(::pInfo)
       cInfo += "BP " + hb_ntos(aBreak[HB_DBG_BP_LINE]) + " " + aBreak[HB_DBG_BP_MODULE] + hb_eol()
-   NEXT
+   Next
 
-   FOR EACH aWatch IN ::aWatch
+   For Each aWatch In ::aWatch
       cInfo += Upper(aWatch[1]) + " " + aWatch[2] + hb_eol()
-   NEXT
+   Next
 
    IF !::lWindowsAutoSized
       // This part of the script must be executed after all windows are created
-      FOR EACH oWnd IN ::aWindows
+      For Each oWnd In ::aWindows
          cInfo += ;
             "Window Size " + hb_ntos(oWnd:nBottom - oWnd:nTop + 1) + " " + ;
             hb_ntos(oWnd:nRight - oWnd:nLeft + 1) + hb_eol() + ;
             "Window Move " + hb_ntos(oWnd:nTop) + " " + ;
             hb_ntos(oWnd:nLeft) + hb_eol() + ;
             "Window Next" + hb_eol()
-      NEXT
+      Next
    ENDIF
 
    hb_MemoWrit(::cSettingsFileName, cInfo)
@@ -2480,9 +2480,9 @@ METHOD HBDebugger:ResizeCmdWnd(nLines)
          ::oWndPnt:Resize(NIL, NIL, NIL, nRight)
       ENDIF
       ::oWndCode:Resize(nTop, 0, ::nMaxRow - ::nCmdWndHight - 3, nRight)
-      FOR EACH oWnd IN aShow DESCEND
+      For Each oWnd In aShow DESCEND
          oWnd:Show()
-      NEXT
+      Next
       DispEnd()
 
    ENDIF
@@ -2907,13 +2907,13 @@ METHOD HBDebugger:BreakPointList()
    LOCAL aBreak
    LOCAL cType
 
-   FOR EACH aBreak IN __dbgGetBreakPoints(::pInfo)
+   For Each aBreak In __dbgGetBreakPoints(::pInfo)
       cType := IIf(aBreak[HB_DBG_BP_FUNC] != NIL, ;
                    aBreak[HB_DBG_BP_FUNC], ;
                    hb_ntos(aBreak[HB_DBG_BP_LINE]) + " " + ;
                    aBreak[HB_DBG_BP_MODULE])
       ::CommandWindowDisplay(hb_ntos(aBreak:__enumIndex() - 1) + ") " + cType, False)
-   NEXT
+   Next
 
    Return Self
 
@@ -3277,7 +3277,7 @@ METHOD PROCEDURE HBDebugger:WatchpointList()
    LOCAL aWatch
    LOCAL cType
 
-   FOR EACH aWatch IN ::aWatch
+   For Each aWatch In ::aWatch
       Switch aWatch[WP_TYPE]
       Case "wp"
          cType := "WatchPoint"
@@ -3289,7 +3289,7 @@ METHOD PROCEDURE HBDebugger:WatchpointList()
          cType := aWatch[WP_TYPE]
       EndSwitch
       ::CommandWindowDisplay(hb_ntos(aWatch:__enumIndex() - 1) + ") " + cType + " " + AllTrim(aWatch[WP_EXPR]), False)
-   NEXT
+   Next
 
    RETURN
 

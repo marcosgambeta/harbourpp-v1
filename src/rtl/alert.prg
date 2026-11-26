@@ -57,11 +57,11 @@ Function Alert(cMessage, aOptions, cColorNorm)
 
    LOCAL cOption
    LOCAL aOptionsOK := {}
-   FOR EACH cOption IN hb_defaultValue(aOptions, {})
+   For Each cOption In hb_defaultValue(aOptions, {})
       IF hb_IsString(cOption) .AND. !Empty(cOption)
          AAdd(aOptionsOK, cOption)
       ENDIF
-   NEXT
+   Next
 
    Do Case
    Case Len(aOptionsOK) == 0
@@ -101,9 +101,9 @@ Function hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
    Do Case
    Case hb_IsArray(xMessage)
       cMessage := ""
-      FOR EACH cString IN xMessage
+      For Each cString In xMessage
          cMessage += IIf(cString:__enumIsFirst(), "", Chr(10)) + hb_CStr(cString)
-      NEXT
+      Next
    Case hb_IsString(xMessage)
       cMessage := StrTran(xMessage, ";", Chr(10))
    Case hb_IsHash(xMessage) .AND. "TXT" $ xMessage
@@ -127,11 +127,11 @@ Function hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
    ENDIF
 
    LOCAL aOptionsOK := {}
-   FOR EACH cString IN hb_defaultValue(aOptions, {})
+   For Each cString In hb_defaultValue(aOptions, {})
       IF hb_IsString(cString) .AND. !Empty(cString)
          AAdd(aOptionsOK, cString)
       ENDIF
-   NEXT
+   Next
 
    Do Case
    Case Len(aOptionsOK) == 0

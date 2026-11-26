@@ -93,12 +93,12 @@ Procedure __TypeFile(cFile, lPrint)
          cTmp := Left(cTmp, --i)
       EndDo
 
-      FOR EACH cPath IN hb_ATokens(cTmp, ";")
+      For Each cPath In hb_ATokens(cTmp, ";")
          IF hb_FileExists(cTmp := hb_FNameMerge(cPath, cName, cExt))
             cFile := cTmp
             EXIT
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    nRetries := 0

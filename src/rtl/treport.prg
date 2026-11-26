@@ -307,12 +307,12 @@ METHOD Init(cFrmName AS STRING, ;
 
          // make sure group has subtotals
          lAnySubTotals := False
-         FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
+         For Each aCol In ::aReportData[RPT_COLUMNS]
             IF aCol[RCT_TOTAL]
                lAnySubTotals := True
                EXIT              // NOTE
             ENDIF
-         NEXT
+         Next
 
          IF !lAnySubTotals
             LOOP                 // NOTE
@@ -350,12 +350,12 @@ METHOD Init(cFrmName AS STRING, ;
 
       // Any report totals?
       lAnyTotals := False
-      FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
+      For Each aCol In ::aReportData[RPT_COLUMNS]
          IF aCol[RCT_TOTAL]
             lAnyTotals := True
             EXIT
          ENDIF
-      NEXT
+      Next
 
       IF lAnyTotals
 
@@ -463,13 +463,13 @@ METHOD ReportHeader() CLASS HBReportForm
       ELSE
          aTempPgHeader := ParseHeader(::aReportData[RPT_HEADING], Occurs(";", ::aReportData[RPT_HEADING]) + 1)
 
-         FOR EACH cLine IN aTempPgHeader
+         For Each cLine In aTempPgHeader
             nLinesInHeader := Max(XMLCOUNT(LTrim(cLine), nHeadingLength), 1)
 
             FOR nHeadLine := 1 TO nLinesInHeader
                AAdd(aPageHeader, Space(15) + PadC(RTrim(XMEMOLINE(LTrim(cLine), nHeadingLength, nHeadLine)), nHeadingLength))
             NEXT
-         NEXT
+         Next
 
          aPageHeader[1] := Stuff(aPageHeader[1], 1, 14, __natMsg(_RFRM_PAGENO) + Str(::nPageNumber, 6))
       ENDIF
@@ -477,7 +477,7 @@ METHOD ReportHeader() CLASS HBReportForm
       AAdd(aPageHeader, DToC(Date()))
    ENDIF
 
-   FOR EACH cLine IN ::aReportData[RPT_HEADER]
+   For Each cLine In ::aReportData[RPT_HEADER]
 
       nLinesInHeader := Max(XMLCOUNT(LTrim(cLine)), 1)
 
@@ -487,23 +487,23 @@ METHOD ReportHeader() CLASS HBReportForm
          AAdd(aPageHeader, Space((nRPageSize - ::aReportData[RPT_LMARGIN] - ;
             Len(cHeader)) / 2) + cHeader)
       NEXT
-   NEXT
+   Next
 
    AAdd(aPageHeader, "")  // S87 compatibility
 
    nLinesInHeader := Len(aPageHeader)
    nMaxColLength := 0
-   FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
+   For Each aCol In ::aReportData[RPT_COLUMNS]
       nMaxColLength := Max(Len(aCol[RCT_HEADER]), nMaxColLength)
-   NEXT
-   FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
+   Next
+   For Each aCol In ::aReportData[RPT_COLUMNS]
       ASize(aCol[RCT_HEADER], nMaxColLength)
-   NEXT
+   Next
    FOR nLine := 1 TO nMaxColLength
       AAdd(aPageHeader, "")
    NEXT
 
-   FOR EACH aCol IN ::aReportData[RPT_COLUMNS]    // Cycle through the columns
+   For Each aCol In ::aReportData[RPT_COLUMNS]    // Cycle through the columns
       FOR nLine := 1 TO nMaxColLength
          IF !aCol:__enumIsFirst()
             aPageHeader[nLinesInHeader + nLine] += " "
@@ -518,7 +518,7 @@ METHOD ReportHeader() CLASS HBReportForm
                PadR(aCol[RCT_HEADER][nLine], aCol[RCT_WIDTH])
          ENDIF
       NEXT
-   NEXT
+   Next
 
    // Insert the two blank lines between the heading and the actual data
    AAdd(aPageHeader, "")
@@ -566,12 +566,12 @@ METHOD ExecuteReport() CLASS HBReportForm
 
          // make sure group has subtotals
          lAnySubTotals := False
-         FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
+         For Each aCol In ::aReportData[RPT_COLUMNS]
             IF aCol[RCT_TOTAL]
                lAnySubTotals := True
                EXIT              // NOTE
             ENDIF
-         NEXT
+         Next
 
          // retrieve group eject state from report form
          IF nGroup == 1
@@ -715,14 +715,14 @@ METHOD ExecuteReport() CLASS HBReportForm
    IF !::aReportData[RPT_SUMMARY]
       // Determine the max number of lines needed by each expression
       nMaxLines := 1
-      FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
+      For Each aCol In ::aReportData[RPT_COLUMNS]
          Do Case
          Case aCol[RCT_TYPE] $ "M"
             nMaxLines := Max(XMLCOUNT(Eval(aCol[RCT_EXP]), aCol[RCT_WIDTH]), nMaxLines)
          Case aCol[RCT_TYPE] $ "C"
             nMaxLines := Max(XMLCOUNT(StrTran(Eval(aCol[RCT_EXP]), ";", hb_eol()), aCol[RCT_WIDTH]), nMaxLines)
          EndCase
-      NEXT
+      Next
 
       // Size aRecordToPrint to the maximum number of lines it will need, then
       // fill it with nulls
@@ -730,7 +730,7 @@ METHOD ExecuteReport() CLASS HBReportForm
       AFill(aRecordToPrint, "")
 
       // Load the current record into aRecordToPrint
-      FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
+      For Each aCol In ::aReportData[RPT_COLUMNS]
          FOR nLine := 1 TO nMaxLines
             // Check to see if it's a memo or character
             IF aCol[RCT_TYPE] $ "CM"
@@ -756,7 +756,7 @@ METHOD ExecuteReport() CLASS HBReportForm
             ENDIF
             aRecordToPrint[nLine] += cLine
          NEXT
-      NEXT
+      Next
 
       // Determine if aRecordToPrint will fit on the current page
       IF Len(aRecordToPrint) > ::nLinesLeft
@@ -853,11 +853,11 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
    IF (nFrmHandle := FOpen(cFrmFile)) == F_ERROR .AND. Empty(hb_FNameDir(cFrmFile))
 
       // Search through default path; attempt to open report file
-      FOR EACH cPath IN hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
+      For Each cPath In hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
          IF (nFrmHandle := FOpen(hb_DirSepAdd(cPath) + cFrmFile)) != F_ERROR
             EXIT
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    // File error

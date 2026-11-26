@@ -55,7 +55,7 @@ Static Function hb_doScan(cPath, cMask, cAttr, cPathSep)
    LOCAL lMatch
    LOCAL aResult := {}
 
-   FOR EACH aFile IN hb_vfDirectory(cPath + hb_osFileMask(), cAttr + "D")
+   For Each aFile In hb_vfDirectory(cPath + hb_osFileMask(), cAttr + "D")
       lMatch := hb_FileMatch(aFile[F_NAME], cMask)
       IF "D" $ aFile[F_ATTR]
          IF lMatch .AND. "D" $ cAttr
@@ -68,7 +68,7 @@ Static Function hb_doScan(cPath, cMask, cAttr, cPathSep)
       ELSEIF lMatch
          AAdd(aResult, aFile)
       ENDIF
-   NEXT
+   Next
 
    RETURN aResult
 
@@ -91,7 +91,7 @@ Function hb_DirRemoveAll(cDir)
          hb_vfAttrSet(cPath, hb_bitXor(nAttr, HB_FA_READONLY))
       ENDIF
       cPath := hb_DirSepAdd(cPath)
-      FOR EACH aFile IN hb_vfDirectory(cPath + hb_osFileMask(), "HSDL")
+      For Each aFile In hb_vfDirectory(cPath + hb_osFileMask(), "HSDL")
          IF "D" $ aFile[F_ATTR] .AND. !"L" $ aFile[F_ATTR]
             IF !(aFile[F_NAME] == "." .OR. aFile[F_NAME] == ".." .OR. aFile[F_NAME] == "")
                IF !hb_DirRemoveAll(cPath + aFile[F_NAME])
@@ -107,7 +107,7 @@ Function hb_DirRemoveAll(cDir)
                Return False
             ENDIF
          ENDIF
-      NEXT
+      Next
       RETURN hb_vfDirRemove(cDir) == 0
    ENDIF
 
@@ -125,7 +125,7 @@ Function hb_FileDelete(cFileMask, cAttr)
    IF hb_IsString(cFileMask) .AND. !Empty(cFileMask) .AND. !hb_vfDirExists(cFileMask)
       cPath := hb_FNameDir(cFileMask)
       cAttrMask := StrTran(hb_defaultValue(cAttr, ""), "D") + "L"
-      FOR EACH aFile IN hb_vfDirectory(cFileMask, cAttrMask)
+      For Each aFile In hb_vfDirectory(cFileMask, cAttrMask)
          cFile := cPath + aFile[F_NAME]
          IF "R" $ aFile[F_ATTR] .AND. hb_vfAttrGet(cFile, @nAttr)
             hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot(HB_FA_READONLY)))
@@ -133,7 +133,7 @@ Function hb_FileDelete(cFileMask, cAttr)
          IF hb_vfErase(cFile) == 0
             lAny := True
          ENDIF
-      NEXT
+      Next
    ENDIF
 
 RETURN lAny

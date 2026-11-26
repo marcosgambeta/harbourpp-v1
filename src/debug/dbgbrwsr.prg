@@ -176,7 +176,7 @@ METHOD HBDbBrowser:DispRow(nRow, lHiLite)
    ELSE
       DispBegin()
       nColX := ::nLeft
-      FOR EACH oCol IN ::aColumns
+      For Each oCol In ::aColumns
          IF nColX <= ::nRight
             xData := Eval(oCol:block)
             nClr := IIf(lHiLite, 2, 1)
@@ -193,7 +193,7 @@ METHOD HBDbBrowser:DispRow(nRow, lHiLite)
             hb_DispOutAt(::nTop + nRow - 1, nColX, Left(PadR(xData, nWid) + IIf(oCol:__enumIsLast(), "", " "), ::nRight - nColX + 1), ::aColorSpec[nClr])
             nColX += nWid + 1
          ENDIF
-      NEXT
+      Next
       DispEnd()
    ENDIF
 

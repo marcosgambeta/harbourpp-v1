@@ -162,28 +162,28 @@ METHOD PROCEDURE HBDbMenu:Build()
    LOCAL oMenuItem
 
    IF Len(::aMenus) == 1           // pulldown menu
-      FOR EACH oMenuItem IN ::aItems
+      For Each oMenuItem In ::aItems
          oMenuItem:nRow := 0
          oMenuItem:nCol := nPos
          nPos += Len(StrTran(oMenuItem:cPrompt, "~"))
-      NEXT
+      Next
    ELSE
       oMenuItem := ATail(::aMenus[Len(::aMenus) - 1]:aItems)
       ::nTop    := oMenuItem:nRow + 1
       ::nLeft   := oMenuItem:nCol
       nPos := ::nLeft
-      FOR EACH oMenuItem IN ::aItems
+      For Each oMenuItem In ::aItems
          oMenuItem:nRow := ::nTop + oMenuItem:__enumIndex()
          oMenuItem:nCol := ::nLeft + 1
          nPos := Max(nPos, ::nLeft + Len(StrTran(oMenuItem:cPrompt, "~")) + 1)
-      NEXT
+      Next
       ::nRight  := nPos + 1
       ::nBottom := ::nTop + Len(::aItems) + 1
-      FOR EACH oMenuItem IN ::aItems
+      For Each oMenuItem In ::aItems
          IF !hb_LeftEq(oMenuItem:cPrompt, "-")
             oMenuItem:cPrompt := " " + PadR(oMenuItem:cPrompt, ::nRight - ::nLeft - 1)
          ENDIF
-      NEXT
+      Next
       ATail(::aMenus[Len(::aMenus) - 1]:aItems):bAction := ATail(::aMenus)
       ::aMenus := ASize(::aMenus, Len(::aMenus) - 1)
    ENDIF
@@ -225,13 +225,13 @@ METHOD PROCEDURE HBDbMenu:Display()
       hb_Scroll(0, 0, 0, MaxCol(), NIL, NIL, ::cClrPopup)
    ENDIF
 
-   FOR EACH oMenuItem IN ::aItems
+   For Each oMenuItem In ::aItems
       IF oMenuItem:cPrompt == "-"  // Separator
          hb_DispOutAtBox(oMenuItem:nRow, ::nLeft, hb_UTF8ToStrBox("├" + Replicate("─", ::nRight - ::nLeft - 1) + "┤"), ::cClrPopup)
       ELSE
          oMenuItem:Display(::cClrPopup, ::cClrHotKey)
       ENDIF
-   NEXT
+   Next
 
    RETURN
 
@@ -251,11 +251,11 @@ METHOD HBDbMenu:GetHotKeyPos(cKey)
 
    LOCAL oMenuItem
 
-   FOR EACH oMenuItem IN ::aItems
+   For Each oMenuItem In ::aItems
       IF Upper(SubStr(oMenuItem:cPrompt, At("~", oMenuItem:cPrompt) + 1, 1)) == cKey
          RETURN oMenuItem:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -263,12 +263,12 @@ METHOD HBDbMenu:GetItemOrdByCoors(nRow, nCol)
 
    LOCAL oMenuItem
 
-   FOR EACH oMenuItem IN ::aItems
+   For Each oMenuItem In ::aItems
       IF oMenuItem:nRow == nRow .AND. nCol >= oMenuItem:nCol .AND. ;
          nCol <= oMenuItem:nCol + Len(oMenuItem:cPrompt) - 2
          RETURN oMenuItem:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -277,7 +277,7 @@ METHOD HBDbMenu:GetItemByIdent(uIdent)
    LOCAL oMenuItem
    LOCAL oItem
 
-   FOR EACH oMenuItem IN ::aItems
+   For Each oMenuItem In ::aItems
       IF hb_IsObject(oMenuItem:bAction)
          IF (oItem := oMenuItem:bAction:GetItemByIdent(uIdent)) != NIL
             RETURN oItem
@@ -286,7 +286,7 @@ METHOD HBDbMenu:GetItemByIdent(uIdent)
          oMenuItem:Ident == uIdent
          RETURN oMenuItem
       ENDIF
-   NEXT
+   Next
 
    Return Nil
 
@@ -372,11 +372,11 @@ METHOD PROCEDURE HBDbMenu:LoadColors()
    ::cClrHilite   := aColors[10]
    ::cClrHotFocus := aColors[11]
 
-   FOR EACH oMenuItem IN ::aItems
+   For Each oMenuItem In ::aItems
       IF hb_IsObject(oMenuItem:bAction)
          oMenuItem:bAction:LoadColors()
       ENDIF
-   NEXT
+   Next
 
    RETURN
 
@@ -390,9 +390,9 @@ METHOD PROCEDURE HBDbMenu:Refresh()
       hb_Scroll(0, 0, 0, MaxCol(), NIL, NIL, ::cClrPopup)
    ENDIF
 
-   FOR EACH oMenuItem IN ::aItems
+   For Each oMenuItem In ::aItems
       oMenuItem:Display(::cClrPopup, ::cClrHotKey)
-   NEXT
+   Next
 
    DispEnd()
 

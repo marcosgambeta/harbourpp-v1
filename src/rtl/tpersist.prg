@@ -79,7 +79,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
 
    bError := IIf(hb_defaultValue(lIgnoreErrors, False), {|e|Break(e)}, ErrorBlock())
 
-   FOR EACH cLine IN hb_ATokens(StrTran(cObjectText, Chr(13)), Chr(10))
+   For Each cLine In hb_ATokens(StrTran(cObjectText, Chr(13)), Chr(10))
 
       cLine := AllTrim(cLine)
 
@@ -136,7 +136,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
       IF Empty(aObjects)
          EXIT
       ENDIF
-   NEXT
+   Next
 
    Return True
 
@@ -164,7 +164,7 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
               "OBJECT " + IIf(nIndent != 0, "::", "") + cObjectName + " AS " + ;
               ::ClassName() + hb_eol()
 
-   FOR EACH cProp IN __clsGetProperties(::ClassH)
+   For Each cProp In __clsGetProperties(::ClassH)
 
       uValue := Self:&cProp
       uNewValue := oNew:&cProp
@@ -199,7 +199,7 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
       ENDIF
 
-   NEXT
+   Next
 
    cObject += hb_eol() + Space(nIndent) + "ENDOBJECT" + hb_eol()
 
@@ -210,7 +210,7 @@ Static Function ArrayToText(aArray, cName, nIndent)
    LOCAL cArray := hb_eol() + Space(nIndent) + "ARRAY ::" + cName + " LEN " + hb_ntos(Len(aArray)) + hb_eol()
    LOCAL uValue
 
-   FOR EACH uValue IN aArray
+   For Each uValue In aArray
 
       Switch ValType(uValue)
       Case "A"
@@ -234,7 +234,7 @@ Static Function ArrayToText(aArray, cName, nIndent)
          ENDIF
          cArray += Space(nIndent + _INDENT) + "::" + cName + "[" + hb_ntos(uValue:__enumIndex()) + "] := " + hb_ValToExp(uValue) + hb_eol()
       EndSwitch
-   NEXT
+   Next
 
    cArray += hb_eol() + Space(nIndent) + "ENDARRAY" + hb_eol()
 

@@ -283,11 +283,11 @@ METHOD RadioGroup:hitTest(nMRow, nMCol)
    Case nMRow > ::nBottom
    Case nMCol < ::nLeft
    Case nMCol <= ::nRight
-      FOR EACH item IN ::aItems
+      For Each item In ::aItems
          IF item:hitTest(nMRow, nMCol) != HTNOWHERE
             RETURN item:__enumIndex()
          ENDIF
-      NEXT
+      Next
       RETURN HTCLIENT
    EndCase
 
@@ -320,9 +320,9 @@ METHOD RadioGroup:killFocus()
 
       DispBegin()
 
-      FOR EACH item IN ::aItems
+      For Each item In ::aItems
          item:killFocus()
-      NEXT
+      Next
 
       ::display()
 
@@ -348,9 +348,9 @@ METHOD RadioGroup:setFocus()
 
       DispBegin()
 
-      FOR EACH item IN ::aItems
+      For Each item In ::aItems
          item:setFocus()
-      NEXT
+      Next
 
       ::display()
 
@@ -441,9 +441,9 @@ METHOD RadioGroup:setColor(cColorSpec)
 
    LOCAL item
 
-   FOR EACH item IN ::aItems
+   For Each item In ::aItems
       item:colorSpec := cColorSpec
-   NEXT
+   Next
 
    Return Self
 
@@ -451,9 +451,9 @@ METHOD RadioGroup:setStyle(cStyle)
 
    LOCAL item
 
-   FOR EACH item IN ::aItems
+   For Each item In ::aItems
       item:style := cStyle
-   NEXT
+   Next
 
    Return Self
 

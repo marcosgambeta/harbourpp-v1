@@ -290,12 +290,12 @@ Static Function HitTest(aMenu, nMRow, nMCol)
 
    LOCAL aMenuItem
 
-   FOR EACH aMenuItem IN aMenu
+   For Each aMenuItem In aMenu
       IF nMRow == aMenuItem[_ITM_ROW] .AND. nMCol >= aMenuItem[_ITM_COL] .AND. nMCol < aMenuItem[_ITM_COL] + Len(aMenuItem[_ITM_PROMPT])
 
          RETURN aMenuItem:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 

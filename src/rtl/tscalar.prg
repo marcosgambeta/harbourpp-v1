@@ -236,11 +236,11 @@ METHOD Array:Collect(b)
    LOCAL elem
    LOCAL result := {}
 
-   FOR EACH elem IN Self
+   For Each elem In Self
       IF Eval(b, elem)
          AAdd(result, elem)
       ENDIF
-   NEXT
+   Next
 
    RETURN result
 
@@ -284,11 +284,11 @@ METHOD Array:IndexOf(x)
 
    LOCAL elem
 
-   FOR EACH elem IN Self
+   For Each elem In Self
       IF elem == x
          RETURN elem:__enumIndex()
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 

@@ -162,9 +162,9 @@ Static Procedure __doJoinList(aList)
 
       (aList[1][1])->(dbAppend())
 
-      FOR EACH aJoin IN aList
+      For Each aJoin In aList
          (aJoin[1])->(FieldPut(aJoin[4], (aJoin[2])->(FieldGet(aJoin[3]))))
-      NEXT
+      Next
    ENDIF
 
    RETURN

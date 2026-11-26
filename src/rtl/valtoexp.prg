@@ -114,24 +114,24 @@ Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
             cVal := "{=>}"
          ELSE
             cVal := "{"
-            FOR EACH tmp IN xVal
+            For Each tmp In xVal
                cKey := s_valToExp(tmp:__enumKey(), lRaw)
                cVal += IIf(tmp:__enumIsFirst(), "", ", ") + cKey + "=>" + s_valToExp(tmp, lRaw, cInd + cKey, hRefs, @cRefs, @cObjs)
-            NEXT
+            Next
             cVal += "}"
          ENDIF
       ELSE
          cVal := "{"
          IF !lRaw .AND. v == "O"
-            FOR EACH tmp IN __objGetIVars(xVal)
+            For Each tmp In __objGetIVars(xVal)
                cVal += IIf(tmp:__enumIsFirst(), '{"', ', {"') + ;
                        tmp[1] + '", ' + ;
                        s_valToExp(tmp[2], lRaw, cInd + hb_ntos(tmp:__enumIndex()) + ",2", hRefs, @cRefs, @cObjs) + "}"
-            NEXT
+            Next
          ELSE
-            FOR EACH tmp IN xVal
+            For Each tmp In xVal
                cVal += IIf(tmp:__enumIsFirst(), "", ", ") + s_valToExp(tmp, lRaw, cInd + hb_ntos(tmp:__enumIndex()), hRefs, @cRefs, @cObjs)
-            NEXT
+            Next
          ENDIF
          cVal += "}"
       ENDIF
@@ -173,9 +173,9 @@ Function __itemSetRef(xVal, aRefs)
 
    LOCAL aRef
 
-   FOR EACH aRef in aRefs
+   For Each aRef In aRefs
       xVal[hb_ArrayToParams(aRef[1])] := IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])])
-   NEXT
+   Next
 
    RETURN xVal
 
@@ -183,9 +183,9 @@ Function __itemSetObj(xVal, aObjs)
 
    LOCAL aRef
 
-   FOR EACH aRef in aObjs
+   For Each aRef In aObjs
       __objRestoreIVars(IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])]), aRef[1])
-   NEXT
+   Next
 
    RETURN xVal
 
@@ -193,8 +193,8 @@ Function __itemSetObjRaw(xVal, aObjs)
 
    LOCAL aRef
 
-   FOR EACH aRef in aObjs
+   For Each aRef In aObjs
       __objSetClass(IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])]), aRef[1])
-   NEXT
+   Next
 
    RETURN xVal

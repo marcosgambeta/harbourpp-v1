@@ -126,13 +126,13 @@ Static Function hb_iniFileLow(cFileSpec)
    ENDIF
 
    hFile := F_ERROR
-   FOR EACH cFile IN aFiles
+   For Each cFile In aFiles
       IF !Empty(cFile) .AND. hb_FileExists(cFile)
          IF (hFile := FOpen(cFile)) != F_ERROR
             EXIT
          ENDIF
       ENDIF
-   NEXT
+   Next
 
    IF hFile == F_ERROR
       RETURN ""
@@ -166,7 +166,7 @@ Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
    hCurrentSection := IIf(lAutoMain, hIni["MAIN"], hIni)
 
    cLine := ""
-   FOR EACH cData IN hb_ATokens(cData, True)
+   For Each cData In hb_ATokens(cData, True)
       cLine += AllTrim(cData)
 
       // Sum up lines terminating with "<space>||" ...
@@ -221,7 +221,7 @@ Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
       ENDIF
 
       cLine := ""
-   NEXT
+   Next
 
    RETURN hIni
 
@@ -294,7 +294,7 @@ Function hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       hb_HEval(hIni, {|cKey, xVal|IIf(hb_IsHash(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine)})
    ENDIF
 
-   FOR EACH cSection IN hIni
+   For Each cSection In hIni
 
       // Avoid re-processing 'MAIN' section
       IF lAutoMain
@@ -312,7 +312,7 @@ Function hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       cBuffer += cNewLine + "[" + hb_CStr(cSection:__enumKey) + "]" + cNewLine
 
       hb_HEval(cSection, {|cKey, xVal|cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine})
-   NEXT
+   Next
 
    IF hb_IsString(cCommentEnd) .AND. !Empty(cCommentEnd)
       cBuffer += cCommentEnd + cNewLine

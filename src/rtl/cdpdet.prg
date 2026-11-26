@@ -235,16 +235,16 @@ Static Function __CPStdToHb(cCPStd, cCtryStd)
       Otherwise
          aCP := hb_cdpList()
          cCtryHb := __LangStdToCPCtryHb(cCtryStd)
-         FOR EACH cdp IN aCP
+         For Each cdp In aCP
             IF hb_LeftEq(cdp, cCtryHb) .AND. cCPStd == hb_cdpUniID(cdp)
                RETURN cdp
             ENDIF
-         NEXT
-         FOR EACH cdp IN aCP
+         Next
+         For Each cdp In aCP
             IF cCPStd == hb_cdpUniID(cdp)
                RETURN hb_cdpUniID(cdp)
             ENDIF
-         NEXT
+         Next
       EndSwitch
    ENDIF
 

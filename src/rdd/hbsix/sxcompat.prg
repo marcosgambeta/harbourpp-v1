@@ -501,7 +501,7 @@ Function sx_dbCreate(cFileName, aStruct, cRDD)
    LOCAL aDbStruct
 
    aDbStruct := AClone(aStruct)
-   FOR EACH aField IN aDbStruct
+   For Each aField In aDbStruct
       Switch aField[DBS_TYPE]
       Case "V"
          aField[DBS_LEN] += 6
@@ -517,7 +517,7 @@ Function sx_dbCreate(cFileName, aStruct, cRDD)
          ENDIF
          EXIT
       EndSwitch
-   NEXT
+   Next
 
    RETURN dbCreate(cFileName, aDbStruct, cRDD)
 
