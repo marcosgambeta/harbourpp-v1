@@ -198,8 +198,8 @@ STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
       cLine := SubStr(cLine, 4)
       ++nLine
 
-      SWITCH AllTrim(cLine)
-      CASE "$DOC$"
+      Switch AllTrim(cLine)
+      Case "$DOC$"
          IF hEntry != NIL
             _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine))
          ELSEIF !Empty(hEntry)
@@ -212,7 +212,7 @@ STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
             NEXT
          ENDIF
          EXIT
-      CASE "$END$"
+      Case "$END$"
          IF hEntry == NIL
             _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $END$ without $DOC$", cFileName, nLine))
          ELSEIF !Empty(hEntry)
@@ -220,7 +220,7 @@ STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
          ENDIF
          hEntry := NIL
          EXIT
-      OTHERWISE
+      Otherwise
          IF hEntry == NIL
             // Ignore line outside entry. Don't warn, this is normal.
          ELSEIF Left(LTrim(cLine), 1) == "$" .AND. Right(RTrim(cLine), 1) == "$"
@@ -244,7 +244,7 @@ STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
          ELSEIF !Empty(cLine)
             _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: Content outside section", cFileName, nLine))
          ENDIF
-      ENDSWITCH
+      EndSwitch
    NEXT
 
    IF hEntry != NIL
@@ -283,7 +283,7 @@ FUNCTION __hbdoc_ToSource(aEntry)
 
 FUNCTION __hbdoc_FilterOut(cFile)
 
-   LOCAL lEntry := FALSE
+   LOCAL lEntry := False
    LOCAL cLine
    LOCAL cOK := ""
    LOCAL nToSkip := 0
@@ -294,15 +294,15 @@ FUNCTION __hbdoc_FilterOut(cFile)
 
    FOR EACH cLine IN hb_ATokens(cFile, Chr(10))
 
-      SWITCH AllTrim(SubStr(cLine, 4))
-      CASE "$DOC$"
-         lEntry := TRUE
+      Switch AllTrim(SubStr(cLine, 4))
+      Case "$DOC$"
+         lEntry := True
          EXIT
-      CASE "$END$"
-         lEntry := FALSE
+      Case "$END$"
+         lEntry := False
          nToSkip := 1
          EXIT
-      OTHERWISE
+      Otherwise
          IF !lEntry
             IF nToSkip > 0
                nToSkip--
@@ -320,7 +320,7 @@ FUNCTION __hbdoc_FilterOut(cFile)
                ENDIF
             ENDIF
          ENDIF
-      ENDSWITCH
+      EndSwitch
    NEXT
 
    RETURN cOK

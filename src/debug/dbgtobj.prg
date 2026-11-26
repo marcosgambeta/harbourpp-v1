@@ -91,20 +91,20 @@ METHOD HBDbObject:New(oObject, cVarName, lEditable)
    aMethods := {}
    FOR EACH cMsg IN aMessages
       IF hb_LeftEq(cMsg, "_") .AND. ;
-         hb_AScan(aMessages, cMsgAcc := SubStr(cMsg, 2), NIL, NIL, TRUE) > 0
+         hb_AScan(aMessages, cMsgAcc := SubStr(cMsg, 2), NIL, NIL, True) > 0
          xValue := __dbgObjGetValue(oObject, cMsgAcc)
-         AAdd(::pItems, {cMsgAcc, xValue, TRUE})
-      ELSEIF hb_AScan(aMessages, "_" + cMsg, NIL, NIL, TRUE) == 0
+         AAdd(::pItems, {cMsgAcc, xValue, True})
+      ELSEIF hb_AScan(aMessages, "_" + cMsg, NIL, NIL, True) == 0
          AAdd(aMethods, cMsg)
       ENDIF
    NEXT
    FOR EACH cMsg IN aMethods
-      AAdd(::pItems, {Lower(cMsg), "Method", FALSE})
+      AAdd(::pItems, {Lower(cMsg), "Method", False})
    NEXT
 
    ::objname := cVarName
    ::TheObj := oObject
-   ::lEditable := hb_defaultValue(lEditable, TRUE)
+   ::lEditable := hb_defaultValue(lEditable, True)
 
    ::addWindows()
 
@@ -130,7 +130,7 @@ METHOD HBDbObject:addWindows(nRow)
    ENDIF
 
    ::nCurWindow++
-   oWndSets:lFocused := TRUE
+   oWndSets:lFocused := True
    AAdd(::aWindows, oWndSets)
 
    oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
@@ -198,62 +198,62 @@ METHOD PROCEDURE HBDbObject:SetsKeyPressed(nKey, oBrwSets)
 
    LOCAL aItemRef
 
-   SWITCH nKey
-   CASE K_UP
+   Switch nKey
+   Case K_UP
       oBrwSets:Up()
       EXIT
 
-   CASE K_DOWN
+   Case K_DOWN
       oBrwSets:Down()
       EXIT
 
-   CASE K_HOME
-   CASE K_CTRL_PGUP
-   CASE K_CTRL_HOME
+   Case K_HOME
+   Case K_CTRL_PGUP
+   Case K_CTRL_HOME
       oBrwSets:GoTop()
       EXIT
 
-   CASE K_END
-   CASE K_CTRL_PGDN
-   CASE K_CTRL_END
+   Case K_END
+   Case K_CTRL_PGDN
+   Case K_CTRL_END
       oBrwSets:GoBottom()
       EXIT
 
-   CASE K_PGDN
+   Case K_PGDN
       oBrwSets:pageDown()
       EXIT
 
-   CASE K_PGUP
+   Case K_PGUP
       oBrwSets:PageUp()
       EXIT
 
-   CASE K_ENTER
+   Case K_ENTER
 
       aItemRef := ::pItems[::ArrayIndex]
-      DO CASE
-      CASE hb_IsArray(aItemRef[OMSG_VALUE])
+      Do Case
+      Case hb_IsArray(aItemRef[OMSG_VALUE])
          IF Len(aItemRef[OMSG_VALUE]) > 0
             HBDbArray():New(aItemRef[OMSG_VALUE], aItemRef[OMSG_NAME])
          ENDIF
-      CASE hb_IsHash(aItemRef[OMSG_VALUE])
+      Case hb_IsHash(aItemRef[OMSG_VALUE])
          IF Len(aItemRef[OMSG_VALUE]) > 0
             HBDbHash():New(aItemRef[OMSG_VALUE], aItemRef[OMSG_NAME])
          ENDIF
-      CASE hb_IsObject(aItemRef[OMSG_VALUE])
+      Case hb_IsObject(aItemRef[OMSG_VALUE])
          HBDbObject():New(aItemRef[OMSG_VALUE], aItemRef[OMSG_NAME])
-      CASE !aItemRef[OMSG_EDIT] .OR. ;
+      Case !aItemRef[OMSG_EDIT] .OR. ;
            hb_IsBlock(aItemRef[OMSG_VALUE]) .OR. ;
            hb_IsPointer(aItemRef[OMSG_VALUE]) .OR. ;
            !::lEditable
          __dbgAlert("Value cannot be edited")
-      OTHERWISE
+      Otherwise
          oBrwSets:RefreshCurrent()
          ::doGet(oBrwSets)
          oBrwSets:RefreshCurrent()
          oBrwSets:ForceStable()
-      ENDCASE
+      EndCase
 
-   ENDSWITCH
+   EndSwitch
 
    oBrwSets:ForceStable()
 
@@ -270,15 +270,15 @@ STATIC FUNCTION __dbgObjGetValue(oObject, cVar, lCanAcc)
 
    BEGIN SEQUENCE WITH {|| Break() }
       xResult := __dbgSendMsg(nProcLevel, oObject, cVar)
-      lCanAcc := TRUE
+      lCanAcc := True
    RECOVER
       BEGIN SEQUENCE WITH __BreakBlock()
          // Try to access variables using class code level
          xResult := __dbgSendMsg(0, oObject, cVar)
-         lCanAcc := TRUE
+         lCanAcc := True
       RECOVER USING oErr
          xResult := oErr:description
-         lCanAcc := FALSE
+         lCanAcc := False
       END SEQUENCE
    END SEQUENCE
 

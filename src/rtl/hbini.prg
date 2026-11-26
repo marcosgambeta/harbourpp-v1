@@ -88,7 +88,7 @@ FUNCTION hb_iniNew(lAutoMain)
 
    LOCAL hIni := {=>}
 
-   IF hb_defaultValue(lAutoMain, TRUE)
+   IF hb_defaultValue(lAutoMain, True)
       hIni["MAIN"] := {=>}
    ENDIF
 
@@ -102,8 +102,8 @@ FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
    LOCAL hIni := {=>}
 
    // Default case sensitiveness for keys
-   hb_default(@lKeyCaseSens, TRUE)
-   hb_default(@lAutoMain, TRUE)
+   hb_default(@lKeyCaseSens, True)
+   hb_default(@lAutoMain, True)
 
    hb_HCaseMatch(hIni, lKeyCaseSens)
 
@@ -166,7 +166,7 @@ STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
    hCurrentSection := IIf(lAutoMain, hIni["MAIN"], hIni)
 
    cLine := ""
-   FOR EACH cData IN hb_ATokens(cData, TRUE)
+   FOR EACH cData IN hb_ATokens(cData, True)
       cLine += AllTrim(cData)
 
       // Sum up lines terminating with "<space>||" ...
@@ -239,10 +239,10 @@ FUNCTION hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
    IF hb_IsString(xFileName)
       hFile := FCreate(xFileName)
-      lClose := TRUE
+      lClose := True
    ELSEIF hb_IsNumeric(xFileName)
       hFile := xFileName
-      lClose := FALSE
+      lClose := False
    ELSE
       Return False
    ENDIF
@@ -278,11 +278,11 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       cBuffer += cCommentBegin + cNewLine
    ENDIF
 
-   hb_default(@lAutoMain, TRUE)
+   hb_default(@lAutoMain, True)
 
-   // Fix if lAutoMain is TRUE but I haven't a MAIN section
+   // Fix if lAutoMain is True but I haven't a MAIN section
    IF lAutoMain .AND. !("MAIN" $ hIni)
-      lAutoMain := FALSE
+      lAutoMain := False
    ENDIF
 
    // Write top-level section

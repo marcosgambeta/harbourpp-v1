@@ -59,14 +59,14 @@ PROCEDURE AltD(nAction)
 
    ELSEIF hb_IsNumeric(nAction)
 
-      SWITCH nAction
-      CASE ALTD_DISABLE
-         Set(_SET_DEBUG, FALSE)
+      Switch nAction
+      Case ALTD_DISABLE
+         Set(_SET_DEBUG, False)
          EXIT
-      CASE ALTD_ENABLE
-         Set(_SET_DEBUG, TRUE)
+      Case ALTD_ENABLE
+         Set(_SET_DEBUG, True)
          EXIT
-      ENDSWITCH
+      EndSwitch
 
    ENDIF
 

@@ -216,8 +216,8 @@ STATIC PROCEDURE DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ *
       RETURN
    ENDIF
 
-   SWITCH oDebug:nWaFocus
-   CASE 1
+   Switch oDebug:nWaFocus
+   Case 1
       nAlias := aBrw[1]:Cargo
       WorkAreasKeyPressed(nKey, aBrw[1], Len(aAlias))
       IF nAlias != aBrw[1]:Cargo
@@ -242,20 +242,20 @@ STATIC PROCEDURE DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ *
          UpdateInfo(oDlg, aAlias[aBrw[1]:Cargo][2])
       ENDIF
       EXIT
-   CASE 2
+   Case 2
       WorkAreasKeyPressed(nKey, aBrw[2], Len(aInfo))
       EXIT
-   CASE 3
+   Case 3
       WorkAreasKeyPressed(nKey, aBrw[3], Len(aStruc))
       EXIT
-   ENDSWITCH
+   EndSwitch
 
    RETURN
 
 STATIC PROCEDURE WorkAreasKeyPressed(nKey, oBrw, nTotal)
 
-   SWITCH nKey
-   CASE K_UP
+   Switch nKey
+   Case K_UP
 
       IF oBrw:Cargo > 1
          oBrw:Cargo--
@@ -265,7 +265,7 @@ STATIC PROCEDURE WorkAreasKeyPressed(nKey, oBrw, nTotal)
       ENDIF
       EXIT
 
-   CASE K_DOWN
+   Case K_DOWN
 
       IF oBrw:Cargo < nTotal
          oBrw:Cargo++
@@ -275,9 +275,9 @@ STATIC PROCEDURE WorkAreasKeyPressed(nKey, oBrw, nTotal)
       ENDIF
       EXIT
 
-   CASE K_HOME
-   CASE K_CTRL_PGUP
-   CASE K_CTRL_HOME
+   Case K_HOME
+   Case K_CTRL_PGUP
+   Case K_CTRL_HOME
 
       IF oBrw:Cargo > 1
          oBrw:Cargo := 1
@@ -286,9 +286,9 @@ STATIC PROCEDURE WorkAreasKeyPressed(nKey, oBrw, nTotal)
       ENDIF
       EXIT
 
-   CASE K_END
-   CASE K_CTRL_PGDN
-   CASE K_CTRL_END
+   Case K_END
+   Case K_CTRL_PGDN
+   Case K_CTRL_END
 
       IF oBrw:Cargo < nTotal
          oBrw:Cargo := nTotal
@@ -297,7 +297,7 @@ STATIC PROCEDURE WorkAreasKeyPressed(nKey, oBrw, nTotal)
       ENDIF
       EXIT
 
-   ENDSWITCH
+   EndSwitch
 
    RETURN
 
@@ -323,18 +323,18 @@ STATIC FUNCTION DbfInfo()
 
       xValue := __dbg():GetExprValue("FieldGet(" + hb_ntos(nFor) + ")")
 
-      SWITCH ValType(xValue)
-      CASE "C"
-      CASE "M"
+      Switch ValType(xValue)
+      Case "C"
+      Case "M"
          cValue := xValue
          EXIT
 #ifdef HB_CLP_STRICT
-      CASE "L"
+      Case "L"
          cValue := IIf(xValue, "T", "F")
 #endif
-      OTHERWISE
+      Otherwise
          cValue := __dbgValToStr(xValue)
-      ENDSWITCH
+      EndSwitch
 
       AAdd(aInfo, Space(8) + PadR(FieldName(nFor), 10) + " = " + PadR(cValue, 19))
 

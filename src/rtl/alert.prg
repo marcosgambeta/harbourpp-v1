@@ -63,14 +63,14 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
       ENDIF
    NEXT
 
-   DO CASE
-   CASE Len(aOptionsOK) == 0
+   Do Case
+   Case Len(aOptionsOK) == 0
       aOptionsOK := {"Ok"}
 #ifdef HB_CLP_STRICT
-   CASE Len(aOptionsOK) > 4  // NOTE: Clipper allows only four options [vszakats]
+   Case Len(aOptionsOK) > 4  // NOTE: Clipper allows only four options [vszakats]
       ASize(aOptionsOK, 4)
 #endif
-   ENDCASE
+   EndCase
 
    RETURN hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh)
 
@@ -98,22 +98,22 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
    LOCAL cMessage
    LOCAL cString
 
-   DO CASE
-   CASE hb_IsArray(xMessage)
+   Do Case
+   Case hb_IsArray(xMessage)
       cMessage := ""
       FOR EACH cString IN xMessage
          cMessage += IIf(cString:__enumIsFirst(), "", Chr(10)) + hb_CStr(cString)
       NEXT
-   CASE hb_IsString(xMessage)
+   Case hb_IsString(xMessage)
       cMessage := StrTran(xMessage, ";", Chr(10))
-   CASE hb_IsHash(xMessage) .AND. "TXT" $ xMessage
+   Case hb_IsHash(xMessage) .AND. "TXT" $ xMessage
       cMessage := xMessage
       IF !hb_IsArray(aOptions) .OR. Empty(aOptions)
          aOptions := hb_HGetDef(xMessage, "BTN")
       ENDIF
-   OTHERWISE
+   Otherwise
       cMessage := hb_CStr(xMessage)
-   ENDCASE
+   EndCase
 
    LOCAL cColorHigh
 
@@ -133,14 +133,14 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
       ENDIF
    NEXT
 
-   DO CASE
-   CASE Len(aOptionsOK) == 0
+   Do Case
+   Case Len(aOptionsOK) == 0
       aOptionsOK := {"Ok"}
 #ifdef HB_CLP_STRICT
-   CASE Len(aOptionsOK) > 4  // NOTE: Clipper allows only four options [vszakats]
+   Case Len(aOptionsOK) > 4  // NOTE: Clipper allows only four options [vszakats]
       ASize(aOptionsOK, 4)
 #endif
-   ENDCASE
+   EndCase
 
    RETURN hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh, nDelay)
 
@@ -148,7 +148,7 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 
 PROCEDURE __NoNoAlert()
 
-   s_lNoAlert := FALSE
+   s_lNoAlert := False
 
    RETURN
 

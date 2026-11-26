@@ -38,7 +38,7 @@ RETURN was_TRIVERTEX():new()
 CLASS WAS_TRIVERTEX
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

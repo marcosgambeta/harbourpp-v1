@@ -49,30 +49,30 @@ FUNCTION hb_CStr(xVal)
 
    LOCAL v := ValType(xVal)
 
-   SWITCH v
-   CASE "C"
-   CASE "M" ; RETURN xVal
-   CASE "N" ; RETURN Str(xVal)
-   CASE "D" ; RETURN IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
-   CASE "T" ; RETURN 't"' + hb_TSToStr(xVal, TRUE) + '"'
-   CASE "L" ; RETURN IIf(xVal, ".T.", ".F.")
-   CASE "S" ; RETURN "@" + xVal:name + "()"
-   CASE "B" ; RETURN "{|| ... }"
-   CASE "O" ; RETURN "{ " + xVal:className() + " Object }"
-   CASE "A" ; RETURN "{ Array of " + hb_ntos(Len(xVal)) + " Items }"
-   CASE "H" ; RETURN "{ Hash of " + hb_ntos(Len(xVal)) + " Items }"
-   CASE "P" ; RETURN "<pointer>"
-   OTHERWISE
+   Switch v
+   Case "C"
+   Case "M" ; RETURN xVal
+   Case "N" ; RETURN Str(xVal)
+   Case "D" ; RETURN IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
+   Case "T" ; RETURN 't"' + hb_TSToStr(xVal, True) + '"'
+   Case "L" ; RETURN IIf(xVal, ".T.", ".F.")
+   Case "S" ; RETURN "@" + xVal:name + "()"
+   Case "B" ; RETURN "{|| ... }"
+   Case "O" ; RETURN "{ " + xVal:className() + " Object }"
+   Case "A" ; RETURN "{ Array of " + hb_ntos(Len(xVal)) + " Items }"
+   Case "H" ; RETURN "{ Hash of " + hb_ntos(Len(xVal)) + " Items }"
+   Case "P" ; RETURN "<pointer>"
+   Otherwise
       IF xVal == NIL
          RETURN "NIL"
       ENDIF
-   ENDSWITCH
+   EndSwitch
 
    RETURN "???:" + v
 
 FUNCTION hb_ValToExp(xVal, lRaw)
 
-   RETURN s_valToExp(xVal, hb_defaultValue(lRaw, FALSE))
+   RETURN s_valToExp(xVal, hb_defaultValue(lRaw, False))
 
 STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
@@ -82,18 +82,18 @@ STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
    LOCAL tmp
    LOCAL v := ValType(xVal)
 
-   SWITCH v
-   CASE "C"
-   CASE "M" ; RETURN hb_StrToExp(xVal)
-   CASE "N" ; RETURN hb_ntos(xVal)
-   CASE "D" ; RETURN IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
-   CASE "T" ; RETURN 't"' + hb_TSToStr(xVal, TRUE) + '"'
-   CASE "L" ; RETURN IIf(xVal, ".T.", ".F.")
-   CASE "S" ; RETURN "@" + xVal:name + "()"
-   CASE "O"
+   Switch v
+   Case "C"
+   Case "M" ; RETURN hb_StrToExp(xVal)
+   Case "N" ; RETURN hb_ntos(xVal)
+   Case "D" ; RETURN IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
+   Case "T" ; RETURN 't"' + hb_TSToStr(xVal, True) + '"'
+   Case "L" ; RETURN IIf(xVal, ".T.", ".F.")
+   Case "S" ; RETURN "@" + xVal:name + "()"
+   Case "O"
       cClass := xVal:className()
-   CASE "A"
-   CASE "H"
+   Case "A"
+   Case "H"
       tmp := __vmItemID(xVal)
       IF cInd == NIL
          cInd := cRefs := ""
@@ -157,15 +157,15 @@ STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
          ENDIF
       ENDIF
       EXIT
-   CASE "P" ; RETURN "<pointer>"
-   CASE "B" ; RETURN "{|| ... }"
-   OTHERWISE
+   Case "P" ; RETURN "<pointer>"
+   Case "B" ; RETURN "{|| ... }"
+   Otherwise
       IF xVal == NIL
          cVal := "NIL"
       ELSE
          cVal := "???:" + v
       ENDIF
-   ENDSWITCH
+   EndSwitch
 
    RETURN cVal
 

@@ -52,14 +52,14 @@ PROCEDURE __SetFunction(nFunctionKey, xKeySeq)
    /* NOTE: CA-Cl*pper will not handle F11 and F12 here.
             This is a Harbour extension. [vszakats] */
 
-   DO CASE
-   CASE nFunctionKey == 1  ; nFunctionKey := K_F1
+   Do Case
+   Case nFunctionKey == 1  ; nFunctionKey := K_F1
 #ifndef HB_CLP_STRICT
-   CASE nFunctionKey == 11 ; nFunctionKey := K_F11
-   CASE nFunctionKey == 12 ; nFunctionKey := K_F12
+   Case nFunctionKey == 11 ; nFunctionKey := K_F11
+   Case nFunctionKey == 12 ; nFunctionKey := K_F12
 #endif
-   OTHERWISE               ; nFunctionKey := -nFunctionKey + 1
-   ENDCASE
+   Otherwise               ; nFunctionKey := -nFunctionKey + 1
+   EndCase
 
    IF hb_IsString(xKeySeq)
       SetKey(nFunctionKey, {||__Keyboard(), hb_keyPut(xKeySeq)})

@@ -68,29 +68,29 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
    LOCAL bForBlock
    LOCAL bKeyBlock
    LOCAL oError
-   LOCAL lError := FALSE
+   LOCAL lError := False
 
-   DO CASE
-   CASE hb_IsEvalItem(xWhile)
+   Do Case
+   Case hb_IsEvalItem(xWhile)
       bWhileBlock := xWhile
-      lRest := TRUE
-   CASE hb_IsString(xWhile) .AND. !Empty(xWhile)
+      lRest := True
+   Case hb_IsString(xWhile) .AND. !Empty(xWhile)
       bWhileBlock := hb_macroBlock(xWhile)
-      lRest := TRUE
-   OTHERWISE
-      bWhileBlock := {|| TRUE }
-   ENDCASE
+      lRest := True
+   Otherwise
+      bWhileBlock := {|| True }
+   EndCase
 
-   DO CASE
-   CASE hb_IsEvalItem(xFor)
+   Do Case
+   Case hb_IsEvalItem(xFor)
       bForBlock := xFor
-   CASE hb_IsString(xFor) .AND. !Empty(xFor)
+   Case hb_IsString(xFor) .AND. !Empty(xFor)
       bForBlock := hb_macroBlock(xFor)
-   OTHERWISE
-      bForBlock := {|| TRUE }
-   ENDCASE
+   Otherwise
+      bForBlock := {|| True }
+   EndCase
 
-   __defaultNIL(@lRest, FALSE)
+   __defaultNIL(@lRest, False)
 
    IF nRec != NIL
       dbGoto(nRec)
@@ -101,7 +101,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
          dbGoTop()
       ENDIF
    ELSE
-      lRest := TRUE
+      lRest := True
    ENDIF
 
    nOldArea := Select()
@@ -132,32 +132,32 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
       aFieldsSum := Array(Len(aGetField))
 
       // Keep it open after creating it.
-      dbCreate(cFile, aNewDbStruct, cRDD, TRUE, "", NIL, cCodePage, nConnection)
+      dbCreate(cFile, aNewDbStruct, cRDD, True, "", NIL, cCodePage, nConnection)
       nNewArea := Select()
 
       dbSelectArea(nOldArea)
-      DO WHILE !Eof() .AND. nNext != 0 .AND. Eval(bWhileBlock)
+      Do While !Eof() .AND. nNext != 0 .AND. Eval(bWhileBlock)
 
-         lDbTransRecord := FALSE
+         lDbTransRecord := False
 
          AFill(aFieldsSum, 0)
 
          xCurKey := Eval(bKeyBlock)
 
-         DO WHILE !Eof() .AND. nNext-- != 0 .AND. Eval(bWhileBlock) .AND. ;
+         Do While !Eof() .AND. nNext-- != 0 .AND. Eval(bWhileBlock) .AND. ;
                xCurKey == Eval(bKeyBlock)
 
             IF Eval(bForBlock)
                IF !lDbTransRecord
                   __dbTransRec(nNewArea, aNewDbStruct)
                   dbSelectArea(nOldArea)
-                  lDbTransRecord := TRUE
+                  lDbTransRecord := True
                ENDIF
                AEval(aGetField, {| bFieldBlock, nFieldPos | aFieldsSum[nFieldPos] += Eval(bFieldBlock) })
             ENDIF
 
             dbSkip()
-         ENDDO
+         EndDo
 
          IF lDbTransRecord
             dbSelectArea(nNewArea)
@@ -165,10 +165,10 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
             dbSelectArea(nOldArea)
          ENDIF
 
-      ENDDO
+      EndDo
 
    RECOVER USING oError
-      lError := TRUE
+      lError := True
    END SEQUENCE
 
    IF nNewArea != NIL
@@ -199,11 +199,11 @@ STATIC FUNCTION __GetField(cField)
          oError:severity   := ES_ERROR
          oError:genCode    := EG_SYNTAX
          oError:subSystem  := "DBCMD"
-         oError:canDefault := TRUE
+         oError:canDefault := True
          oError:operation  := cField
          oError:subCode    := 1101
 
-         IF hb_defaultValue(Eval(ErrorBlock(), oError), TRUE)
+         IF hb_defaultValue(Eval(ErrorBlock(), oError), True)
             __errInHandler()
          ENDIF
 

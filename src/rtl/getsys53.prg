@@ -76,13 +76,13 @@ FUNCTION GUIPreValidate(oGet, oGUI, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
-   RETURN IIf(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), FALSE)
+   RETURN IIf(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), False)
 
 FUNCTION GUIPostValidate(oGet, oGUI, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
-   RETURN IIf(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), FALSE)
+   RETURN IIf(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), False)
 
 PROCEDURE TBReader(oGet, oGetList, oMenu, aMsg)
 

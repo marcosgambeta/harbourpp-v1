@@ -59,7 +59,7 @@ FUNCTION __eInstVar53(oVar, cMethod, xValue, cType, nSubCode, bValid)
       oError:description := hb_langErrMsg(EG_ARG)
       oError:gencode := EG_ARG
       oError:severity := ES_ERROR
-      oError:cansubstitute := TRUE
+      oError:cansubstitute := True
       oError:subsystem := oVar:className
 #ifdef HB_CLP_STRICT
       HB_SYMBOL_UNUSED(cMethod)

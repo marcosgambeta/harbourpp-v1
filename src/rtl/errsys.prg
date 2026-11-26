@@ -74,13 +74,13 @@ STATIC FUNCTION DefError(oError)
 
    // Set NetErr() of there was a database open error
    IF oError:genCode == EG_OPEN .AND. oError:osCode == 32 .AND. oError:canDefault
-      NetErr(TRUE)
+      NetErr(True)
       Return False
    ENDIF
 
    // Set NetErr() if there was a lock error on dbAppend()
    IF oError:genCode == EG_APPENDLOCK .AND. oError:canDefault
-      NetErr(TRUE)
+      NetErr(True)
       Return False
    ENDIF
 
@@ -109,14 +109,14 @@ STATIC FUNCTION DefError(oError)
    EndDo
 
    IF !Empty(nChoice)  // Alert() may return NIL
-      SWITCH aOptions[nChoice]
-      CASE "Break"
+      Switch aOptions[nChoice]
+      Case "Break"
          Break(oError)
-      CASE "Retry"
+      Case "Retry"
          Return True
-      CASE "Default"
+      Case "Default"
          Return False
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    // "Quit" selected
@@ -164,11 +164,11 @@ STATIC FUNCTION ErrorMessage(oError)
    ENDIF
 
    // add either filename or operation
-   DO CASE
-   CASE !Empty(oError:filename)
+   Do Case
+   Case !Empty(oError:filename)
       cMessage += ": " + oError:filename
-   CASE !Empty(oError:operation)
+   Case !Empty(oError:operation)
       cMessage += ": " + oError:operation
-   ENDCASE
+   EndCase
 
    RETURN cMessage

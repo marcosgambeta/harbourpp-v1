@@ -108,7 +108,7 @@ FUNCTION hb_vfDirUnbuild(cDir)
 
       cDir := hb_DirSepDel(cDir)
 
-      DO WHILE !cDir == ""
+      Do While !cDir == ""
          IF hb_vfDirExists(cDir) .AND. ;
             hb_vfDirRemove(cDir) != 0
             Return False
@@ -121,7 +121,7 @@ FUNCTION hb_vfDirUnbuild(cDir)
             Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator()
             EXIT
          ENDIF
-      ENDDO
+      EndDo
    ENDIF
 
    Return True

@@ -52,19 +52,19 @@ FUNCTION hb_GetReadVar(oGet)
 
    IF oGet:subScript != NIL
       FOR EACH xSubScript IN oGet:subScript
-         SWITCH ValType(xSubScript)
-         CASE "C"
+         Switch ValType(xSubScript)
+         Case "C"
             cName += '["' + xSubScript + '"]'
             EXIT
-         CASE "D"
+         Case "D"
             cName += "[0d" + DToS(xSubScript) + "]"
             EXIT
-         CASE "T"
-            cName += '[t"' + hb_TSToStr(xSubScript, TRUE) + '"]'
+         Case "T"
+            cName += '[t"' + hb_TSToStr(xSubScript, True) + '"]'
             EXIT
-         OTHERWISE
+         Otherwise
             cName += "[" + hb_ntos(xSubScript) + "]"
-         ENDSWITCH
+         EndSwitch
       NEXT
    ENDIF
 

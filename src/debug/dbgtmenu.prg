@@ -116,9 +116,9 @@ METHOD HBDbMenu:New()
 
    IF ::aMenus == NIL
       ::aMenus := {}
-      ::lPopup := FALSE
+      ::lPopup := False
    ELSE
-      ::lPopup := TRUE
+      ::lPopup := True
    ENDIF
 
    ::nTop         := 0
@@ -314,10 +314,10 @@ METHOD PROCEDURE HBDbMenu:GoLeft()
       ENDIF
       IF ::nOpenPopup > 1
          --::nOpenPopup
-         DO WHILE ::nOpenPopup > 1 .AND. ;
+         Do While ::nOpenPopup > 1 .AND. ;
             hb_LeftEq(::aItems[::nOpenPopup]:cPrompt, "-")
             --::nOpenPopup
-         ENDDO
+         EndDo
          ::ShowPopup(::nOpenPopup)
       ELSE
          ::ShowPopup(::nOpenPopup := Len(::aItems))
@@ -338,10 +338,10 @@ METHOD PROCEDURE HBDbMenu:GoRight()
       ENDIF
       IF ::nOpenPopup < Len(::aItems)
          ++::nOpenPopup
-         DO WHILE ::nOpenPopup < Len(::aItems) .AND. ;
+         Do While ::nOpenPopup < Len(::aItems) .AND. ;
             hb_LeftEq(::aItems[::nOpenPopup]:cPrompt, "-")
             ++::nOpenPopup
-         ENDDO
+         EndDo
          ::ShowPopup(::nOpenPopup)
       ELSE
          ::ShowPopup(::nOpenPopup := 1)
@@ -415,8 +415,8 @@ METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
    LOCAL nPopup
    LOCAL oPopup
 
-   SWITCH nKey
-   CASE K_LBUTTONDOWN
+   Switch nKey
+   Case K_LBUTTONDOWN
       IF MRow() == 0
          IF (nPopup := ::GetItemOrdByCoors(0, MCol())) != 0
             IF nPopup != ::nOpenPopup
@@ -437,39 +437,39 @@ METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
       ENDIF
       EXIT
 
-   CASE K_ESC
+   Case K_ESC
       ::Close()
       EXIT
 
-   CASE K_LEFT
+   Case K_LEFT
       ::GoLeft()
       EXIT
 
-   CASE K_RIGHT
+   Case K_RIGHT
       ::GoRight()
       EXIT
 
-   CASE K_DOWN
+   Case K_DOWN
       ::GoDown()
       EXIT
 
-   CASE K_UP
+   Case K_UP
       ::GoUp()
       EXIT
 
-   CASE K_ENTER
+   Case K_ENTER
       ::EvalAction()
       EXIT
 
-   CASE K_HOME
+   Case K_HOME
       ::GoTop()
       EXIT
 
-   CASE K_END
+   Case K_END
       ::GoBottom()
       EXIT
 
-   OTHERWISE
+   Otherwise
 
       IF ::nOpenPopup > 0
          IF IsAlpha(hb_keyChar(nKey))
@@ -487,7 +487,7 @@ METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
          ::ShowPopup(nPopup)
       ENDIF
 
-   ENDSWITCH
+   EndSwitch
 
    RETURN
 

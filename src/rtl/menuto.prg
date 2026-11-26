@@ -118,7 +118,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
       nMsgCol := 0
       nMsgRow := Set(_SET_MESSAGE)
       lMsgCenter := Set(_SET_MCENTER)
-      lExit := FALSE
+      lExit := False
 
       Do While n != 0
 
@@ -196,60 +196,60 @@ FUNCTION __MenuTo(bBlock, cVariable)
          EndDo
 
          // check for keystrokes
-         SWITCH nKey
+         Switch nKey
 #ifdef HB_COMPAT_C53
-         CASE K_MOUSEMOVE
+         Case K_MOUSEMOVE
             EXIT
-         CASE K_LBUTTONDOWN
-         CASE K_LDBLCLK
+         Case K_LBUTTONDOWN
+         Case K_LDBLCLK
             IF (nMouseClik := HitTest(t_aLevel[nPointer - 1], MRow(), MCol())) > 0
                n := nMouseClik
             ENDIF
             // QUESTION: Clipper does this, but shouldn't we only
             //           exit when HitTest() was successful?
             IF nKey == K_LDBLCLK
-               lExit := TRUE
+               lExit := True
             ENDIF
             EXIT
 #endif
-         CASE K_DOWN
-         CASE K_RIGHT
+         Case K_DOWN
+         Case K_RIGHT
             IF ++n > nArrLen
                n := IIf(Set(_SET_WRAP), 1, nArrLen)
             ENDIF
             EXIT
-         CASE K_UP
-         CASE K_LEFT
+         Case K_UP
+         Case K_LEFT
             IF --n < 1
                n := IIf(Set(_SET_WRAP), nArrLen, 1)
             ENDIF
             EXIT
-         CASE K_HOME
+         Case K_HOME
             n := 1
             EXIT
-         CASE K_END
+         Case K_END
             n := nArrLen
             EXIT
-         CASE K_ENTER
-         CASE K_PGUP
-         CASE K_PGDN
-            lExit := TRUE
+         Case K_ENTER
+         Case K_PGUP
+         Case K_PGDN
+            lExit := True
             EXIT
-         CASE K_ESC
+         Case K_ESC
             n := 0
             EXIT
-         OTHERWISE
+         Otherwise
             // did user hit a hot key?
             IF Len(cKey := Upper(hb_keyChar(nKey))) > 0
                FOR y := 1 TO nArrLen
                   IF hb_LeftEqI(LTrim(t_aLevel[nPointer - 1][y][_ITM_PROMPT]), cKey)
                      n := y
-                     lExit := TRUE
+                     lExit := True
                      EXIT
                   ENDIF
                NEXT
             ENDIF
-         ENDSWITCH
+         EndSwitch
 
          IF n != 0
 #ifndef HB_CLP_STRICT

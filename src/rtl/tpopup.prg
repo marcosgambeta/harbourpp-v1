@@ -111,7 +111,7 @@ CREATE CLASS PopupMenu FUNCTION HBPopupMenu
    VAR aItems     INIT {}
    VAR aSaveScr
 
-   VAR lShadowed  INIT FALSE // Harbour extension
+   VAR lShadowed  INIT False // Harbour extension
 
    METHOD setMetrics()
 
@@ -132,7 +132,7 @@ METHOD PopupMenu:addItem(oItem)
 
 METHOD PopupMenu:close(lCloseChild)
 
-   __defaultNIL(@lCloseChild, TRUE)
+   __defaultNIL(@lCloseChild, True)
 
    IF ::isOpen()
 
@@ -161,7 +161,7 @@ METHOD PopupMenu:delItem(nPos)
 
       nLen := Len(::aItems[nPos]:caption)
 
-      hb_ADel(::aItems, nPos, TRUE)
+      hb_ADel(::aItems, nPos, True)
       ::nItemCount--
 
       IF ::nWidth == nLen + 2
@@ -270,14 +270,14 @@ METHOD PopupMenu:getAccel(xKey)
    LOCAL cKey
    LOCAL item
 
-   DO CASE
-   CASE hb_IsString(xKey)
+   Do Case
+   Case hb_IsString(xKey)
       cKey := xKey
-   CASE hb_IsNumeric(xKey)
+   Case hb_IsNumeric(xKey)
       cKey := hb_keyChar(xKey)
-   OTHERWISE
+   Otherwise
       RETURN 0
-   ENDCASE
+   EndCase
 
    IF Len(cKey) > 0
       cKey := "&" + cKey
@@ -365,8 +365,8 @@ METHOD PopupMenu:hitTest(nMRow, nMCol)
 
    ::setMetrics()
 
-   DO CASE
-   CASE nMRow == ::nTop
+   Do Case
+   Case nMRow == ::nTop
       IF nMCol == ::nLeft
          RETURN HTTOPLEFT
       ELSEIF nMCol == ::nRight
@@ -374,7 +374,7 @@ METHOD PopupMenu:hitTest(nMRow, nMCol)
       ELSEIF nMCol >= ::nLeft .AND. nMCol <= ::nRight
          RETURN HTTOP
       ENDIF
-   CASE nMRow == ::nBottom
+   Case nMRow == ::nBottom
       IF nMCol == ::nLeft
          RETURN HTBOTTOMLEFT
       ELSEIF nMCol == ::nRight
@@ -382,28 +382,28 @@ METHOD PopupMenu:hitTest(nMRow, nMCol)
       ELSEIF nMCol >= ::nLeft .AND. nMCol <= ::nRight
          RETURN HTBOTTOM
       ENDIF
-   CASE nMCol == ::nLeft
+   Case nMCol == ::nLeft
       IF nMRow >= ::nTop .AND. nMRow <= ::nBottom
          RETURN HTLEFT
       ELSE
          RETURN HTNOWHERE
       ENDIF
-   CASE nMCol == ::nRight
+   Case nMCol == ::nRight
       IF nMRow >= ::nTop .AND. nMRow <= ::nBottom
          RETURN HTRIGHT
       ELSE
          RETURN HTNOWHERE
       ENDIF
-   CASE nMRow > ::nTop .AND. nMRow < ::nBottom .AND. nMCol > ::nLeft .AND. nMCol < ::nRight
+   Case nMRow > ::nTop .AND. nMRow < ::nBottom .AND. nMCol > ::nLeft .AND. nMCol < ::nRight
 
       nPos := nMRow - ::nTop
-      DO CASE
-      CASE ::aItems[nPos]:__issep
+      Do Case
+      Case ::aItems[nPos]:__issep
          RETURN HTSEPARATOR
-      OTHERWISE
+      Otherwise
          RETURN nPos
-      ENDCASE
-   ENDCASE
+      EndCase
+   EndCase
 
    RETURN HTNOWHERE
 
@@ -411,7 +411,7 @@ METHOD PopupMenu:insItem(nPos, oItem)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. hb_IsObject(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
-      hb_AIns(::aItems, nPos, oItem, TRUE)
+      hb_AIns(::aItems, nPos, oItem, True)
       ::nItemCount++
 
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)

@@ -113,7 +113,7 @@ CREATE CLASS RadioGroup FUNCTION HBRadioGroup
    VAR cColdBox   INIT HB_B_SINGLE_UNI
    VAR cColorSpec
    VAR bFBlock
-   VAR lHasFocus  INIT FALSE
+   VAR lHasFocus  INIT False
    VAR cHotBox    INIT HB_B_DOUBLE_UNI
    VAR nItemCount INIT 0
    VAR nLeft
@@ -142,7 +142,7 @@ METHOD RadioGroup:addItem(oRadioButton)
 METHOD RadioGroup:delItem(nPos)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
-      hb_ADel(::aItems, nPos, TRUE)
+      hb_ADel(::aItems, nPos, True)
       ::nItemCount--
    ENDIF
 
@@ -171,12 +171,12 @@ METHOD RadioGroup:display()
       cUnSelBox := ::cHotBox
    ENDIF
 
-   DO CASE
-   CASE !Empty(cSelBox)
+   Do Case
+   Case !Empty(cSelBox)
       hb_DispBox(::nTop, ::nLeft, ::nBottom, ::nRight, cSelBox, hb_ColorIndex(::cColorSpec, 0))
-   CASE !Empty(cUnSelBox)
+   Case !Empty(cUnSelBox)
       hb_DispBox(::nTop, ::nLeft, ::nBottom, ::nRight, cUnSelBox, hb_ColorIndex(::cColorSpec, 0))
-   ENDCASE
+   EndCase
 
    IF !Empty(cCaption := ::cCaption)
 
@@ -205,14 +205,14 @@ METHOD RadioGroup:getAccel(xKey)
 
    LOCAL cKey
 
-   DO CASE
-   CASE hb_IsString(xKey)
+   Do Case
+   Case hb_IsString(xKey)
       cKey := xKey
-   CASE hb_IsNumeric(xKey)
+   Case hb_IsNumeric(xKey)
       cKey := hb_keyChar(xKey)
-   OTHERWISE
+   Otherwise
       RETURN 0
-   ENDCASE
+   EndCase
 
    IF Len(cKey) > 0
       cKey := Lower(cKey)
@@ -230,39 +230,39 @@ METHOD RadioGroup:hitTest(nMRow, nMCol)
    LOCAL nPos
    LOCAL item
 
-   DO CASE
-   CASE Empty(::cColdbox + ::cHotBox)
-   CASE nMRow == ::nTop
-      DO CASE
-      CASE nMCol == ::nLeft
+   Do Case
+   Case Empty(::cColdbox + ::cHotBox)
+   Case nMRow == ::nTop
+      Do Case
+      Case nMCol == ::nLeft
          RETURN HTTOPLEFT
-      CASE nMCol == ::nRight
+      Case nMCol == ::nRight
          RETURN HTTOPRIGHT
-      CASE nMCol >= ::nLeft .AND. nMCol <= ::nRight
+      Case nMCol >= ::nLeft .AND. nMCol <= ::nRight
          RETURN HTTOP
-      ENDCASE
-   CASE nMRow == ::nBottom
-      DO CASE
-      CASE nMCol == ::nLeft
+      EndCase
+   Case nMRow == ::nBottom
+      Do Case
+      Case nMCol == ::nLeft
          RETURN HTBOTTOMLEFT
-      CASE nMCol == ::nRight
+      Case nMCol == ::nRight
          RETURN HTBOTTOM
-      CASE nMCol >= ::nLeft .AND. nMCol <= ::nRight
+      Case nMCol >= ::nLeft .AND. nMCol <= ::nRight
          RETURN HTBOTTOMRIGHT
-      ENDCASE
-   CASE nMCol == ::nLeft
+      EndCase
+   Case nMCol == ::nLeft
       IF nMRow >= ::nTop .AND. nMRow <= ::nBottom
          RETURN HTLEFT
       ELSE
          RETURN HTNOWHERE
       ENDIF
-   CASE nMCol == ::nRight
+   Case nMCol == ::nRight
       IF nMRow >= ::nTop .AND. nMRow <= ::nBottom
          RETURN HTRIGHT
       ELSE
          RETURN HTNOWHERE
       ENDIF
-   ENDCASE
+   EndCase
 
    nLen := Len(::cCaption)
 
@@ -270,26 +270,26 @@ METHOD RadioGroup:hitTest(nMRow, nMCol)
       nLen--
    ENDIF
 
-   DO CASE
-   CASE Empty(::cCaption)
-   CASE nMRow != ::nCapRow
-   CASE nMCol < ::nCapCol
-   CASE nMCol < ::nCapCol + nLen
+   Do Case
+   Case Empty(::cCaption)
+   Case nMRow != ::nCapRow
+   Case nMCol < ::nCapCol
+   Case nMCol < ::nCapCol + nLen
       RETURN HTCAPTION
-   ENDCASE
+   EndCase
 
-   DO CASE
-   CASE nMRow < ::nTop
-   CASE nMRow > ::nBottom
-   CASE nMCol < ::nLeft
-   CASE nMCol <= ::nRight
+   Do Case
+   Case nMRow < ::nTop
+   Case nMRow > ::nBottom
+   Case nMCol < ::nLeft
+   Case nMCol <= ::nRight
       FOR EACH item IN ::aItems
          IF item:hitTest(nMRow, nMCol) != HTNOWHERE
             RETURN item:__enumIndex()
          ENDIF
       NEXT
       RETURN HTCLIENT
-   ENDCASE
+   EndCase
 
    RETURN HTNOWHERE
 
@@ -297,7 +297,7 @@ METHOD RadioGroup:insItem(nPos, oRadioButton)
 
    IF hb_IsObject(oRadioButton) .AND. oRadioButton:ClassName() == "RADIOBUTTN" .AND. nPos < ::nItemCount
 
-      hb_AIns(::aItems, nPos, oRadioButton, TRUE)
+      hb_AIns(::aItems, nPos, oRadioButton, True)
       ::nItemCount++
    ENDIF
 
@@ -310,13 +310,13 @@ METHOD RadioGroup:killFocus()
 
    IF ::lHasFocus
 
-      ::lHasFocus := FALSE
+      ::lHasFocus := False
 
       IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 
-      nOldMCur := MSetCursor(FALSE)
+      nOldMCur := MSetCursor(False)
 
       DispBegin()
 
@@ -342,9 +342,9 @@ METHOD RadioGroup:setFocus()
    IF !::lHasFocus
 
       ::nCursor := SetCursor(SC_NONE)
-      ::lHasFocus := TRUE
+      ::lHasFocus := True
 
-      nOldMCur := MSetCursor(FALSE)
+      nOldMCur := MSetCursor(False)
 
       DispBegin()
 
@@ -384,11 +384,11 @@ METHOD RadioGroup:prevItem()
 
       nValue := ::nValue
 
-      DO CASE
-      CASE nValue == 0 ; nPos := 1
-      CASE nValue == 1 ; nPos := ::nItemCount
-      OTHERWISE        ; nPos := nValue - 1
-      ENDCASE
+      Do Case
+      Case nValue == 0 ; nPos := 1
+      Case nValue == 1 ; nPos := ::nItemCount
+      Otherwise        ; nPos := nValue - 1
+      EndCase
 
       ::changeButton(nValue, nPos)
    ENDIF
@@ -400,8 +400,8 @@ METHOD RadioGroup:select(xValue)
    LOCAL nPos
    LOCAL nLen
 
-   SWITCH ValType(xValue)
-   CASE "C"
+   Switch ValType(xValue)
+   Case "C"
 
       nLen := ::nItemCount
       FOR nPos := 1 TO nLen
@@ -422,7 +422,7 @@ METHOD RadioGroup:select(xValue)
       ENDIF
       EXIT
 
-   CASE "N"
+   Case "N"
 
       IF xValue >= 1 .AND. xValue <= ::nItemCount
          IF ::xBuffer == NIL
@@ -433,7 +433,7 @@ METHOD RadioGroup:select(xValue)
       ENDIF
       EXIT
 
-   ENDSWITCH
+   EndSwitch
 
    RETURN Self
 
@@ -459,18 +459,18 @@ METHOD RadioGroup:setStyle(cStyle)
 
 METHOD RadioGroup:changeButton(nUnselect, nSelect)
 
-   LOCAL nOldMCur := MSetCursor(FALSE)
+   LOCAL nOldMCur := MSetCursor(False)
 
    IF nUnselect != nSelect
 
       DispBegin()
 
       IF nUnselect > 0
-         ::aItems[nUnselect]:select(FALSE)
+         ::aItems[nUnselect]:select(False)
          ::aItems[nUnselect]:display()
       ENDIF
       IF nSelect > 0
-         ::aItems[nSelect]:select(TRUE)
+         ::aItems[nSelect]:select(True)
          ::aItems[nSelect]:display()
       ENDIF
 

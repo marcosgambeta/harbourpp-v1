@@ -72,14 +72,14 @@ FUNCTION __dbDelim(lExport, cFile, cDelimArg, aFields, bFor, bWhile, nNext, nRec
    ENDIF
 
    IF lExport
-      dbCreate(cFile, aStruct, cRDD, TRUE, "", cDelimArg)
+      dbCreate(cFile, aStruct, cRDD, True, "", cDelimArg)
       nDstArea := Select()
       IF nDstArea == nSrcArea
          nDstArea := NIL
       ENDIF
       dbSelectArea(nSrcArea)
    ELSE
-      IF !__dbOpenSDF(cFile, aStruct, cRDD, TRUE, "", cDelimArg)
+      IF !__dbOpenSDF(cFile, aStruct, cRDD, True, "", cDelimArg)
          Return False
       ENDIF
       nSrcArea := Select()

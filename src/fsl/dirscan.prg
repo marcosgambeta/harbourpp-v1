@@ -115,7 +115,7 @@ FUNCTION hb_DirRemoveAll(cDir)
 
 FUNCTION hb_FileDelete(cFileMask, cAttr)
 
-   LOCAL lAny := FALSE
+   LOCAL lAny := False
    LOCAL aFile
    LOCAL cPath
    LOCAL cFile
@@ -131,7 +131,7 @@ FUNCTION hb_FileDelete(cFileMask, cAttr)
             hb_vfAttrSet(cFile, hb_bitAnd(nAttr, hb_bitNot(HB_FA_READONLY)))
          ENDIF
          IF hb_vfErase(cFile) == 0
-            lAny := TRUE
+            lAny := True
          ENDIF
       NEXT
    ENDIF

@@ -69,7 +69,7 @@ FUNCTION hb_PathNormalize(cPath)
             (cDir:__enumIndex() > 2 .OR. ;
             (cDir:__enumIndex() == 2 .AND. !Empty(aDir[1]))))
 
-            hb_ADel(aDir, cDir:__enumIndex(), TRUE)
+            hb_ADel(aDir, cDir:__enumIndex(), True)
 
          ELSEIF !(cDir == "..") .AND. ;
             !Empty(cDir) .AND. ;
@@ -77,8 +77,8 @@ FUNCTION hb_PathNormalize(cPath)
 
             IF !cDir:__enumIsLast() .AND. ;
                aDir[cDir:__enumIndex() + 1] == ".."
-               hb_ADel(aDir, cDir:__enumIndex() + 1, TRUE)
-               hb_ADel(aDir, cDir:__enumIndex(), TRUE)
+               hb_ADel(aDir, cDir:__enumIndex() + 1, True)
+               hb_ADel(aDir, cDir:__enumIndex(), True)
             ENDIF
          ENDIF
       NEXT
@@ -150,14 +150,14 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
    tmp := 1
    cTestBase := ""
    cTestTarget := ""
-   DO WHILE tmp <= Len(aPathTarget) .AND. tmp <= Len(aPathBase)
+   Do While tmp <= Len(aPathTarget) .AND. tmp <= Len(aPathBase)
       cTestBase   += aPathBase[tmp]
       cTestTarget += aPathTarget[tmp]
       IF !hb_FileMatch(cTestBase, cTestTarget)
          EXIT
       ENDIF
       ++tmp
-   ENDDO
+   EndDo
 
    IF tmp > Len(aPathTarget) .AND. tmp > Len(aPathBase)
       tmp--
@@ -176,7 +176,7 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
    ENDIF
 
    // Force to return relative paths even when base is different.
-   IF hb_defaultValue(lForceRelative, TRUE) .AND. ;
+   IF hb_defaultValue(lForceRelative, True) .AND. ;
       hb_DirExists(cPathBase + (cTestTarget := s_FN_FromArray(aPathTarget, tmp, cTargetFileName, Replicate(".." + hb_ps(), Len(aPathBase) - tmp))))
       RETURN cTestTarget
    ENDIF
@@ -243,18 +243,18 @@ FUNCTION hb_DirSepDel(cDir)
    ENDIF
 
    IF Empty(hb_osDriveSeparator())
-      DO WHILE Len(cDir) > 1 .AND. Right(cDir, 1) == hb_ps() .AND. ;
+      Do While Len(cDir) > 1 .AND. Right(cDir, 1) == hb_ps() .AND. ;
          !cDir == hb_ps() + hb_ps()
 
          cDir := hb_StrShrink(cDir)
-      ENDDO
+      EndDo
    ELSE
-      DO WHILE Len(cDir) > 1 .AND. Right(cDir, 1) == hb_ps() .AND. ;
+      Do While Len(cDir) > 1 .AND. Right(cDir, 1) == hb_ps() .AND. ;
          !cDir == hb_ps() + hb_ps() .AND. ;
          !Right(cDir, Len(hb_osDriveSeparator()) + 1) == hb_osDriveSeparator() + hb_ps()
 
          cDir := hb_StrShrink(cDir)
-      ENDDO
+      EndDo
    ENDIF
 
    RETURN cDir
@@ -330,7 +330,7 @@ FUNCTION hb_DirUnbuild(cDir)
 
       cDir := hb_DirSepDel(cDir)
 
-      DO WHILE !Empty(cDir)
+      Do While !Empty(cDir)
          IF hb_DirExists(cDir) .AND. ;
             hb_DirDelete(cDir) != 0
             Return False
@@ -343,7 +343,7 @@ FUNCTION hb_DirUnbuild(cDir)
             Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator()
             EXIT
          ENDIF
-      ENDDO
+      EndDo
    ENDIF
 
    Return True

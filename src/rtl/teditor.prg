@@ -137,12 +137,12 @@ CREATE CLASS HBEditor
    VAR nNumRows       AS INTEGER
 
    VAR nTabWidth      AS INTEGER     INIT 4              // Size of Tab chars
-   VAR lEditAllow     AS LOGICAL     INIT TRUE            // Are changes to text allowed?
-   VAR lSaved         AS LOGICAL     INIT FALSE            // True if user exited editor with K_CTRL_W
-   VAR lWordWrap      AS LOGICAL     INIT FALSE            // True if word wrapping is active
+   VAR lEditAllow     AS LOGICAL     INIT True            // Are changes to text allowed?
+   VAR lSaved         AS LOGICAL     INIT False            // True if user exited editor with K_CTRL_W
+   VAR lWordWrap      AS LOGICAL     INIT False            // True if word wrapping is active
    VAR nWordWrapCol   AS INTEGER     INIT 0              // At which column word wrapping occurs
-   VAR lDirty         AS LOGICAL     INIT FALSE            // TRUE if there are changes not saved
-   VAR lExitEdit      AS LOGICAL     INIT FALSE            // TRUE if user requested to end Edit() method
+   VAR lDirty         AS LOGICAL     INIT False            // True if there are changes not saved
+   VAR lExitEdit      AS LOGICAL     INIT False            // True if user requested to end Edit() method
 
    VAR cColorSpec     AS CHARACTER                       // Color string used for screen writes
 
@@ -155,10 +155,10 @@ METHOD HBEditor:Init(cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength
 
    ::cColorSpec := SetColor()
 
-   ::lEditAllow := hb_defaultValue(lEditMode, TRUE)
+   ::lEditAllow := hb_defaultValue(lEditMode, True)
 
    IF hb_IsNumeric(nLineLength) .AND. nLineLength >= 1
-      ::lWordWrap := TRUE
+      ::lWordWrap := True
       ::nWordWrapCol := nLineLength
    ENDIF
 
@@ -206,11 +206,11 @@ METHOD HBEditor:LoadFile(cFileName)
 METHOD HBEditor:LoadText(cText)
 
    ::aText := Text2Array(cText, IIf(::lWordWrap, ::nWordWrapCol, NIL), ::nTabWidth)
-   ::lDirty := FALSE
+   ::lDirty := False
 
    RETURN IIf(::nNumCols > 0, ::GoTo(1, 1), Self)
 
-// Saves file being edited, if there is no file name does nothing, returns TRUE if OK
+// Saves file being edited, if there is no file name does nothing, returns True if OK
 METHOD HBEditor:SaveFile()
    RETURN !::cFile == "" .AND. !::lDirty := !hb_MemoWrit(::cFile, ::GetText())
 
@@ -224,14 +224,14 @@ METHOD HBEditor:AddLine(cLine, lSoftCR)
 // Insert a line of text at a defined row
 METHOD HBEditor:InsertLine(cLine, lSoftCR, nRow)
 
-   hb_AIns(::aText, nRow, HBTextLine():New(cLine, lSoftCR), TRUE)
+   hb_AIns(::aText, nRow, HBTextLine():New(cLine, lSoftCR), True)
 
    RETURN Self
 
 // Remove a line of text
 METHOD HBEditor:RemoveLine(nRow)
 
-   hb_ADel(::aText, nRow, TRUE)
+   hb_ADel(::aText, nRow, True)
 
    RETURN Self
 
@@ -252,7 +252,7 @@ METHOD HBEditor:GetText(lSoftCR)
    LOCAL oLine
 
    cEOL := hb_eol()
-   cSoftCR := IIf(::lWordWrap, IIf(hb_defaultValue(lSoftCR, FALSE), Chr(141) + Chr(10), ""), cEOL)
+   cSoftCR := IIf(::lWordWrap, IIf(hb_defaultValue(lSoftCR, False), Chr(141) + Chr(10), ""), cEOL)
    cText := ""
    FOR EACH oLine IN ::aText
       cText += oLine:cText
@@ -362,8 +362,8 @@ METHOD HBEditor:Col()
 // Handles cursor movements inside text array
 METHOD HBEditor:MoveCursor(nKey)
 
-   SWITCH hb_keyStd(nKey)
-   CASE K_DOWN
+   Switch hb_keyStd(nKey)
+   Case K_DOWN
       IF ::lEditAllow
          ::Goto(::nRow + 1, ::nCol)
       ELSE
@@ -371,15 +371,15 @@ METHOD HBEditor:MoveCursor(nKey)
       ENDIF
       EXIT
 
-   CASE K_PGDN
+   Case K_PGDN
       ::Goto(::nRow + ::nNumRows - 1, ::nCol)
       EXIT
 
-   CASE K_CTRL_PGDN
+   Case K_CTRL_PGDN
       ::Goto(::LineCount, -1)
       EXIT
 
-   CASE K_UP
+   Case K_UP
       IF ::lEditAllow
          ::Goto(::nRow - 1, ::nCol)
       ELSE
@@ -387,19 +387,19 @@ METHOD HBEditor:MoveCursor(nKey)
       ENDIF
       EXIT
 
-   CASE K_PGUP
+   Case K_PGUP
       ::Goto(::nRow - ::nNumRows + 1, ::nCol)
       EXIT
 
-   CASE K_CTRL_PGUP
+   Case K_CTRL_PGUP
       ::Goto(1, 1)
       EXIT
 
-   CASE K_RIGHT
+   Case K_RIGHT
       ::Goto(::nRow, ::nCol + 1)
       EXIT
 
-   CASE K_CTRL_RIGHT
+   Case K_CTRL_RIGHT
       // Resolve K_CTRL_B and K_CTRL_RIGHT Cl*pper keycode collision
       IF nKey != K_CTRL_RIGHT .AND. hb_keyVal(nKey) != HB_KX_RIGHT
          Return False
@@ -407,28 +407,28 @@ METHOD HBEditor:MoveCursor(nKey)
       ::Goto(::nRow, NextWord(::GetLine(::nRow), ::nCol))
       EXIT
 
-   CASE K_LEFT
-   CASE K_BS
+   Case K_LEFT
+   Case K_BS
       ::Goto(::nRow, ::nCol - 1)
       EXIT
 
-   CASE K_CTRL_LEFT
+   Case K_CTRL_LEFT
       ::Goto(::nRow, PrevWord(::GetLine(::nRow), ::nCol))
       EXIT
 
-   CASE K_HOME
+   Case K_HOME
       ::Goto(::nRow, 1)
       EXIT
 
-   CASE K_CTRL_HOME
+   Case K_CTRL_HOME
       ::Goto(::nFirstRow, 1)
       EXIT
 
-   CASE K_END
+   Case K_END
       ::Goto(::nRow, -1)
       EXIT
 
-   CASE K_CTRL_END
+   Case K_CTRL_END
       // Resolve K_CTRL_W and K_CTRL_END Cl*pper keycode collision
       IF nKey != K_CTRL_END .AND. hb_keyVal(nKey) != HB_KX_END
          Return False
@@ -436,17 +436,17 @@ METHOD HBEditor:MoveCursor(nKey)
       ::Goto(::nFirstRow + ::nNumRows - 1, -1)
       EXIT
 
-   CASE K_ENTER
+   Case K_ENTER
       ::Goto(::nRow + 1, 1)
       EXIT
 
-   CASE K_TAB
+   Case K_TAB
       ::Goto(::nRow, ::nCol + TabCount(::nTabWidth, ::nCol))
       EXIT
 
-   OTHERWISE
+   Otherwise
       Return False
-   ENDSWITCH
+   EndSwitch
 
    Return True
 
@@ -476,12 +476,12 @@ METHOD HBEditor:Edit(nPassedKey)
       ENDIF
       nKeyStd := hb_keyStd(nKey)
 
-      DO CASE
-      CASE (bKeyBlock := SetKey(nKeyStd)) != NIL
+      Do Case
+      Case (bKeyBlock := SetKey(nKeyStd)) != NIL
          Eval(bKeyBlock)
 
-      CASE !hb_IsNull(cKey := IIf(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount(::nTabWidth, ::nCol)), hb_keyChar(nKey)))
-         ::lDirty := TRUE
+      Case !hb_IsNull(cKey := IIf(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount(::nTabWidth, ::nCol)), hb_keyChar(nKey)))
+         ::lDirty := True
          oLine := ::aText[::nRow]
          IF (nPos := ::nCol - hb_ULen(oLine:cText) - 1) > 0
             oLine:cText += Space(nPos)
@@ -494,35 +494,35 @@ METHOD HBEditor:Edit(nPassedKey)
             ::GoTo(::nRow, ::nCol, _REFRESH_LINE)
          ENDIF
 
-      CASE nKeyStd == K_ENTER
+      Case nKeyStd == K_ENTER
          IF Set(_SET_INSERT)
-            ::lDirty := TRUE
+            ::lDirty := True
             oLine := ::aText[::nRow]
             ::InsertLine(hb_USubStr(oLine:cText, ::nCol), oLine:lSoftCR, ::nRow + 1)
             oLine:cText := hb_ULeft(oLine:cText, ::nCol - 1)
-            oLine:lSoftCR := FALSE
+            oLine:lSoftCR := False
             ::Goto(::nRow + 1, 1, _REFRESH_ALL)
          ELSE
             IF ::nRow == ::LineCount
-               ::lDirty := TRUE
+               ::lDirty := True
                ::AddLine()
             ENDIF
             ::Goto(::nRow + 1, 1)
          ENDIF
 
-      CASE nKeyStd == K_INS
+      Case nKeyStd == K_INS
          ::InsertState(!Set(_SET_INSERT))
 
-      CASE nKeyStd == K_BS
+      Case nKeyStd == K_BS
          IF ::nCol > 1
-            ::lDirty := TRUE
+            ::lDirty := True
             ::aText[::nRow]:cText := hb_UStuff(::aText[::nRow]:cText, --::nCol, 1, "")
             ::GoTo(::nRow, ::nCol, _REFRESH_LINE)
          ENDIF
 
-      CASE nKeyStd == K_DEL
+      Case nKeyStd == K_DEL
          IF ::nRow < ::LineCount .OR. ::nCol <= ::LineLen(::nRow)
-            ::lDirty := TRUE
+            ::lDirty := True
             oLine := ::aText[::nRow]
             IF ::nCol <= hb_ULen(oLine:cText)
                oLine:cText := hb_UStuff(oLine:cText, ::nCol, 1, "")
@@ -542,8 +542,8 @@ METHOD HBEditor:Edit(nPassedKey)
             ENDIF
          ENDIF
 
-      CASE nKeyStd == K_CTRL_Y
-         ::lDirty := TRUE
+      Case nKeyStd == K_CTRL_Y
+         ::lDirty := True
          IF ::nRow == ::LineCount
             ::aText[::nRow]:cText := ""
             ::GoTo(::nRow, ::nCol, _REFRESH_LINE)
@@ -552,37 +552,37 @@ METHOD HBEditor:Edit(nPassedKey)
             ::GoTo(::nRow, ::nCol, _REFRESH_ALL)
          ENDIF
 
-      CASE nKeyStd == K_CTRL_T
+      Case nKeyStd == K_CTRL_T
          IF (nPos := SkipWord(::GetLine(::nRow), ::nCol) - ::nCol) > 0
-            ::lDirty := TRUE
+            ::lDirty := True
             ::aText[::nRow]:cText := hb_UStuff(::aText[::nRow]:cText, ::nCol, nPos, "")
             ::GoTo(::nRow, ::nCol, _REFRESH_LINE)
          ENDIF
 
-      CASE ::MoveCursor(nKey)
+      Case ::MoveCursor(nKey)
          // if it's a movement key ::MoveCursor() handles it
 
-      CASE nKeyStd == K_CTRL_B .OR. nKeyStd == K_ALT_B
+      Case nKeyStd == K_CTRL_B .OR. nKeyStd == K_ALT_B
          // FIXME: K_ALT_B is not Cl*pper compatible, added as workaround
          //        for missing in some GTs extended keycodes which are
          //        necessary to resolve K_CTRL_B and K_CTRL_RIGHT keycode
          //        conflict
          ::ReformParagraph()
 
-      CASE nKeyStd == K_CTRL_W .OR. nKeyStd == K_ALT_W
+      Case nKeyStd == K_CTRL_W .OR. nKeyStd == K_ALT_W
          // FIXME: K_ALT_W is not Cl*pper compatible, added as workaround
          //        for missing in some GTs extended keycodes which are
          //        necessary to resolve K_CTRL_W and K_CTRL_END keycode
          //        conflict
-         ::lSaved := TRUE
-         ::lExitEdit := TRUE
+         ::lSaved := True
+         ::lExitEdit := True
 
-      OTHERWISE
+      Otherwise
          // NOTE: if you call ::Edit() with a key that is passed to
          //       ::KeyboardHook() and then ::KeyboardHook() calls ::Edit()
          //       with the same key you end up with an endless loop
          ::KeyboardHook(nKeyStd)
-      ENDCASE
+      EndCase
 
       IF nPassedKey != NIL
          EXIT
@@ -612,7 +612,7 @@ METHOD HBEditor:BrowseText(nPassedKey)
       IF (bKeyBlock := SetKey(nKeyStd)) != NIL
          Eval(bKeyBlock)
       ELSEIF nKeyStd == K_ESC
-         ::lExitEdit := TRUE
+         ::lExitEdit := True
       ELSEIF !::MoveCursor(nKey)
          ::KeyboardHook(nKey)
       ENDIF
@@ -628,8 +628,8 @@ METHOD HBEditor:BrowseText(nPassedKey)
 METHOD HBEditor:KeyboardHook(nKey)
 
    IF hb_keyStd(nKey) == K_ESC
-      ::lSaved := FALSE
-      ::lExitEdit := TRUE
+      ::lSaved := False
+      ::lExitEdit := True
    ENDIF
 
    RETURN Self
@@ -641,7 +641,7 @@ METHOD HBEditor:IdleHook()
 // Reform paragraph
 METHOD HBEditor:ReformParagraph()
 
-   LOCAL lNext := TRUE
+   LOCAL lNext := True
    LOCAL cText := ""
    LOCAL nLine
    LOCAL nRow

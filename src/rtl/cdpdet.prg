@@ -93,52 +93,52 @@ FUNCTION hb_cdpOS()
 #if defined(__PLATFORM__WINDOWS)
 STATIC FUNCTION __CPWinToCPStd(nCPWin)
 
-   SWITCH nCPWin
-   CASE 65001 ; RETURN "utf8"
-   CASE 1200  ; RETURN "utf16"
-   CASE 437
-   CASE 737
-   CASE 775
-   CASE 850
-   CASE 852
-   CASE 855
-   CASE 856
-   CASE 857
-   CASE 858
-   CASE 860
-   CASE 861
-   CASE 862
-   CASE 863
-   CASE 864
-   CASE 865
-   CASE 866
-   CASE 869
-   CASE 874
-   CASE 1250
-   CASE 1251
-   CASE 1252
-   CASE 1253
-   CASE 1254
-   CASE 1255
-   CASE 1256
-   CASE 1257
-   CASE 1258  ; RETURN "cp" + hb_ntos(nCPWin)
-   CASE 28591
-   CASE 28592
-   CASE 28593
-   CASE 28594
-   CASE 28595
-   CASE 28596
-   CASE 28597
-   CASE 28598
-   CASE 28599
-   CASE 28603
-   CASE 28605 ; RETURN "iso8859-" + hb_ntos(nCPWin - 28590)
-   CASE 20866 ; RETURN "koi-8"
-   CASE 21866 ; RETURN "koi-8u"
-   CASE 936   ; RETURN "GBK"
-   CASE 950   ; RETURN "CP950"
-   ENDSWITCH
+   Switch nCPWin
+   Case 65001 ; RETURN "utf8"
+   Case 1200  ; RETURN "utf16"
+   Case 437
+   Case 737
+   Case 775
+   Case 850
+   Case 852
+   Case 855
+   Case 856
+   Case 857
+   Case 858
+   Case 860
+   Case 861
+   Case 862
+   Case 863
+   Case 864
+   Case 865
+   Case 866
+   Case 869
+   Case 874
+   Case 1250
+   Case 1251
+   Case 1252
+   Case 1253
+   Case 1254
+   Case 1255
+   Case 1256
+   Case 1257
+   Case 1258  ; RETURN "cp" + hb_ntos(nCPWin)
+   Case 28591
+   Case 28592
+   Case 28593
+   Case 28594
+   Case 28595
+   Case 28596
+   Case 28597
+   Case 28598
+   Case 28599
+   Case 28603
+   Case 28605 ; RETURN "iso8859-" + hb_ntos(nCPWin - 28590)
+   Case 20866 ; RETURN "koi-8"
+   Case 21866 ; RETURN "koi-8u"
+   Case 936   ; RETURN "GBK"
+   Case 950   ; RETURN "CP950"
+   EndSwitch
 
    RETURN NIL
 
@@ -170,51 +170,51 @@ STATIC FUNCTION __UnixParseLangCP(cString, /* @ */ cLang)
    ENDIF
 
    // Convert Unix CP name to Harbour CP ID
-   SWITCH cCP
-   CASE "utf8"
-   CASE "cp437"
-   CASE "cp737"
-   CASE "cp775"
-   CASE "cp850"
-   CASE "cp852"
-   CASE "cp855"
-   CASE "cp856"
-   CASE "cp857"
-   CASE "cp858"
-   CASE "cp860"
-   CASE "cp861"
-   CASE "cp862"
-   CASE "cp863"
-   CASE "cp864"
-   CASE "cp865"
-   CASE "cp866"
-   CASE "cp869"
-   CASE "cp874"
-   CASE "cp1250"
-   CASE "cp1251"
-   CASE "cp1252"
-   CASE "cp1253"
-   CASE "cp1254"
-   CASE "cp1255"
-   CASE "cp1256"
-   CASE "cp1257"
-   CASE "cp1258"
-   CASE "iso8859-1"
-   CASE "iso8859-2"
-   CASE "iso8859-3"
-   CASE "iso8859-4"
-   CASE "iso8859-5"
-   CASE "iso8859-6"
-   CASE "iso8859-7"
-   CASE "iso8859-8"
-   CASE "iso8859-9"
-   CASE "iso8859-13"
-   CASE "iso8859-15" ; RETURN cCP
-   CASE "koi8r"      ; RETURN "koi-8"
-   CASE "koi8u"      ; RETURN "koi-8u"
-   CASE "gbk"        ; RETURN "GBK"
-   CASE "big5"       ; RETURN "BIG5"
-   ENDSWITCH
+   Switch cCP
+   Case "utf8"
+   Case "cp437"
+   Case "cp737"
+   Case "cp775"
+   Case "cp850"
+   Case "cp852"
+   Case "cp855"
+   Case "cp856"
+   Case "cp857"
+   Case "cp858"
+   Case "cp860"
+   Case "cp861"
+   Case "cp862"
+   Case "cp863"
+   Case "cp864"
+   Case "cp865"
+   Case "cp866"
+   Case "cp869"
+   Case "cp874"
+   Case "cp1250"
+   Case "cp1251"
+   Case "cp1252"
+   Case "cp1253"
+   Case "cp1254"
+   Case "cp1255"
+   Case "cp1256"
+   Case "cp1257"
+   Case "cp1258"
+   Case "iso8859-1"
+   Case "iso8859-2"
+   Case "iso8859-3"
+   Case "iso8859-4"
+   Case "iso8859-5"
+   Case "iso8859-6"
+   Case "iso8859-7"
+   Case "iso8859-8"
+   Case "iso8859-9"
+   Case "iso8859-13"
+   Case "iso8859-15" ; RETURN cCP
+   Case "koi8r"      ; RETURN "koi-8"
+   Case "koi8u"      ; RETURN "koi-8u"
+   Case "gbk"        ; RETURN "GBK"
+   Case "big5"       ; RETURN "BIG5"
+   EndSwitch
 
    RETURN NIL
 
@@ -227,12 +227,12 @@ STATIC FUNCTION __CPStdToHb(cCPStd, cCtryStd)
    LOCAL aCP
 
    IF cCPStd != NIL
-      SWITCH cCPStd := Lower(cCPStd)
-      CASE "utf8"
+      Switch cCPStd := Lower(cCPStd)
+      Case "utf8"
          RETURN "UTF8"
-      CASE "utf16"
+      Case "utf16"
          RETURN "UTF16LE"
-      OTHERWISE
+      Otherwise
          aCP := hb_cdpList()
          cCtryHb := __LangStdToCPCtryHb(cCtryStd)
          FOR EACH cdp IN aCP
@@ -245,255 +245,255 @@ STATIC FUNCTION __CPStdToHb(cCPStd, cCtryStd)
                RETURN hb_cdpUniID(cdp)
             ENDIF
          NEXT
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    RETURN NIL
 
 STATIC FUNCTION __LangStdToCPCtryHb(cCtryStd)
 
-   SWITCH Lower(cCtryStd)
+   Switch Lower(cCtryStd)
 #if 0
-   CASE "af-za"      ; EXIT
-   CASE "af"         ; EXIT
-   CASE "ar-ae"      ; EXIT
-   CASE "ar-bh"      ; EXIT
-   CASE "ar-dz"      ; EXIT
-   CASE "ar-eg"      ; EXIT
-   CASE "ar-iq"      ; EXIT
-   CASE "ar-jo"      ; EXIT
-   CASE "ar-kw"      ; EXIT
-   CASE "ar-lb"      ; EXIT
-   CASE "ar-ly"      ; EXIT
-   CASE "ar-ma"      ; EXIT
-   CASE "ar-om"      ; EXIT
-   CASE "ar-qa"      ; EXIT
-   CASE "ar-sa"      ; EXIT
-   CASE "ar-sy"      ; EXIT
-   CASE "ar-tn"      ; EXIT
-   CASE "ar-ye"      ; EXIT
-   CASE "ar"         ; EXIT
-   CASE "az-az-cyrl" ; EXIT
-   CASE "az-az-latn" ; EXIT
-   CASE "az"         ; EXIT
-   CASE "be-by"      ; EXIT
-   CASE "be"         ; EXIT
+   Case "af-za"      ; EXIT
+   Case "af"         ; EXIT
+   Case "ar-ae"      ; EXIT
+   Case "ar-bh"      ; EXIT
+   Case "ar-dz"      ; EXIT
+   Case "ar-eg"      ; EXIT
+   Case "ar-iq"      ; EXIT
+   Case "ar-jo"      ; EXIT
+   Case "ar-kw"      ; EXIT
+   Case "ar-lb"      ; EXIT
+   Case "ar-ly"      ; EXIT
+   Case "ar-ma"      ; EXIT
+   Case "ar-om"      ; EXIT
+   Case "ar-qa"      ; EXIT
+   Case "ar-sa"      ; EXIT
+   Case "ar-sy"      ; EXIT
+   Case "ar-tn"      ; EXIT
+   Case "ar-ye"      ; EXIT
+   Case "ar"         ; EXIT
+   Case "az-az-cyrl" ; EXIT
+   Case "az-az-latn" ; EXIT
+   Case "az"         ; EXIT
+   Case "be-by"      ; EXIT
+   Case "be"         ; EXIT
 #endif
-   CASE "bg-bg"
-   CASE "bg"         ; RETURN "BG"
+   Case "bg-bg"
+   Case "bg"         ; RETURN "BG"
 #if 0
-   CASE "ca-es"      ; EXIT
-   CASE "ca"         ; EXIT
-   CASE "cy-gb"      ; EXIT
+   Case "ca-es"      ; EXIT
+   Case "ca"         ; EXIT
+   Case "cy-gb"      ; EXIT
 #endif
-   CASE "cs-cz"
-   CASE "cs"         ; RETURN "CS"
-   CASE "da-dk"
-   CASE "da"         ; RETURN "DK"
-   CASE "de-at"
-   CASE "de-ch"
-   CASE "de-de"
-   CASE "de-li"
-   CASE "de-lu"
-   CASE "de"         ; RETURN "DE"
+   Case "cs-cz"
+   Case "cs"         ; RETURN "CS"
+   Case "da-dk"
+   Case "da"         ; RETURN "DK"
+   Case "de-at"
+   Case "de-ch"
+   Case "de-de"
+   Case "de-li"
+   Case "de-lu"
+   Case "de"         ; RETURN "DE"
 #if 0
-   CASE "div-mv"     ; EXIT
-   CASE "div"        ; EXIT
+   Case "div-mv"     ; EXIT
+   Case "div"        ; EXIT
 #endif
-   CASE "el-gr"
-   CASE "el"         ; RETURN "EL"
-   CASE "en-au"
-   CASE "en-bz"
-   CASE "en-ca"
-   CASE "en-cb"
-   CASE "en-gb"
-   CASE "en-ie"
-   CASE "en-jm"
-   CASE "en-nz"
-   CASE "en-ph"
-   CASE "en-tt"
-   CASE "en-us"
-   CASE "en-za"
-   CASE "en-zw"
-   CASE "en"         ; RETURN "EN"
+   Case "el-gr"
+   Case "el"         ; RETURN "EL"
+   Case "en-au"
+   Case "en-bz"
+   Case "en-ca"
+   Case "en-cb"
+   Case "en-gb"
+   Case "en-ie"
+   Case "en-jm"
+   Case "en-nz"
+   Case "en-ph"
+   Case "en-tt"
+   Case "en-us"
+   Case "en-za"
+   Case "en-zw"
+   Case "en"         ; RETURN "EN"
 #if 0
-   CASE "eo"         ; EXIT
+   Case "eo"         ; EXIT
 #endif
-   CASE "es-419"
-   CASE "es-ar"
-   CASE "es-bo"
-   CASE "es-cl"
-   CASE "es-co"
-   CASE "es-cr"
-   CASE "es-do"
-   CASE "es-ec"
-   CASE "es-es"
-   CASE "es-gt"
-   CASE "es-hn"
-   CASE "es-mx"
-   CASE "es-ni"
-   CASE "es-pa"
-   CASE "es-pe"
-   CASE "es-pr"
-   CASE "es-py"
-   CASE "es-sv"
-   CASE "es-uy"
-   CASE "es-ve"
-   CASE "es"         ; RETURN "ES"
+   Case "es-419"
+   Case "es-ar"
+   Case "es-bo"
+   Case "es-cl"
+   Case "es-co"
+   Case "es-cr"
+   Case "es-do"
+   Case "es-ec"
+   Case "es-es"
+   Case "es-gt"
+   Case "es-hn"
+   Case "es-mx"
+   Case "es-ni"
+   Case "es-pa"
+   Case "es-pe"
+   Case "es-pr"
+   Case "es-py"
+   Case "es-sv"
+   Case "es-uy"
+   Case "es-ve"
+   Case "es"         ; RETURN "ES"
 #if 0
-   CASE "et-ee"      ; EXIT
-   CASE "et"         ; EXIT
-   CASE "eu-es"      ; EXIT
-   CASE "eu"         ; EXIT
-   CASE "fa-ir"      ; EXIT
-   CASE "fa"         ; EXIT
+   Case "et-ee"      ; EXIT
+   Case "et"         ; EXIT
+   Case "eu-es"      ; EXIT
+   Case "eu"         ; EXIT
+   Case "fa-ir"      ; EXIT
+   Case "fa"         ; EXIT
 #endif
-   CASE "fi-fi"
-   CASE "fi"         ; RETURN "FI"
+   Case "fi-fi"
+   Case "fi"         ; RETURN "FI"
 #if 0
-   CASE "fo-fo"      ; EXIT
-   CASE "fo"         ; EXIT
+   Case "fo-fo"      ; EXIT
+   Case "fo"         ; EXIT
 #endif
-   CASE "fr-be"
-   CASE "fr-ca"
-   CASE "fr-ch"
-   CASE "fr-fr"
-   CASE "fr-lu"
-   CASE "fr-mc"
-   CASE "fr"         ; RETURN "FR"
+   Case "fr-be"
+   Case "fr-ca"
+   Case "fr-ch"
+   Case "fr-fr"
+   Case "fr-lu"
+   Case "fr-mc"
+   Case "fr"         ; RETURN "FR"
 #if 0
-   CASE "gl-es"      ; EXIT
-   CASE "gl"         ; EXIT
-   CASE "gu-in"      ; EXIT
-   CASE "gu"         ; EXIT
+   Case "gl-es"      ; EXIT
+   Case "gl"         ; EXIT
+   Case "gu-in"      ; EXIT
+   Case "gu"         ; EXIT
 #endif
-   CASE "he-il"
-   CASE "he"         ; RETURN "HE"
+   Case "he-il"
+   Case "he"         ; RETURN "HE"
 #if 0
-   CASE "hi-in"      ; EXIT
-   CASE "hi"         ; EXIT
+   Case "hi-in"      ; EXIT
+   Case "hi"         ; EXIT
 #endif
-   CASE "hr-hr"
-   CASE "hr"         ; RETURN "HR"
-   CASE "hu-hu"
-   CASE "hu"         ; RETURN "HU"
+   Case "hr-hr"
+   Case "hr"         ; RETURN "HR"
+   Case "hu-hu"
+   Case "hu"         ; RETURN "HU"
 #if 0
-   CASE "hy-am"      ; EXIT
-   CASE "hy"         ; EXIT
-   CASE "id-id"      ; EXIT
-   CASE "id"         ; EXIT
+   Case "hy-am"      ; EXIT
+   Case "hy"         ; EXIT
+   Case "id-id"      ; EXIT
+   Case "id"         ; EXIT
 #endif
-   CASE "is-is"
-   CASE "is"         ; RETURN "IS"
-   CASE "it-ch"
-   CASE "it-it"
-   CASE "it"         ; RETURN "IT"
+   Case "is-is"
+   Case "is"         ; RETURN "IS"
+   Case "it-ch"
+   Case "it-it"
+   Case "it"         ; RETURN "IT"
 #if 0
-   CASE "ja-jp"      ; EXIT
-   CASE "ja"         ; EXIT
-   CASE "ka-ge"      ; EXIT
-   CASE "ka"         ; EXIT
-   CASE "kk-kz"      ; EXIT
-   CASE "kk"         ; EXIT
-   CASE "kn-in"      ; EXIT
-   CASE "kn"         ; EXIT
-   CASE "ko-kr"      ; EXIT
-   CASE "ko"         ; EXIT
-   CASE "kok-in"     ; EXIT
-   CASE "kok"        ; EXIT
-   CASE "ky-kz"      ; EXIT
-   CASE "ky"         ; EXIT
+   Case "ja-jp"      ; EXIT
+   Case "ja"         ; EXIT
+   Case "ka-ge"      ; EXIT
+   Case "ka"         ; EXIT
+   Case "kk-kz"      ; EXIT
+   Case "kk"         ; EXIT
+   Case "kn-in"      ; EXIT
+   Case "kn"         ; EXIT
+   Case "ko-kr"      ; EXIT
+   Case "ko"         ; EXIT
+   Case "kok-in"     ; EXIT
+   Case "kok"        ; EXIT
+   Case "ky-kz"      ; EXIT
+   Case "ky"         ; EXIT
 #endif
-   CASE "lt-lt"
-   CASE "lt"         ; RETURN "LT"
+   Case "lt-lt"
+   Case "lt"         ; RETURN "LT"
 #if 0
-   CASE "lv-lv"      ; EXIT
-   CASE "lv"         ; EXIT
-   CASE "mk-mk"      ; EXIT
-   CASE "mk"         ; EXIT
-   CASE "mn-mn"      ; EXIT
-   CASE "mn"         ; EXIT
-   CASE "mr-in"      ; EXIT
-   CASE "mr"         ; EXIT
-   CASE "ms-bn"      ; EXIT
-   CASE "ms-my"      ; EXIT
-   CASE "ms"         ; EXIT
-   CASE "nb-no"      ; EXIT
+   Case "lv-lv"      ; EXIT
+   Case "lv"         ; EXIT
+   Case "mk-mk"      ; EXIT
+   Case "mk"         ; EXIT
+   Case "mn-mn"      ; EXIT
+   Case "mn"         ; EXIT
+   Case "mr-in"      ; EXIT
+   Case "mr"         ; EXIT
+   Case "ms-bn"      ; EXIT
+   Case "ms-my"      ; EXIT
+   Case "ms"         ; EXIT
+   Case "nb-no"      ; EXIT
 #endif
-   CASE "nl-be"
-   CASE "nl-nl"
-   CASE "nl"         ; RETURN "NL"
+   Case "nl-be"
+   Case "nl-nl"
+   Case "nl"         ; RETURN "NL"
 #if 0
-   CASE "nn-no"      ; EXIT
+   Case "nn-no"      ; EXIT
 #endif
-   CASE "no"         ; RETURN "NO"
+   Case "no"         ; RETURN "NO"
 #if 0
-   CASE "pa-in"      ; EXIT
-   CASE "pa"         ; EXIT
+   Case "pa-in"      ; EXIT
+   Case "pa"         ; EXIT
 #endif
-   CASE "pl-pl"
-   CASE "pl"         ; RETURN "PL"
-   CASE "pt-br"
-   CASE "pt-pt"
-   CASE "pt"         ; RETURN "PT"
-   CASE "ro-ro"
-   CASE "ro"         ; RETURN "RO"
-   CASE "ru-ru"
-   CASE "ru"         ; RETURN "RU"
+   Case "pl-pl"
+   Case "pl"         ; RETURN "PL"
+   Case "pt-br"
+   Case "pt-pt"
+   Case "pt"         ; RETURN "PT"
+   Case "ro-ro"
+   Case "ro"         ; RETURN "RO"
+   Case "ru-ru"
+   Case "ru"         ; RETURN "RU"
 #if 0
-   CASE "sa-in"      ; EXIT
-   CASE "sa"         ; EXIT
+   Case "sa-in"      ; EXIT
+   Case "sa"         ; EXIT
 #endif
-   CASE "sk-sk"
-   CASE "sk"         ; RETURN "SK"
-   CASE "sl-si"
-   CASE "sl"         ; RETURN "SL"
+   Case "sk-sk"
+   Case "sk"         ; RETURN "SK"
+   Case "sl-si"
+   Case "sl"         ; RETURN "SL"
 #if 0
-   CASE "sq-al"      ; EXIT
-   CASE "sq"         ; EXIT
+   Case "sq-al"      ; EXIT
+   Case "sq"         ; EXIT
 #endif
-   CASE "sr-sp-cyrl"
-   CASE "sr-sp-latn" ; RETURN "SR"
-   CASE "sv-fi"
-   CASE "sv-se"
-   CASE "sv"         ; RETURN "SV"
+   Case "sr-sp-cyrl"
+   Case "sr-sp-latn" ; RETURN "SR"
+   Case "sv-fi"
+   Case "sv-se"
+   Case "sv"         ; RETURN "SV"
 #if 0
-   CASE "sw-ke"      ; EXIT
-   CASE "sw"         ; EXIT
-   CASE "syr-sy"     ; EXIT
-   CASE "syr"        ; EXIT
-   CASE "ta-in"      ; EXIT
-   CASE "ta"         ; EXIT
-   CASE "te-in"      ; EXIT
-   CASE "te"         ; EXIT
-   CASE "th-th"      ; EXIT
-   CASE "th"         ; EXIT
+   Case "sw-ke"      ; EXIT
+   Case "sw"         ; EXIT
+   Case "syr-sy"     ; EXIT
+   Case "syr"        ; EXIT
+   Case "ta-in"      ; EXIT
+   Case "ta"         ; EXIT
+   Case "te-in"      ; EXIT
+   Case "te"         ; EXIT
+   Case "th-th"      ; EXIT
+   Case "th"         ; EXIT
 #endif
-   CASE "tr-tr"
-   CASE "tr"         ; RETURN "TR"
+   Case "tr-tr"
+   Case "tr"         ; RETURN "TR"
 #if 0
-   CASE "tt-ru"      ; EXIT
-   CASE "tt"         ; EXIT
+   Case "tt-ru"      ; EXIT
+   Case "tt"         ; EXIT
 #endif
-   CASE "uk-ua"
-   CASE "uk"         ; RETURN "UA"
+   Case "uk-ua"
+   Case "uk"         ; RETURN "UA"
 #if 0
-   CASE "ur-pk"      ; EXIT
-   CASE "ur"         ; EXIT
-   CASE "uz-uz-cyrl" ; EXIT
-   CASE "uz-uz-latn" ; EXIT
-   CASE "uz"         ; EXIT
-   CASE "vi-vn"      ; EXIT
-   CASE "vi"         ; EXIT
-   CASE "zh-chs"     ; EXIT
-   CASE "zh-cht"     ; EXIT
-   CASE "zh-cn"      ; EXIT
-   CASE "zh-hk"      ; EXIT
-   CASE "zh-mo"      ; EXIT
-   CASE "zh-sg"      ; EXIT
-   CASE "zh-tw"      ; EXIT
-   CASE "zh"         ; EXIT
+   Case "ur-pk"      ; EXIT
+   Case "ur"         ; EXIT
+   Case "uz-uz-cyrl" ; EXIT
+   Case "uz-uz-latn" ; EXIT
+   Case "uz"         ; EXIT
+   Case "vi-vn"      ; EXIT
+   Case "vi"         ; EXIT
+   Case "zh-chs"     ; EXIT
+   Case "zh-cht"     ; EXIT
+   Case "zh-cn"      ; EXIT
+   Case "zh-hk"      ; EXIT
+   Case "zh-mo"      ; EXIT
+   Case "zh-sg"      ; EXIT
+   Case "zh-tw"      ; EXIT
+   Case "zh"         ; EXIT
 #endif
-   ENDSWITCH
+   EndSwitch
 
    RETURN Left(hb_cdpSelect(), 2)  // Caller assumes this never returns strings shorter than two chars

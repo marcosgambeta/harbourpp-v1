@@ -56,39 +56,39 @@ FUNCTION sx_DefTrigger(nEvent, nArea, nFieldPos, xTrigVal)
    HB_SYMBOL_UNUSED(nFieldPos)
    HB_SYMBOL_UNUSED(xTrigVal)
 
-   SWITCH nEvent
-   CASE EVENT_PREUSE
+   Switch nEvent
+   Case EVENT_PREUSE
 #if 0
       _sx_IniInit(nArea)
 #endif
       sx_SetTrigger(TRIGGER_REMOVE)
       EXIT
-   CASE EVENT_POSTUSE
+   Case EVENT_POSTUSE
       EXIT
-   CASE EVENT_UPDATE
+   Case EVENT_UPDATE
       EXIT
-   CASE EVENT_APPEND
+   Case EVENT_APPEND
       EXIT
-   CASE EVENT_DELETE
+   Case EVENT_DELETE
       EXIT
-   CASE EVENT_RECALL
+   Case EVENT_RECALL
       EXIT
-   CASE EVENT_PACK
+   Case EVENT_PACK
       EXIT
-   CASE EVENT_ZAP
+   Case EVENT_ZAP
       EXIT
-   CASE EVENT_PUT
+   Case EVENT_PUT
       EXIT
-   CASE EVENT_GET
+   Case EVENT_GET
       EXIT
-   CASE EVENT_PRECLOSE
+   Case EVENT_PRECLOSE
       EXIT
-   CASE EVENT_POSTCLOSE
+   Case EVENT_POSTCLOSE
       EXIT
-   CASE EVENT_PREMEMOPACK
+   Case EVENT_PREMEMOPACK
       EXIT
-   CASE EVENT_POSTMEMOPACK
+   Case EVENT_POSTMEMOPACK
       EXIT
-   ENDSWITCH
+   EndSwitch
 
    Return True

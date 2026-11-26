@@ -66,7 +66,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
       Return False
    ENDIF
 
-   lAppend := lKeyPressed := lRefresh := FALSE
+   lAppend := lKeyPressed := lRefresh := False
 
    IF PCount() < 4
       nTop    := 1
@@ -103,10 +103,10 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
    IF LastRec() == 0
       nKey := K_DOWN
-      lKeyPressed := TRUE
+      lKeyPressed := True
    ENDIF
 
-   lContinue := TRUE
+   lContinue := True
 
    Do While lContinue
 
@@ -115,7 +115,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
       EndDo
 
       IF lKeyPressed
-         lKeyPressed := FALSE
+         lKeyPressed := False
       ELSE
          IF oBrw:HitBottom .AND. (!lAppend .OR. RecNo() != LastRec() + 1)
             IF lAppend
@@ -123,7 +123,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
                oBrw:ForceStable()
                dbGoBottom()
             ELSE
-               lAppend := TRUE
+               lAppend := True
                SetCursor(IIf(ReadInsert(), SC_INSERT, SC_NORMAL))
             ENDIF
             oBrw:Down()
@@ -142,107 +142,107 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
          ENDIF
       ENDIF
 
-      SWITCH nKey
+      Switch nKey
 
 #ifdef HB_COMPAT_C53
-      CASE K_LBUTTONDOWN
-      CASE K_LDBLCLK
+      Case K_LBUTTONDOWN
+      Case K_LDBLCLK
          TBMouse(oBrw, MRow(), MCol())
          EXIT
 #endif
 #ifndef HB_CLP_STRICT
-      CASE K_MWFORWARD
+      Case K_MWFORWARD
 #endif
-      CASE K_UP
+      Case K_UP
          IF lAppend
-            lRefresh := TRUE
+            lRefresh := True
          ELSE
             oBrw:Up()
          ENDIF
          EXIT
 
 #ifndef HB_CLP_STRICT
-      CASE K_MWBACKWARD
+      Case K_MWBACKWARD
 #endif
-      CASE K_DOWN
+      Case K_DOWN
          IF lAppend
-            oBrw:HitBottom := TRUE
+            oBrw:HitBottom := True
          ELSE
             oBrw:Down()
          ENDIF
          EXIT
 
-      CASE K_PGUP
+      Case K_PGUP
          IF lAppend
-            lRefresh := TRUE
+            lRefresh := True
          ELSE
             oBrw:PageUp()
          ENDIF
          EXIT
 
-      CASE K_PGDN
+      Case K_PGDN
          IF lAppend
-            oBrw:HitBottom := TRUE
+            oBrw:HitBottom := True
          ELSE
             oBrw:PageDown()
          ENDIF
          EXIT
 
-      CASE K_CTRL_PGUP
+      Case K_CTRL_PGUP
          IF lAppend
-            lRefresh := TRUE
+            lRefresh := True
          ELSE
             oBrw:GoTop()
          ENDIF
          EXIT
 
-      CASE K_CTRL_PGDN
+      Case K_CTRL_PGDN
          IF lAppend
-            lRefresh := TRUE
+            lRefresh := True
          ELSE
             oBrw:GoBottom()
          ENDIF
          EXIT
 
-      CASE K_LEFT
+      Case K_LEFT
          oBrw:Left()
          EXIT
 
-      CASE K_RIGHT
+      Case K_RIGHT
          oBrw:Right()
          EXIT
 
-      CASE K_HOME
+      Case K_HOME
          oBrw:Home()
          EXIT
 
-      CASE K_END
+      Case K_END
          oBrw:End()
          EXIT
 
-      CASE K_CTRL_LEFT
+      Case K_CTRL_LEFT
          oBrw:panLeft()
          EXIT
 
-      CASE K_CTRL_RIGHT
+      Case K_CTRL_RIGHT
          oBrw:panRight()
          EXIT
 
-      CASE K_CTRL_HOME
+      Case K_CTRL_HOME
          oBrw:panHome()
          EXIT
 
-      CASE K_CTRL_END
+      Case K_CTRL_END
          oBrw:panEnd()
          EXIT
 
-      CASE K_INS
+      Case K_INS
          IF lAppend
             SetCursor(IIf(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))
          ENDIF
          EXIT
 
-      CASE K_DEL
+      Case K_DEL
          IF RecNo() != LastRec() + 1
             IF Deleted()
                dbRecall()
@@ -252,29 +252,29 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
          ENDIF
          EXIT
 
-      CASE K_ENTER
+      Case K_ENTER
          IF lAppend .OR. RecNo() != LastRec() + 1
             lKeyPressed := (nKey := DoGet(oBrw, lAppend)) != 0
          ELSE
             nKey := K_DOWN
-            lKeyPressed := TRUE
+            lKeyPressed := True
          ENDIF
          EXIT
 
-      CASE K_ESC
-         lContinue := FALSE
+      Case K_ESC
+         lContinue := False
          EXIT
 
-      OTHERWISE
+      Otherwise
          IF !hb_keyChar(nKey) == ""
             hb_keyIns(nKey)
             nKey := K_ENTER
-            lKeyPressed := TRUE
+            lKeyPressed := True
          ENDIF
-      ENDSWITCH
+      EndSwitch
 
       IF lRefresh
-         lRefresh := lAppend := FALSE
+         lRefresh := lAppend := False
          FreshOrder(oBrw)
          SetCursor(SC_NONE)
       ENDIF
@@ -323,12 +323,12 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
    LOCAL nKey
    LOCAL xValue
 
-   oBrw:HitTop := FALSE
+   oBrw:HitTop := False
    StatLine(oBrw, lAppend)
    oBrw:ForceStable()
 
-   lScore := Set(_SET_SCOREBOARD, FALSE)
-   lExit := Set(_SET_EXIT, TRUE)
+   lScore := Set(_SET_SCOREBOARD, False)
+   lExit := Set(_SET_EXIT, True)
    bIns := SetKey(K_INS, {||SetCursor(IIf(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))})
    nCursor := SetCursor(IIf(ReadInsert(), SC_INSERT, SC_NORMAL))
    IF !Empty(cIndexKey := IndexKey(0))
@@ -338,7 +338,7 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
    oCol := oBrw:GetColumn(oBrw:ColPos)
    xValue := Eval(oCol:Block)
    oGet := GetNew(Row(), Col(), {|xNewVal|IIf(PCount() == 0, xValue, xValue := xNewVal)}, "mGetVar", NIL, oBrw:ColorSpec)
-   lSuccess := FALSE
+   lSuccess := False
    IF ReadModal({oGet})
       IF lAppend .AND. RecNo() == LastRec() + 1
          dbAppend()
@@ -349,7 +349,7 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
          dbGoTop()
       ENDIF
       IF !lAppend .AND. !Empty(bIndexKey) .AND. !xKeyValue == Eval(bIndexKey)
-         lSuccess := TRUE
+         lSuccess := True
       ENDIF
    ENDIF
 
@@ -376,15 +376,15 @@ STATIC FUNCTION ExitKey(lAppend)
 
    LOCAL nKey
 
-   SWITCH nKey := LastKey()
-   CASE K_PGDN
+   Switch nKey := LastKey()
+   Case K_PGDN
       RETURN IIf(lAppend, 0, K_DOWN)
-   CASE K_PGUP
+   Case K_PGUP
       RETURN IIf(lAppend, 0, K_UP)
-   CASE K_DOWN
-   CASE K_UP
+   Case K_DOWN
+   Case K_UP
       RETURN nKey
-   ENDSWITCH
+   EndSwitch
 
    RETURN IIf(nKey == K_ENTER .OR. !(hb_keyChar(nKey) == ""), K_RIGHT, 0)
 
@@ -409,10 +409,10 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
    LOCAL nSkipped := 0
 
    IF LastRec() != 0
-      DO CASE
-      CASE nRecs == 0
+      Do Case
+      Case nRecs == 0
          dbSkip(0)
-      CASE nRecs > 0 .AND. RecNo() != LastRec() + 1
+      Case nRecs > 0 .AND. RecNo() != LastRec() + 1
          Do While nSkipped < nRecs
             dbSkip()
             IF Eof()
@@ -425,7 +425,7 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
             ENDIF
             ++nSkipped
          EndDo
-      CASE nRecs < 0
+      Case nRecs < 0
          Do While nSkipped > nRecs
             dbSkip(-1)
             IF Bof()
@@ -433,7 +433,7 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
             ENDIF
             --nSkipped
          EndDo
-      ENDCASE
+      EndCase
    ENDIF
 
    RETURN nSkipped

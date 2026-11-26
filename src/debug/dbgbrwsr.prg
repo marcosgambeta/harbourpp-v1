@@ -66,25 +66,25 @@ CREATE CLASS HBDbBrowser
    VAR nBottom
    VAR nRight
    VAR cColorSpec
-   VAR autoLite INIT TRUE
+   VAR autoLite INIT True
 
    VAR goTopBlock
    VAR goBottomBlock
    VAR skipBlock
 
-   VAR stable INIT FALSE
+   VAR stable INIT False
    VAR rowCount INIT 0
    VAR rowPos INIT 1
    VAR colCount INIT 0
    VAR colPos INIT 1
-   VAR hitBottom INIT FALSE
+   VAR hitBottom INIT False
    VAR freeze INIT 0
 
    VAR aColumns INIT {}
    VAR aRowState INIT {}
    VAR aColorSpec INIT {}
    VAR nFirstVisible INIT 1
-   VAR lConfigured INIT FALSE
+   VAR lConfigured INIT False
 
    METHOD New(nTop, nLeft, nBottom, nRight, oParentWindow)
    METHOD AddColumn(oCol)    INLINE AAdd(::aColumns, oCol), ::colCount++, Self
@@ -92,8 +92,8 @@ CREATE CLASS HBDbBrowser
    ACCESS ColorSpec            INLINE ::cColorSpec
    ASSIGN ColorSpec(cColors) METHOD SetColorSpec(cColors)
    METHOD Configure()
-   METHOD DeHiLite()           INLINE ::DispRow(::rowPos, FALSE)
-   METHOD HiLite()             INLINE ::DispRow(::rowPos, TRUE)
+   METHOD DeHiLite()           INLINE ::DispRow(::rowPos, False)
+   METHOD HiLite()             INLINE ::DispRow(::rowPos, True)
    METHOD DispRow(nRow, lHiLite)
    METHOD MoveCursor(nSkip)
    METHOD GoTo(nRow)
@@ -104,8 +104,8 @@ CREATE CLASS HBDbBrowser
    METHOD PageDown()           INLINE ::MoveCursor(::rowCount)
    METHOD PageUp()             INLINE ::MoveCursor(-::rowCount)
    METHOD GetColumn(nColumn) INLINE ::aColumns[nColumn]
-   METHOD RefreshAll()         INLINE AFill(::aRowState, FALSE), Self
-   METHOD RefreshCurrent()     INLINE IIf(::rowCount >= 1 .AND. ::rowPos <= Len(::aRowState), ::aRowState[::rowPos] := FALSE, NIL), Self
+   METHOD RefreshAll()         INLINE AFill(::aRowState, False), Self
+   METHOD RefreshCurrent()     INLINE IIf(::rowCount >= 1 .AND. ::rowPos <= Len(::aRowState), ::aRowState[::rowPos] := False, NIL), Self
    METHOD Invalidate()         INLINE ::RefreshAll()
    METHOD Stabilize()          INLINE ::ForceStable()
    METHOD ForceStable()
@@ -129,8 +129,8 @@ METHOD HBDbBrowser:Configure()
       ::nFirstVisible += ::rowPos - ::rowCount
       ::rowPos := ::rowCount
    ENDIF
-   AFill(ASize(::aRowState, ::rowCount), FALSE)
-   ::lConfigured := TRUE
+   AFill(ASize(::aRowState, ::rowCount), False)
+   ::lConfigured := True
 
    RETURN Self
 
@@ -210,7 +210,7 @@ METHOD HBDbBrowser:ForceStable()
    FOR nRow := 1 TO ::rowCount
       IF !::aRowState[nRow]
          ::DispRow(nRow, nRow == ::rowPos)
-         ::aRowState[nRow] := TRUE
+         ::aRowState[nRow] := True
       ENDIF
    NEXT
    ::GoTo(::nFirstVisible + ::rowPos - 1)
@@ -226,7 +226,7 @@ METHOD HBDbBrowser:GoTo(nRow)
 
    Eval(::goTopBlock)
    IF nRow == 1
-      ::hitBottom := FALSE
+      ::hitBottom := False
    ELSE
       nSkipped := Eval(::skipBlock, nRow - 1)
       ::hitBottom := (nSkipped != nRow - 1)
@@ -238,9 +238,9 @@ METHOD HBDbBrowser:GoBottom()
 
    LOCAL nScroll
 
-   DO WHILE !::hitBottom
+   Do While !::hitBottom
       ::PageDown()
-   ENDDO
+   EndDo
    IF ::rowPos < ::rowCount .AND. ::nFirstVisible > 1
       nScroll := Min(::nFirstVisible - 1, ::rowCount - ::rowPos)
       ::nFirstVisible -= nScroll
@@ -251,23 +251,23 @@ METHOD HBDbBrowser:GoBottom()
 
 METHOD HBDbBrowser:Resize(nTop, nLeft, nBottom, nRight)
 
-   LOCAL lResize := FALSE
+   LOCAL lResize := False
 
    IF hb_IsNumeric(nTop) .AND. nTop != ::nTop
       ::nTop := nTop
-      lResize := TRUE
+      lResize := True
    ENDIF
    IF hb_IsNumeric(nLeft) .AND. nLeft != ::nLeft
       ::nLeft := nLeft
-      lResize := TRUE
+      lResize := True
    ENDIF
    IF hb_IsNumeric(nBottom) .AND. nBottom != ::nBottom
       ::nBottom := nBottom
-      lResize := TRUE
+      lResize := True
    ENDIF
    IF hb_IsNumeric(nRight) .AND. nRight != ::nRight
       ::nRight := nRight
-      lResize := TRUE
+      lResize := True
    ENDIF
 
    IF lResize

@@ -38,7 +38,7 @@ RETURN was_BITMAP():new()
 CLASS WAS_BITMAP
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

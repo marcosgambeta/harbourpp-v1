@@ -175,9 +175,9 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
 
    lLeftDown := MLeftDown()
 
-   ::ShowMsg(TRUE)
+   ::ShowMsg(True)
 
-   Do While TRUE
+   Do While True
 
       nKey := Inkey(0)
 
@@ -186,8 +186,8 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
          LOOP
       ENDIF
 
-      DO CASE
-      CASE nKey == K_MOUSEMOVE
+      Do Case
+      Case nKey == K_MOUSEMOVE
 
          IF lLeftDown
 
@@ -201,7 +201,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                   ::oMenu:select(nNewItem)
                   ::oMenu:display()
                   ::PushMenu()
-                  ::ShowMsg(TRUE)
+                  ::ShowMsg(True)
                ENDIF
 
             ELSEIF nNewItem != oNewMenu:Current()  // menu item change.
@@ -212,16 +212,16 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                   ::oMenu:select(nNewItem)
                   ::oMenu:display()
                   ::PushMenu()
-                  ::ShowMsg(TRUE)
+                  ::ShowMsg(True)
                ENDIF
             ENDIF
          ENDIF
 
-      CASE nKey == K_DOWN
+      Case nKey == K_DOWN
 
          IF ::oMenu:ClassName() == "TOPBARMENU"
             IF ::PushMenu()
-               ::ShowMsg(TRUE)
+               ::ShowMsg(True)
             ENDIF
          ELSE
             nTemp := ::oMenu:getNext()
@@ -230,10 +230,10 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
             ENDIF
             ::oMenu:select(nTemp)
             ::oMenu:display()
-            ::ShowMsg(TRUE)
+            ::ShowMsg(True)
          ENDIF
 
-      CASE nKey == K_UP
+      Case nKey == K_UP
 
          IF !::oMenu:ClassName() == "TOPBARMENU"
             nTemp := ::oMenu:getPrev()
@@ -242,10 +242,10 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
             ENDIF
             ::oMenu:select(nTemp)
             ::oMenu:display()
-            ::ShowMsg(TRUE)
+            ::ShowMsg(True)
          ENDIF
 
-      CASE nKey == K_LEFT
+      Case nKey == K_LEFT
 
          IF (lSubMenu := (::nMenuLevel > 1))
             ::PopMenu()
@@ -262,9 +262,9 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                ::PushMenu()
             ENDIF
          ENDIF
-         ::ShowMsg(TRUE)
+         ::ShowMsg(True)
 
-      CASE nKey == K_RIGHT
+      Case nKey == K_RIGHT
 
          IF (lSubMenu := (::nMenuLevel > 1))
             ::PopMenu()
@@ -281,25 +281,25 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                ::PushMenu()
             ENDIF
          ENDIF
-         ::ShowMsg(TRUE)
+         ::ShowMsg(True)
 
-      CASE nKey == K_ENTER
+      Case nKey == K_ENTER
 
          IF ::PushMenu()
-            ::ShowMsg(TRUE)
+            ::ShowMsg(True)
          ELSE
-            ::ShowMsg(FALSE)
+            ::ShowMsg(False)
             nReturn := ::execute()
             IF nReturn != 0
                EXIT
             ENDIF
          ENDIF
 
-      CASE nKey == K_ESC // go to previous menu
+      Case nKey == K_ESC // go to previous menu
 
          IF ::PopMenu()
             ::oMenu:display()
-            ::ShowMsg(TRUE)
+            ::ShowMsg(True)
          ELSE
             IF IS_IN(::oMenu:ClassName(), "POPUPMENU|HB_POPUPMENU")
                ::oMenu:close()
@@ -309,7 +309,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
             EXIT
          ENDIF
 
-      CASE nKey == K_LBUTTONDOWN
+      Case nKey == K_LBUTTONDOWN
 
          IF !::MHitTest(@oNewMenu, @nNewLevel, @nNewItem)
 
@@ -331,7 +331,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
             ::oMenu:select(nNewItem)
             ::oMenu:display()
             ::PushMenu()
-            ::ShowMsg(TRUE)
+            ::ShowMsg(True)
 
          ELSE
             ::nMenuLevel := nNewLevel
@@ -348,19 +348,19 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                ::PushMenu()
             ENDIF
 
-            ::ShowMsg(TRUE)
+            ::ShowMsg(True)
          ENDIF
 
-         lLeftDown := TRUE
+         lLeftDown := True
 
-      CASE nKey == K_LBUTTONUP
+      Case nKey == K_LBUTTONUP
 
-         lLeftDown := FALSE
+         lLeftDown := False
 
          IF ::MHitTest(@oNewMenu, @nNewLevel, @nNewItem) .AND. nNewLevel == ::nMenuLevel
 
             IF nNewItem == ::oMenu:current
-               ::ShowMsg(FALSE)
+               ::ShowMsg(False)
                nReturn := ::execute()
                IF nReturn != 0
                   EXIT
@@ -368,29 +368,29 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
             ENDIF
          ENDIF
 
-      CASE (nNewItem := ::oMenu:getAccel(nKey)) != 0
+      Case (nNewItem := ::oMenu:getAccel(nKey)) != 0
 
          IF ::oMenu:getItem(nNewItem):enabled
             ::oMenu:select(nNewItem)
             ::oMenu:display()
 
             IF !::PushMenu()
-               ::ShowMsg(FALSE)
+               ::ShowMsg(False)
                nReturn := ::execute()
                IF nReturn != 0
                   EXIT
                ENDIF
             ENDIF
-            ::ShowMsg(TRUE)
+            ::ShowMsg(True)
          ENDIF
 
-      CASE IsShortcut(oTopMenu, nKey, @nReturn)
+      Case IsShortcut(oTopMenu, nKey, @nReturn)
 
          IF nReturn != 0
             EXIT
          ENDIF
 
-      CASE GetList != NIL .AND. (nNewItem := Accelerator(GetList, nKey, ::GetMsgArray())) != 0
+      Case GetList != NIL .AND. (nNewItem := Accelerator(GetList, nKey, ::GetMsgArray())) != 0
 
          GetActive():ExitState := GE_SHORTCUT
          ReadStats(SNNEXTGET, nNewItem)  // reset get system values
@@ -401,7 +401,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
          nReturn := -1
          EXIT
 
-      CASE (nNewItem := oTopMenu:getAccel(nKey)) != 0  // check for the top menu item accelerator key
+      Case (nNewItem := oTopMenu:getAccel(nKey)) != 0  // check for the top menu item accelerator key
 
          IF oTopMenu:getItem(nNewItem):enabled
             ::PopAll()
@@ -410,16 +410,16 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
             IF oTopMenu:getItem(nNewItem):isPopUp()
                ::PushMenu()
             ELSE
-               ::ShowMsg(FALSE)
+               ::ShowMsg(False)
                nReturn := ::execute()
                IF nReturn != 0
                   EXIT
                ENDIF
             ENDIF
-            ::ShowMsg(TRUE)
+            ::ShowMsg(True)
          ENDIF
 
-      ENDCASE
+      EndCase
    EndDo
 
    IF ::lMsgFlag
@@ -459,7 +459,7 @@ METHOD HBMenuSys:PopMenu()
 
    IF ::nMenuLevel > 1
       ::oMenu:select(0)
-      ::oMenu:close(TRUE)
+      ::oMenu:close(True)
       ::oMenu := ::aMenuList[--::nMenuLevel] // Decrement MenuItem level and assign
       Return True
    ENDIF
@@ -499,7 +499,7 @@ METHOD HBMenuSys:PopAll()
 METHOD HBMenuSys:Execute()
 
    LOCAL oNewMenu := ::oMenu:getItem(::oMenu:current)
-   LOCAL lPas := TRUE
+   LOCAL lPas := True
 
    // Execute the Data block if selected MenuItem is !IsPopUp:
    IF hb_IsObject(oNewMenu) .AND. !oNewMenu:IsPopUp
@@ -509,7 +509,7 @@ METHOD HBMenuSys:Execute()
          SetCursor(::nOldCursor)
          Eval(oNewMenu:data, oNewMenu)
          SetCursor(SC_NONE)
-         lPas := FALSE
+         lPas := False
       ENDIF
 
       // Pop the Menu:
@@ -543,19 +543,19 @@ METHOD HBMenuSys:MHitTest(oNewMenu, nNewLevel, nNewItem)
       oNewMenu := ::aMenuList[nNewLevel]
       nNewItem := oNewMenu:hitTest(MRow(), MCol())
 
-      DO CASE
-      CASE nNewItem < 0
+      Do Case
+      Case nNewItem < 0
          Return False  // Test for the mouse on Menu separator or border
-      CASE nNewItem > 0 .AND. oNewMenu:getItem(nNewItem):enabled
+      Case nNewItem > 0 .AND. oNewMenu:getItem(nNewItem):enabled
          Return True  // Test for the mouse on an enabled item in the menu
-      ENDCASE
+      EndCase
    NEXT
 
    Return False
 
 /* Erase and Show Messages.
-   Erase Message then ::ShowMsg() if lMode is TRUE
-   Only erases Menu Message if lMode is FALSE
+   Erase Message then ::ShowMsg() if lMode is True
+   Only erases Menu Message if lMode is False
    SaveScreen()/RestScreen() is used for the
    Message area in both text or graphics mode. */
 METHOD HBMenuSys:ShowMsg(lMode)
@@ -563,7 +563,7 @@ METHOD HBMenuSys:ShowMsg(lMode)
    LOCAL nCurrent
    LOCAL cMsg
 
-   IF hb_defaultValue(::lOldMsgFlag, FALSE)
+   IF hb_defaultValue(::lOldMsgFlag, False)
       RestScreen(::nMsgRow, ::nMsgLeft, ::nMsgRow, ::nMsgRight, ::cMsgSaveS)
    ENDIF
 

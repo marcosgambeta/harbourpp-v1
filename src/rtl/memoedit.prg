@@ -55,7 +55,7 @@
 // A specialized HBEditor which can simulate MemoEdit() behaviour
 CREATE CLASS HBMemoEditor INHERIT HBEditor
 
-   VAR lCallKeyboardHook AS LOGICAL INIT FALSE // To avoid recursive calls in endless loop. [jarabal]
+   VAR lCallKeyboardHook AS LOGICAL INIT False // To avoid recursive calls in endless loop. [jarabal]
 
    VAR xUserFunction                         // User Function called to change default MemoEdit() behaviour
 
@@ -92,18 +92,18 @@ METHOD HBMemoEditor:MemoInit(xUserFunction)
 
    IF ::UserFunctionIsValid()
 
-      Do While TRUE
-         SWITCH nUdfReturn := ::xDo(ME_INIT)
+      Do While True
+         Switch nUdfReturn := ::xDo(ME_INIT)
          // Tested with CL52 that only these 3 actions are processed and
          // then ME_INIT call repeated
-         CASE K_INS
-         CASE ME_TOGGLEWRAP
-         CASE ME_TOGGLESCROLL
+         Case K_INS
+         Case ME_TOGGLEWRAP
+         Case ME_TOGGLESCROLL
             // At this time there is no input from user of MemoEdit() only handling
             // of values returned by ::xUserFunction, so I pass NIL as the key code.
             ::HandleUserKey(NIL, nUdfReturn)
             LOOP
-         ENDSWITCH
+         EndSwitch
          EXIT
       EndDo
    ENDIF
@@ -164,9 +164,9 @@ METHOD HBMemoEditor:KeyboardHook(nKey)
 
    IF ::UserFunctionIsValid() .AND. !::lCallKeyboardHook  // To avoid recursive calls in endless loop. [jarabal]
 
-      ::lCallKeyboardHook := TRUE
+      ::lCallKeyboardHook := True
       ::HandleUserKey(nKey, ::xDo(IIf(::lDirty, ME_UNKEYX, ME_UNKEY)))
-      ::lCallKeyboardHook := FALSE
+      ::lCallKeyboardHook := False
 
    ELSEIF hb_keyStd(nKey) == K_ESC
 
@@ -185,12 +185,12 @@ METHOD HBMemoEditor:KeyboardHook(nKey)
 
          IF Upper(hb_keyChar(nYesNoKey)) == "Y"
             hb_keySetLast(K_ESC)  // Cl*pper compatibility
-            ::lSaved := FALSE
-            ::lExitEdit := TRUE
+            ::lSaved := False
+            ::lExitEdit := True
          ENDIF
       ELSE
-         ::lSaved := FALSE
-         ::lExitEdit := TRUE
+         ::lSaved := False
+         ::lExitEdit := True
       ENDIF
    ENDIF
 
@@ -206,8 +206,8 @@ METHOD HBMemoEditor:IdleHook()
 
 METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
 
-   SWITCH nUdfReturn
-   CASE ME_DEFAULT
+   Switch nUdfReturn
+   Case ME_DEFAULT
 
       // I won't reach this point during ME_INIT since ME_DEFAULT ends initialization phase of MemoEdit()
 
@@ -215,8 +215,8 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
          // HBEditor is not able to handle keys with a value higher than 256, but I have to tell him
          // that user wants to save text
          IF hb_keyStd(nKey) == K_ESC
-            ::lSaved := FALSE
-            ::lExitEdit := TRUE
+            ::lSaved := False
+            ::lExitEdit := True
          ELSE
             ::super:Edit(nKey)
          ENDIF
@@ -225,7 +225,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
       ENDIF
       EXIT
 
-   CASE ME_DATA
+   Case ME_DATA
       IF hb_IsNumeric(nKey)
          // TODO: convert nKey >=1 .and. nKey <= 31 to key value with unicode character
          IF HB_ULen(hb_keyChar(nKey)) > 0
@@ -236,33 +236,33 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
       ENDIF
       EXIT
 
-   CASE ME_TOGGLEWRAP
+   Case ME_TOGGLEWRAP
       ::lWordWrap := !::lWordWrap
       EXIT
 
-   CASE ME_TOGGLESCROLL
+   Case ME_TOGGLESCROLL
       // TODO: HBEditor does not support vertical scrolling of text inside window without moving cursor position
       EXIT
 
-   CASE ME_WORDRIGHT
+   Case ME_WORDRIGHT
       ::super:MoveCursor(K_CTRL_RIGHT)
       EXIT
 
-   CASE ME_BOTTOMRIGHT
+   Case ME_BOTTOMRIGHT
       ::super:MoveCursor(K_CTRL_END)
       EXIT
 
 #ifndef HB_CLP_STRICT
-   CASE ME_PASTE  // Xbase++ compatibility
-      hb_gtInfo(HB_GTI_CLIPBOARDPASTE, TRUE)
+   Case ME_PASTE  // Xbase++ compatibility
+      hb_gtInfo(HB_GTI_CLIPBOARDPASTE, True)
       EXIT
 #endif
 
-   CASE ME_IGNORE
+   Case ME_IGNORE
       // do nothing
       EXIT
 
-   OTHERWISE
+   Otherwise
 
       // FIXME: Not CA-Cl*pper compatible, see teditor.prg
       IF (nUdfReturn >= 1 .AND. nUdfReturn <= 31) .OR. nUdfReturn == K_ALT_W
@@ -271,7 +271,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
          Return False
       ENDIF
 
-   ENDSWITCH
+   EndSwitch
 
    Return True
 
@@ -290,8 +290,8 @@ METHOD HBMemoEditor:xDo(nStatus)
 METHOD HBMemoEditor:MoveCursor(nKey)
 
    IF nKey == K_CTRL_W
-      ::lSaved := TRUE
-      ::lExitEdit := TRUE
+      ::lSaved := True
+      ::lExitEdit := True
       Return False
    ENDIF
 
@@ -328,7 +328,7 @@ FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunctio
       nLeft, ;
       hb_defaultValue(nBottom, MaxRow()), ;
       nRight, ;
-      hb_defaultValue(lEditMode, TRUE), ;
+      hb_defaultValue(lEditMode, True), ;
       nLineLength, ;
       hb_defaultValue(nTabSize, 4), ;
       hb_defaultValue(nTextBuffRow, 1), ;
@@ -345,7 +345,7 @@ FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunctio
       oEd:InsertState(Set(_SET_INSERT))
       oEd:Edit()
       IF oEd:Saved()
-         cString := oEd:GetText(TRUE)
+         cString := oEd:GetText(True)
       ENDIF
       SetCursor(nOldCursor)
    ENDIF

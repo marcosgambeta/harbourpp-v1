@@ -38,7 +38,7 @@ RETURN was_GRADIENT_TRIANGLE():new()
 CLASS WAS_GRADIENT_TRIANGLE
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

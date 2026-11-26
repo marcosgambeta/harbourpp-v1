@@ -97,24 +97,24 @@ CREATE CLASS PushButton FUNCTION HBPushButton
    PROTECTED:
 
    VAR cBitmap    INIT ""
-   VAR lBuffer    INIT FALSE
+   VAR lBuffer    INIT False
    VAR cCaption
    VAR nCol
    VAR cColorSpec
    VAR bFBlock
-   VAR lHasFocus  INIT FALSE
+   VAR lHasFocus  INIT False
    VAR cMessage   INIT ""
    VAR nRow
    VAR bSBlock
    VAR cStyle     INIT "<>"
-   VAR lTypeOut   INIT FALSE
+   VAR lTypeOut   INIT False
 
 ENDCLASS
 
 METHOD PushButton:setFocus()
 
    IF !::lHasFocus
-      ::lHasFocus := TRUE
+      ::lHasFocus := True
       ::display()
 
       IF hb_IsEvalItem(::bFBlock)
@@ -129,7 +129,7 @@ METHOD PushButton:select(nPos)
    LOCAL nCurPos := nPos
 
    IF ::lHasFocus
-      ::lbuffer := TRUE
+      ::lbuffer := True
       ::display()
 
       IF hb_IsNumeric(nPos)
@@ -150,7 +150,7 @@ METHOD PushButton:select(nPos)
          Eval(::bSBlock)
       ENDIF
 
-      ::lBuffer := FALSE
+      ::lBuffer := False
       ::display()
    ENDIF
 
@@ -159,7 +159,7 @@ METHOD PushButton:select(nPos)
 METHOD PushButton:killFocus()
 
    IF ::lHasFocus
-      ::lHasFocus := FALSE
+      ::lHasFocus := False
 
       IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
@@ -205,14 +205,14 @@ METHOD PushButton:display()
 
    DispBegin()
 
-   DO CASE
-   CASE ::lBuffer
+   Do Case
+   Case ::lBuffer
       cColor := hb_ColorIndex(::cColorSpec, 2)
-   CASE ::lHasFocus
+   Case ::lHasFocus
       cColor := hb_ColorIndex(::cColorSpec, 1)
-   OTHERWISE
+   Otherwise
       cColor := hb_ColorIndex(::cColorSpec, 0)
-   ENDCASE
+   EndCase
 
    IF (nPos := At("&", cCaption)) == 0
    ELSEIF nPos == Len(cCaption)

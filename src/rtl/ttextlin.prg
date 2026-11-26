@@ -60,6 +60,6 @@ ENDCLASS
 METHOD HBTextLine:Init(cLine, lSoftCR)
 
    ::cText := hb_defaultValue(cLine, "")
-   ::lSoftCR := hb_defaultValue(lSoftCR, FALSE)
+   ::lSoftCR := hb_defaultValue(lSoftCR, False)
 
    RETURN Self

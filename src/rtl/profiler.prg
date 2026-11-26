@@ -204,7 +204,7 @@ ENDCLASS
 
 METHOD HBProfile:init()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    ::reset()
 
@@ -223,7 +223,7 @@ METHOD HBProfile:ignoreSymbol(cSymbol)
 
 METHOD HBProfile:gatherFunctions()
 
-   LOCAL lProfile  := __SetProfiler(FALSE)
+   LOCAL lProfile  := __SetProfiler(False)
    LOCAL nSymCount := __dynsCount()
    LOCAL cName
    LOCAL n
@@ -250,7 +250,7 @@ METHOD HBProfile:gatherFunctions()
 
 METHOD HBProfile:gatherMethods()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
    LOCAL n        := 1
    LOCAL cClass
    LOCAL nMembers
@@ -285,7 +285,7 @@ METHOD HBProfile:gatherMethods()
 
 METHOD HBProfile:gather()
 
-   LOCAL lProfile  := __SetProfiler(FALSE)
+   LOCAL lProfile  := __SetProfiler(False)
 
    ::reset()            // Reset the profile.
    ::gatherFunctions()  // Gather function calls
@@ -297,7 +297,7 @@ METHOD HBProfile:gather()
 
 METHOD HBProfile:forEach(b)
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    AEval(::aProfile, b)
 
@@ -307,7 +307,7 @@ METHOD HBProfile:forEach(b)
 
 METHOD HBProfile:sort(b)
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    ASort(::aProfile, NIL, NIL, b)
 
@@ -317,7 +317,7 @@ METHOD HBProfile:sort(b)
 
 METHOD HBProfile:nameSort()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    ::sort({|oX, oY|oX:cName < oY:cName})
 
@@ -327,7 +327,7 @@ METHOD HBProfile:nameSort()
 
 METHOD HBProfile:callSort()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    ::sort({|oX, oY|oX:nCalls > oY:nCalls})
 
@@ -337,7 +337,7 @@ METHOD HBProfile:callSort()
 
 METHOD HBProfile:timeSort()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    ::sort({|oX, oY|oX:nTicks > oY:nTicks})
 
@@ -347,7 +347,7 @@ METHOD HBProfile:timeSort()
 
 METHOD HBProfile:totalCalls()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
    LOCAL nCalls   := 0
 
    ::forEach({|o|nCalls += o:nCalls})
@@ -358,7 +358,7 @@ METHOD HBProfile:totalCalls()
 
 METHOD HBProfile:totalTicks()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
    LOCAL nTicks   := 0
 
    ::forEach({|o|nTicks += o:nTicks})
@@ -369,7 +369,7 @@ METHOD HBProfile:totalTicks()
 
 METHOD HBProfile:totalSeconds()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
    LOCAL nSeconds := 0
 
    ::forEach({|o|nSeconds += o:nSeconds})
@@ -396,7 +396,7 @@ ENDCLASS
 
 METHOD HBProfileLowLevel:gather()
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    // Gather functions and methods.
    ::super:gather()
@@ -450,7 +450,7 @@ ENDCLASS
 
 METHOD HBProfileReport:init(oProfile)
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    ::oProfile := oProfile
 
@@ -491,9 +491,9 @@ METHOD HBProfileReport:emitLine(oEntity)
 
 METHOD HBProfileReport:generate(bFilter)
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
-   hb_default(@bFilter, {||TRUE})
+   hb_default(@bFilter, {||True})
 
    ::emitHeader():oProfile:forEach({|o|IIf(Eval(bFilter, o), ::emitLine(o), NIL)})
 
@@ -529,7 +529,7 @@ METHOD HBProfileReportToFile:writeLines(aLines)
 
 METHOD HBProfileReportToFile:generate(bFilter, cFile)
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
 
    IF (::hFile := FCreate(hb_defaultValue(cFile, "hbprof.txt"))) != F_ERROR
       ::super:generate(bFilter)
@@ -627,7 +627,7 @@ METHOD HBProfileReportToTBrowse:emitLine(oEntity)
 
 METHOD HBProfileReportToTBrowse:generate(bFilter, nTop, nLeft, nBottom, nRight)
 
-   LOCAL lProfile := __SetProfiler(FALSE)
+   LOCAL lProfile := __SetProfiler(False)
    LOCAL oBrowse
 
    ::nEntity := 1  // Start with the first entity.

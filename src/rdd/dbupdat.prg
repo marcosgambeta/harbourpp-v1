@@ -50,9 +50,9 @@ FUNCTION __dbUpdate(cAlias, bKey, lRandom, bAssign)
    LOCAL nOldArea := Select()
    LOCAL xKey
    LOCAL oError
-   LOCAL lError := FALSE
+   LOCAL lError := False
 
-   __defaultNIL(@lRandom, FALSE)
+   __defaultNIL(@lRandom, False)
 
    dbGoTop()
 
@@ -60,7 +60,7 @@ FUNCTION __dbUpdate(cAlias, bKey, lRandom, bAssign)
 
       dbSelectArea(cAlias)
       dbGoTop()
-      DO WHILE !Eof()
+      Do While !Eof()
 
          xKey := Eval(bKey)
 
@@ -70,9 +70,9 @@ FUNCTION __dbUpdate(cAlias, bKey, lRandom, bAssign)
                Eval(bAssign)
             ENDIF
          ELSE
-            DO WHILE Eval(bKey) < xKey .AND. !Eof()
+            Do While Eval(bKey) < xKey .AND. !Eof()
                dbSkip()
-            ENDDO
+            EndDo
 
             IF Eval(bKey) == xKey .AND. !Eof()
                Eval(bAssign)
@@ -81,10 +81,10 @@ FUNCTION __dbUpdate(cAlias, bKey, lRandom, bAssign)
 
          dbSelectArea(cAlias)
          dbSkip()
-      ENDDO
+      EndDo
 
    RECOVER USING oError
-      lError := TRUE
+      lError := True
    END SEQUENCE
 
    dbSelectArea(nOldArea)

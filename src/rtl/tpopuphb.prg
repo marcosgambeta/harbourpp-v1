@@ -113,7 +113,7 @@ METHOD hb_PopupMenu:setCoors(nRow, nCol, lTop)
 
       FOR EACH oItem IN ::aItems
          IF oItem:isPopup()
-            oItem:data:setCoors(nRow + oItem:__enumIndex(), ::nRight + 1, FALSE)
+            oItem:data:setCoors(nRow + oItem:__enumIndex(), ::nRight + 1, False)
          ENDIF
       NEXT
    ENDIF
@@ -128,10 +128,10 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
    LOCAL oItem
    LOCAL i
 
-   DO CASE
+   Do Case
    // Test and assign top menu item shortCut, enabled, and !PopUp:
    // Changed by enclosing assignment before ':Enabled':
-   CASE (nShortCut := ::getShortCt(nKey)) > 0 .AND. (oItem := ::getItem(nShortcut)):enabled .AND. !oItem:isPopUp()
+   Case (nShortCut := ::getShortCt(nKey)) > 0 .AND. (oItem := ::getItem(nShortcut)):enabled .AND. !oItem:isPopUp()
 
       ::select(nShortCut)
       Eval(oItem:data, oItem)
@@ -140,7 +140,7 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
       Return True
 
    // Test and assignment for TopBar MenuItem:
-   CASE nShortCut == 0
+   Case nShortCut == 0
       nTotal := ::nItemCount
       nItem  := ::nCurrent
       IF nItem == 0
@@ -157,7 +157,7 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
          ENDIF
       NEXT
 
-   ENDCASE
+   EndCase
 
    Return False
 

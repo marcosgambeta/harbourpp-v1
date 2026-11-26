@@ -99,7 +99,7 @@ CREATE CLASS ScrollBar FUNCTION HBScrollBar
    VAR nTotal     INIT 100
    VAR bSBlock
 
-   VAR lOverride  INIT FALSE
+   VAR lOverride  INIT False
 
    METHOD CalcThumbPos()
 
@@ -184,57 +184,57 @@ METHOD ScrollBar:hitTest(nMRow, nMCol)
 
    IF ::nOrient == SCROLL_VERTICAL
 
-      DO CASE
-      CASE nMCol != ::nOffset
-      CASE nMRow < ::nStart
-      CASE nMRow > ::nEnd
-      CASE nMRow == ::nStart
+      Do Case
+      Case nMCol != ::nOffset
+      Case nMRow < ::nStart
+      Case nMRow > ::nEnd
+      Case nMRow == ::nStart
          RETURN HTSCROLLUNITDEC
-      CASE nMRow == ::nEnd
+      Case nMRow == ::nEnd
          RETURN HTSCROLLUNITINC
-      CASE nMRow < ::nThumbPos + ::nStart
+      Case nMRow < ::nThumbPos + ::nStart
          RETURN HTSCROLLBLOCKDEC
-      CASE nMRow > ::nThumbPos + ::nStart
+      Case nMRow > ::nThumbPos + ::nStart
          RETURN HTSCROLLBLOCKINC
-      CASE nMRow == ::nThumbPos + ::nStart
+      Case nMRow == ::nThumbPos + ::nStart
          RETURN HTSCROLLTHUMBDRAG
-      ENDCASE
+      EndCase
 
       IF nMCol == ::nOffset + 1 .OR. nMCol == ::nOffset
 
-         DO CASE
-         CASE nMCol != ::nOffset .AND. nMCol != ::nOffset + 1
-         CASE nMRow < ::nStart
-         CASE nMRow > ::nEnd
-         CASE nMRow == ::nStart
+         Do Case
+         Case nMCol != ::nOffset .AND. nMCol != ::nOffset + 1
+         Case nMRow < ::nStart
+         Case nMRow > ::nEnd
+         Case nMRow == ::nStart
             RETURN HTSCROLLUNITDEC
-         CASE nMRow == ::nEnd
+         Case nMRow == ::nEnd
             RETURN HTSCROLLUNITINC
-         CASE nMRow < ::nThumbPos + ::nStart
+         Case nMRow < ::nThumbPos + ::nStart
             RETURN HTSCROLLBLOCKDEC
-         CASE nMRow > ::nThumbPos + ::nStart
+         Case nMRow > ::nThumbPos + ::nStart
             RETURN HTSCROLLBLOCKINC
-         CASE nMRow == ::nThumbPos + ::nStart
+         Case nMRow == ::nThumbPos + ::nStart
             RETURN HTSCROLLTHUMBDRAG
-         ENDCASE
+         EndCase
       ENDIF
    ELSE
 
-      DO CASE
-      CASE nMRow != ::nOffset
-      CASE nMCol < ::nStart
-      CASE nMCol > ::nEnd
-      CASE nMCol == ::nStart
+      Do Case
+      Case nMRow != ::nOffset
+      Case nMCol < ::nStart
+      Case nMCol > ::nEnd
+      Case nMCol == ::nStart
          RETURN HTSCROLLUNITDEC
-      CASE nMCol == ::nEnd
+      Case nMCol == ::nEnd
          RETURN HTSCROLLUNITINC
-      CASE nMCol < ::nThumbPos + ::nStart
+      Case nMCol < ::nThumbPos + ::nStart
          RETURN HTSCROLLBLOCKDEC
-      CASE nMCol > ::nThumbPos + ::nStart
+      Case nMCol > ::nThumbPos + ::nStart
          RETURN HTSCROLLBLOCKINC
-      CASE nMCol == ::nThumbPos + ::nStart
+      Case nMCol == ::nThumbPos + ::nStart
          RETURN HTSCROLLTHUMBDRAG
-      ENDCASE
+      EndCase
    ENDIF
 
    RETURN HTNOWHERE
@@ -328,16 +328,16 @@ METHOD ScrollBar:thumbPos(nThumbPos)
 
    IF hb_IsNumeric(nThumbPos)
 
-      DO CASE
-      CASE nThumbPos < 1
+      Do Case
+      Case nThumbPos < 1
          ::nThumbPos := 1
-      CASE nThumbPos >= ::nBarLength
+      Case nThumbPos >= ::nBarLength
          ::nThumbPos := ::nBarLength
-      CASE nThumbPos >= ::nBarLength - 1
+      Case nThumbPos >= ::nBarLength - 1
          ::nThumbPos := nThumbPos
-      OTHERWISE
+      Otherwise
          ::nThumbPos := nThumbPos
-      ENDCASE
+      EndCase
 
       ::lOverride := (nThumbPos != 0)
    ENDIF
@@ -400,16 +400,16 @@ METHOD ScrollBar:Init(nStart, nEnd, nOffset, bSBlock, nOrient)
    ::start      := nStart
    ::nBarLength := nEnd - nStart - 1
 
-   SWITCH nOrient
-   CASE SCROLL_VERTICAL
+   Switch nOrient
+   Case SCROLL_VERTICAL
       ::cStyle := SB_UPARROW + SB_THUMB + SB_TRACK + SB_DNARROW
       ::aBitmaps := {"arrow_u.bmu", "arrow_d.bmu", "arrow_e.bmu"}
       EXIT
-   CASE SCROLL_HORIZONTAL
+   Case SCROLL_HORIZONTAL
       ::cStyle := SB_LEFTARROW + SB_THUMB + SB_TRACK + SB_RIGHTARROW
       ::aBitmaps := {"arrow_l.bmu", "arrow_r.bmu", "arrow_e.bmu"}
       EXIT
-   ENDSWITCH
+   EndSwitch
 
    cColor := SetColor()
    ::cColorSpec := hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + hb_ColorIndex(cColor, CLR_ENHANCED)

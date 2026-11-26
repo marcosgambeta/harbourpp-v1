@@ -58,18 +58,18 @@ MEMVAR SxIniInfo
 
 STATIC FUNCTION _sx_INIlogical(cVal)
 
-   SWITCH Upper(cVal)
-   CASE ".T."
-   CASE "TRUE"
-   CASE "YES"
-   CASE "ON"
+   Switch Upper(cVal)
+   Case ".T."
+   Case "TRUE"
+   Case "YES"
+   Case "ON"
       Return True
-   CASE ".F."
-   CASE "FALSE"
-   CASE "NO"
-   CASE "OFF"
+   Case ".F."
+   Case "FALSE"
+   Case "NO"
+   Case "OFF"
       Return False
-   ENDSWITCH
+   EndSwitch
 
    RETURN NIL
 
@@ -92,7 +92,7 @@ FUNCTION _sx_IniInit(nArea)
 
    IF hb_LeftEq(Type("SxIniInfo"), "U")
       PUBLIC SxIniInfo := { => }
-      hb_HCaseMatch(SxIniInfo, FALSE)
+      hb_HCaseMatch(SxIniInfo, False)
       hb_HAutoAdd(SxIniInfo, HB_HAUTOADD_ASSIGN)
    ENDIF
 
@@ -100,25 +100,25 @@ FUNCTION _sx_IniInit(nArea)
       Return False
    ENDIF
 
-   hIni := hb_iniRead(hb_FNameExtSet((nArea)->(dbInfo(DBI_FULLPATH)), ".ini"), FALSE, NIL, FALSE)
+   hIni := hb_iniRead(hb_FNameExtSet((nArea)->(dbInfo(DBI_FULLPATH)), ".ini"), False, NIL, False)
 
    IF !Empty(hIni)
       IF HB_SIX_SECTION $ hIni
          FOR EACH item IN hIni[HB_SIX_SECTION]
-            SWITCH item:__enumKey()
-            CASE "SHARED"
+            Switch item:__enumKey()
+            Case "SHARED"
                xShared := _sx_INIlogical(item)
                EXIT
-            CASE "READONLY"
+            Case "READONLY"
                xReadOnly := _sx_INIlogical(item)
                EXIT
-            CASE "ALIAS"
+            Case "ALIAS"
                xAlias := item
                EXIT
-            CASE "TRIGGER"
+            Case "TRIGGER"
                xTrigger := item
                EXIT
-            ENDSWITCH
+            EndSwitch
          NEXT
          IF xTrigger != NIL
             (nArea)->(sx_SetTrigger(TRIGGER_INSTALL, xTrigger))

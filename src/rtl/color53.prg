@@ -147,12 +147,12 @@ FUNCTION ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xCl
    LOCAL xNewColor
    LOCAL n
 
-   SWITCH PCount()
-   CASE 0
+   Switch PCount()
+   Case 0
       RETURN ""
-   CASE 1
+   Case 1
       RETURN cColor
-   ENDSWITCH
+   EndSwitch
 
    cSetColor := SetColor()
 

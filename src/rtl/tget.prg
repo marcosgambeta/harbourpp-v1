@@ -87,18 +87,18 @@ CREATE CLASS Get
    VAR cMessage                 INIT "" /* 15. CA-Cl*pper 5.3 only. */
    VAR nDispLen                         /* 16. CA-Cl*pper 5.3 places it here. */
 #endif
-   VAR cType                            /* +1. Only accessible in CA-Cl*pper when ::hasFocus == TRUE In CA-Cl*pper the field may contain random chars after the first one, which is the type. */
-   VAR cBuffer                          /* +2. Only accessible in CA-Cl*pper when ::hasFocus == TRUE */
-   VAR xVarGet                          /* +3. Only accessible in CA-Cl*pper when ::hasFocus == TRUE */
+   VAR cType                            /* +1. Only accessible in CA-Cl*pper when ::hasFocus == True In CA-Cl*pper the field may contain random chars after the first one, which is the type. */
+   VAR cBuffer                          /* +2. Only accessible in CA-Cl*pper when ::hasFocus == True */
+   VAR xVarGet                          /* +3. Only accessible in CA-Cl*pper when ::hasFocus == True */
    /* === End of CA-Cl*pper compatible TGet instance area === */
 
    EXPORTED:
 
    VAR decPos         INIT 0   READONLY /* CA-Cl*pper NG says that it contains NIL, but in fact it contains zero. [vszakats] */
-   VAR hasFocus       INIT FALSE READONLY
+   VAR hasFocus       INIT False READONLY
    VAR original                READONLY
-   VAR rejected       INIT FALSE READONLY
-   VAR typeOut        INIT FALSE READONLY
+   VAR rejected       INIT False READONLY
+   VAR typeOut        INIT False READONLY
 
    METHOD Init(nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec) /* NOTE: This method is a Harbour extension [vszakats] */
 
@@ -179,28 +179,28 @@ CREATE CLASS Get
 #endif
    VAR cColorSpec
    VAR nPos           INIT 0
-   VAR lChanged       INIT FALSE
-   VAR lClear         INIT FALSE
+   VAR lChanged       INIT False
+   VAR lClear         INIT False
    VAR nRow
    VAR nCol
-   VAR lRejected      INIT FALSE
-   VAR lHideInput     INIT FALSE
-   VAR cStyle         INIT "*" /* NOTE: First char is to be used as mask character when :hideInput is TRUE [vszakats] */
+   VAR lRejected      INIT False
+   VAR lHideInput     INIT False
+   VAR cStyle         INIT "*" /* NOTE: First char is to be used as mask character when :hideInput is True [vszakats] */
    VAR nMaxLen
-   VAR lEdit          INIT FALSE
+   VAR lEdit          INIT False
    VAR nDispPos       INIT 1
    VAR nOldPos        INIT 0
    VAR nMaxEdit
-   VAR lMinus         INIT FALSE
-   VAR lMinus2        INIT FALSE
-   VAR lMinusPrinted  INIT FALSE
-   VAR lSuppDisplay   INIT FALSE
+   VAR lMinus         INIT False
+   VAR lMinus2        INIT False
+   VAR lMinusPrinted  INIT False
+   VAR lSuppDisplay   INIT False
 
    VAR nPicLen
    VAR cPicMask       INIT ""
    VAR cPicFunc       INIT ""
-   VAR lPicComplex    INIT FALSE
-   VAR lPicBlankZero  INIT FALSE
+   VAR lPicComplex    INIT False
+   VAR lPicBlankZero  INIT False
 
    METHOD leftLow()
    METHOD rightLow()
@@ -348,7 +348,7 @@ METHOD Get:display()
    ENDIF
 
    ::nOldPos := nDispPos
-   ::lSuppDisplay := FALSE
+   ::lSuppDisplay := False
 
    SetCursor(nOldCursor)
 
@@ -395,9 +395,9 @@ METHOD Get:end()
             EXIT
          ENDIF
       NEXT
-      ::lClear := FALSE
+      ::lClear := False
       ::typeOut := (::nPos == 0)
-      ::lSuppDisplay := TRUE
+      ::lSuppDisplay := True
       ::display()
    ENDIF
 
@@ -407,9 +407,9 @@ METHOD Get:home()
 
    IF ::hasFocus
       ::pos := ::FirstEditable()
-      ::lClear := FALSE
+      ::lClear := False
       ::typeOut := (::nPos == 0)
-      ::lSuppDisplay := TRUE
+      ::lSuppDisplay := True
       ::display()
    ENDIF
 
@@ -418,15 +418,15 @@ METHOD Get:home()
 METHOD Get:reset()
 
    IF ::hasFocus
-      ::cBuffer  := ::PutMask(::varGet(), FALSE)
+      ::cBuffer  := ::PutMask(::varGet(), False)
       ::xVarGet  := ::original
       ::cType    := ValType(::xVarGet)
       ::pos      := ::FirstEditable() /* Simple 0 in CA-Cl*pper [vszakats] */
       ::lClear   := ("K" $ ::cPicFunc .OR. ::cType == "N")
-      ::lEdit    := FALSE
-      ::lMinus   := FALSE
-      ::rejected := FALSE
-      ::typeOut  := !(::type $ "CNDTL") .OR. (::nPos == 0) /* Simple FALSE in CA-Cl*pper [vszakats] */
+      ::lEdit    := False
+      ::lMinus   := False
+      ::rejected := False
+      ::typeOut  := !(::type $ "CNDTL") .OR. (::nPos == 0) /* Simple False in CA-Cl*pper [vszakats] */
       ::display()
    ENDIF
 
@@ -439,7 +439,7 @@ METHOD Get:undo()
          ::varPut(::original)
       ENDIF
       ::reset()
-      ::lChanged := FALSE
+      ::lChanged := False
    ENDIF
 
    RETURN Self
@@ -452,21 +452,21 @@ METHOD Get:setFocus()
 
       xVarGet := ::xVarGet := ::varGet()
 
-      ::hasFocus := TRUE
-      ::rejected := FALSE
+      ::hasFocus := True
+      ::rejected := False
 
       ::original := xVarGet
       ::cType    := ValType(xVarGet)
       ::picture  := ::cPicture
-      ::cBuffer  := ::PutMask(xVarGet, FALSE)
+      ::cBuffer  := ::PutMask(xVarGet, False)
 
-      ::lChanged := FALSE
+      ::lChanged := False
       ::lClear   := ("K" $ ::cPicFunc .OR. ::cType == "N")
-      ::lEdit    := FALSE
+      ::lEdit    := False
       ::pos      := 1
 
-      ::lMinusPrinted := FALSE
-      ::lMinus        := FALSE
+      ::lMinusPrinted := False
+      ::lMinus        := False
 
       IF ::cType == "N"
          ::decPos := At(IIf("E" $ ::cPicFunc, ",", "."), ::cBuffer)
@@ -487,13 +487,13 @@ METHOD Get:killFocus()
 
    LOCAL lHadFocus := ::hasFocus
 
-   ::hasFocus := FALSE
+   ::hasFocus := False
    ::nPos     := 0
-   ::lClear   := FALSE
-   ::lMinus   := FALSE
-   ::lChanged := FALSE
+   ::lClear   := False
+   ::lMinus   := False
+   ::lChanged := False
    ::decPos   := 0 /* CA-Cl*pper NG says that it contains NIL, but in fact it contains zero. [vszakats] */
-   ::typeOut  := FALSE
+   ::typeOut  := False
 
    IF lHadFocus
       ::display()
@@ -580,16 +580,16 @@ METHOD Get:overStrike(cChar)
          cChar := ::Input(Left(cChar, 1))
 
          IF cChar == ""
-            ::rejected := TRUE
+            ::rejected := True
          ELSE
-            ::rejected := FALSE
+            ::rejected := False
 
             IF ::lClear .AND. ::nPos == ::FirstEditable()
                ::DeleteAll()
-               ::lClear := FALSE
+               ::lClear := False
             ENDIF
 
-            ::lEdit := TRUE
+            ::lEdit := True
 
             IF ::nPos == 0
                ::pos := 1
@@ -604,7 +604,7 @@ METHOD Get:overStrike(cChar)
             ENDIF
             ::cBuffer := Stuff(::cBuffer, ::nPos, 1, cChar)
 
-            ::lChanged := TRUE
+            ::lChanged := True
 
             ::rightLow()
          ENDIF
@@ -636,16 +636,16 @@ METHOD Get:insert(cChar)
          cChar := ::Input(Left(cChar, 1))
 
          IF cChar == ""
-            ::rejected := TRUE
+            ::rejected := True
          ELSE
-            ::rejected := FALSE
+            ::rejected := False
 
             IF ::lClear .AND. ::nPos == ::FirstEditable()
                ::DeleteAll()
-               ::lClear := FALSE
+               ::lClear := False
             ENDIF
 
-            ::lEdit := TRUE
+            ::lEdit := True
 
             IF ::nPos == 0
                ::pos := 1
@@ -672,7 +672,7 @@ METHOD Get:insert(cChar)
                ::cBuffer := Left(Stuff(::cBuffer, ::nPos, 0, cChar), ::nMaxEdit)
             ENDIF
 
-            ::lChanged := TRUE
+            ::lChanged := True
 
             ::rightLow()
          ENDIF
@@ -687,7 +687,7 @@ METHOD Get:right()
 
    IF ::hasFocus .AND. ::rightLow()
 
-      ::lSuppDisplay := TRUE
+      ::lSuppDisplay := True
       ::display()
    ENDIF
 
@@ -697,7 +697,7 @@ METHOD Get:left()
 
    IF ::hasFocus .AND. ::leftLow()
 
-      ::lSuppDisplay := TRUE
+      ::lSuppDisplay := True
       ::display()
    ENDIF
 
@@ -709,12 +709,12 @@ METHOD Get:wordLeft()
 
    IF ::hasFocus
 
-      ::lClear := FALSE
+      ::lClear := False
 
       IF ::nPos == ::FirstEditable()
-         ::typeOut := TRUE
+         ::typeOut := True
       ELSE
-         ::typeOut := FALSE
+         ::typeOut := False
 
          nPos := IIf(SubStr(::cBuffer, ::nPos, 1) == " ", ::nPos, ::nPos - 1)
 
@@ -727,7 +727,7 @@ METHOD Get:wordLeft()
 
          ::pos := IIf(nPos > 1, nPos + 1, 1)
 
-         ::lSuppDisplay := TRUE
+         ::lSuppDisplay := True
          ::display()
       ENDIF
    ENDIF
@@ -740,12 +740,12 @@ METHOD Get:wordRight()
 
    IF ::hasFocus
 
-      ::lClear := FALSE
+      ::lClear := False
 
       IF ::nPos == ::nMaxEdit
-         ::typeOut := TRUE
+         ::typeOut := True
       ELSE
-         ::typeOut := FALSE
+         ::typeOut := False
 
          nPos := ::nPos
 
@@ -758,7 +758,7 @@ METHOD Get:wordRight()
 
          ::pos := nPos
 
-         ::lSuppDisplay := TRUE
+         ::lSuppDisplay := True
          ::display()
       ENDIF
    ENDIF
@@ -773,9 +773,9 @@ METHOD Get:toDecPos()
          ::delEnd()
       ENDIF
 
-      ::cBuffer := ::PutMask(::unTransform(), FALSE)
+      ::cBuffer := ::PutMask(::unTransform(), False)
       ::pos := ::decPos
-      ::lChanged := TRUE
+      ::lChanged := True
 
       IF ::type == "N" .AND. ::lMinus .AND. ::unTransform() == 0
          ::backSpace()
@@ -873,12 +873,12 @@ METHOD Get:delWordRight()
 
    IF ::hasFocus
 
-      ::lClear := FALSE
+      ::lClear := False
 
       IF ::nPos == ::nMaxEdit
-         ::typeOut := TRUE
+         ::typeOut := True
       ELSE
-         ::typeOut := FALSE
+         ::typeOut := False
 
          Do While ::nPos <= ::nMaxEdit .AND. !(SubStr(::cBuffer, ::nPos, 1) == " ")
             ::deleteLow()
@@ -961,13 +961,13 @@ METHOD Get:setPos(nPos)
 
       IF ::hasFocus
 
-         DO CASE
-         CASE nPos > ::nMaxLen
+         Do Case
+         Case nPos > ::nMaxLen
 
             ::nPos := IIf(::nMaxLen == 0, 1, ::nMaxLen)
-            ::typeOut := TRUE
+            ::typeOut := True
 
-         CASE nPos > 0
+         Case nPos > 0
 
             /* NOTE: CA-Cl*pper has a bug where negative nPos value will be translated to 16bit unsigned int,
                      so the behaviour will be different in this case. [vszakats] */
@@ -986,9 +986,9 @@ METHOD Get:setPos(nPos)
             NEXT
 
             ::nPos := ::nMaxLen + 1
-            ::typeOut := TRUE
+            ::typeOut := True
 
-         ENDCASE
+         EndCase
       ENDIF
 
       RETURN nPos
@@ -1019,7 +1019,7 @@ METHOD Get:picture(cPicture)
          ::nPicLen       := NIL
          ::cPicFunc      := ""
          ::cPicMask      := ""
-         ::lPicBlankZero := FALSE
+         ::lPicBlankZero := False
 
          IF hb_IsString(cPicture)
 
@@ -1066,7 +1066,7 @@ METHOD Get:picture(cPicture)
                ENDIF
 
                IF "Z" $ ::cPicFunc
-                  ::lPicBlankZero := TRUE
+                  ::lPicBlankZero := True
                   ::cPicFunc := StrTran(::cPicFunc, "Z")
                ENDIF
 
@@ -1089,8 +1089,8 @@ METHOD Get:picture(cPicture)
 
       IF ::cType != NIL .AND. (Empty(::cPicMask) .OR. ::cPicture == NIL .OR. ::cType == "D")
 
-         SWITCH ::cType
-         CASE "D"
+         Switch ::cType
+         Case "D"
 
             ::cPicMask := Set(_SET_DATEFORMAT)
             FOR EACH cChar IN "yYmMdD"
@@ -1098,7 +1098,7 @@ METHOD Get:picture(cPicture)
             NEXT
             EXIT
 
-         CASE "T"
+         Case "T"
 
             ::cPicMask := Set(_SET_DATEFORMAT) + " " + Set(_SET_TIMEFORMAT)
             FOR EACH cChar IN "yYmMdDhHsSfF"
@@ -1106,7 +1106,7 @@ METHOD Get:picture(cPicture)
             NEXT
             EXIT
 
-         CASE "N"
+         Case "N"
 
             IF ::xVarGet != NIL
                cNum := Str(::xVarGet)
@@ -1119,7 +1119,7 @@ METHOD Get:picture(cPicture)
             ENDIF
             EXIT
 
-         CASE "C"
+         Case "C"
 
             IF ::xVarGet != NIL
                IF ::cPicFunc == "@9"
@@ -1129,17 +1129,17 @@ METHOD Get:picture(cPicture)
             ENDIF
             EXIT
 
-         ENDSWITCH
+         EndSwitch
 
       ENDIF
 
       /* To verify if it has non-modifiable embedded characters in the group. */
 
-      ::lPicComplex := FALSE
+      ::lPicComplex := False
       IF !Empty(::cPicMask)
          FOR EACH cChar IN hb_asciiUpper(::cPicMask)
             IF !(cChar $ "!ANX9#")
-               ::lPicComplex := TRUE
+               ::lPicComplex := True
                EXIT
             ENDIF
          NEXT
@@ -1241,8 +1241,8 @@ METHOD Get:unTransform()
 
       IF hb_IsString(cBuffer) .AND. ::cType != NIL
 
-         SWITCH ::cType
-         CASE "C"
+         Switch ::cType
+         Case "C"
 
             IF "R" $ ::cPicFunc
                xValue := ""
@@ -1256,11 +1256,11 @@ METHOD Get:unTransform()
             ENDIF
             EXIT
 
-         CASE "N"
+         Case "N"
 
-            lMinus := FALSE
+            lMinus := False
             IF "X" $ ::cPicFunc .AND. Right(cBuffer, 2) == "DB"
-               lMinus := TRUE
+               lMinus := True
             ENDIF
             IF !lMinus
                FOR nFor := 1 TO ::nMaxLen
@@ -1268,7 +1268,7 @@ METHOD Get:unTransform()
                      EXIT
                   ENDIF
                   IF SubStr(cBuffer, nFor, 1) $ "-(" .AND. !(SubStr(cBuffer, nFor, 1) == SubStr(::cPicMask, nFor, 1))
-                     lMinus := TRUE
+                     lMinus := True
                      EXIT
                   ENDIF
                NEXT
@@ -1297,7 +1297,7 @@ METHOD Get:unTransform()
                              SubStr(cBuffer, ::LastEditable() + 1)
                ENDIF
 
-               lHasDec := FALSE
+               lHasDec := False
                FOR nFor := ::FirstEditable() TO ::LastEditable()
                   IF ::IsEditable(nFor)
                      IF lHasDec .AND. SubStr(cBuffer, nFor, 1) == " "
@@ -1305,7 +1305,7 @@ METHOD Get:unTransform()
                      ENDIF
                   ELSE
                      IF SubStr(cBuffer, nFor, 1) == "."
-                        lHasDec := TRUE
+                        lHasDec := True
                      ELSE
                         cBuffer := Left(cBuffer, nFor - 1) + Chr(1) + SubStr(cBuffer, nFor + 1)
                      ENDIF
@@ -1337,13 +1337,13 @@ METHOD Get:unTransform()
 
             EXIT
 
-         CASE "L"
+         Case "L"
 
             cBuffer := Upper(cBuffer)
             xValue := "T" $ cBuffer .OR. "Y" $ cBuffer .OR. hb_langMessage(HB_LANG_ITEM_BASE_TEXT + 1) $ cBuffer
             EXIT
 
-         CASE "D"
+         Case "D"
 
             IF "E" $ ::cPicFunc
                cBuffer := SubStr(cBuffer, 4, 3) + SubStr(cBuffer, 1, 3) + SubStr(cBuffer, 7)
@@ -1351,18 +1351,18 @@ METHOD Get:unTransform()
             xValue := CToD(cBuffer)
             EXIT
 
-         CASE "T"
+         Case "T"
 
             xValue := hb_CToT(cBuffer)
             EXIT
 
-         ENDSWITCH
+         EndSwitch
 
       ELSE
-         ::lClear  := FALSE
+         ::lClear  := False
          ::decPos  := 0
          ::nPos    := 0
-         ::typeOut := FALSE
+         ::typeOut := False
       ENDIF
    ENDIF
 
@@ -1431,12 +1431,12 @@ METHOD Get:badDate()
    LOCAL xValue
 
    IF ::hasFocus
-      SWITCH ::type
-      CASE "D"
+      Switch ::type
+      Case "D"
          RETURN (xValue := ::unTransform()) == hb_SToD() .AND. !(::cBuffer == Transform(xValue, ::cPicture))
-      CASE "T"
+      Case "T"
          RETURN (xValue := ::unTransform()) == hb_SToT() .AND. !(::cBuffer == Transform(xValue, ::cPicture))
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    Return False
@@ -1446,7 +1446,7 @@ METHOD Get:badDate()
 METHOD Get:reform()
 
    IF ::hasFocus
-      ::cBuffer := ::PutMask(::unTransform(), FALSE)
+      ::cBuffer := ::PutMask(::unTransform(), False)
       ::nDispLen := IIf(::nPicLen == NIL, ::nMaxLen, ::nPicLen) // ?
    ENDIF
 
@@ -1461,12 +1461,12 @@ METHOD Get:hitTest(nMRow, nMCol)
    IF hb_IsObject(::oControl)
       RETURN ::oControl:hitTest(nMRow, nMCol)
    ELSE
-      DO CASE
-      CASE nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + IIf(::nDispLen == NIL, 0, ::nDispLen)
+      Do Case
+      Case nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + IIf(::nDispLen == NIL, 0, ::nDispLen)
          RETURN HTCLIENT
-      CASE nMRow == ::nCapRow .AND. nMCol >= ::nCapCol .AND. nMCol < ::nCapCol + Len(::cCaption) /* NOTE: C5.3 doesn't care about the shortcut key. */
+      Case nMRow == ::nCapRow .AND. nMCol >= ::nCapCol .AND. nMCol < ::nCapCol + Len(::cCaption) /* NOTE: C5.3 doesn't care about the shortcut key. */
          RETURN HTCAPTION
-      ENDCASE
+      EndCase
    ENDIF
 
    RETURN HTNOWHERE
@@ -1519,11 +1519,11 @@ METHOD Get:rightLow()
 
    LOCAL nPos
 
-   ::typeOut := FALSE
-   ::lClear  := FALSE
+   ::typeOut := False
+   ::lClear  := False
 
    IF ::nPos == ::nMaxEdit
-      ::typeOut := TRUE
+      ::typeOut := True
       Return False
    ENDIF
 
@@ -1536,7 +1536,7 @@ METHOD Get:rightLow()
    IF nPos <= ::nMaxEdit
       ::pos := nPos
    ELSE
-      ::typeOut := TRUE
+      ::typeOut := True
    ENDIF
 
    Return True
@@ -1545,11 +1545,11 @@ METHOD Get:leftLow()
 
    LOCAL nPos
 
-   ::typeOut := FALSE
-   ::lClear  := FALSE
+   ::typeOut := False
+   ::lClear  := False
 
    IF ::nPos == ::FirstEditable()
-      ::typeOut := TRUE
+      ::typeOut := True
       Return False
    ENDIF
 
@@ -1562,7 +1562,7 @@ METHOD Get:leftLow()
    IF nPos > 0
       ::pos := nPos
    ELSE
-      ::typeOut := TRUE
+      ::typeOut := True
    ENDIF
 
    Return True
@@ -1580,8 +1580,8 @@ METHOD Get:backSpaceLow()
 
          ::cBuffer := Stuff(::cBuffer, nMinus, 1, " ")
 
-         ::lEdit := TRUE
-         ::lChanged := TRUE
+         ::lEdit := True
+         ::lChanged := True
 
          Return True
       ENDIF
@@ -1601,8 +1601,8 @@ METHOD Get:deleteLow()
    LOCAL nMaxLen := ::nMaxLen
    LOCAL n
 
-   ::lClear := FALSE
-   ::lEdit := TRUE
+   ::lClear := False
+   ::lEdit := True
 
    IF ::lPicComplex
       /* Calculating different nMaxLen for ::lPicComplex */
@@ -1615,12 +1615,12 @@ METHOD Get:deleteLow()
    ENDIF
 
    IF ::cType == "N" .AND. SubStr(::cBuffer, ::nPos, 1) $ "(-"
-      ::lMinus2 := FALSE
+      ::lMinus2 := False
    ENDIF
 
    ::cBuffer := PadR(Stuff(Stuff(::cBuffer, ::nPos, 1, ""), nMaxLen, 0, " "), ::nMaxLen)
 
-   ::lChanged := TRUE
+   ::lChanged := True
 
    RETURN NIL
 
@@ -1630,26 +1630,26 @@ METHOD Get:DeleteAll()
 
    IF ::hasFocus
 
-      ::lEdit := TRUE
+      ::lEdit := True
 
-      SWITCH ::cType
-      CASE "C"
+      Switch ::cType
+      Case "C"
          xValue := Space(::nMaxlen)
          EXIT
-      CASE "N"
+      Case "N"
          xValue := 0
-         ::lMinus2 := FALSE
+         ::lMinus2 := False
          EXIT
-      CASE "D"
+      Case "D"
          xValue := hb_SToD()
          EXIT
-      CASE "T"
+      Case "T"
          xValue := hb_SToT()
          EXIT
-      CASE "L"
-         xValue := FALSE
+      Case "L"
+         xValue := False
          EXIT
-      ENDSWITCH
+      EndSwitch
 
       ::cBuffer := ::PutMask(xValue)
       ::pos     := ::FirstEditable()
@@ -1675,13 +1675,13 @@ METHOD Get:IsEditable(nPos)
 
    IF ::cType != NIL
       cChar := SubStr(::cPicMask, nPos, 1)
-      SWITCH ::cType
-      CASE "C" ; RETURN hb_asciiUpper(cChar) $ "!ANX9#LY"
-      CASE "N" ; RETURN cChar $ "9#$*"
-      CASE "D"
-      CASE "T" ; RETURN cChar == "9"
-      CASE "L" ; RETURN hb_asciiUpper(cChar) $ "LY#" /* CA-Cl*pper 5.2 undocumented: # allow T,F,Y,N for Logical [ckedem] */
-      ENDSWITCH
+      Switch ::cType
+      Case "C" ; RETURN hb_asciiUpper(cChar) $ "!ANX9#LY"
+      Case "N" ; RETURN cChar $ "9#$*"
+      Case "D"
+      Case "T" ; RETURN cChar == "9"
+      Case "L" ; RETURN hb_asciiUpper(cChar) $ "LY#" /* CA-Cl*pper 5.2 undocumented: # allow T,F,Y,N for Logical [ckedem] */
+      EndSwitch
    ENDIF
 
    Return False
@@ -1692,45 +1692,45 @@ METHOD Get:Input(cChar)
 
    IF ::cType != NIL
 
-      SWITCH ::cType
-      CASE "N"
+      Switch ::cType
+      Case "N"
 
-         DO CASE
-         CASE cChar == "-"
-            ::lMinus2 := TRUE  /* The minus symbol can be written in any place */
-            ::lMinus := TRUE
+         Do Case
+         Case cChar == "-"
+            ::lMinus2 := True  /* The minus symbol can be written in any place */
+            ::lMinus := True
 
-         CASE cChar $ ".,"
+         Case cChar $ ".,"
             ::toDecPos()
             RETURN ""
 
-         CASE !(cChar $ "0123456789+")
+         Case !(cChar $ "0123456789+")
             RETURN ""
-         ENDCASE
+         EndCase
          EXIT
 
-      CASE "D"
+      Case "D"
 
          IF !(cChar $ "0123456789")
             RETURN ""
          ENDIF
          EXIT
 
-      CASE "T"
+      Case "T"
 
          IF !(cChar $ "0123456789")
             RETURN ""
          ENDIF
          EXIT
 
-      CASE "L"
+      Case "L"
 
          IF !(Upper(cChar) $ "YNTF")
             RETURN ""
          ENDIF
          EXIT
 
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    IF !Empty(::cPicFunc)
@@ -1744,18 +1744,18 @@ METHOD Get:Input(cChar)
       // Above line eliminated because some get picture template symbols for
       // numeric input not work in text input. eg: $ and *
 
-      DO CASE
-      CASE cPic == "A"
+      Do Case
+      Case cPic == "A"
          IF !IsAlpha(cChar)
             cChar := ""
          ENDIF
 
-      CASE cPic == "N"
+      Case cPic == "N"
          IF !IsAlpha(cChar) .AND. !IsDigit(cChar)
             cChar := ""
          ENDIF
 
-      CASE cPic == "9"
+      Case cPic == "9"
          IF !IsDigit(cChar) .AND. !cChar $ "-+"
             cChar := ""
          ENDIF
@@ -1764,29 +1764,29 @@ METHOD Get:Input(cChar)
          ENDIF
 
       /* Clipper 5.2 undocumented: # allow T,F,Y,N for Logical [ckedem] */
-      CASE cPic == "L" .OR. (cPic == "#" .AND. ::cType == "L")
+      Case cPic == "L" .OR. (cPic == "#" .AND. ::cType == "L")
          IF !(Upper(cChar) $ "YNTF" + hb_langMessage(HB_LANG_ITEM_BASE_TEXT + 1) + hb_langMessage(HB_LANG_ITEM_BASE_TEXT + 2))
             cChar := ""
          ENDIF
 
-      CASE cPic == "#"
+      Case cPic == "#"
          IF !IsDigit(cChar) .AND. !(cChar == " ") .AND. !(cChar $ ".+-")
             cChar := ""
          ENDIF
 
-      CASE cPic == "Y"
+      Case cPic == "Y"
          cChar := Upper(cChar)
          IF !(cChar $ "YN")
             cChar := ""
          ENDIF
 
-      CASE (cPic == "$" .OR. cPic == "*") .AND. ::cType == "N"
+      Case (cPic == "$" .OR. cPic == "*") .AND. ::cType == "N"
          IF !IsDigit(cChar) .AND. !(cChar == "-")
             cChar := ""
          ENDIF
-      OTHERWISE
+      Otherwise
          cChar := Transform(cChar, cPic)
-      ENDCASE
+      EndCase
    ENDIF
 
    RETURN cChar

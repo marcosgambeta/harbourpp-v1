@@ -71,7 +71,7 @@ FUNCTION ReadModal(GetList)
 
    oSaveGetList := __GetListActive()
 #ifdef HB_COMPAT_C53
-// oSaveGetList:ReadStats(SLUPDATED, FALSE)
+// oSaveGetList:ReadStats(SLUPDATED, False)
 // oSaveGetList:ReadStats(SXREADVAR, ReadVar(""))
 // oSaveGetList:ReadStats(SOACTIVEGET, GetActive(NIL))
 #endif
@@ -218,14 +218,14 @@ FUNCTION Updated()
 
    LOCAL oGetList := __GetListLast()
 
-   RETURN IIf(oGetList != NIL, oGetList:Updated(), FALSE)
+   RETURN IIf(oGetList != NIL, oGetList:Updated(), False)
 
 PROCEDURE __KillRead()
 
    LOCAL oGetList := __GetListActive()
 
    IF oGetList != NIL
-      oGetList:KillRead(TRUE)
+      oGetList:KillRead(True)
    ENDIF
 
    RETURN

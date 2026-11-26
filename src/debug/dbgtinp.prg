@@ -139,47 +139,47 @@ METHOD HBDbInput:showCursor()
 
 METHOD HBDbInput:applyKey(nKey)
 
-   LOCAL lUpdate := TRUE
+   LOCAL lUpdate := True
 
-   SWITCH nKey
-   CASE K_HOME
+   Switch nKey
+   Case K_HOME
       ::nPos := 1
       EXIT
-   CASE K_END
+   Case K_END
       ::nPos := Len(RTrim(::cValue)) + 1
       IF ::nPos > ::nSize
          ::nPos := ::nSize
       ENDIF
       EXIT
-   CASE K_LEFT
+   Case K_LEFT
       IF ::nPos > 1
          ::nPos--
       ENDIF
       EXIT
-   CASE K_RIGHT
+   Case K_RIGHT
       IF ::nPos < ::nSize
          ::nPos++
       ENDIF
       EXIT
-   CASE K_DEL
+   Case K_DEL
       ::cValue := Stuff(::cValue, ::nPos, 1, "") + " "
       EXIT
-   CASE K_BS
+   Case K_BS
       IF ::nPos > 1
          ::cValue := Stuff(::cValue, --::nPos, 1, "") + " "
       ENDIF
       EXIT
-   CASE K_CTRL_Y
-   CASE K_CTRL_DEL
+   Case K_CTRL_Y
+   Case K_CTRL_DEL
       ::cValue := Space(::nSize)
       ::nPos := 1
       EXIT
-   CASE K_INS
+   Case K_INS
       Set(_SET_INSERT, !Set(_SET_INSERT))
       EXIT
-   OTHERWISE
+   Otherwise
       IF hb_keyChar(nKey) == ""
-         lUpdate := FALSE
+         lUpdate := False
       ELSE
          IF Set(_SET_INSERT)
             ::cValue := Left(Stuff(::cValue, ::nPos, 0, hb_keyChar(nKey)), ::nSize)
@@ -190,7 +190,7 @@ METHOD HBDbInput:applyKey(nKey)
             ::nPos++
          ENDIF
       ENDIF
-   ENDSWITCH
+   EndSwitch
 
    IF lUpdate
       ::display()

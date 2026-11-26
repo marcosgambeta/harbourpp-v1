@@ -38,7 +38,7 @@ RETURN was_ABCFLOAT():new()
 CLASS WAS_ABCFLOAT
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

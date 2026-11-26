@@ -260,16 +260,16 @@ CREATE CLASS TBrowse
    VAR nLastScroll   AS INTEGER INIT 0          // last scroll value
    VAR nConfigure    AS INTEGER INIT _TBR_CONF_ALL // configuration status
    VAR nLastPos      AS INTEGER INIT 0          // last calculated column position
-   VAR lHitTop       AS LOGICAL INIT FALSE        // indicates the beginning of available data
-   VAR lHitBottom    AS LOGICAL INIT FALSE        // indicates the end of available data
-   VAR lHiLited      AS LOGICAL INIT FALSE        // indicates if current cell is highlighted
-   VAR lAutoLite     AS LOGICAL INIT TRUE        // logical value to control highlighting
-   VAR lStable       AS LOGICAL INIT FALSE        // indicates if the TBrowse object is stable
-   VAR lInvalid      AS LOGICAL INIT TRUE        // indicates that TBrowse object data should be fully redrawn
-   VAR lRefresh      AS LOGICAL INIT FALSE        // indicates that record buffer should be discarded in next stabilization
-   VAR lFrames       AS LOGICAL INIT FALSE        // indicates that headings and footings should be redrawn
-   VAR lHeadSep      AS LOGICAL INIT FALSE        // indicates if heading separator exists
-   VAR lFootSep      AS LOGICAL INIT FALSE        // indicates if footing separator exists
+   VAR lHitTop       AS LOGICAL INIT False        // indicates the beginning of available data
+   VAR lHitBottom    AS LOGICAL INIT False        // indicates the end of available data
+   VAR lHiLited      AS LOGICAL INIT False        // indicates if current cell is highlighted
+   VAR lAutoLite     AS LOGICAL INIT True        // logical value to control highlighting
+   VAR lStable       AS LOGICAL INIT False        // indicates if the TBrowse object is stable
+   VAR lInvalid      AS LOGICAL INIT True        // indicates that TBrowse object data should be fully redrawn
+   VAR lRefresh      AS LOGICAL INIT False        // indicates that record buffer should be discarded in next stabilization
+   VAR lFrames       AS LOGICAL INIT False        // indicates that headings and footings should be redrawn
+   VAR lHeadSep      AS LOGICAL INIT False        // indicates if heading separator exists
+   VAR lFootSep      AS LOGICAL INIT False        // indicates if footing separator exists
    VAR aColData      AS ARRAY   INIT {}         // column information, see _TBCI_*
    VAR aColors       AS ARRAY   INIT {}         // array with TBrowse colors, see _TBC_CLR_*
    VAR aDispStatus   AS ARRAY   INIT {}         // record buffer status
@@ -334,8 +334,8 @@ STATIC PROCEDURE _DISP_FHSEP(nRow, nType, cColor, aColData)
    LOCAL cSep
    LOCAL nLen
    LOCAL nWidth
-   LOCAL lFirst := TRUE
-   LOCAL lFirstVisible := TRUE
+   LOCAL lFirst := True
+   LOCAL lFirstVisible := True
 
    FOR EACH aCol IN aColData
       IF aCol[_TBCI_COLPOS] != NIL
@@ -349,10 +349,10 @@ STATIC PROCEDURE _DISP_FHSEP(nRow, nType, cColor, aColData)
           * probably in the future it will be changed. [druzus]
           */
          IF lFirst
-            lFirst := lFirstVisible := FALSE
+            lFirst := lFirstVisible := False
             cSep := Replicate(Right(cSep, 1), nWidth + aCol[_TBCI_FROZENSPACE])
          ELSEIF lFirstVisible
-            lFirstVisible := FALSE
+            lFirstVisible := False
             nLen := Len(cSep)
             IF nLen <= aCol[_TBCI_SEPWIDTH]
                cSep := Replicate(Right(cSep, 1), nWidth + aCol[_TBCI_FROZENSPACE])
@@ -383,7 +383,7 @@ STATIC PROCEDURE _DISP_FHSEP(nRow, nType, cColor, aColData)
          ENDIF
          hb_DispOutAtBox(nRow, aCol[_TBCI_COLPOS] - aCol[_TBCI_FROZENSPACE], cSep, cColor)
       ELSEIF aCol[_TBCI_CELLWIDTH] > 0
-         lFirst := FALSE
+         lFirst := False
       ENDIF
    NEXT
 
@@ -397,7 +397,7 @@ STATIC PROCEDURE _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColo
    LOCAL nPos
    LOCAL nCol
    LOCAL nWidth
-   LOCAL lFirst := TRUE
+   LOCAL lFirst := True
 
    hb_DispBox(nRow, nLeft, nRow + nHeight - 1, nRight, Space(9), aColors[_TBC_CLR_STANDARD])
 
@@ -406,7 +406,7 @@ STATIC PROCEDURE _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColo
          cName := aCol[nType]
          nCol := aCol[_TBCI_COLPOS]
          IF lFirst
-            lFirst := FALSE
+            lFirst := False
          ELSE
             nCol += aCol[_TBCI_SEPWIDTH]
          ENDIF
@@ -452,7 +452,7 @@ METHOD TBrowse:dispFrames()
 
    DispEnd()
 
-   ::lFrames := FALSE
+   ::lFrames := False
 
    RETURN Self
 
@@ -477,12 +477,12 @@ METHOD TBrowse:dispRow(nRow)
 
       hb_DispBox(nRowPos, ::n_Left, nRowPos, ::n_Right, Space(9), cStdColor)
 
-      lFirst := TRUE
+      lFirst := True
       FOR EACH aCol, cValue, aColors IN ::aColData, ::aCellValues[nRow], ::aCellColors[nRow]
          IF aCol[_TBCI_COLPOS] != NIL
             nColPos := aCol[_TBCI_COLPOS]
             IF lFirst
-               lFirst := FALSE
+               lFirst := False
             ELSEIF aCol[_TBCI_SEPWIDTH] > 0
                hb_DispOutAtBox(nRowPos, aCol[_TBCI_COLPOS] - aCol[_TBCI_FROZENSPACE], aCol[_TBCI_COLSEP], cStdColor)
                nColPos += aCol[_TBCI_SEPWIDTH]
@@ -501,7 +501,7 @@ METHOD TBrowse:dispRow(nRow)
          ENDIF
       NEXT
 
-      ::aDispStatus[nRow] := FALSE
+      ::aDispStatus[nRow] := False
 
       DispEnd()
    ENDIF
@@ -554,7 +554,7 @@ METHOD TBrowse:scrollBuffer(nRows)
    ::nLastScroll := nRows
 
    IF nRows >= nRowCount .OR. nRows <= -nRowCount
-      AFill(::aCellStatus, FALSE)
+      AFill(::aCellStatus, False)
    ELSE
       hb_Scroll(::n_Top + ::nHeadHeight + IIf(::lHeadSep, 1, 0), ::n_Left, ;
                 ::n_Bottom - ::nFootHeight - IIf(::lFootSep, 1, 0), ::n_Right, ;
@@ -569,15 +569,15 @@ METHOD TBrowse:scrollBuffer(nRows)
             ADel(::aDispStatus, 1)
             ::aCellValues[nRowCount] := aValues
             ::aCellColors[nRowCount] := aColors
-            ::aCellStatus[nRowCount] := FALSE
-            ::aDispStatus[nRowCount] := TRUE
+            ::aCellStatus[nRowCount] := False
+            ::aDispStatus[nRowCount] := True
          EndDo
       ELSEIF nRows < 0
          Do While ++nRows <= 0
-            hb_AIns(::aCellValues, 1, ATail(::aCellValues), FALSE)
-            hb_AIns(::aCellColors, 1, ATail(::aCellColors), FALSE)
-            hb_AIns(::aCellStatus, 1, FALSE, FALSE)
-            hb_AIns(::aDispStatus, 1, TRUE, FALSE)
+            hb_AIns(::aCellValues, 1, ATail(::aCellValues), False)
+            hb_AIns(::aCellColors, 1, ATail(::aCellColors), False)
+            hb_AIns(::aCellStatus, 1, False, False)
+            hb_AIns(::aDispStatus, 1, True, False)
          EndDo
       ENDIF
    ENDIF
@@ -595,7 +595,7 @@ METHOD TBrowse:readRecord(nRow)
    LOCAL nToMove
    LOCAL nMoved
    LOCAL nRowCount := ::rowCount
-   LOCAL lRead := FALSE
+   LOCAL lRead := False
 
    IF nRow >= 1 .AND. nRow <= nRowCount .AND. !::aCellStatus[nRow]
 
@@ -622,7 +622,7 @@ METHOD TBrowse:readRecord(nRow)
          IF nToMove > 0 .AND. nMoved < nToMove
             ::nLastRow := ::nBufferPos
          ELSE
-            lRead := TRUE
+            lRead := True
          ENDIF
       ENDIF
 
@@ -645,8 +645,8 @@ METHOD TBrowse:readRecord(nRow)
          NEXT
       ENDIF
 
-      ::aCellStatus[nRow] := TRUE
-      ::aDispStatus[nRow] := TRUE
+      ::aCellStatus[nRow] := True
+      ::aDispStatus[nRow] := True
 
    ENDIF
 
@@ -659,7 +659,7 @@ METHOD TBrowse:setPosition()
    LOCAL nRowCount := ::rowCount
    LOCAL nMoveOffset := ::nMoveOffset + (::nRowPos - ::nBufferPos)
    LOCAL nNewPos := ::nBufferPos + nMoveOffset
-   LOCAL lSetPos := TRUE
+   LOCAL lSetPos := True
 
    IF nNewPos < 1
       IF ::nMoveOffset < -1
@@ -678,17 +678,17 @@ METHOD TBrowse:setPosition()
    IF nMoved > 0
       ::nBufferPos += nMoved
       IF ::nBufferPos > ::nLastRow
-         AFill(::aCellStatus, FALSE, ::nLastRow + 1, ::nBufferPos - ::nLastRow)
+         AFill(::aCellStatus, False, ::nLastRow + 1, ::nBufferPos - ::nLastRow)
       ENDIF
       IF ::nBufferPos > nRowCount
          ::scrollBuffer(::nBufferPos - nRowCount)
          ::nBufferPos := nRowCount
-         lSetPos := FALSE
+         lSetPos := False
       ENDIF
       IF ::nBufferPos > ::nLastRow
          ::nLastRow := ::nBufferPos
          IF nMoved != nMoveOffset
-            lSetPos := FALSE
+            lSetPos := False
          ENDIF
       ENDIF
    ELSEIF nMoved < 0
@@ -697,19 +697,19 @@ METHOD TBrowse:setPosition()
          ::nLastRow := Min(nRowCount, ::nLastRow - ::nBufferPos + 1)
          ::scrollBuffer(::nBufferPos - 1)
          ::nBufferPos := 1
-         lSetPos := FALSE
+         lSetPos := False
       ENDIF
    ELSE  /* nMoved == 0 */
       IF nMoveOffset > 0
          IF nMoveOffset != 0 .AND. ::nBufferPos == ::nRowPos
-            ::lHitBottom := TRUE
+            ::lHitBottom := True
          ENDIF
          ::nLastRow := ::nBufferPos
          /* CA-Cl*pper does not do that */
-         AFill(::aCellStatus, FALSE, ::nLastRow + 1)
+         AFill(::aCellStatus, False, ::nLastRow + 1)
       ELSEIF nMoveOffset < 0
          IF nMoveOffset != 0 .AND. ::nBufferPos == ::nRowPos
-            ::lHitTop := TRUE
+            ::lHitTop := True
          ENDIF
          /* CA-Cl*pper does not do that */
          IF ::nBufferPos > 1
@@ -746,23 +746,23 @@ METHOD TBrowse:stabilize()
       nRowCount := ::rowCount
 
       IF ::lRefresh
-         AFill(::aCellStatus, FALSE)
+         AFill(::aCellStatus, False)
          ::nLastRow := nRowCount
          ::nLastScroll := 0
-         ::lRefresh := FALSE
+         ::lRefresh := False
       ENDIF
 
       ::setVisible()
 
       IF ::lFrames
          ::dispFrames()
-         AFill(::aDispStatus, TRUE)
+         AFill(::aDispStatus, True)
       ENDIF
 
-      lRead := FALSE
+      lRead := False
       IF ::nMoveOffset != 0
          ::setPosition()
-         lRead := TRUE
+         lRead := True
       ENDIF
 
       IF ::nLastScroll > 0
@@ -816,8 +816,8 @@ METHOD TBrowse:stabilize()
          ::nBufferPos += nMoved
          ::nRowPos := ::nBufferPos
       ENDIF
-      ::lStable := TRUE
-      ::lInvalid := FALSE
+      ::lStable := True
+      ::lInvalid := False
    ENDIF
 
    IF ::autoLite
@@ -1029,9 +1029,9 @@ METHOD TBrowse:setUnstable()
       ::deHilite()
    ENDIF
 
-   ::lHitTop    := FALSE
-   ::lHitBottom := FALSE
-   ::lStable    := FALSE
+   ::lHitTop    := False
+   ::lHitBottom := False
+   ::lStable    := False
 
    RETURN Self
 
@@ -1039,8 +1039,8 @@ METHOD TBrowse:setUnstable()
 METHOD TBrowse:invalidate()
 
    ::setUnstable()
-   ::lInvalid := TRUE
-   ::lFrames := TRUE
+   ::lInvalid := True
+   ::lFrames := True
 
    RETURN Self
 
@@ -1051,12 +1051,12 @@ METHOD TBrowse:refreshAll()
 
    Eval(::bSkipBlock, 1 - ::nBufferPos)
    ::nBufferPos := 1
-   ::lFrames := TRUE
+   ::lFrames := True
    /* In CA-Cl*pper refreshAll() method does not discards
     * record buffer here but only set's flag that the record
     * buffer should be reloaded in stabilize method. [druzus]
     */
-   ::lRefresh := TRUE
+   ::lRefresh := True
 
    RETURN Self
 
@@ -1066,7 +1066,7 @@ METHOD TBrowse:refreshCurrent()
    ::setUnstable()
 
    IF ::nRowPos >= 1 .AND. ::nRowPos <= ::rowCount
-      ::aCellStatus[::nRowPos] := FALSE
+      ::aCellStatus[::nRowPos] := False
    ENDIF
 
    RETURN Self
@@ -1107,7 +1107,7 @@ METHOD TBrowse:pageDown()
 METHOD TBrowse:left()
 
    ::setUnstable()
-   Do While TRUE
+   Do While True
       ::nColPos--
       IF ::nColPos < 1 .OR. ::nColPos > ::colCount .OR. ::aColData[::nColPos][_TBCI_CELLWIDTH] != 0
          EXIT
@@ -1120,7 +1120,7 @@ METHOD TBrowse:left()
 METHOD TBrowse:right()
 
    ::setUnstable()
-   Do While TRUE
+   Do While True
       ::nColPos++
       IF ::nColPos < 1 .OR. ::nColPos > ::colCount .OR. ::aColData[::nColPos][_TBCI_CELLWIDTH] != 0
          EXIT
@@ -1202,7 +1202,7 @@ METHOD TBrowse:goTop()
     * record buffer here but only set's flag that the record
     * buffer should be reloaded in stabilize method. [druzus]
     */
-   ::lRefresh := TRUE
+   ::lRefresh := True
    ::nRowPos := 1
    ::nBufferPos := 1
    ::nMoveOffset := 0
@@ -1223,7 +1223,7 @@ METHOD TBrowse:goBottom()
     * record buffer here but only set's flag that the record
     * buffer should be reloaded in stabilize method. [druzus]
     */
-   ::lRefresh := TRUE
+   ::lRefresh := True
    ::nRowPos := 1
    ::nBufferPos := 1
    ::nMoveOffset := -nMoved
@@ -1281,7 +1281,7 @@ METHOD TBrowse:doConfigure()
 
    /* update column data */
    nHeadHeight := nFootHeight := 0
-   lHeadSep := lFootSep := FALSE
+   lHeadSep := lFootSep := False
    nColCount := Len(::columns)
    ASize(::aColData, nColCount)
    FOR EACH oCol, aCol IN ::columns, ::aColData
@@ -1317,10 +1317,10 @@ METHOD TBrowse:doConfigure()
       aCol[_TBCI_FROZENSPACE] := 0
       aCol[_TBCI_LASTSPACE  ] := 0
       IF Len(cHeadSep) > 0
-         lHeadSep := TRUE
+         lHeadSep := True
       ENDIF
       IF Len(cFootSep) > 0
-         lFootSep := TRUE
+         lFootSep := True
       ENDIF
       cHeading := oCol:heading
       IF _DECODE_FH(@cHeading, @nHeight, @nWidth)
@@ -1378,12 +1378,12 @@ METHOD TBrowse:doConfigure()
    IF lHeadSep .AND. nHeight > 0
       --nHeight
    ELSE
-      lHeadSep := FALSE
+      lHeadSep := False
    ENDIF
    IF lFootSep .AND. nHeight > 0
       --nHeight
    ELSE
-      lFootSep := FALSE
+      lFootSep := False
    ENDIF
    IF nHeadHeight >= nHeight
       nHeadHeight := nHeight
@@ -1421,8 +1421,8 @@ METHOD TBrowse:doConfigure()
    ASize(::aDispStatus, nRowCount)
    ASize(::aCellValues, nRowCount)
    ASize(::aCellColors, nRowCount)
-   AFill(::aCellStatus, FALSE)
-   AFill(::aDispStatus, TRUE)
+   AFill(::aCellStatus, False)
+   AFill(::aDispStatus, True)
    FOR EACH aVal, aCol IN ::aCellValues, ::aCellColors
       IF aVal == NIL
          aVal := Array(nColCount)
@@ -1436,11 +1436,11 @@ METHOD TBrowse:doConfigure()
       ENDIF
    NEXT
 
-   ::lStable := FALSE
-   ::lFrames := TRUE
+   ::lStable := False
+   ::lFrames := True
 
    /* Clipper does not set refreshAll flag in Configure */
-   /* ::lRefresh := TRUE */
+   /* ::lRefresh := True */
 
    ::nLastRow := nRowCount
    ::nLastScroll := 0
@@ -1472,8 +1472,8 @@ STATIC PROCEDURE _GENLIMITRTE()
    oError:subSystem   := "TBROWSE"
    oError:subCode     := 0
    oError:description := hb_langErrMsg(EG_LIMIT)
-   oError:canRetry    := FALSE
-   oError:canDefault  := FALSE
+   oError:canRetry    := False
+   oError:canDefault  := False
    oError:fileName    := ""
    oError:osCode      := 0
 
@@ -1528,13 +1528,13 @@ STATIC FUNCTION _MAXFREEZE(nColumns, aColData, nWidth)
    ENDIF
 
    nTot := nWidth
-   lFirst := TRUE
+   lFirst := True
    FOR nCol := 1 TO nColumns
       aCol := aColData[nCol]
       IF aCol[_TBCI_CELLWIDTH] > 0
          nColWidth := aCol[_TBCI_COLWIDTH]
          IF lFirst
-            lFirst := FALSE
+            lFirst := False
          ELSE
             nColWidth += aCol[_TBCI_SEPWIDTH]
          ENDIF
@@ -1609,7 +1609,7 @@ STATIC FUNCTION _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
             IF nWidth >= nColWidth
                nLast := nCol
                nWidth -= nColWidth
-               lFirst := FALSE
+               lFirst := False
                IF nFirst == 0 .OR. nCol < nFirst
                   nFirst := nCol
                ENDIF
@@ -1617,7 +1617,7 @@ STATIC FUNCTION _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
                IF lFirst
                   nLast := nCol
                   nWidth := 0
-                  lFirst := FALSE
+                  lFirst := False
                ENDIF
                EXIT
             ENDIF
@@ -1671,14 +1671,14 @@ STATIC PROCEDURE _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
                ENDIF
                IF nPos > nFrozen
                   nLeft := nPos
-                  lLeft := TRUE
+                  lLeft := True
                ENDIF
             ENDIF
          ENDIF
-         lFirst := TRUE
+         lFirst := True
          nFirst := _PREVCOLUMN(aColData, nFrozen)
       ELSE
-         lLeft := lRight := FALSE
+         lLeft := lRight := False
       ENDIF
       IF lLeft
          nRight := _SETCOLUMNS(nLeft, nColCount, 1, aColData, @nFirst, @nWidth, @lFirst)
@@ -1714,7 +1714,7 @@ METHOD TBrowse:setVisible()
       ::lFrames .OR. ::nLeftVisible == 0 .OR. ::nRightVisible == 0 .OR. ;
       ::aColData[nColPos][_TBCI_COLPOS] == NIL
 
-      lFrames := FALSE
+      lFrames := False
       nWidth := _TBR_COORD(::n_Right) - _TBR_COORD(::n_Left) + 1
       nColumns := Len(::aColData)
 
@@ -1759,7 +1759,7 @@ METHOD TBrowse:setVisible()
 
       /* update column size and positions on the screen */
       nLeft := _TBR_COORD(::n_Left)
-      lFirst := TRUE
+      lFirst := True
       FOR nCol := 1 TO ::nRightVisible
          aCol := ::aColData[nCol]
          IF aCol[_TBCI_CELLWIDTH] > 0 .AND. (nCol <= ::nFrozen .OR. nCol >= ::nLeftVisible)
@@ -1768,7 +1768,7 @@ METHOD TBrowse:setVisible()
             nColPos := nLeft += nFrozen
             nLeft += aCol[_TBCI_COLWIDTH]
             IF lFirst
-               lFirst := FALSE
+               lFirst := False
             ELSE
                nLeft += aCol[_TBCI_SEPWIDTH]
             ENDIF
@@ -1776,14 +1776,14 @@ METHOD TBrowse:setVisible()
 
             IF aCol[_TBCI_COLPOS] != nColPos .OR. aCol[_TBCI_FROZENSPACE] != nFrozen .OR. aCol[_TBCI_LASTSPACE] != nLast
 
-               lFrames := TRUE
+               lFrames := True
                aCol[_TBCI_COLPOS     ] := nColPos
                aCol[_TBCI_FROZENSPACE] := nFrozen
                aCol[_TBCI_LASTSPACE  ] := nLast
             ENDIF
          ELSE
             IF aCol[_TBCI_COLPOS] != NIL
-               lFrames := TRUE
+               lFrames := True
             ENDIF
             aCol[_TBCI_COLPOS] := NIL
          ENDIF
@@ -1791,7 +1791,7 @@ METHOD TBrowse:setVisible()
       FOR nCol := ::nRightVisible + 1 TO nColumns
          aCol := ::aColData[nCol]
          IF aCol[_TBCI_COLPOS] != NIL
-            lFrames := TRUE
+            lFrames := True
          ENDIF
          aCol[_TBCI_COLPOS] := NIL
       NEXT
@@ -1799,7 +1799,7 @@ METHOD TBrowse:setVisible()
       ::nLastPos := ::nColPos
 
       IF lFrames
-         ::lFrames := TRUE
+         ::lFrames := True
       ENDIF
 
    ENDIF
@@ -1826,7 +1826,7 @@ METHOD TBrowse:hiLite()
          ENDIF
          hb_DispOutAt(::n_Row, ::n_Col, cValue, cColor)
          SetPos(::n_Row, ::n_Col)
-         ::lHiLited := TRUE
+         ::lHiLited := True
       ENDIF
    ENDIF
 
@@ -1856,7 +1856,7 @@ METHOD TBrowse:deHilite()
          SetPos(::n_Row, ::n_Col)
       ENDIF
    ENDIF
-   ::lHiLited := FALSE
+   ::lHiLited := False
 
    DispEnd()
 
@@ -1902,7 +1902,7 @@ METHOD TBrowse:freeze(nColumns)
       IF _MAXFREEZE(nCols, ::aColData, _TBR_COORD(::n_Right) - _TBR_COORD(::n_Left) + 1) == nCols
 
          ::nFrozen := nCols
-         ::lFrames := TRUE
+         ::lFrames := True
          ::nLastPos := 0
          /* CA-Cl*pper update visible columns here but without
           * colPos repositioning. [druzus]
@@ -2137,7 +2137,7 @@ METHOD TBrowse:delColumn(nColumn)
    IF nColumn >= 1 .AND. nColumn <= ::colCount
 #endif
       oCol := ::columns[nColumn]
-      hb_ADel(::columns, nColumn, TRUE)
+      hb_ADel(::columns, nColumn, True)
       ::configure(_TBR_CONF_COLUMNS)
 #ifndef HB_CLP_STRICT
    ENDIF
@@ -2153,7 +2153,7 @@ METHOD TBrowse:insColumn(nColumn, oCol)
 #ifndef HB_CLP_STRICT
    IF nColumn >= 1 .AND. nColumn <= ::colCount + 1
 #endif
-      hb_AIns(::columns, nColumn, oCol, TRUE)
+      hb_AIns(::columns, nColumn, oCol, True)
       ::configure(_TBR_CONF_COLUMNS)
 #ifndef HB_CLP_STRICT
    ENDIF
@@ -2437,13 +2437,13 @@ METHOD TBrowse:hitTest(mRow, mCol)
 #ifdef HB_BRW_STATICMOUSE
          ::mRowPos := mRow - nTop - ::nHeadHeight - IIf(::lHeadSep, 1, 0)
 #endif
-         lFirst := TRUE
+         lFirst := True
          nCol := 1
          Do While nCol <= ::nRightVisible
             aCol := ::aColData[nCol]
             IF aCol[_TBCI_COLPOS] != NIL
                IF lFirst
-                  lFirst := FALSE
+                  lFirst := False
                ELSE
                   /* NOTE: CA-Cl*pper has bug here, it takes the size of
                    *       next column separator instead of the current one
@@ -2656,7 +2656,7 @@ METHOD TBrowse:setKey(nKey, bBlock)
    ELSE
       bReturn := ::keys[nPos][_TBC_SETKEY_BLOCK]
       IF PCount() == 2 .AND. bBlock == NIL .AND. nKey != 0
-         hb_ADel(::keys, nPos, TRUE)
+         hb_ADel(::keys, nPos, True)
       ENDIF
    ENDIF
 
@@ -2668,7 +2668,7 @@ METHOD TBrowse:setStyle(nStyle, lNewValue)
    /* NOTE: CA-Cl*pper 5.3 will initialize this var on the first
             :setStyle() method call. [vszakats] */
 
-   hb_default(@::styles, {FALSE, FALSE, FALSE, FALSE, FALSE, NIL})
+   hb_default(@::styles, {False, False, False, False, False, NIL})
 
    /* NOTE: CA-Cl*pper 5.3 does no checks on the value of nStyle, so in case
             it is zero or non-numeric, a regular RTE will happen. [vszakats] */
@@ -2690,27 +2690,27 @@ FUNCTION TBMouse(oBrw, nMRow, nMCol)
 
    IF oBrw:hitTest(nMRow, nMCol) == HTCELL
 
-      DO CASE
-      CASE (n := oBrw:mRowPos - oBrw:rowPos) < 0
+      Do Case
+      Case (n := oBrw:mRowPos - oBrw:rowPos) < 0
          Do While ++n <= 0
             oBrw:up()
          EndDo
-      CASE n > 0
+      Case n > 0
          Do While --n >= 0
             oBrw:down()
          EndDo
-      ENDCASE
+      EndCase
 
-      DO CASE
-      CASE (n := oBrw:mColPos - oBrw:colPos) < 0
+      Do Case
+      Case (n := oBrw:mColPos - oBrw:colPos) < 0
          Do While ++n <= 0
             oBrw:left()
          EndDo
-      CASE n > 0
+      Case n > 0
          Do While --n >= 0
             oBrw:right()
          EndDo
-      ENDCASE
+      EndCase
 
       RETURN TBR_CONTINUE
    ENDIF

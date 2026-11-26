@@ -73,7 +73,7 @@ METHOD HBDbArray:New(aArray, cVarName, lEditable)
 
    ::arrayName := cVarName
    ::TheArray := aArray
-   ::lEditable := hb_defaultValue(lEditable, TRUE)
+   ::lEditable := hb_defaultValue(lEditable, True)
 
    ::addWindows(::TheArray)
 
@@ -98,7 +98,7 @@ METHOD HBDbArray:addWindows(aArray, nRow)
    ENDIF
 
    ::nCurWindow++
-   oWndSets:lFocused := TRUE
+   oWndSets:lFocused := True
    AAdd(::aWindows, oWndSets)
 
    oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
@@ -155,47 +155,47 @@ METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
    LOCAL nSet := oBrwSets:cargo[1]
    LOCAL cOldName := ::arrayName
 
-   SWITCH nKey
-   CASE K_UP
+   Switch nKey
+   Case K_UP
       oBrwSets:Up()
       EXIT
 
-   CASE K_DOWN
+   Case K_DOWN
       oBrwSets:Down()
       EXIT
 
-   CASE K_HOME
-   CASE K_CTRL_PGUP
-   CASE K_CTRL_HOME
+   Case K_HOME
+   Case K_CTRL_PGUP
+   Case K_CTRL_HOME
       oBrwSets:GoTop()
       EXIT
 
-   CASE K_END
-   CASE K_CTRL_PGDN
-   CASE K_CTRL_END
+   Case K_END
+   Case K_CTRL_PGDN
+   Case K_CTRL_END
       oBrwSets:GoBottom()
       EXIT
 
-   CASE K_PGDN
+   Case K_PGDN
       oBrwSets:pageDown()
       EXIT
 
-   CASE K_PGUP
+   Case K_PGUP
       oBrwSets:PageUp()
       EXIT
 
-   CASE K_ENTER
+   Case K_ENTER
       IF hb_IsArray(aArray[nSet])
          IF Len(aArray[nSet]) == 0
             __dbgAlert("Array is empty")
          ELSE
             SetPos(oWnd:nBottom, oWnd:nLeft)
-            ::aWindows[::nCurWindow]:lFocused := FALSE
+            ::aWindows[::nCurWindow]:lFocused := False
             ::arrayname := ::arrayname + "[" + hb_ntos(nSet) + "]"
             ::AddWindows(aArray[nSet], oBrwSets:RowPos + oBrwSets:nTop)
             ::arrayname := cOldName
 
-            hb_ADel(::aWindows, ::nCurWindow, TRUE)
+            hb_ADel(::aWindows, ::nCurWindow, True)
             IF ::nCurWindow == 0
                ::nCurWindow := 1
             ELSE
@@ -206,24 +206,24 @@ METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
          __dbgAlert("Value cannot be edited")
       ELSE
          oBrwSets:RefreshCurrent()
-         DO CASE
-         CASE hb_IsObject(aArray[nSet])
+         Do Case
+         Case hb_IsObject(aArray[nSet])
             __dbgObject(aArray[nSet], cName + "[" + hb_ntos(nSet) + "]")
-         CASE hb_IsHash(aArray[nSet])
+         Case hb_IsHash(aArray[nSet])
             IF Len(aArray[nSet]) == 0
                __dbgAlert("Hash is empty")
             ELSE
                __dbgHashes(aArray[nSet], cName + "[" + hb_ntos(nSet) + "]")
             ENDIF
-         OTHERWISE
+         Otherwise
             ::doGet(oBrwsets, aArray, nSet)
-         ENDCASE
+         EndCase
          oBrwSets:RefreshCurrent()
          oBrwSets:ForceStable()
       ENDIF
       EXIT
 
-   ENDSWITCH
+   EndSwitch
 
    oBrwSets:forceStable()
 

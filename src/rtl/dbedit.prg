@@ -101,7 +101,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    oBrowse:colSep    := IIf(hb_IsString(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox(" │ "))
    oBrowse:footSep   := hb_defaultValue(xFootingSeparators, "")
    oBrowse:skipBlock := {|nRecs|Skipped(nRecs, lAppend)}
-   oBrowse:autoLite  := FALSE  // Set to FALSE just like in CA-Cl*pper. [vszakats]
+   oBrowse:autoLite  := False  // Set to False just like in CA-Cl*pper. [vszakats]
 
    IF hb_IsArray(acColumns)
       nColCount := 0
@@ -147,28 +147,28 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
       bBlock := IIf(Type(cBlock) == "M", {||"  <Memo>  "}, hb_macroBlock(cBlock))
 
-      DO CASE
-      CASE hb_IsArray(xColumnHeaders) .AND. Len(xColumnHeaders) >= nPos .AND. hb_IsString(xColumnHeaders[nPos])
+      Do Case
+      Case hb_IsArray(xColumnHeaders) .AND. Len(xColumnHeaders) >= nPos .AND. hb_IsString(xColumnHeaders[nPos])
          cHeading := xColumnHeaders[nPos]
-      CASE hb_IsString(xColumnHeaders)
+      Case hb_IsString(xColumnHeaders)
          cHeading := xColumnHeaders
-      ENDCASE
+      EndCase
 
       oColumn := TBColumnNew(cHeading, bBlock)
 
-      DO CASE
-      CASE hb_IsArray(xColumnSayPictures) .AND. nPos <= Len(xColumnSayPictures) .AND. hb_IsString(xColumnSayPictures[nPos]) .AND. !Empty(xColumnSayPictures[nPos])
+      Do Case
+      Case hb_IsArray(xColumnSayPictures) .AND. nPos <= Len(xColumnSayPictures) .AND. hb_IsString(xColumnSayPictures[nPos]) .AND. !Empty(xColumnSayPictures[nPos])
          oColumn:picture := xColumnSayPictures[nPos]
-      CASE hb_IsString(xColumnSayPictures) .AND. !Empty(xColumnSayPictures)
+      Case hb_IsString(xColumnSayPictures) .AND. !Empty(xColumnSayPictures)
          oColumn:picture := xColumnSayPictures
-      ENDCASE
+      EndCase
 
-      DO CASE
-      CASE hb_IsArray(xColumnFootings) .AND. nPos <= Len(xColumnFootings) .AND. hb_IsString(xColumnFootings[nPos])
+      Do Case
+      Case hb_IsArray(xColumnFootings) .AND. nPos <= Len(xColumnFootings) .AND. hb_IsString(xColumnFootings[nPos])
          oColumn:footing := xColumnFootings[nPos]
-      CASE hb_IsString(xColumnFootings)
+      Case hb_IsString(xColumnFootings)
          oColumn:footing := xColumnFootings
-      ENDCASE
+      EndCase
 
       IF hb_IsArray(xHeadingSeparators) .AND. nPos <= Len(xHeadingSeparators) .AND. hb_IsString(xHeadingSeparators[nPos])
          oColumn:headSep := xHeadingSeparators[nPos]
@@ -189,14 +189,14 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
    // Go into the processing loop
 
-   lAppend := FALSE
-   lFlag := TRUE
-   lDoIdleCall := TRUE
-   lContinue := TRUE
+   lAppend := False
+   lFlag := True
+   lDoIdleCall := True
+   lContinue := True
 
    Do While lContinue
 
-      Do While TRUE
+      Do While True
          nKey := Inkey()
          IF oBrowse:stabilize()
             EXIT
@@ -231,54 +231,54 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
                LOOP
             ENDIF
          ELSE
-            lFlag := TRUE
+            lFlag := True
          ENDIF
       ENDIF
 
-      lDoIdleCall := TRUE
+      lDoIdleCall := True
 
       IF nKey != 0
 #ifdef HB_CLP_UNDOC
          IF lAppend
-            SWITCH nKey
-            CASE K_DOWN
-            CASE K_PGDN
-            CASE K_CTRL_PGDN
-               oBrowse:hitBottom := TRUE
+            Switch nKey
+            Case K_DOWN
+            Case K_PGDN
+            Case K_CTRL_PGDN
+               oBrowse:hitBottom := True
                LOOP
-            CASE K_UP
-            CASE K_PGUP
-            CASE K_CTRL_PGUP
-               oBrowse:hitTop := TRUE
+            Case K_UP
+            Case K_PGUP
+            Case K_CTRL_PGUP
+               oBrowse:hitTop := True
                LOOP
-            ENDSWITCH
+            EndSwitch
          ENDIF
 #endif
-         SWITCH nKey
+         Switch nKey
 #ifdef HB_COMPAT_C53
-         CASE K_LBUTTONDOWN
-         CASE K_LDBLCLK
+         Case K_LBUTTONDOWN
+         Case K_LDBLCLK
             TBMouse(oBrowse, MRow(), MCol())
             EXIT
 #endif
-         CASE K_DOWN          ; oBrowse:down()     ; EXIT
-         CASE K_UP            ; oBrowse:up()       ; EXIT
-         CASE K_PGDN          ; oBrowse:pageDown() ; EXIT
-         CASE K_PGUP          ; oBrowse:pageUp()   ; EXIT
-         CASE K_CTRL_PGUP     ; oBrowse:goTop()    ; EXIT
-         CASE K_CTRL_PGDN     ; oBrowse:goBottom() ; EXIT
-         CASE K_RIGHT         ; oBrowse:right()    ; EXIT
-         CASE K_LEFT          ; oBrowse:left()     ; EXIT
-         CASE K_HOME          ; oBrowse:home()     ; EXIT
-         CASE K_END           ; oBrowse:end()      ; EXIT
-         CASE K_CTRL_LEFT     ; oBrowse:panLeft()  ; EXIT
-         CASE K_CTRL_RIGHT    ; oBrowse:panRight() ; EXIT
-         CASE K_CTRL_HOME     ; oBrowse:panHome()  ; EXIT
-         CASE K_CTRL_END      ; oBrowse:panEnd()   ; EXIT
-         OTHERWISE
+         Case K_DOWN          ; oBrowse:down()     ; EXIT
+         Case K_UP            ; oBrowse:up()       ; EXIT
+         Case K_PGDN          ; oBrowse:pageDown() ; EXIT
+         Case K_PGUP          ; oBrowse:pageUp()   ; EXIT
+         Case K_CTRL_PGUP     ; oBrowse:goTop()    ; EXIT
+         Case K_CTRL_PGDN     ; oBrowse:goBottom() ; EXIT
+         Case K_RIGHT         ; oBrowse:right()    ; EXIT
+         Case K_LEFT          ; oBrowse:left()     ; EXIT
+         Case K_HOME          ; oBrowse:home()     ; EXIT
+         Case K_END           ; oBrowse:end()      ; EXIT
+         Case K_CTRL_LEFT     ; oBrowse:panLeft()  ; EXIT
+         Case K_CTRL_RIGHT    ; oBrowse:panRight() ; EXIT
+         Case K_CTRL_HOME     ; oBrowse:panHome()  ; EXIT
+         Case K_CTRL_END      ; oBrowse:panEnd()   ; EXIT
+         Otherwise
             lContinue := CallUser(oBrowse, xUserFunc, nKey, @lAppend, @lFlag)
-            lDoIdleCall := FALSE
-         ENDSWITCH
+            lDoIdleCall := False
+         EndSwitch
       ENDIF
    EndDo
 
@@ -326,7 +326,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
       ELSE
          oBrowse:refreshAll():forceStable()
       ENDIF
-      lFlag := FALSE
+      lFlag := False
       Return True
    ENDIF
 #endif
@@ -335,7 +335,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
       IF nAction != DE_ABORT
 
-         lAppend := FALSE
+         lAppend := False
 
          IF (Set(_SET_DELETED) .AND. Deleted()) .OR. (!Empty(dbFilter()) .AND. !Eval(hb_macroBlock(dbFilter())))
             dbSkip()
@@ -350,7 +350,7 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
             oBrowse:Up():forceStable()
          EndDo
 
-         lFlag := FALSE
+         lFlag := False
 
       ENDIF
    ELSE
@@ -371,15 +371,15 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
    LOCAL nSkipped := 0
 
    IF LastRec() != 0
-      DO CASE
-      CASE nRecs == 0
+      Do Case
+      Case nRecs == 0
          IF Eof() .AND. !lAppend
             dbSkip(-1)
             nSkipped := -1
          ELSE
             dbSkip(0)
          ENDIF
-      CASE nRecs > 0 .AND. RecNo() != LastRec() + 1
+      Case nRecs > 0 .AND. RecNo() != LastRec() + 1
          Do While nSkipped < nRecs
             dbSkip()
             IF Eof()
@@ -392,7 +392,7 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
             ENDIF
             nSkipped++
          EndDo
-      CASE nRecs < 0
+      Case nRecs < 0
          Do While nSkipped > nRecs
             dbSkip(-1)
             IF Bof()
@@ -400,7 +400,7 @@ STATIC FUNCTION Skipped(nRecs, lAppend)
             ENDIF
             nSkipped--
          EndDo
-      ENDCASE
+      EndCase
    ENDIF
 
    RETURN nSkipped

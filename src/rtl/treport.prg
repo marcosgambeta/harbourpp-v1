@@ -65,10 +65,10 @@
 #define RPT_RMARGIN     4       // NIL, Not used
 #define RPT_LINES       5       // Numeric, number of lines per page
 #define RPT_SPACING     6       // Numeric, single=1, double=2
-#define RPT_BEJECT      7       // Logical, eject before 1st page, TRUE=Yes FALSE=No
-#define RPT_AEJECT      8       // Logical, eject after last page, TRUE=Yes FALSE=No
-#define RPT_PLAIN       9       // Logical, plain report, TRUE=Yes FALSE=No
-#define RPT_SUMMARY     10      // Logical, no detail lines, TRUE=Yes FALSE=No
+#define RPT_BEJECT      7       // Logical, eject before 1st page, True=Yes False=No
+#define RPT_AEJECT      8       // Logical, eject after last page, True=Yes False=No
+#define RPT_PLAIN       9       // Logical, plain report, True=Yes False=No
+#define RPT_SUMMARY     10      // Logical, no detail lines, True=Yes False=No
 #define RPT_COLUMNS     11      // Array of Column arrays
 #define RPT_GROUPS      12      // Array of Group arrays
 #define RPT_HEADING     13      // Character, heading for the report
@@ -83,7 +83,7 @@
 #define RCT_HEADER      4       // Array of column heading strings
 #define RCT_WIDTH       5       // Numeric, column width including decimals and decimal point
 #define RCT_DECIMALS    6       // Numeric, number of decimal places
-#define RCT_TOTAL       7       // Logical, total this column, TRUE=Yes FALSE=No
+#define RCT_TOTAL       7       // Logical, total this column, True=Yes False=No
 #define RCT_PICT        8       // Character, picture string
 
 #define RCT_COUNT       8       // Number of elements in the Column array
@@ -94,7 +94,7 @@
 #define RGT_TEXT        2       // Character, contains text group expression
 #define RGT_TYPE        3       // Character, type of expression
 #define RGT_HEADER      4       // Character, column heading string
-#define RGT_AEJECT      5       // Logical, eject after group, TRUE=Yes FALSE=No
+#define RGT_AEJECT      5       // Logical, eject after group, True=Yes False=No
 
 #define RGT_COUNT       5       // Number of elements in the Group array
 
@@ -205,7 +205,7 @@ METHOD Init(cFrmName AS STRING, ;
    LOCAL aCol
    LOCAL nGroup
    LOCAL xBreakVal
-   LOCAL lBroke := FALSE
+   LOCAL lBroke := False
    LOCAL err
    LOCAL lAnyTotals
    LOCAL lAnySubTotals
@@ -231,12 +231,12 @@ METHOD Init(cFrmName AS STRING, ;
    // Set output devices
 
    lPrintOn   := IIf(lPrinter, Set(_SET_PRINTER, lPrinter), Set(_SET_PRINTER))
-   lConsoleOn := IIf(lNoConsole, Set(_SET_CONSOLE, FALSE), Set(_SET_CONSOLE))
+   lConsoleOn := IIf(lNoConsole, Set(_SET_CONSOLE, False), Set(_SET_CONSOLE))
 
    ::lFormFeeds := lPrinter
 
    IF !Empty(cAltFile)        // To file
-      lExtraState := Set(_SET_EXTRA, TRUE)
+      lExtraState := Set(_SET_EXTRA, True)
       cExtraFile := Set(_SET_EXTRAFILE, cAltFile)
    ENDIF
 
@@ -250,12 +250,12 @@ METHOD Init(cFrmName AS STRING, ;
          ::aReportData[RPT_SUMMARY] := lSummary
       ENDIF
       IF lBEject != NIL .AND. lBEject
-         ::aReportData[RPT_BEJECT]  := FALSE
+         ::aReportData[RPT_BEJECT]  := False
       ENDIF
       IF lPlain                      // Set plain report flag
-         ::aReportData[RPT_PLAIN]   := TRUE
+         ::aReportData[RPT_PLAIN]   := True
          cHeading                     := ""
-         ::lFormFeeds                 := FALSE
+         ::lFormFeeds                 := False
       ENDIF
       ::aReportData[RPT_HEADING]    := cHeading
 
@@ -265,7 +265,7 @@ METHOD Init(cFrmName AS STRING, ;
       // ::aReportData[RPT_LMARGIN] += Set(_SET_MARGIN)
 
       ::nPageNumber := 1                  // Set the initial page number
-      ::lFirstPass  := TRUE                // Set the first pass flag
+      ::lFirstPass  := True                // Set the first pass flag
 
       ::nLinesLeft  := ::aReportData[RPT_LINES]
 
@@ -306,10 +306,10 @@ METHOD Init(cFrmName AS STRING, ;
       FOR nGroup := Len(::aReportData[RPT_GROUPS]) TO 1 STEP -1
 
          // make sure group has subtotals
-         lAnySubTotals := FALSE
+         lAnySubTotals := False
          FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
             IF aCol[RCT_TOTAL]
-               lAnySubTotals := TRUE
+               lAnySubTotals := True
                EXIT              // NOTE
             ENDIF
          NEXT
@@ -349,10 +349,10 @@ METHOD Init(cFrmName AS STRING, ;
       NEXT
 
       // Any report totals?
-      lAnyTotals := FALSE
+      lAnyTotals := False
       FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
          IF aCol[RCT_TOTAL]
-            lAnyTotals := TRUE
+            lAnyTotals := True
             EXIT
          ENDIF
       NEXT
@@ -396,7 +396,7 @@ METHOD Init(cFrmName AS STRING, ;
 
    RECOVER USING xBreakVal
 
-      lBroke := TRUE
+      lBroke := True
 
    END SEQUENCE
 
@@ -541,8 +541,8 @@ METHOD ExecuteReport() CLASS HBReportForm
    LOCAL nCol                          // Counter for the column work
    LOCAL aCol
    LOCAL nGroup                        // Counter for the group work
-   LOCAL lGroupChanged  := FALSE         // Has any group changed?
-   LOCAL lEjectGrp := FALSE              // Group eject indicator
+   LOCAL lGroupChanged  := False         // Has any group changed?
+   LOCAL lEjectGrp := False              // Group eject indicator
    LOCAL nMaxLines                     // Number of lines needed by record
    LOCAL nLine                         // Counter for each record line
    LOCAL cLine                         // Current line of text for parsing
@@ -565,10 +565,10 @@ METHOD ExecuteReport() CLASS HBReportForm
       FOR nGroup := Len(::aReportData[RPT_GROUPS]) TO 1 STEP -1
 
          // make sure group has subtotals
-         lAnySubTotals := FALSE
+         lAnySubTotals := False
          FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
             IF aCol[RCT_TOTAL]
-               lAnySubTotals := TRUE
+               lAnySubTotals := True
                EXIT              // NOTE
             ENDIF
          NEXT
@@ -585,7 +585,7 @@ METHOD ExecuteReport() CLASS HBReportForm
          //  For subgroup processing: check if group has been changed
          IF MakeAStr(Eval(::aReportData[RPT_GROUPS][1][RGT_EXP]), ;
             ::aReportData[RPT_GROUPS][1][RGT_TYPE]) != ::aGroupTotals[1]
-            lGroupChanged := TRUE
+            lGroupChanged := True
          ENDIF
 
          //  If this (sub)group has changed since the last record
@@ -664,7 +664,7 @@ METHOD ExecuteReport() CLASS HBReportForm
       ENDIF
    NEXT
 
-   ::lFirstPass := FALSE
+   ::lFirstPass := False
 
    // Is there anything in the record header?
    IF Len(aRecordHeader) > 0
@@ -716,12 +716,12 @@ METHOD ExecuteReport() CLASS HBReportForm
       // Determine the max number of lines needed by each expression
       nMaxLines := 1
       FOR EACH aCol IN ::aReportData[RPT_COLUMNS]
-         DO CASE
-         CASE aCol[RCT_TYPE] $ "M"
+         Do Case
+         Case aCol[RCT_TYPE] $ "M"
             nMaxLines := Max(XMLCOUNT(Eval(aCol[RCT_EXP]), aCol[RCT_WIDTH]), nMaxLines)
-         CASE aCol[RCT_TYPE] $ "C"
+         Case aCol[RCT_TYPE] $ "C"
             nMaxLines := Max(XMLCOUNT(StrTran(Eval(aCol[RCT_EXP]), ";", hb_eol()), aCol[RCT_WIDTH]), nMaxLines)
-         ENDCASE
+         EndCase
       NEXT
 
       // Size aRecordToPrint to the maximum number of lines it will need, then
@@ -841,10 +841,10 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
    aReport[RPT_RMARGIN]   := 0
    aReport[RPT_LINES]     := 58
    aReport[RPT_SPACING]   := 1
-   aReport[RPT_BEJECT]    := TRUE
-   aReport[RPT_AEJECT]    := FALSE
-   aReport[RPT_PLAIN]     := FALSE
-   aReport[RPT_SUMMARY]   := FALSE
+   aReport[RPT_BEJECT]    := True
+   aReport[RPT_AEJECT]    := False
+   aReport[RPT_PLAIN]     := False
+   aReport[RPT_SUMMARY]   := False
    aReport[RPT_COLUMNS]   := {}
    aReport[RPT_GROUPS]    := {}
    aReport[RPT_HEADING]   := ""
@@ -910,13 +910,13 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
             IF nOptionByte <= 8  // Bug compatibility with CA-Cl*pper for corrupted input files
 #endif
                IF hb_bitAnd(nOptionByte, 4) != 0
-                  aReport[RPT_PLAIN] := TRUE          // Plain page
+                  aReport[RPT_PLAIN] := True          // Plain page
                ENDIF
                IF hb_bitAnd(nOptionByte, 2) != 0
-                  aReport[RPT_AEJECT] := TRUE         // Page eject after report
+                  aReport[RPT_AEJECT] := True         // Page eject after report
                ENDIF
                IF hb_bitAnd(nOptionByte, 1) != 0
-                  aReport[RPT_BEJECT] := FALSE         // Page eject before report
+                  aReport[RPT_BEJECT] := False         // Page eject before report
                ENDIF
 #ifdef HB_CLP_STRICT
             ENDIF
@@ -976,7 +976,7 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
                aReport[RPT_GROUPS][2][RGT_HEADER] := ::GetExpr(Bin2W(hb_BSubStr(cParamsBuff, SUB_HDR_OFFSET, 2)))
 
                // Page eject after subgroup
-               aReport[RPT_GROUPS][2][RGT_AEJECT] := FALSE
+               aReport[RPT_GROUPS][2][RGT_AEJECT] := False
             ENDIF
 
             // Process columns
@@ -1138,18 +1138,18 @@ METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBRe
    // Column picture
    // Setup picture only if a database file is open
    IF Used()
-      SWITCH aColumn[RCT_TYPE] := ValType(Eval(aColumn[RCT_EXP]))
-      CASE "C"
-      CASE "M"
+      Switch aColumn[RCT_TYPE] := ValType(Eval(aColumn[RCT_EXP]))
+      Case "C"
+      Case "M"
          aColumn[RCT_PICT] := Replicate("X", aColumn[RCT_WIDTH])
          EXIT
-      CASE "D"
+      Case "D"
          aColumn[RCT_PICT] := "@D"
          EXIT
-      CASE "T"
+      Case "T"
          aColumn[RCT_PICT] := "@T"
          EXIT
-      CASE "N"
+      Case "N"
          IF aColumn[RCT_DECIMALS] != 0
             aColumn[RCT_PICT] := ;
                Replicate("9", aColumn[RCT_WIDTH] - aColumn[RCT_DECIMALS] - 1) + "." + ;
@@ -1158,10 +1158,10 @@ METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBRe
             aColumn[RCT_PICT] := Replicate("9", aColumn[RCT_WIDTH])
          ENDIF
          EXIT
-      CASE "L"
+      Case "L"
          aColumn[RCT_PICT] := "@L" + Replicate("X", aColumn[RCT_WIDTH] - 1)
          EXIT
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    // Update offset into ?_buffer
@@ -1171,20 +1171,20 @@ METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBRe
 
 STATIC FUNCTION MakeAStr(uVar, cType)
 
-   SWITCH Asc(cType)
-   CASE Asc("D")
-   CASE Asc("d") ; RETURN DToC(uVar)
-   CASE Asc("T")
-   CASE Asc("t") ; RETURN hb_TToC(uVar)
-   CASE Asc("L")
-   CASE Asc("l") ; RETURN IIf(uVar, "T", "F")
-   CASE Asc("N")
-   CASE Asc("n") ; RETURN Str(uVar)
-   CASE Asc("C")
-   CASE Asc("c")
-   CASE Asc("M")
-   CASE Asc("m") ; RETURN uVar
-   ENDSWITCH
+   Switch Asc(cType)
+   Case Asc("D")
+   Case Asc("d") ; RETURN DToC(uVar)
+   Case Asc("T")
+   Case Asc("t") ; RETURN hb_TToC(uVar)
+   Case Asc("L")
+   Case Asc("l") ; RETURN IIf(uVar, "T", "F")
+   Case Asc("N")
+   Case Asc("n") ; RETURN Str(uVar)
+   Case Asc("C")
+   Case Asc("c")
+   Case Asc("M")
+   Case Asc("m") ; RETURN uVar
+   EndSwitch
 
    RETURN "INVALID EXPRESSION"
 

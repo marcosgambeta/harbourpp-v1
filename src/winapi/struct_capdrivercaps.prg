@@ -38,7 +38,7 @@ RETURN was_CAPDRIVERCAPS():new()
 CLASS WAS_CAPDRIVERCAPS
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

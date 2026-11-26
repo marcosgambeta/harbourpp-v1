@@ -69,7 +69,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
    LOCAL cInd
    LOCAL uValue
    LOCAL aWords
-   LOCAL lStart := TRUE
+   LOCAL lStart := True
    LOCAL aObjects := {Self}
    LOCAL bError
 
@@ -77,7 +77,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
       Return False
    ENDIF
 
-   bError := IIf(hb_defaultValue(lIgnoreErrors, FALSE), {|e|Break(e)}, ErrorBlock())
+   bError := IIf(hb_defaultValue(lIgnoreErrors, False), {|e|Break(e)}, ErrorBlock())
 
    FOR EACH cLine IN hb_ATokens(StrTran(cObjectText, Chr(13)), Chr(10))
 
@@ -100,25 +100,25 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
             ENDIF
          ELSE
             aWords := hb_ATokens(hb_asciiUpper(cLine))
-            SWITCH aWords[1]
-            CASE "OBJECT"
+            Switch aWords[1]
+            Case "OBJECT"
                IF lStart
-                  lStart := FALSE
+                  lStart := False
                ELSEIF aWords[Len(aWords) - 1] == "AS" .AND. hb_LeftEq(aWords[2], "::")
                   cProp := SubStr(AllTrim(SubStr(cLine, 7, RAt(" AS ", cLine) - 7)), 3)
                   uValue := &(aTail(aWords))():CreateNew()
                ENDIF
                EXIT
-            CASE "ENDOBJECT"
+            Case "ENDOBJECT"
                ASize(aObjects, Len(aObjects) - 1)
                EXIT
-            CASE "ARRAY"
+            Case "ARRAY"
                IF hb_LeftEq(aWords[2], "::")
                   cProp := SubStr(AllTrim(SubStr(cLine, 6, RAt(" LEN ", cLine) - 6)), 3)
                   uValue := Array(Val(ATail(aWords)))
                ENDIF
                EXIT
-            ENDSWITCH
+            EndSwitch
          ENDIF
 
          IF !Empty(cProp)
@@ -148,7 +148,7 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
    LOCAL uNewValue
    LOCAL cObject
    LOCAL cType
-   LOCAL lSpacer := TRUE
+   LOCAL lSpacer := True
 
    IF !hb_IsString(cObjectName)
       cObjectName := "o" + ::ClassName()
@@ -171,31 +171,31 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
       IF !((cType := ValType(uValue)) == ValType(uNewValue)) .OR. !(uValue == uNewValue)
 
-         SWITCH cType
-         CASE "A"
+         Switch cType
+         Case "A"
             cObject += ArrayToText(uValue, cProp, nIndent + _INDENT)
-            lSpacer := TRUE
+            lSpacer := True
             EXIT
 
-         CASE "O"
+         Case "O"
             IF __objDerivedFrom(uValue, "HBPersistent")
                cObject += uValue:SaveToText(cProp, nIndent)
-               lSpacer := TRUE
+               lSpacer := True
             ENDIF
             EXIT
 
-         CASE "B"
-         CASE "P"
+         Case "B"
+         Case "P"
             // ignore codeblock and pointer items
             EXIT
 
-         OTHERWISE
+         Otherwise
             IF lSpacer
-               lSpacer := FALSE
+               lSpacer := False
                cObject += hb_eol()
             ENDIF
             cObject += Space(nIndent + _INDENT) + "::" + cProp + " := " + hb_ValToExp(uValue) + hb_eol()
-         ENDSWITCH
+         EndSwitch
 
       ENDIF
 
@@ -212,28 +212,28 @@ STATIC FUNCTION ArrayToText(aArray, cName, nIndent)
 
    FOR EACH uValue IN aArray
 
-      SWITCH ValType(uValue)
-      CASE "A"
+      Switch ValType(uValue)
+      Case "A"
          cArray += ArrayToText(uValue, cName + "[" + hb_ntos(uValue:__enumIndex()) + "]", nIndent + _INDENT) + hb_eol()
          EXIT
 
-      CASE "O"
+      Case "O"
          IF __objDerivedFrom(uValue, "HBPersistent")
             cArray += uValue:SaveToText(cName + "[" + hb_ntos(uValue:__enumIndex()) + "]", nIndent)
          ENDIF
          EXIT
 
-      CASE "B"
-      CASE "P"
+      Case "B"
+      Case "P"
          // ignore codeblock and pointer items
          EXIT
 
-      OTHERWISE
+      Otherwise
          IF uValue:__enumIsFirst()
             cArray += hb_eol()
          ENDIF
          cArray += Space(nIndent + _INDENT) + "::" + cName + "[" + hb_ntos(uValue:__enumIndex()) + "] := " + hb_ValToExp(uValue) + hb_eol()
-      ENDSWITCH
+      EndSwitch
    NEXT
 
    cArray += hb_eol() + Space(nIndent) + "ENDARRAY" + hb_eol()

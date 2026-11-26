@@ -70,15 +70,15 @@ CREATE CLASS HBDbWindow // Debugger windows and dialogs
    VAR cCaption
    VAR cBackImage
    VAR cColor
-   VAR lFocused     INIT FALSE
+   VAR lFocused     INIT False
    VAR bGotFocus
    VAR bLostFocus
    VAR bKeyPressed
    VAR bPainted
    VAR bLButtonDown
    VAR bLDblClick
-   VAR lShadow      INIT FALSE
-   VAR lVisible     INIT FALSE
+   VAR lShadow      INIT False
+   VAR lVisible     INIT False
    VAR Cargo
    VAR Browser
 
@@ -126,7 +126,7 @@ METHOD PROCEDURE HBDbWindow:Hide()
 
    __dbgRestScreen(::nTop, ::nLeft, ::nBottom + IIf(::lShadow, 1, 0), ::nRight + IIf(::lShadow, 2, 0), ::cBackImage)
    ::cBackImage := NIL
-   ::lVisible := FALSE
+   ::lVisible := False
 
    RETURN
 
@@ -196,39 +196,39 @@ METHOD PROCEDURE HBDbWindow:Show(lFocused)
    ENDIF
 
    ::Refresh()
-   ::lVisible := TRUE
+   ::lVisible := True
 
    RETURN
 
 METHOD PROCEDURE HBDbWindow:ShowModal()
 
-   LOCAL lExit := FALSE
+   LOCAL lExit := False
    LOCAL nKey
 
-   ::lShadow := TRUE
+   ::lShadow := True
    ::Show()
 
-   DO WHILE !lExit
+   Do While !lExit
       nKey := __dbgInkey()
 
       IF hb_IsEvalItem(::bKeyPressed)
          Eval(::bKeyPressed, nKey)
       ENDIF
 
-      SWITCH nKey
-      CASE K_ESC
-         lExit := TRUE
+      Switch nKey
+      Case K_ESC
+         lExit := True
          EXIT
 
-      CASE K_LBUTTONDOWN
+      Case K_LBUTTONDOWN
          IF MRow() == ::nTop .AND. MCol() >= ::nLeft + 1 .AND. ;
             MCol() <= ::nLeft + 3
-            lExit := TRUE
+            lExit := True
          ENDIF
          EXIT
 
-      ENDSWITCH
-   ENDDO
+      EndSwitch
+   EndDo
 
    ::Hide()
 
@@ -258,12 +258,12 @@ METHOD PROCEDURE HBDbWindow:Move()
    LOCAL nOldRight  := ::nright
    LOCAL nKey
 
-   DO WHILE TRUE
+   Do While True
       __dbgRestScreen(NIL, NIL, NIL, NIL, ::cBackImage)
       hb_DispBox(::nTop, ::nLeft, ::nRight, ::nBottom, Replicate(hb_UTF8ToStrBox("░"), 8) + " ", ::cColor)
 
-      SWITCH nKey := __dbgInkey()
-      CASE K_UP
+      Switch nKey := __dbgInkey()
+      Case K_UP
 
          IF ::nTop != 0
             ::nTop--
@@ -271,7 +271,7 @@ METHOD PROCEDURE HBDbWindow:Move()
          ENDIF
          EXIT
 
-      CASE K_DOWN
+      Case K_DOWN
 
          IF ::nBottom != MaxRow()
             ::nTop++
@@ -279,7 +279,7 @@ METHOD PROCEDURE HBDbWindow:Move()
          ENDIF
          EXIT
 
-      CASE K_LEFT
+      Case K_LEFT
 
          IF ::nLeft != 0
             ::nLeft--
@@ -287,7 +287,7 @@ METHOD PROCEDURE HBDbWindow:Move()
          ENDIF
          EXIT
 
-      CASE K_RIGHT
+      Case K_RIGHT
 
          IF ::nBottom != MaxRow()
             ::nLeft++
@@ -295,7 +295,7 @@ METHOD PROCEDURE HBDbWindow:Move()
          ENDIF
          EXIT
 
-      CASE K_ESC
+      Case K_ESC
 
          ::nTop    := nOldTop
          ::nLeft   := nOldLeft
@@ -303,12 +303,12 @@ METHOD PROCEDURE HBDbWindow:Move()
          ::nRight  := nOldRight
          EXIT
 
-      ENDSWITCH
+      EndSwitch
 
       IF nKey == K_ESC .OR. nKey == K_ENTER
          EXIT
       ENDIF
-   ENDDO
+   EndDo
 
 #if 0
    hb_keySetLast(0)

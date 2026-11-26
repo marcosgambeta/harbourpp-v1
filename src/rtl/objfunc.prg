@@ -79,7 +79,7 @@ FUNCTION __objGetMsgList(oObject, lDataMethod, nClassType)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
-   hb_default(@lDataMethod, TRUE)
+   hb_default(@lDataMethod, True)
 
    aInfo := oObject:ClassSel(hb_defaultValue(nClasstype, HB_MSGLISTALL))
    aData := {}
@@ -106,7 +106,7 @@ FUNCTION __objGetMethodList(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
-   RETURN __objGetMsgList(oObject, FALSE)
+   RETURN __objGetMsgList(oObject, False)
 
 FUNCTION __objGetValueList(oObject, aExcept)
 
@@ -121,7 +121,7 @@ FUNCTION __objGetValueList(oObject, aExcept)
 
    aData := {}
    FOR EACH cSymbol IN __objGetMsgList(oObject)
-      IF hb_AScan(aExcept, cSymbol, NIL, NIL, TRUE) == 0
+      IF hb_AScan(aExcept, cSymbol, NIL, NIL, True) == 0
          AAdd(aData, {cSymbol, __objSendMsg(oObject, cSymbol)})
       ENDIF
    NEXT
@@ -227,14 +227,14 @@ FUNCTION __objDerivedFrom(oObject, xSuper)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
-   DO CASE
-   CASE hb_IsObject(xSuper)
+   Do Case
+   Case hb_IsObject(xSuper)
       cClassName := xSuper:ClassName()
-   CASE hb_IsString(xSuper)
+   Case hb_IsString(xSuper)
       cClassName := hb_asciiUpper(xSuper)
-   OTHERWISE
+   Otherwise
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
-   ENDCASE
+   EndCase
 
    RETURN __clsParent(oObject:ClassH, cClassName)
 

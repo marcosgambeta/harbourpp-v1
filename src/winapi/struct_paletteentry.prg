@@ -38,7 +38,7 @@ RETURN was_PALETTEENTRY():new()
 CLASS WAS_PALETTEENTRY
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

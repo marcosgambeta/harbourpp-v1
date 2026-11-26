@@ -84,26 +84,26 @@
 
 FUNCTION sxChar(nLen, /* @ */ xKeyVal)
 
-   SWITCH ValType(xKeyVal)
-   CASE "C"
-   CASE "M"
+   Switch ValType(xKeyVal)
+   Case "C"
+   Case "M"
       EXIT
-   CASE "N"
+   Case "N"
       xKeyVal := Str(xKeyVal)
       EXIT
-   CASE "D"
+   Case "D"
       xKeyVal := DToS(xKeyVal)
       EXIT
-   CASE "T"
+   Case "T"
       xKeyVal := hb_TToS(xKeyVal)
       EXIT
-   CASE "L"
+   Case "L"
       xKeyVal := IIf(xKeyVal, "T", "F")
       EXIT
-   OTHERWISE
+   Otherwise
       xKeyVal := IIf(hb_IsNumeric(nLen), "", Space(10))
       EXIT
-   ENDSWITCH
+   EndSwitch
 
    IF hb_IsNumeric(nLen)
       xKeyVal := PadR(LTrim(xKeyVal), nLen)
@@ -113,73 +113,73 @@ FUNCTION sxChar(nLen, /* @ */ xKeyVal)
 
 FUNCTION sxNum(/* @ */ xKeyVal)
 
-   SWITCH ValType(xKeyVal)
-   CASE "N"
+   Switch ValType(xKeyVal)
+   Case "N"
       EXIT
-   CASE "C"
-   CASE "M"
+   Case "C"
+   Case "M"
       xKeyVal := Val(xKeyVal)
       EXIT
-   CASE "T"
-   CASE "D"
+   Case "T"
+   Case "D"
       xKeyVal := xKeyVal - hb_SToD()
       EXIT
-   CASE "L"
+   Case "L"
       xKeyVal := IIf(xKeyVal, 1, 0)
       EXIT
-   OTHERWISE
+   Otherwise
       xKeyVal := 0.00
       EXIT
-   ENDSWITCH
+   EndSwitch
 
    RETURN xKeyVal
 
 FUNCTION sxDate(/* @ */ xKeyVal)
 
-   SWITCH ValType(xKeyVal)
-   CASE "D"
+   Switch ValType(xKeyVal)
+   Case "D"
       EXIT
-   CASE "T"
+   Case "T"
       xKeyVal := hb_TToD(xKeyVal)
       EXIT
-   CASE "C"
-   CASE "M"
+   Case "C"
+   Case "M"
       xKeyVal := CToD(xKeyVal)
       EXIT
-   CASE "N"
+   Case "N"
       xKeyVal := hb_SToD() + xKeyVal
       EXIT
-   OTHERWISE
+   Otherwise
       xKeyVal := hb_SToD()
       EXIT
-   ENDSWITCH
+   EndSwitch
 
    RETURN xKeyVal
 
 FUNCTION sxLog(/* @ */ xKeyVal)
 
-   SWITCH ValType(xKeyVal)
-   CASE "L"
+   Switch ValType(xKeyVal)
+   Case "L"
       EXIT
-   CASE "C"
-   CASE "M"
-      SWITCH xKeyVal
-      CASE  "T";  CASE  "t";  CASE  "Y";  CASE  "y"
-      CASE ".T."; CASE ".t."; CASE ".Y."; CASE ".y."
-         xKeyVal := TRUE
+   Case "C"
+   Case "M"
+      Switch xKeyVal
+      Case  "T";  Case  "t";  Case  "Y";  Case  "y"
+      Case ".T."; Case ".t."; Case ".Y."; Case ".y."
+         xKeyVal := True
          EXIT
-      OTHERWISE
-         xKeyVal := FALSE
+      Otherwise
+         xKeyVal := False
          EXIT
-      ENDSWITCH
+      EndSwitch
       EXIT
-   CASE "N"
+   Case "N"
       xKeyVal := xKeyVal != 0
       EXIT
-   OTHERWISE
-      xKeyVal := FALSE
+   Otherwise
+      xKeyVal := False
       EXIT
-   ENDSWITCH
+   EndSwitch
 
    RETURN xKeyVal
 
@@ -187,15 +187,15 @@ FUNCTION sx_Compress(xVal)
 
    LOCAL xRetVal
 
-   SWITCH ValType(xVal)
-   CASE "C"
-   CASE "M"
+   Switch ValType(xVal)
+   Case "C"
+   Case "M"
       RETURN _sx_StrCompress(xVal)
-   CASE "A"
+   Case "A"
       xRetVal := Array(Len(xVal))
       AEval(xVal, {| x, i | xRetVal[i] := sx_Compress(x) })
       RETURN xRetVal
-   ENDSWITCH
+   EndSwitch
 
    RETURN xVal
 
@@ -203,15 +203,15 @@ FUNCTION sx_Decompress(xVal)
 
    LOCAL xRetVal
 
-   SWITCH ValType(xVal)
-   CASE "C"
-   CASE "M"
+   Switch ValType(xVal)
+   Case "C"
+   Case "M"
       RETURN _sx_StrDecompress(xVal)
-   CASE "A"
+   Case "A"
       xRetVal := Array(Len(xVal))
       AEval(xVal, {| x, i | xRetVal[i] := sx_Decompress(x) })
       RETURN xRetVal
-   ENDSWITCH
+   EndSwitch
 
    RETURN xVal
 
@@ -250,16 +250,16 @@ FUNCTION sx_TagCount(xIndex)
    LOCAL nOrder
 
    IF Used()
-      DO CASE
-      CASE hb_IsNumeric(xIndex)
+      Do Case
+      Case hb_IsNumeric(xIndex)
          IF (nOrder := sx_TagOrder(1, xIndex)) != 0
             cIndex := dbOrderInfo(DBOI_FULLPATH, NIL, nOrder)
          ENDIF
-      CASE hb_IsString(xIndex) .AND. !Empty(xIndex)
+      Case hb_IsString(xIndex) .AND. !Empty(xIndex)
          cIndex := xIndex
-      OTHERWISE
+      Otherwise
          cIndex := dbOrderInfo(DBOI_FULLPATH)
-      ENDCASE
+      EndCase
       IF !Empty(cIndex)
          nTags := ordCount(cIndex)
       ENDIF
@@ -274,19 +274,19 @@ FUNCTION sx_Tags(xIndex)
    LOCAL nTags
 
    IF Used()
-      DO CASE
-      CASE hb_IsNumeric(xIndex)
+      Do Case
+      Case hb_IsNumeric(xIndex)
          nOrder := sx_TagOrder(1, xIndex)
-      CASE hb_IsString(xIndex) .AND. !Empty(xIndex)
+      Case hb_IsString(xIndex) .AND. !Empty(xIndex)
          nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex)
-      OTHERWISE
+      Otherwise
          nOrder := ordNumber()
-      ENDCASE
+      EndCase
       IF nOrder != 0
          nTags := ordCount(dbOrderInfo(DBOI_FULLPATH, NIL, nOrder))
-         DO WHILE --nTags >= 0
+         Do While --nTags >= 0
             AAdd(aTagNames, ordName(nOrder++))
-         ENDDO
+         EndDo
       ENDIF
    ENDIF
 
@@ -294,7 +294,7 @@ FUNCTION sx_Tags(xIndex)
 
 FUNCTION sx_SetTag(xTag, xIndex)
 
-   LOCAL lRet := FALSE
+   LOCAL lRet := False
    LOCAL nOrder := 0
    LOCAL nOldOrd
    LOCAL cIndex
@@ -336,7 +336,7 @@ FUNCTION sx_SetTag(xTag, xIndex)
          ENDIF
       ELSEIF Empty(xTag)
          ordSetFocus(0)
-         lRet := TRUE
+         lRet := True
       ENDIF
    ENDIF
 
@@ -344,23 +344,23 @@ FUNCTION sx_SetTag(xTag, xIndex)
 
 FUNCTION sx_KillTag(xTag, xIndex)
 
-   LOCAL lRet := FALSE
+   LOCAL lRet := False
    LOCAL nOrder
    LOCAL cIndex
 
    IF hb_IsLogical(xTag)
       IF xTag
-         DO CASE
-         CASE Empty(xIndex)
+         Do Case
+         Case Empty(xIndex)
             cIndex := sx_IndexName()
-         CASE hb_IsNumeric(xIndex)
+         Case hb_IsNumeric(xIndex)
             cIndex := sx_IndexName(1, xIndex)
-         CASE hb_IsString(xIndex)
+         Case hb_IsString(xIndex)
             nOrder := dbOrderInfo(DBOI_BAGORDER, xIndex)
             IF nOrder != 0
                cIndex := dbOrderInfo(DBOI_FULLPATH, NIL, nOrder)
             ENDIF
-         ENDCASE
+         EndCase
          IF !Empty(cIndex)
             IF ordBagClear(cIndex)
                lRet := FErase(cIndex) != F_ERROR
@@ -429,19 +429,19 @@ FUNCTION rdd_Info(xID)
 
    LOCAL cRDD
 
-   DO CASE
-   CASE hb_IsNumeric(xID)
+   Do Case
+   Case hb_IsNumeric(xID)
       IF !Alias(xID) == ""
          (xID)->(rddName())
       ENDIF
-   CASE hb_IsString(xID)
+   Case hb_IsString(xID)
       cRDD := Upper(AllTrim(xID))
       IF AScan(rddList(), {| x | Upper(x) == cRDD }) == 0
          cRDD := NIL
       ENDIF
-   CASE xID == NIL
+   Case xID == NIL
       cRDD := rddSetDefault()
-   ENDCASE
+   EndCase
 
    IF Empty(cRDD)
       RETURN {}
@@ -449,7 +449,7 @@ FUNCTION rdd_Info(xID)
 
    RETURN { ;
       cRDD, ;
-      TRUE, ;
+      True, ;
       hb_rddInfo(RDDI_TABLEEXT, NIL, cRDD), ;
       hb_rddInfo(RDDI_ORDBAGEXT, NIL, cRDD), ;
       hb_rddInfo(RDDI_ORDEREXT, NIL, cRDD), ;
@@ -502,21 +502,21 @@ FUNCTION sx_dbCreate(cFileName, aStruct, cRDD)
 
    aDbStruct := AClone(aStruct)
    FOR EACH aField IN aDbStruct
-      SWITCH aField[DBS_TYPE]
-      CASE "V"
+      Switch aField[DBS_TYPE]
+      Case "V"
          aField[DBS_LEN] += 6
          EXIT
-      CASE "D"
+      Case "D"
          IF aField[DBS_LEN] == 3
             aField[DBS_TYPE] := "V"
          ENDIF
          EXIT
-      CASE "I"
+      Case "I"
          IF aField[DBS_LEN] == 4
             aField[DBS_TYPE] := "V"
          ENDIF
          EXIT
-      ENDSWITCH
+      EndSwitch
    NEXT
 
    RETURN dbCreate(cFileName, aDbStruct, cRDD)
@@ -527,12 +527,12 @@ FUNCTION sx_VSigLen(xField)
    LOCAL nField := 0
 
    IF Used()
-      DO CASE
-      CASE hb_IsString(xField)
+      Do Case
+      Case hb_IsString(xField)
          nField := FieldPos(xField)
-      CASE hb_IsNumeric(xField)
+      Case hb_IsNumeric(xField)
          nField := xField
-      ENDCASE
+      EndCase
       IF nField >= 1 .AND. nField <= FCount()
          nResult := FieldLen(nField)
          IF FieldType(nField) == "V" .AND. nResult >= 6
@@ -583,22 +583,22 @@ FUNCTION sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
          ENDIF
       ELSEIF Used()
          cPrevTrigger := dbInfo(DBI_TRIGGER)
-         SWITCH nAction
-         CASE TRIGGER_ENABLE
-            dbInfo(DBI_TRIGGER, TRUE)
+         Switch nAction
+         Case TRIGGER_ENABLE
+            dbInfo(DBI_TRIGGER, True)
             EXIT
-         CASE TRIGGER_DISABLE
-            dbInfo(DBI_TRIGGER, FALSE)
+         Case TRIGGER_DISABLE
+            dbInfo(DBI_TRIGGER, False)
             EXIT
-         CASE TRIGGER_REMOVE
+         Case TRIGGER_REMOVE
             dbInfo(DBI_TRIGGER, "")
             EXIT
-         CASE TRIGGER_INSTALL
+         Case TRIGGER_INSTALL
             IF hb_IsString(cTriggerName)
                dbInfo(DBI_TRIGGER, cTriggerName)
             ENDIF
             EXIT
-         ENDSWITCH
+         EndSwitch
       ENDIF
    ENDIF
 

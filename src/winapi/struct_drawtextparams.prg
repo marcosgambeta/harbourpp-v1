@@ -38,7 +38,7 @@ RETURN was_DRAWTEXTPARAMS():new()
 CLASS WAS_DRAWTEXTPARAMS
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

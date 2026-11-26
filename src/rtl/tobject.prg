@@ -79,7 +79,7 @@ FUNCTION HBObject()
          oClass:AddInline("MSGNOTFOUND"     , {|Self, cMsg|::Error("Message not found", ::className(), cMsg, IIf(hb_LeftEq(cMsg, "_"), 1005, 1004))}, HB_OO_CLSTP_EXPORTED)
 
 #if 0
-         oClass:AddMultiData(NIL, NIL, HB_OO_CLSTP_EXPORTED, {"CLASS"}, FALSE)
+         oClass:AddMultiData(NIL, NIL, HB_OO_CLSTP_EXPORTED, {"CLASS"}, False)
 
          oClass:AddInline("ADDMETHOD", {|Self, cMeth, pFunc, nScopeMeth|__clsAddMsg(__classH(Self), cMeth, pFunc, HB_OO_MSG_METHOD, NIL, IIf(nScopeMeth == NIL, 1, nScopeMeth))}, HB_OO_CLSTP_EXPORTED)
          oClass:AddInline("ADDVAR"   , {|Self, cVAR, nScopeMeth, uiData, hClass|__clsAddMsg(hClass := __classH(Self), cVar, uidata := __cls_IncData(hClass), HB_OO_MSG_ACCESS, NIL, IIf(nScopeMeth == NIL, 1, nScopeMeth)), ;

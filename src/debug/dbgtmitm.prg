@@ -76,7 +76,7 @@ METHOD HBDbMenuItem:New(cPrompt, bAction, lChecked, xIdent)
 
    ::cPrompt  := cPrompt
    ::bAction  := bAction
-   ::lChecked := hb_defaultValue(lChecked, FALSE)
+   ::lChecked := hb_defaultValue(lChecked, False)
    ::Ident    := xIdent
 
    RETURN Self

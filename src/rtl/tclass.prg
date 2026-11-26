@@ -158,28 +158,28 @@ STATIC FUNCTION New(cClassName, xSuper, sClassFunc, lModuleFriendly)
    LOCAL Self := QSelf()
    LOCAL i
 
-   DO CASE
-   CASE hb_IsSymbol(xSuper)
+   Do Case
+   Case hb_IsSymbol(xSuper)
       ::asSuper := {xSuper}
-   CASE Empty(xSuper)
+   Case Empty(xSuper)
       ::asSuper := {}
-   CASE hb_IsString(xSuper)
+   Case hb_IsString(xSuper)
       ::asSuper := {__dynsN2Sym(xSuper)}
-   CASE hb_IsArray(xSuper)
+   Case hb_IsArray(xSuper)
       ::asSuper := {}
       FOR EACH i IN xSuper
-         DO CASE
-         CASE hb_IsSymbol(i)
+         Do Case
+         Case hb_IsSymbol(i)
             AAdd(::asSuper, i)
-         CASE hb_IsString(i) .AND. !Empty(i)
+         Case hb_IsString(i) .AND. !Empty(i)
             AAdd(::asSuper, __dynsN2Sym(i))
-         ENDCASE
+         EndCase
       NEXT
-   ENDCASE
+   EndCase
 
    ::cName         := hb_asciiUpper(cClassName)
    ::sClassFunc    := sClassFunc
-   ::lModFriendly  := hb_defaultValue(lModuleFriendly, FALSE)
+   ::lModFriendly  := hb_defaultValue(lModuleFriendly, False)
 
    ::aDatas        := {}
    ::aMethods      := {}
@@ -282,28 +282,28 @@ STATIC FUNCTION Instance()
 STATIC PROCEDURE AddData(cData, xInit, cType, nScope, lNoinit)
 
    /* Default Init for Logical and numeric */
-   IF !hb_defaultValue(lNoInit, FALSE) .AND. cType != NIL .AND. xInit == NIL
+   IF !hb_defaultValue(lNoInit, False) .AND. cType != NIL .AND. xInit == NIL
 
-      SWITCH Asc(cType)
-      CASE Asc("L")   /* Logical */
-      CASE Asc("l")   /* Logical */
-         xInit := FALSE
+      Switch Asc(cType)
+      Case Asc("L")   /* Logical */
+      Case Asc("l")   /* Logical */
+         xInit := False
          EXIT
-      CASE Asc("I")   /* Numeric or Integer */
-      CASE Asc("i")   /* Numeric or Integer */
-      CASE Asc("N")   /* Numeric or Integer */
-      CASE Asc("n")   /* Numeric or Integer */
+      Case Asc("I")   /* Numeric or Integer */
+      Case Asc("i")   /* Numeric or Integer */
+      Case Asc("N")   /* Numeric or Integer */
+      Case Asc("n")   /* Numeric or Integer */
          xInit := 0
          EXIT
-      CASE Asc("D")   /* Date */
-      CASE Asc("d")   /* Date */
+      Case Asc("D")   /* Date */
+      Case Asc("d")   /* Date */
          xInit := hb_SToD()
          EXIT
-      CASE Asc("T")   /* Timestamp */
-      CASE Asc("t")   /* Timestamp */
+      Case Asc("T")   /* Timestamp */
+      Case Asc("t")   /* Timestamp */
          xInit := hb_SToT()
          EXIT
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    AAdd(QSelf():aDatas, {cData, xInit, cType, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
@@ -325,28 +325,28 @@ STATIC PROCEDURE AddMultiData(cType, xInit, nScope, aData, lNoInit)
 STATIC PROCEDURE AddClassData(cData, xInit, cType, nScope, lNoInit)
 
    /* Default Init for Logical and numeric */
-   IF !hb_defaultValue(lNoInit, FALSE) .AND. cType != NIL .AND. xInit == NIL
+   IF !hb_defaultValue(lNoInit, False) .AND. cType != NIL .AND. xInit == NIL
 
-      SWITCH Asc(cType)
-      CASE Asc("L")   /* Logical */
-      CASE Asc("l")   /* Logical */
-         xInit := FALSE
+      Switch Asc(cType)
+      Case Asc("L")   /* Logical */
+      Case Asc("l")   /* Logical */
+         xInit := False
          EXIT
-      CASE Asc("I")   /* Numeric or Integer */
-      CASE Asc("i")   /* Numeric or Integer */
-      CASE Asc("N")   /* Numeric or Integer */
-      CASE Asc("n")   /* Numeric or Integer */
+      Case Asc("I")   /* Numeric or Integer */
+      Case Asc("i")   /* Numeric or Integer */
+      Case Asc("N")   /* Numeric or Integer */
+      Case Asc("n")   /* Numeric or Integer */
          xInit := 0
          EXIT
-      CASE Asc("D")   /* Date */
-      CASE Asc("d")   /* Date */
+      Case Asc("D")   /* Date */
+      Case Asc("d")   /* Date */
          xInit := hb_SToD()
          EXIT
-      CASE Asc("T")   /* Timestamp */
-      CASE Asc("t")   /* Timestamp */
+      Case Asc("T")   /* Timestamp */
+      Case Asc("t")   /* Timestamp */
          xInit := hb_SToT()
          EXIT
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    AAdd(QSelf():aClsDatas, {cData, xInit, cType, hb_bitOr(hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED), HB_OO_CLSTP_CLASS)})
@@ -393,14 +393,14 @@ STATIC PROCEDURE AddDelegate(xMethod, cDelegMsg, cObject, nScope)
 
    LOCAL mth
 
-   DO CASE
-   CASE hb_IsString(xMethod)
+   Do Case
+   Case hb_IsString(xMethod)
       AAdd(QSelf():aDelegates, {xMethod, cDelegMsg, cObject, nScope})
-   CASE hb_IsArray(xMethod)
+   Case hb_IsArray(xMethod)
       FOR EACH mth IN xMethod
          AAdd(QSelf():aDelegates, {mth, cDelegMsg, cObject, nScope})
       NEXT
-   ENDCASE
+   EndCase
 
    RETURN
 

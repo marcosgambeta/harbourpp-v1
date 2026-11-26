@@ -58,7 +58,7 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
    LOCAL aStruct
    LOCAL aJoinList
    LOCAL oError
-   LOCAL lError := FALSE
+   LOCAL lError := False
 
    dbSelectArea(nMaster)
    IF Empty(aStruct := __FieldTwo(cAlias, aFields))
@@ -69,17 +69,17 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
    BEGIN SEQUENCE
 
-      dbCreate(cFile, aStruct, cRDD, TRUE, "", NIL, cCodePage, nConnection)
+      dbCreate(cFile, aStruct, cRDD, True, "", NIL, cCodePage, nConnection)
       nResult := Select()
       aJoinList := __JoinList(nMaster, nDetail, nResult, aStruct)
 
       dbSelectArea(nMaster)
       dbGoTop()
-      DO WHILE !Eof()
+      Do While !Eof()
 
          dbSelectArea(nDetail)
          dbGoTop()
-         DO WHILE !Eof()
+         Do While !Eof()
 
             dbSelectArea(nMaster)
             IF Eval(bFor)
@@ -88,14 +88,14 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
             dbSelectArea(nDetail)
             dbSkip()
-         ENDDO
+         EndDo
 
          dbSelectArea(nMaster)
          dbSkip()
-      ENDDO
+      EndDo
 
    RECOVER USING oError
-      lError := TRUE
+      lError := True
    END SEQUENCE
 
    IF nResult != NIL
@@ -144,12 +144,12 @@ STATIC FUNCTION __JoinList(nMaster, nDetail, nResult, aStruct)
    LOCAL i
 
    FOR i := 1 TO Len(aStruct)
-      DO CASE
-      CASE (nPos := (nMaster)->(FieldPos(aStruct[i][DBS_NAME]))) != 0
+      Do Case
+      Case (nPos := (nMaster)->(FieldPos(aStruct[i][DBS_NAME]))) != 0
          AAdd(aList, { nResult, nMaster, nPos, i })
-      CASE (nPos := (nDetail)->(FieldPos(aStruct[i][DBS_NAME]))) != 0
+      Case (nPos := (nDetail)->(FieldPos(aStruct[i][DBS_NAME]))) != 0
          AAdd(aList, { nResult, nDetail, nPos, i })
-      ENDCASE
+      EndCase
    NEXT
 
    RETURN aList

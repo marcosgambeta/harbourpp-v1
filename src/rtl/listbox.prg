@@ -83,7 +83,7 @@ CREATE CLASS ListBox FUNCTION HBListBox
    VAR aItems     INIT {}
    VAR lDropDown
    VAR bFBlock
-   VAR lHasFocus  INIT FALSE
+   VAR lHasFocus  INIT False
    VAR cHotBox    INIT HB_B_DOUBLE_UNI
    VAR nItemCount INIT 0
    VAR nLeft
@@ -182,7 +182,7 @@ METHOD ListBox:close()
 
    IF ::lIsOpen
       RestScreen(::aSaveScr[1], ::aSaveScr[2], ::aSaveScr[3], ::aSaveScr[4], ::aSaveScr[5])
-      ::lIsOpen := FALSE
+      ::lIsOpen := False
       ::aSaveScr := NIL
    ENDIF
 
@@ -192,7 +192,7 @@ METHOD ListBox:delItem(nPos)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
 
-      hb_ADel(::aItems, nPos, TRUE)
+      hb_ADel(::aItems, nPos, True)
       ::nItemCount--
 
       IF ::nValue > ::nItemCount
@@ -318,7 +318,7 @@ METHOD ListBox:findText(cText, nPos, lCaseSensitive, lExact)
 #endif
 
    hb_default(@nPos, 1)
-   hb_default(@lCaseSensitive, TRUE)
+   hb_default(@lCaseSensitive, True)
    IF !hb_IsLogical(lExact)
       lExact := Set(_SET_EXACT)
    ENDIF
@@ -354,7 +354,7 @@ METHOD ListBox:findData(xData, nPos, lCaseSensitive, lExact)
    LOCAL bSearch
 
    hb_default(@nPos, 1)
-   hb_default(@lCaseSensitive, TRUE)
+   hb_default(@lCaseSensitive, True)
    IF !hb_IsLogical(lExact)
       lExact := Set(_SET_EXACT)
    ENDIF
@@ -412,66 +412,66 @@ METHOD ListBox:hitTest(nMRow, nMCol)
    IF ::lIsOpen .AND. !Empty(::cHotBox + ::cColdBox)
 
       nOffset := 1
-      DO CASE
-      CASE nMRow == nTop
-         DO CASE
-         CASE nMCol == ::nLeft
+      Do Case
+      Case nMRow == nTop
+         Do Case
+         Case nMCol == ::nLeft
             RETURN HTTOPLEFT
-         CASE nMCol == ::nRight
+         Case nMCol == ::nRight
             RETURN HTTOPRIGHT
-         CASE nMCol >= ::nLeft .AND. nMCol <= ::nRight
+         Case nMCol >= ::nLeft .AND. nMCol <= ::nRight
             RETURN HTTOP
-         ENDCASE
-      CASE nMRow == ::nBottom
-         DO CASE
-         CASE nMCol == ::nLeft
+         EndCase
+      Case nMRow == ::nBottom
+         Do Case
+         Case nMCol == ::nLeft
             RETURN HTBOTTOMLEFT
-         CASE nMCol == ::nRight
+         Case nMCol == ::nRight
             RETURN HTBOTTOMRIGHT
-         CASE nMCol >= ::nLeft .AND. nMCol <= ::nRight
+         Case nMCol >= ::nLeft .AND. nMCol <= ::nRight
             RETURN HTBOTTOM
-         ENDCASE
-      CASE nMCol == ::nLeft
+         EndCase
+      Case nMCol == ::nLeft
          IF nMRow >= nTop .AND. nMRow <= ::nBottom
             RETURN HTLEFT
          ELSE
             RETURN HTNOWHERE
          ENDIF
-      CASE nMCol == ::nRight
+      Case nMCol == ::nRight
          IF nMRow >= nTop .AND. nMRow <= ::nBottom
             RETURN HTRIGHT
          ELSE
             RETURN HTNOWHERE
          ENDIF
-      ENDCASE
+      EndCase
    ENDIF
 
-   DO CASE
-   CASE !::lIsOpen
-   CASE nMRow < nTop + nOffset
-   CASE nMRow > ::nBottom - nOffset
-   CASE nMCol < ::nLeft + nOffset
-   CASE nMCol <= ::nRight - nOffset
+   Do Case
+   Case !::lIsOpen
+   Case nMRow < nTop + nOffset
+   Case nMRow > ::nBottom - nOffset
+   Case nMCol < ::nLeft + nOffset
+   Case nMCol <= ::nRight - nOffset
       RETURN ::nTopItem + nMRow - (nTop + nOffset)
-   ENDCASE
+   EndCase
 
-   DO CASE
-   CASE !::lDropDown
-   CASE nMRow != nTop
-   CASE nMCol < ::nLeft
-   CASE nMCol < ::nRight
+   Do Case
+   Case !::lDropDown
+   Case nMRow != nTop
+   Case nMCol < ::nLeft
+   Case nMCol < ::nRight
       RETURN HTCLIENT
-   CASE nMCol == ::nRight
+   Case nMCol == ::nRight
       RETURN HTDROPBUTTON
-   ENDCASE
+   EndCase
 
-   DO CASE
-   CASE Empty(::cCaption)
-   CASE nMRow != ::nCapRow
-   CASE nMCol < ::nCapCol
-   CASE nMCol < ::nCapCol + __CapLength(::cCaption)
+   Do Case
+   Case Empty(::cCaption)
+   Case nMRow != ::nCapRow
+   Case nMCol < ::nCapCol
+   Case nMCol < ::nCapCol + __CapLength(::cCaption)
       RETURN HTCAPTION
-   ENDCASE
+   EndCase
 
    RETURN HTNOWHERE
 
@@ -479,7 +479,7 @@ METHOD ListBox:insItem(nPos, cText, xData)
 
    IF hb_IsString(cText) .AND. hb_IsNumeric(nPos) .AND. nPos < ::nItemCount
 
-      hb_AIns(::aItems, nPos, {cText, xData}, TRUE)
+      hb_AIns(::aItems, nPos, {cText, xData}, True)
       ::nItemCount++
 
       IF ::nItemCount == 1
@@ -498,13 +498,13 @@ METHOD ListBox:killFocus()
    LOCAL nOldMCur
 
    IF ::lHasFocus
-      ::lHasFocus := FALSE
+      ::lHasFocus := False
 
       IF hb_IsEvalItem(::bFBlock)
          Eval(::bFBlock)
       ENDIF
 
-      nOldMCur := MSetCursor(FALSE)
+      nOldMCur := MSetCursor(False)
       DispBegin()
 
       IF ::lDropDown .AND. ::lIsOpen
@@ -536,7 +536,7 @@ METHOD ListBox:open()
 
       ::aSaveScr := {::nTop + 1, ::nLeft, ::nBottom, ::nRight, SaveScreen(::nTop + 1, ::nLeft, ::nBottom, ::nRight)}
 
-      ::lIsOpen := TRUE
+      ::lIsOpen := True
       ::display()
    ENDIF
 
@@ -574,8 +574,8 @@ METHOD ListBox:scroll(nMethod)
 
    IF hb_IsNumeric(nMethod)
 
-      SWITCH nMethod
-      CASE HTSCROLLTHUMBDRAG
+      Switch nMethod
+      Case HTSCROLLTHUMBDRAG
 
          nPrevMRow := MRow()
 
@@ -614,7 +614,7 @@ METHOD ListBox:scroll(nMethod)
          EndDo
          EXIT
 
-      CASE HTSCROLLUNITDEC
+      Case HTSCROLLUNITDEC
 
          IF ::nTopItem > 1
             ::nTopItem--
@@ -623,7 +623,7 @@ METHOD ListBox:scroll(nMethod)
          ENDIF
          EXIT
 
-      CASE HTSCROLLUNITINC
+      Case HTSCROLLUNITINC
 
          IF (::nTopItem + ::nBottom - ::nTop) <= ::nItemCount + 1
             ::nTopItem++
@@ -632,7 +632,7 @@ METHOD ListBox:scroll(nMethod)
          ENDIF
          EXIT
 
-      CASE HTSCROLLBLOCKDEC
+      Case HTSCROLLBLOCKDEC
 
          nPos     := ::nBottom - ::nTop - IIf(::lDropDown, 2, 1)
          nTopItem := ::nTopItem - nPos
@@ -643,7 +643,7 @@ METHOD ListBox:scroll(nMethod)
          ENDIF
          EXIT
 
-      CASE HTSCROLLBLOCKINC
+      Case HTSCROLLBLOCKINC
 
          nPos       := ::nBottom - ::nTop - 1
          nItemCount := ::nItemCount
@@ -658,7 +658,7 @@ METHOD ListBox:scroll(nMethod)
          ENDIF
          EXIT
 
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    RETURN Self
@@ -669,8 +669,8 @@ METHOD ListBox:select(xPos)
    LOCAL nPos
    LOCAL cType := ValType(xPos)
 
-   DO CASE
-   CASE cType == "C"
+   Do Case
+   Case cType == "C"
       nPos := ::findData(xPos)
       IF !ValType(::xBuffer) $ "CU"
          ::xBuffer := nPos
@@ -679,15 +679,15 @@ METHOD ListBox:select(xPos)
       ELSE
          ::xBuffer := _LISTBOX_ITEMDATA(::aItems[nPos])
       ENDIF
-   CASE !cType == "N"
+   Case !cType == "N"
       RETURN ::nValue
-   CASE xPos < 1
+   Case xPos < 1
       RETURN ::nValue
-   CASE xPos > ::nItemCount
+   Case xPos > ::nItemCount
       RETURN ::nValue
-   CASE xPos == ::nValue
+   Case xPos == ::nValue
       RETURN ::nValue
-   OTHERWISE
+   Otherwise
       nPos := xPos
       IF ValType(::xBuffer) $ "NU"
          ::xBuffer := nPos
@@ -696,7 +696,7 @@ METHOD ListBox:select(xPos)
       ELSE
          ::xBuffer := _LISTBOX_ITEMDATA(::aItems[nPos])
       ENDIF
-   ENDCASE
+   EndCase
    ::nValue := nPos
 
    ::cTextValue := IIf(nPos == 0, "", _LISTBOX_ITEMDATA(::aItems[nPos]))
@@ -736,7 +736,7 @@ METHOD ListBox:setFocus()
    IF !::lHasFocus
 
       ::nCursor := SetCursor(SC_NONE)
-      ::lHasFocus := TRUE
+      ::lHasFocus := True
 
       ::display()
 
@@ -899,7 +899,7 @@ METHOD ListBox:dropDown(lDropDown)
       ::lDropDown := __eInstVar53(Self, "DROPDOWN", lDropDown, "L", 1001)
 
       IF !::lDropDown .AND. !::lIsOpen
-         ::lIsOpen := TRUE
+         ::lIsOpen := True
       ENDIF
 
       ::display()
@@ -1039,7 +1039,7 @@ METHOD ListBox:Init(nTop, nLeft, nBottom, nRight, lDropDown)
       RETURN NIL
    ENDIF
 
-   hb_default(@lDropDown, FALSE)
+   hb_default(@lDropDown, False)
 
    ::nBottom   := nBottom
    ::nRight    := nRight
@@ -1088,22 +1088,22 @@ FUNCTION _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessag
       o:sBlock    := bSBlock
 
       FOR EACH xItem IN aItems
-         DO CASE
-         CASE !hb_IsArray(xItem)
+         Do Case
+         Case !hb_IsArray(xItem)
             o:addItem(xItem)
-         CASE Len(xItem) == _ITEM_cText
+         Case Len(xItem) == _ITEM_cText
             o:addItem(xItem[_ITEM_cText])
 #ifdef HB_CLP_STRICT
-         OTHERWISE  /* Cl*pper will RTE on empty subarray */
+         Otherwise  /* Cl*pper will RTE on empty subarray */
 #else
-         CASE Len(xItem) >= _ITEM_xData
+         Case Len(xItem) >= _ITEM_xData
 #endif
             o:addItem(xItem[_ITEM_cText], xItem[_ITEM_xData])
-         ENDCASE
+         EndCase
       NEXT
 
-      IF hb_defaultValue(lScrollBar, FALSE)
-         IF hb_defaultValue(lDropDown, FALSE)
+      IF hb_defaultValue(lScrollBar, False)
+         IF hb_defaultValue(lDropDown, False)
             nTop++
          ENDIF
          o:VScroll := ScrollBar(nTop + 1, nBottom - 1, nRight)

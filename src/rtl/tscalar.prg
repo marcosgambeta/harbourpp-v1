@@ -91,30 +91,30 @@ METHOD ScalarObject:IsScalar()
 
 METHOD ScalarObject:AsString()
 
-   SWITCH ValType(Self)
-   CASE "B" ; RETURN "{ || ... }"
-   CASE "M"
-   CASE "C" ; RETURN Self
-   CASE "D" ; RETURN DToC(Self)
-   CASE "T" ; RETURN hb_TToC(Self)
-   CASE "H" ; RETURN "{ ... => ... }"
-   CASE "L" ; RETURN IIf(Self, ".T.", ".F.")
-   CASE "N" ; RETURN hb_ntos(Self)
-   CASE "S" ; RETURN "@" + ::name + "()"
-   CASE "P" ; RETURN "<0x...>"
-   CASE "U" ; RETURN "NIL"
-   ENDSWITCH
+   Switch ValType(Self)
+   Case "B" ; RETURN "{ || ... }"
+   Case "M"
+   Case "C" ; RETURN Self
+   Case "D" ; RETURN DToC(Self)
+   Case "T" ; RETURN hb_TToC(Self)
+   Case "H" ; RETURN "{ ... => ... }"
+   Case "L" ; RETURN IIf(Self, ".T.", ".F.")
+   Case "N" ; RETURN hb_ntos(Self)
+   Case "S" ; RETURN "@" + ::name + "()"
+   Case "P" ; RETURN "<0x...>"
+   Case "U" ; RETURN "NIL"
+   EndSwitch
 
    RETURN "Error!"
 
 METHOD ScalarObject:AsExpStr()
 
-   SWITCH ValType(Self)
-   CASE "M"
-   CASE "C" ; RETURN '"' + Self + '"'
-   CASE "D" ; RETURN 'CToD("' + DToC(Self) + '")'
-   CASE "T" ; RETURN 'hb_CToT("' + hb_TToC(Self) + '")'
-   ENDSWITCH
+   Switch ValType(Self)
+   Case "M"
+   Case "C" ; RETURN '"' + Self + '"'
+   Case "D" ; RETURN 'CToD("' + DToC(Self) + '")'
+   Case "T" ; RETURN 'hb_CToT("' + hb_TToC(Self) + '")'
+   EndSwitch
 
    RETURN ::AsString()
 
@@ -250,20 +250,20 @@ METHOD Array:Copy()
 METHOD Array:DeleteAt(n)
 
    IF n >= 1 .AND. n <= Len(Self)
-      hb_ADel(Self, n, TRUE)
+      hb_ADel(Self, n, True)
    ENDIF
 
    RETURN Self
 
 METHOD Array:InsertAt(n, x)
 
-   DO CASE
-   CASE n > Len(Self)
+   Do Case
+   Case n > Len(Self)
       ASize(Self, n)
       Self[n] := x
-   CASE n >= 1
-      hb_AIns(Self, n, x, TRUE)
-   ENDCASE
+   Case n >= 1
+      hb_AIns(Self, n, x, True)
+   EndCase
 
    RETURN Self
 

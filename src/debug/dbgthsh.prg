@@ -73,7 +73,7 @@ METHOD HBDbHash:New(hHash, cVarName, lEditable)
 
    ::hashName := cVarName
    ::TheHash := hHash
-   ::lEditable := hb_defaultValue(lEditable, TRUE)
+   ::lEditable := hb_defaultValue(lEditable, True)
 
    ::addWindows(::TheHash)
 
@@ -98,7 +98,7 @@ METHOD HBDbHash:addWindows(hHash, nRow)
       oWndSets := HBDbWindow():New(1, 5, MaxRow() - 2, MaxCol() - 5, ::hashName + "[1.." + hb_ntos(nSize) + "]", "N/W")
    ENDIF
    ::nCurWindow++
-   oWndSets:lFocused := TRUE
+   oWndSets:lFocused := True
    AAdd(::aWindows, oWndSets)
 
    oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
@@ -160,36 +160,36 @@ METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
    LOCAL cOldname := ::hashName
    LOCAL uValue
 
-   SWITCH nKey
-   CASE K_UP
+   Switch nKey
+   Case K_UP
       oBrwSets:Up()
       EXIT
 
-   CASE K_DOWN
+   Case K_DOWN
       oBrwSets:Down()
       EXIT
 
-   CASE K_HOME
-   CASE K_CTRL_PGUP
-   CASE K_CTRL_HOME
+   Case K_HOME
+   Case K_CTRL_PGUP
+   Case K_CTRL_HOME
       oBrwSets:GoTop()
       EXIT
 
-   CASE K_END
-   CASE K_CTRL_PGDN
-   CASE K_CTRL_END
+   Case K_END
+   Case K_CTRL_PGDN
+   Case K_CTRL_END
       oBrwSets:GoBottom()
       EXIT
 
-   CASE K_PGDN
+   Case K_PGDN
       oBrwSets:pageDown()
       EXIT
 
-   CASE K_PGUP
+   Case K_PGUP
       oBrwSets:PageUp()
       EXIT
 
-   CASE K_ENTER
+   Case K_ENTER
       uValue := hb_HValueAt(hHash, nSet)
 
       IF hb_IsHash(uValue)
@@ -197,13 +197,13 @@ METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
             __dbgAlert("Hash is empty")
          ELSE
             SetPos(ownd:nBottom, ownd:nLeft)
-            ::aWindows[::nCurwindow]:lFocused := FALSE
+            ::aWindows[::nCurwindow]:lFocused := False
 
             ::hashName := ::hashName + "[" + HashKeyString(hHash, nSet) + "]"
             ::AddWindows(hb_HValueAt(hHash, nSet), oBrwSets:RowPos + oBrwSets:nTop)
             ::hashName := cOldName
 
-            hb_ADel(::aWindows, ::nCurWindow, TRUE)
+            hb_ADel(::aWindows, ::nCurWindow, True)
             IF ::nCurwindow == 0
                ::nCurwindow := 1
             ELSE
@@ -214,24 +214,24 @@ METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
          __dbgAlert("Value cannot be edited")
       ELSE
          oBrwSets:RefreshCurrent()
-         DO CASE
-         CASE hb_IsObject(uValue)
+         Do Case
+         Case hb_IsObject(uValue)
             __dbgObject(uValue, cName + "[" + HashKeyString(hHash, nSet) + "]")
-         CASE hb_IsArray(uValue)
+         Case hb_IsArray(uValue)
             IF Len(uValue) == 0
                __dbgAlert("Array is empty")
             ELSE
                __dbgArrays(uValue, cName + "[" + HashKeyString(hHash, nSet) + "]")
             ENDIF
-         OTHERWISE
+         Otherwise
             ::doGet(oBrwSets, hHash, nSet)
-         ENDCASE
+         EndCase
          oBrwSets:RefreshCurrent()
          oBrwSets:ForceStable()
       ENDIF
       EXIT
 
-   ENDSWITCH
+   EndSwitch
 
    oBrwSets:forcestable()
 

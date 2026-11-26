@@ -38,7 +38,7 @@ RETURN was_WNDCLASS():new()
 CLASS WAS_WNDCLASS
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    DATA strMenuName
    DATA strClassName

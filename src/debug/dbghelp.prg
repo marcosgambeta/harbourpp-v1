@@ -101,8 +101,8 @@ STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
    LOCAL n
    LOCAL nSkip
 
-   SWITCH nKey
-   CASE K_UP
+   Switch nKey
+   Case K_UP
 
       IF oBrw:Cargo > 1
          oBrw:Up()
@@ -111,7 +111,7 @@ STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
       ENDIF
       EXIT
 
-   CASE K_DOWN
+   Case K_DOWN
 
       IF oBrw:Cargo < Len(aTopics)
          oBrw:Down()
@@ -120,7 +120,7 @@ STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
       ENDIF
       EXIT
 
-   CASE K_HOME
+   Case K_HOME
 
       IF oBrw:Cargo > 1
          oBrw:GoTop()
@@ -129,7 +129,7 @@ STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
       ENDIF
       EXIT
 
-   CASE K_END
+   Case K_END
 
       IF oBrw:Cargo < Len(aTopics)
          oBrw:GoBottom()
@@ -138,22 +138,22 @@ STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
       ENDIF
       EXIT
 
-   CASE K_PGUP
-   CASE K_CTRL_B
+   Case K_PGUP
+   Case K_CTRL_B
 
       ShowTopic(oDlg, aTopics, oBrw:Cargo, -1)  // Skip to previous page
       EXIT
 
-   CASE K_PGDN
+   Case K_PGDN
 #if 0
-   CASE K_CTRL_F
+   Case K_CTRL_F
 #endif
-   CASE K_SPACE
+   Case K_SPACE
 
       ShowTopic(oDlg, aTopics, oBrw:Cargo, 1)  // Skip to next page
       EXIT
 
-   CASE K_LBUTTONDOWN
+   Case K_LBUTTONDOWN
 
       IF (nSkip := MRow() - oDlg:nTop - oBrw:RowPos) != 0
          IF nSkip > 0
@@ -172,7 +172,7 @@ STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
       ENDIF
       EXIT
 
-   ENDSWITCH
+   EndSwitch
 
    RETURN
 
@@ -196,13 +196,13 @@ STATIC PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
       ENDIF
       oDebug:nHelpPage := 1
    ELSE
-      SWITCH nPageOp
-      CASE 0  // Show first page
+      Switch nPageOp
+      Case 0  // Show first page
 
          oDebug:nHelpPage := 1
          EXIT
 
-      CASE 1  // Show next page
+      Case 1  // Show next page
 
          IF oDebug:nHelpPage < nPages
             oDebug:nHelpPage++
@@ -211,7 +211,7 @@ STATIC PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
          ENDIF
          EXIT
 
-      CASE -1  // Show previous page
+      Case -1  // Show previous page
 
          IF oDebug:nHelpPage > 1
             oDebug:nHelpPage--
@@ -220,7 +220,7 @@ STATIC PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
          ENDIF
          EXIT
 
-      ENDSWITCH
+      EndSwitch
    ENDIF
 
    hb_Scroll(oDlg:nTop + 1, oDlg:nLeft + 14, oDlg:nBottom - 1, oDlg:nRight - 1, NIL, NIL, oDlg:cColor)
@@ -240,7 +240,7 @@ STATIC FUNCTION GetTopics()
    LOCAL aTopics := {}
    LOCAL cLine
 
-   FOR EACH cLine IN hb_ATokens(help_en(), TRUE)
+   FOR EACH cLine IN hb_ATokens(help_en(), True)
       IF hb_LeftEq(cLine, "--")
          AAdd(aTopics, {PadR(SubStr(cLine, Len("--") + 1), 12), {}})
       ELSEIF !Empty(aTopics) .AND. ;

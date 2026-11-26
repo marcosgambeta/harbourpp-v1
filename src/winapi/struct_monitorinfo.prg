@@ -38,7 +38,7 @@ RETURN was_MONITORINFO():new()
 CLASS WAS_MONITORINFO
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

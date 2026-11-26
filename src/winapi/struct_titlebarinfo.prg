@@ -38,7 +38,7 @@ RETURN was_TITLEBARINFO():new()
 CLASS WAS_TITLEBARINFO
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete

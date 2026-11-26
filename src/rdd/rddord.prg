@@ -87,4 +87,4 @@ FUNCTION IndexKey(nOrder)
    RETURN ""
 
 FUNCTION ordSetRelation(xArea, bRelation, cRelation)
-   RETURN dbSetRelation(xArea, bRelation, cRelation, TRUE)
+   RETURN dbSetRelation(xArea, bRelation, cRelation, True)

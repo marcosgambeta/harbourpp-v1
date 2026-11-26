@@ -38,7 +38,7 @@ RETURN was_PAINTSTRUCT():new()
 CLASS WAS_PAINTSTRUCT
 
    DATA ptr
-   DATA self_destruction INIT FALSE
+   DATA self_destruction INIT False
 
    METHOD new
    METHOD delete
