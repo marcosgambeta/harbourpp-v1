@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasLOGPALETTE()
+Function wasLOGPALETTE()
 RETURN was_LOGPALETTE():new()
 
 CLASS WAS_LOGPALETTE

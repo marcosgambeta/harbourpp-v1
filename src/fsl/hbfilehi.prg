@@ -48,7 +48,7 @@
 #define _ISDRIVESPEC(cDir) (!Empty(hb_osDriveSeparator()) .AND. Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator())
 
 // NOTE: Can hurt if there are symlinks on the way.
-FUNCTION hb_PathNormalize(cPath)
+Function hb_PathNormalize(cPath)
 
    LOCAL aDir
    LOCAL cDir
@@ -98,7 +98,7 @@ FUNCTION hb_PathNormalize(cPath)
 
    RETURN cPath
 
-FUNCTION hb_PathJoin(cPathA, cPathR)
+Function hb_PathJoin(cPathA, cPathR)
 
    LOCAL cDirA
    LOCAL cDirR
@@ -126,7 +126,7 @@ FUNCTION hb_PathJoin(cPathA, cPathR)
 
    RETURN hb_FNameMerge(cDirA + cDirR, cNameR, cExtR)
 
-FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
+Function hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
 
    LOCAL tmp
    LOCAL aPathBase
@@ -183,7 +183,7 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
 
    RETURN cPathTarget
 
-STATIC FUNCTION s_FN_ToArray(cPath, /* @ */ cFileName)
+Static Function s_FN_ToArray(cPath, /* @ */ cFileName)
 
    LOCAL cDir
    LOCAL cName
@@ -197,7 +197,7 @@ STATIC FUNCTION s_FN_ToArray(cPath, /* @ */ cFileName)
 
    RETURN hb_ATokens(cDir, hb_ps())
 
-STATIC FUNCTION s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
+Static Function s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
 
    LOCAL nTo := Len(aPath)
    LOCAL cDir
@@ -221,7 +221,7 @@ STATIC FUNCTION s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
 
    RETURN hb_FNameMerge(hb_DirSepDel(hb_DirSepAdd(cDirPrefix) + cDir), cFileName)
 
-FUNCTION hb_DirSepAdd(cDir)
+Function hb_DirSepAdd(cDir)
 
    IF !hb_IsString(cDir)
       RETURN ""
@@ -236,7 +236,7 @@ FUNCTION hb_DirSepAdd(cDir)
 
    RETURN cDir
 
-FUNCTION hb_DirSepDel(cDir)
+Function hb_DirSepDel(cDir)
 
    IF !hb_IsString(cDir)
       RETURN ""
@@ -259,7 +259,7 @@ FUNCTION hb_DirSepDel(cDir)
 
    RETURN cDir
 
-FUNCTION hb_DirSepToOS(cFileName)
+Function hb_DirSepToOS(cFileName)
 
    IF hb_IsString(cFileName)
       RETURN StrTran(cFileName, IIf(hb_ps() == "\", "/", "\"), hb_ps())
@@ -267,7 +267,7 @@ FUNCTION hb_DirSepToOS(cFileName)
 
    RETURN ""
 
-FUNCTION hb_DirBuild(cDir)
+Function hb_DirBuild(cDir)
 
    LOCAL cDirTemp
    LOCAL cDirItem
@@ -318,7 +318,7 @@ FUNCTION hb_DirBuild(cDir)
 
    Return True
 
-FUNCTION hb_DirUnbuild(cDir)
+Function hb_DirUnbuild(cDir)
 
    LOCAL tmp
 

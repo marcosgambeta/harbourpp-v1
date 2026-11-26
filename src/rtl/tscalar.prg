@@ -84,7 +84,7 @@ CREATE CLASS ScalarObject FUNCTION HBScalar
 ENDCLASS
 
 METHOD ScalarObject:Copy()
-   RETURN Self
+   Return Self
 
 METHOD ScalarObject:IsScalar()
    Return True
@@ -94,7 +94,7 @@ METHOD ScalarObject:AsString()
    Switch ValType(Self)
    Case "B" ; RETURN "{ || ... }"
    Case "M"
-   Case "C" ; RETURN Self
+   Case "C" ; Return Self
    Case "D" ; RETURN DToC(Self)
    Case "T" ; RETURN hb_TToC(Self)
    Case "H" ; RETURN "{ ... => ... }"
@@ -208,22 +208,22 @@ METHOD Array:Init(nElements)
 
    ::size := IIf(nElements == NIL, 0, nElements)
 
-   RETURN Self
+   Return Self
 
 METHOD Array:AddAll(aOtherCollection)
 
    aOtherCollection:Do({|e|::Add(e)})
 
-   RETURN Self
+   Return Self
 
 METHOD Array:AsString()
    RETURN "{ ... }"
 
 METHOD Array:At(n)
-   RETURN Self[n]
+   Return Self[n]
 
 METHOD Array:AtPut(n, x)
-   RETURN Self[n] := x
+   Return Self[n] := x
 
 METHOD Array:Add(x)
 
@@ -253,7 +253,7 @@ METHOD Array:DeleteAt(n)
       hb_ADel(Self, n, True)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Array:InsertAt(n, x)
 
@@ -265,7 +265,7 @@ METHOD Array:InsertAt(n, x)
       hb_AIns(Self, n, x, True)
    EndCase
 
-   RETURN Self
+   Return Self
 
 METHOD Array:IsScalar()
    Return True
@@ -278,7 +278,7 @@ METHOD Array:Do(b)
       b:Eval(Self[i], i)
    NEXT
 
-   RETURN Self
+   Return Self
 
 METHOD Array:IndexOf(x)
 
@@ -363,7 +363,7 @@ CREATE CLASS Character INHERIT HBScalar FUNCTION __HBCharacter
 ENDCLASS
 
 METHOD Character:AsString()
-   RETURN Self
+   Return Self
 
 METHOD Character:AsExpStr()
    RETURN '"' + Self + '"'

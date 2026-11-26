@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasLOGBRUSH()
+Function wasLOGBRUSH()
 RETURN was_LOGBRUSH():new()
 
 CLASS WAS_LOGBRUSH

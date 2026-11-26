@@ -56,7 +56,7 @@
 #xcommand SEPARATOR => HBDbMenu():AddItem(HBDbMenuItem():New("-"))
 #xcommand ENDMENU => ATail(HBDbMenu():aMenus):Build()
 
-FUNCTION __dbgBuildMenu(oDebugger)  // Builds the debugger pulldown menu
+Function __dbgBuildMenu(oDebugger)  // Builds the debugger pulldown menu
 
    LOCAL oMenu
 

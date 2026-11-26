@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasFILETIME()
+Function wasFILETIME()
 RETURN was_FILETIME():new()
 
 CLASS WAS_FILETIME

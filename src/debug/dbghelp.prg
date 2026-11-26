@@ -55,7 +55,7 @@
 #include "box.ch"
 #include "inkey.ch"
 
-PROCEDURE __dbgHelp(cTopic)
+Procedure __dbgHelp(cTopic)
 
    LOCAL cColor := IIf(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
    LOCAL oBrw
@@ -85,7 +85,7 @@ PROCEDURE __dbgHelp(cTopic)
 
    RETURN
 
-STATIC PROCEDURE PaintWindow(oDlg, oBrw, aTopics)
+Static Procedure PaintWindow(oDlg, oBrw, aTopics)
 
    hb_DispBox(oDlg:nTop + 1, oDlg:nLeft + 13, oDlg:nBottom - 1, oDlg:nLeft + 13, HB_B_SINGLE_UNI, oDlg:cColor)
    hb_DispOutAtBox(oDlg:nTop, oDlg:nLeft + 13, hb_UTF8ToStrBox("┬"), oDlg:cColor)
@@ -96,7 +96,7 @@ STATIC PROCEDURE PaintWindow(oDlg, oBrw, aTopics)
 
    RETURN
 
-STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
+Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
 
    LOCAL n
    LOCAL nSkip
@@ -176,7 +176,7 @@ STATIC PROCEDURE ProcessKey(nKey, oDlg, oBrw, aTopics)
 
    RETURN
 
-STATIC PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
+Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
    LOCAL oDebug := __dbg()
    LOCAL nRows  := oDlg:nBottom - oDlg:nTop - 1
@@ -235,7 +235,7 @@ STATIC PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
    RETURN
 
-STATIC FUNCTION GetTopics()
+Static Function GetTopics()
 
    LOCAL aTopics := {}
    LOCAL cLine
@@ -251,5 +251,5 @@ STATIC FUNCTION GetTopics()
 
    RETURN aTopics
 
-STATIC FUNCTION help_en()
+Static Function help_en()
    #pragma __streaminclude "en.txt" | RETURN %s

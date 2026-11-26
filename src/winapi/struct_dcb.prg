@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasDCB()
+Function wasDCB()
 RETURN was_DCB():new()
 
 CLASS WAS_DCB

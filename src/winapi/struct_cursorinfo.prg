@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasCURSORINFO()
+Function wasCURSORINFO()
 RETURN was_CURSORINFO():new()
 
 CLASS WAS_CURSORINFO

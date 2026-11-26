@@ -66,7 +66,7 @@ METHOD Symbol:Init(cSymName)
 
    ::nSym := __dynsN2Sym(cSymName)
 
-   RETURN Self
+   Return Self
 
 METHOD Symbol:name()
    RETURN ::nSym:Name

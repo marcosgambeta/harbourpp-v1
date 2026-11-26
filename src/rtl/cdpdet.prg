@@ -47,7 +47,7 @@
 
 #include "hbextcdp.ch"
 
-FUNCTION hb_cdpTerm()
+Function hb_cdpTerm()
 
    LOCAL cCP
    LOCAL cLang
@@ -69,7 +69,7 @@ FUNCTION hb_cdpTerm()
 
    RETURN __CPStdToHb(cCP, cLang)
 
-FUNCTION hb_cdpOS()
+Function hb_cdpOS()
 
    LOCAL cCP
    LOCAL cLang
@@ -91,7 +91,7 @@ FUNCTION hb_cdpOS()
    RETURN __CPStdToHb(cCP, cLang)
 
 #if defined(__PLATFORM__WINDOWS)
-STATIC FUNCTION __CPWinToCPStd(nCPWin)
+Static Function __CPWinToCPStd(nCPWin)
 
    Switch nCPWin
    Case 65001 ; RETURN "utf8"
@@ -140,14 +140,14 @@ STATIC FUNCTION __CPWinToCPStd(nCPWin)
    Case 950   ; RETURN "CP950"
    EndSwitch
 
-   RETURN NIL
+   Return Nil
 
 #elif defined(__PLATFORM__UNIX)
 
 // language[_territory][.codeset]
 // [language[_territory][.codeset][@modifier]]
 // TODO: handle "C"/"POSIX" values and values starting with "/"
-STATIC FUNCTION __UnixParseLangCP(cString, /* @ */ cLang)
+Static Function __UnixParseLangCP(cString, /* @ */ cLang)
 
    LOCAL tmp
    LOCAL cCP
@@ -216,11 +216,11 @@ STATIC FUNCTION __UnixParseLangCP(cString, /* @ */ cLang)
    Case "big5"       ; RETURN "BIG5"
    EndSwitch
 
-   RETURN NIL
+   Return Nil
 
 #endif
 
-STATIC FUNCTION __CPStdToHb(cCPStd, cCtryStd)
+Static Function __CPStdToHb(cCPStd, cCtryStd)
 
    LOCAL cCtryHb
    LOCAL cdp
@@ -248,9 +248,9 @@ STATIC FUNCTION __CPStdToHb(cCPStd, cCtryStd)
       EndSwitch
    ENDIF
 
-   RETURN NIL
+   Return Nil
 
-STATIC FUNCTION __LangStdToCPCtryHb(cCtryStd)
+Static Function __LangStdToCPCtryHb(cCtryStd)
 
    Switch Lower(cCtryStd)
 #if 0

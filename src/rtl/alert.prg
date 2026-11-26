@@ -24,7 +24,7 @@
 STATIC s_lNoAlert
 #endif
 
-FUNCTION Alert(cMessage, aOptions, cColorNorm)
+Function Alert(cMessage, aOptions, cColorNorm)
 
 #ifdef HB_CLP_UNDOC
 
@@ -33,13 +33,13 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
    ENDIF
 
    IF s_lNoAlert
-      RETURN NIL
+      Return Nil
    ENDIF
 
 #endif
 
    IF !hb_IsString(cMessage)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    cMessage := StrTran(cMessage, ";", Chr(10))
@@ -77,7 +77,7 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
 // NOTE: xMessage can be of any type. This is a Harbour extension over Alert().
 // NOTE: nDelay parameter is a Harbour extension over Alert().
 
-FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
+Function hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 
 #ifdef HB_CLP_UNDOC
 
@@ -86,13 +86,13 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
    ENDIF
 
    IF s_lNoAlert
-      RETURN NIL
+      Return Nil
    ENDIF
 
 #endif
 
    IF PCount() == 0
-      RETURN NIL
+      Return Nil
    ENDIF
 
    LOCAL cMessage
@@ -146,7 +146,7 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 
 #ifdef HB_CLP_UNDOC
 
-PROCEDURE __NoNoAlert()
+Procedure __NoNoAlert()
 
    s_lNoAlert := False
 

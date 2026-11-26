@@ -108,7 +108,7 @@ METHOD HBDbObject:New(oObject, cVarName, lEditable)
 
    ::addWindows()
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbObject:addWindows(nRow)
 
@@ -163,7 +163,7 @@ METHOD HBDbObject:addWindows(nRow)
 
    ::aWindows[::nCurWindow]:ShowModal()
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDbObject:doGet(oBrowse)
 
@@ -259,10 +259,10 @@ METHOD PROCEDURE HBDbObject:SetsKeyPressed(nKey, oBrwSets)
 
    RETURN
 
-FUNCTION __dbgObject(oObject, cVarName, lEditable)
+Function __dbgObject(oObject, cVarName, lEditable)
    RETURN HBDbObject():New(oObject, cVarName, lEditable)
 
-STATIC FUNCTION __dbgObjGetValue(oObject, cVar, lCanAcc)
+Static Function __dbgObjGetValue(oObject, cVar, lCanAcc)
 
    LOCAL nProcLevel := __dbg():nProcLevel
    LOCAL xResult
@@ -284,7 +284,7 @@ STATIC FUNCTION __dbgObjGetValue(oObject, cVar, lCanAcc)
 
    RETURN xResult
 
-STATIC FUNCTION __dbgObjSetValue(oObject, cVar, xValue)
+Static Function __dbgObjSetValue(oObject, cVar, xValue)
 
    LOCAL nProcLevel := __dbg():nProcLevel
    LOCAL oErr

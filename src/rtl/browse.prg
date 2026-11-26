@@ -49,7 +49,7 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-FUNCTION Browse(nTop, nLeft, nBottom, nRight)
+Function Browse(nTop, nLeft, nBottom, nRight)
 
    LOCAL oBrw
    LOCAL lContinue
@@ -286,7 +286,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
    Return True
 
-STATIC PROCEDURE StatLine(oBrw, lAppend)
+Static Procedure StatLine(oBrw, lAppend)
 
    LOCAL nTop   := oBrw:nTop - 1
    LOCAL nRight := oBrw:nRight
@@ -307,7 +307,7 @@ STATIC PROCEDURE StatLine(oBrw, lAppend)
 
    RETURN
 
-STATIC FUNCTION DoGet(oBrw, lAppend)
+Static Function DoGet(oBrw, lAppend)
 
    LOCAL lScore
    LOCAL lExit
@@ -372,7 +372,7 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
 
    RETURN nKey
 
-STATIC FUNCTION ExitKey(lAppend)
+Static Function ExitKey(lAppend)
 
    LOCAL nKey
 
@@ -388,7 +388,7 @@ STATIC FUNCTION ExitKey(lAppend)
 
    RETURN IIf(nKey == K_ENTER .OR. !(hb_keyChar(nKey) == ""), K_RIGHT, 0)
 
-STATIC PROCEDURE FreshOrder(oBrw)
+Static Procedure FreshOrder(oBrw)
 
    LOCAL nRec := RecNo()
 
@@ -404,7 +404,7 @@ STATIC PROCEDURE FreshOrder(oBrw)
 
    RETURN
 
-STATIC FUNCTION Skipped(nRecs, lAppend)
+Static Function Skipped(nRecs, lAppend)
 
    LOCAL nSkipped := 0
 

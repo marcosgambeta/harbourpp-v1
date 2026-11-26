@@ -214,7 +214,7 @@ METHOD HBGetList:ReadModal()
    SetCursor(::nSaveCursor)
 #endif
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:Updated()
    RETURN ::lUpdated
@@ -228,7 +228,7 @@ METHOD HBGetList:SetFocus()
    __GetListLast(Self)
    ::aGetList[::nPos]:setFocus()
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:Reader(oMenu, aMsg)
 
@@ -299,7 +299,7 @@ METHOD HBGetList:Reader(oMenu, aMsg)
       ::EraseGetMsg(aMsg)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
 
@@ -316,7 +316,7 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
 
    IF (bKeyBlock := SetKey(nKey)) != NIL
       IF ::GetDoSetKey(bKeyBlock, oGet)
-         RETURN Self
+         Return Self
       ENDIF
    ENDIF
 
@@ -518,7 +518,7 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
       ENDIF
    EndSwitch
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:GetPreValidate(oGet, aMsg)
 
@@ -744,7 +744,7 @@ METHOD HBGetList:PostActiveGet()
    ::ReadVar(::GetReadVar())
    ::ShowScoreBoard()
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:GetReadVar()
    RETURN hb_GetReadVar(::oGet)
@@ -791,7 +791,7 @@ METHOD HBGetList:ShowScoreboard()
 
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:DateMsg()
 
@@ -809,7 +809,7 @@ METHOD HBGetList:DateMsg()
 
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:ReadVar(cNewVarName)
 
@@ -907,7 +907,7 @@ METHOD HBGetList:GUIReader(oGet, oMenu, aMsg)
 
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
 
@@ -923,7 +923,7 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
    // Check for SET KEY first
    IF (bKeyBlock := SetKey(nKey)) != NIL
       IF ::GetDoSetKey(bKeyBlock, oGet)
-         RETURN Self
+         Return Self
       ENDIF
    ENDIF
 
@@ -1108,7 +1108,7 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
 
    EndSwitch
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:GUIPreValidate(oGet, oGUI, aMsg)
 
@@ -1216,7 +1216,7 @@ METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
    // Check for SET KEY first
    IF (bKeyBlock := SetKey(nKey)) != NIL
       IF ::GetDoSetKey(bKeyBlock, oGet)
-         RETURN Self
+         Return Self
       ENDIF
    ENDIF
 
@@ -1300,7 +1300,7 @@ METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
 
    EndSwitch
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
 
@@ -1383,7 +1383,7 @@ METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
       SetCursor(nSaveCursor)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:Accelerator(nKey, aMsg)
 
@@ -1613,7 +1613,7 @@ METHOD HBGetList:ShowGetMsg(oGet, aMsg)
    HB_SYMBOL_UNUSED(aMsg)
 #endif
 
-   RETURN Self
+   Return Self
 
 METHOD HBGetList:EraseGetMsg(aMsg)
 
@@ -1633,7 +1633,7 @@ METHOD HBGetList:EraseGetMsg(aMsg)
    HB_SYMBOL_UNUSED(aMsg)
 #endif
 
-   RETURN Self
+   Return Self
 
 // ---
 
@@ -1645,4 +1645,4 @@ METHOD HBGetList:Init(GetList)
       ::oGet := GetList[1]
    ENDIF
 
-   RETURN Self
+   Return Self

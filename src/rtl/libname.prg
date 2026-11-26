@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-FUNCTION hb_libName(cLibName, cLibDir)
+Function hb_libName(cLibName, cLibDir)
 
    LOCAL cDir
    LOCAL cName

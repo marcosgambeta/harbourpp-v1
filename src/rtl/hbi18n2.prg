@@ -59,7 +59,7 @@
 #define _I18N_EOL          Chr(10)
 #define _I18N_DELIM        (Chr(0) + Chr(3) + Chr(0))
 
-STATIC FUNCTION __i18n_fileName(cFileName)
+Static Function __i18n_fileName(cFileName)
 
    IF Set(_SET_DEFEXTENSIONS)
       cFileName := hb_FNameExtSetDef(cFileName, ".pot")
@@ -67,10 +67,10 @@ STATIC FUNCTION __i18n_fileName(cFileName)
 
    RETURN cFileName
 
-STATIC FUNCTION __i18n_strEncode(cStr)
+Static Function __i18n_strEncode(cStr)
    RETURN SubStr(hb_StrToExp(cStr, True), 2)
 
-STATIC FUNCTION __i18n_strDecode(cLine, cValue, lCont)
+Static Function __i18n_strDecode(cLine, cValue, lCont)
 
    LOCAL lRet := False
    LOCAL cText
@@ -90,7 +90,7 @@ STATIC FUNCTION __i18n_strDecode(cLine, cValue, lCont)
 #define _BOM_VALUE      0xFEFF
 #define _UTF8_BOM       hb_utf8Chr(_BOM_VALUE) // e"\xEF\xBB\xBF"
 
-FUNCTION __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
+Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
 
    LOCAL cLine
    LOCAL cValue
@@ -108,7 +108,7 @@ FUNCTION __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
    __i18n_fileName(@cFile)
    IF (hFile := FOpen(cFile)) == F_ERROR
       cErrorMsg := hb_StrFormat("cannot open file: %1$s", cFile)
-      RETURN NIL
+      Return Nil
    ENDIF
    cValue := Space(FSeek(hFile, 0, FS_END))
    FSeek(hFile, 0, FS_SET)
@@ -116,7 +116,7 @@ FUNCTION __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
    FClose(hFile)
    IF n != hb_BLen(cValue)
       cErrorMsg := hb_StrFormat("cannot read from file: %1$s", cFile)
-      RETURN NIL
+      Return Nil
    ENDIF
    // Strip UTF-8 BOM
    IF hb_utf8Asc(cValue) == _BOM_VALUE
@@ -290,7 +290,7 @@ FUNCTION __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
 
    RETURN aTrans
 
-STATIC FUNCTION __i18n_IsBOM_UTF8(cFileName)
+Static Function __i18n_IsBOM_UTF8(cFileName)
 
    LOCAL fhnd
    LOCAL cBuffer
@@ -305,10 +305,10 @@ STATIC FUNCTION __i18n_IsBOM_UTF8(cFileName)
 
    Return False
 
-FUNCTION __i18n_potArraySort(aTrans)
+Function __i18n_potArraySort(aTrans)
    RETURN ASort(aTrans, NIL, NIL, {|item1, item2|__i18n_ItemToStr(item1) < __i18n_ItemToStr(item2)})
 
-STATIC FUNCTION __i18n_ItemToStr(item)
+Static Function __i18n_ItemToStr(item)
 
    LOCAL cSource := item[_I18N_SOURCE]
    LOCAL tmp
@@ -326,7 +326,7 @@ STATIC FUNCTION __i18n_ItemToStr(item)
 
    RETURN cSource + item[_I18N_MSGID][1]
 
-FUNCTION __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTransformTranslation)
+Function __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTransformTranslation)
 
    LOCAL item
    LOCAL cString
@@ -368,7 +368,7 @@ FUNCTION __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTrans
 
    RETURN aTrans
 
-FUNCTION __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSourceRef)
+Function __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSourceRef)
 
    LOCAL aItem
    LOCAL hFile
@@ -441,7 +441,7 @@ FUNCTION __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSour
 
    RETURN lRet
 
-FUNCTION __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
+Function __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
 
    LOCAL aItem
    LOCAL cContext
@@ -474,7 +474,7 @@ FUNCTION __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
 
    RETURN hI18N
 
-FUNCTION __i18n_potArrayTrans(aTrans, hI18N)
+Function __i18n_potArrayTrans(aTrans, hI18N)
 
    LOCAL aItem
    LOCAL hContext
@@ -503,7 +503,7 @@ FUNCTION __i18n_potArrayTrans(aTrans, hI18N)
 
    RETURN aTrans
 
-FUNCTION __i18n_hashJoin(hTrans, hTrans2)
+Function __i18n_hashJoin(hTrans, hTrans2)
 
    LOCAL hContext
    LOCAL hCtx
@@ -526,7 +526,7 @@ FUNCTION __i18n_hashJoin(hTrans, hTrans2)
 
    RETURN hTrans
 
-FUNCTION __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
+Function __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
 
    LOCAL aItem
    LOCAL aDest
@@ -572,7 +572,7 @@ FUNCTION __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
 
    RETURN aTrans
 
-FUNCTION hb_i18n_LoadPOT(cFile, pI18N, cErrorMsg)
+Function hb_i18n_LoadPOT(cFile, pI18N, cErrorMsg)
 
    LOCAL aTrans
    LOCAL hI18N
@@ -590,7 +590,7 @@ FUNCTION hb_i18n_LoadPOT(cFile, pI18N, cErrorMsg)
 
    RETURN pI18N
 
-FUNCTION hb_i18n_SavePOT(cFile, pI18N, /* @ */ cErrorMsg)
+Function hb_i18n_SavePOT(cFile, pI18N, /* @ */ cErrorMsg)
 
    LOCAL hI18N
    LOCAL hFile

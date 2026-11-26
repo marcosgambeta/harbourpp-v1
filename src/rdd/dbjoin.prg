@@ -50,7 +50,7 @@
 // NOTE: Compared to CA-Cl*pper, Harbour has three extra parameters
 //       (cRDD, nConnection, cCodePage).
 
-FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
+Function __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
    LOCAL nMaster := Select()
    LOCAL nDetail := Select(cAlias)
@@ -111,7 +111,7 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
    Return True
 
-STATIC FUNCTION __FieldTwo(cAlias, aFields)
+Static Function __FieldTwo(cAlias, aFields)
 
    LOCAL aFldTemp
    LOCAL bFind
@@ -137,7 +137,7 @@ STATIC FUNCTION __FieldTwo(cAlias, aFields)
 
    RETURN aStruct
 
-STATIC FUNCTION __JoinList(nMaster, nDetail, nResult, aStruct)
+Static Function __JoinList(nMaster, nDetail, nResult, aStruct)
 
    LOCAL aList := {}
    LOCAL nPos
@@ -154,7 +154,7 @@ STATIC FUNCTION __JoinList(nMaster, nDetail, nResult, aStruct)
 
    RETURN aList
 
-STATIC PROCEDURE __doJoinList(aList)
+Static Procedure __doJoinList(aList)
 
    LOCAL aJoin
 

@@ -50,7 +50,7 @@
 
 #define BUFFER_LENGTH  8192
 
-PROCEDURE __TypeFile(cFile, lPrint)
+Procedure __TypeFile(cFile, lPrint)
 
    LOCAL nHandle
    LOCAL cBuffer

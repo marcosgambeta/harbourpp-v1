@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasRGBQUAD()
+Function wasRGBQUAD()
 RETURN was_RGBQUAD():new()
 
 CLASS WAS_RGBQUAD

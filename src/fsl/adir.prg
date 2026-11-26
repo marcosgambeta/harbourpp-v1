@@ -47,7 +47,7 @@
 
 #include "directry.ch"
 
-FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
+Function ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
    // CA-Cl*pper would fail on this case.
    IF !hb_IsString(cFileMask)

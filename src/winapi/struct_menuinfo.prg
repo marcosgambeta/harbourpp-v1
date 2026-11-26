@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasMENUINFO()
+Function wasMENUINFO()
 RETURN was_MENUINFO():new()
 
 CLASS WAS_MENUINFO

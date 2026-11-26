@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasLOGPEN()
+Function wasLOGPEN()
 RETURN was_LOGPEN():new()
 
 CLASS WAS_LOGPEN

@@ -118,7 +118,7 @@ METHOD hb_PopupMenu:setCoors(nRow, nCol, lTop)
       NEXT
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
 

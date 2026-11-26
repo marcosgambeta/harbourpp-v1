@@ -60,7 +60,7 @@
 
 #ifdef HB_COMPAT_C53
 
-CREATE CLASS CheckBox FUNCTION HBCheckBox
+CREATE CLASS CheckBox Function HBCheckBox
 
    EXPORTED:
 
@@ -121,7 +121,7 @@ METHOD CheckBox:setFocus()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD CheckBox:select(lState)
 
@@ -137,7 +137,7 @@ METHOD CheckBox:select(lState)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD CheckBox:killFocus()
 
@@ -152,7 +152,7 @@ METHOD CheckBox:killFocus()
       SetCursor(::nCursor)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD CheckBox:hitTest(nMRow, nMCol)
 
@@ -212,7 +212,7 @@ METHOD CheckBox:display()
 
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD CheckBox:bitmaps(aBitmaps)
 
@@ -334,9 +334,9 @@ METHOD CheckBox:Init(nRow, nCol, cCaption)
          hb_ColorIndex(cColor, CLR_BACKGROUND)
    ENDIF
 
-   RETURN Self
+   Return Self
 
-FUNCTION _CheckBox_(lState, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, aBitmaps)
+Function _CheckBox_(lState, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, aBitmaps)
 
    LOCAL o := HBCheckBox():New(Row(), Col(), cCaption)
 
@@ -351,7 +351,7 @@ FUNCTION _CheckBox_(lState, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cS
 
    RETURN o
 
-FUNCTION CheckBox(nRow, nCol, cCaption)
+Function CheckBox(nRow, nCol, cCaption)
    RETURN HBCheckBox():New(nRow, nCol, cCaption)
 
 #endif

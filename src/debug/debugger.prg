@@ -85,7 +85,7 @@
 THREAD STATIC t_oDebugger
 
 // debugger entry point
-PROCEDURE __dbgEntry(nMode, uParam1, uParam2, uParam3, uParam4)
+Procedure __dbgEntry(nMode, uParam1, uParam2, uParam3, uParam4)
 
    LOCAL lStartup
 
@@ -369,7 +369,7 @@ METHOD HBDebugger:New()
       ::lGo := ::lRunAtStartup // Once again after settings file is loaded
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDebugger:OpenDebuggerWindow()
 
@@ -1685,7 +1685,7 @@ METHOD HBDebugger:RunAtStartup(lRunAtStartup)
    ::lRunAtStartup := hb_defaultValue(lRunAtStartup, !::lRunAtStartup)
    ::oPulldown:GetItemByIdent("ALTD"):checked := ::lRunAtStartup
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:LineNumbers(lLineNumbers)
 
@@ -1696,7 +1696,7 @@ METHOD HBDebugger:LineNumbers(lLineNumbers)
       ::oBrwText:RefreshAll()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:ListBox(cCaption, aItems)
 
@@ -1887,7 +1887,7 @@ METHOD HBDebugger:Locate(nMode, cValue)
    IF Empty(cValue)
       cValue := ::InputBox("Search string", ::cSearchString)
       IF Empty(cValue)
-         RETURN NIL
+         Return Nil
       ENDIF
    ENDIF
 
@@ -1909,7 +1909,7 @@ METHOD HBDebugger:LocatePrgPath(cPrgName)
       ENDIF
    NEXT
 
-   RETURN NIL
+   Return Nil
 
 METHOD PROCEDURE HBDebugger:MonoDisplay()
 
@@ -1926,7 +1926,7 @@ METHOD HBDebugger:NextRoutine()
    __dbgSetNextRoutine(::pInfo)
    ::Exit()
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDebugger:NextWindow()
 
@@ -2101,7 +2101,7 @@ METHOD HBDebugger:PathForFiles(cPathForFiles)
 
    ::Resume()
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDebugger:PrevWindow()
 
@@ -2222,7 +2222,7 @@ METHOD HBDebugger:ResizeWindows(oWindow)
    oWindow:Show()
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDebugger:RestoreAppScreen()
 
@@ -2487,7 +2487,7 @@ METHOD HBDebugger:ResizeCmdWnd(nLines)
 
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDebugger:SearchLine(cLine)
 
@@ -2844,7 +2844,7 @@ METHOD HBDebugger:ToCursor()
       ::Exit()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 // Toggle a breakpoint at the cursor position in the currently viewed file
 // which may be different from the file in which execution was broken
@@ -2894,13 +2894,13 @@ METHOD HBDebugger:BreakPointDelete(cPos)
 
    ::oBrwText:RefreshAll():ForceStable()
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:BreakPointFunc(cFuncName)
 
    __dbgAddBreak(::pInfo, NIL, NIL, cFuncName)
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:BreakPointList()
 
@@ -2915,14 +2915,14 @@ METHOD HBDebugger:BreakPointList()
       ::CommandWindowDisplay(hb_ntos(aBreak:__enumIndex() - 1) + ") " + cType, False)
    NEXT
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:Trace()
 
    __dbgSetTrace(::pInfo)
    ::Step() // forces a Step()
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:TracepointAdd(cExpr)
 
@@ -2931,14 +2931,14 @@ METHOD HBDebugger:TracepointAdd(cExpr)
    IF cExpr == NIL
       cExpr := AllTrim(::InputBox("Enter Tracepoint", NIL, __dbgExprValidBlock()))
       IF LastKey() == K_ESC
-         RETURN Self
+         Return Self
       ENDIF
    ENDIF
 
    cExpr := AllTrim(cExpr)
 
    IF Empty(cExpr)
-      RETURN Self
+      Return Self
    ENDIF
 
    aWatch := {"tp", cExpr, NIL}
@@ -2948,7 +2948,7 @@ METHOD HBDebugger:TracepointAdd(cExpr)
    AAdd(::aWatch, aWatch)
    ::WatchpointsShow()
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:VarGetInfo(aVar)
 
@@ -2996,7 +2996,7 @@ METHOD HBDebugger:VarSetValue(aVar, uValue)
       &(aVar[HB_DBG_VAR_NAME]) := uValue
    EndSwitch
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDebugger:ViewSets()
 
@@ -3056,14 +3056,14 @@ METHOD HBDebugger:WatchpointAdd(cExpr)
    IF cExpr == NIL
       cExpr := ::InputBox("Enter Watchpoint", NIL, __dbgExprValidBlock())
       IF LastKey() == K_ESC
-         RETURN Self
+         Return Self
       ENDIF
    ENDIF
 
    cExpr := AllTrim(cExpr)
 
    IF Empty(cExpr)
-      RETURN Self
+      Return Self
    ENDIF
 
    aWatch := {"wp", cExpr}
@@ -3071,7 +3071,7 @@ METHOD HBDebugger:WatchpointAdd(cExpr)
    AAdd(::aWatch, aWatch)
    ::WatchpointsShow()
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:WatchpointDel(xPos)
 
@@ -3114,7 +3114,7 @@ METHOD HBDebugger:WatchpointDel(xPos)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:WatchpointEdit(nPos)
 
@@ -3122,13 +3122,13 @@ METHOD HBDebugger:WatchpointEdit(nPos)
    LOCAL aWatch
 
    IF LastKey() == K_ESC
-      RETURN Self
+      Return Self
    ENDIF
 
    cExpr := AllTrim(cExpr)
 
    IF Empty(cExpr)
-      RETURN Self
+      Return Self
    ENDIF
 
    aWatch := {"wp", cExpr}
@@ -3137,7 +3137,7 @@ METHOD HBDebugger:WatchpointEdit(nPos)
    ::aWatch[nPos] := aWatch
    ::WatchpointsShow()
 
-   RETURN Self
+   Return Self
 
 METHOD HBDebugger:WatchpointInspect(nPos)
 
@@ -3151,7 +3151,7 @@ METHOD HBDebugger:WatchpointInspect(nPos)
    ::InputBox(::aWatch[nPos][WP_EXPR], xValue, NIL, False)
    ::RefreshVars()
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDebugger:WatchpointsHide()
 
@@ -3318,7 +3318,7 @@ METHOD PROCEDURE HBDebugger:WndVarsLButtonDown(nMRow, nMCol)
 
    RETURN
 
-STATIC PROCEDURE SetsKeyPressed(nKey, oBrwSets, nSets, oWnd, cCaption, bEdit)
+Static Procedure SetsKeyPressed(nKey, oBrwSets, nSets, oWnd, cCaption, bEdit)
 
    Switch nKey
    Case K_UP
@@ -3370,13 +3370,13 @@ STATIC PROCEDURE SetsKeyPressed(nKey, oBrwSets, nSets, oWnd, cCaption, bEdit)
 
    RETURN
 
-FUNCTION __dbgColors()
+Function __dbgColors()
    RETURN t_oDebugger:GetColors()
 
-FUNCTION __dbg()
+Function __dbg()
    RETURN t_oDebugger
 
-STATIC PROCEDURE RefreshVarsS(oBrowse)
+Static Procedure RefreshVarsS(oBrowse)
 
    LOCAL nLen := oBrowse:colCount
 
@@ -3392,12 +3392,12 @@ STATIC PROCEDURE RefreshVarsS(oBrowse)
 
    RETURN
 
-STATIC FUNCTION ArrayBrowseSkip(nPos, oBrwSets)
+Static Function ArrayBrowseSkip(nPos, oBrwSets)
    RETURN IIf(oBrwSets:cargo[1] + nPos < 1, 0 - oBrwSets:cargo[1] + 1, ;
       IIf(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;
       Len(oBrwSets:cargo[2][1]) - oBrwSets:cargo[1], nPos))
 
-STATIC FUNCTION PathToArray(cList)
+Static Function PathToArray(cList)
 
    LOCAL aList := {}
    LOCAL cSep := hb_osPathListSeparator()
@@ -3420,10 +3420,10 @@ STATIC FUNCTION PathToArray(cList)
    RETURN aList
 
 // Check if a string starts with another string with a min length
-STATIC FUNCTION hb_LeftEqN(cLine, cStart, nMin)
+Static Function hb_LeftEqN(cLine, cStart, nMin)
    RETURN Len(cStart) >= nMin .AND. hb_LeftEq(cLine, cStart)
 
-FUNCTION __dbgExprValidBlock(cType)
+Function __dbgExprValidBlock(cType)
 
    LOCAL cTypeName
 
@@ -3447,7 +3447,7 @@ FUNCTION __dbgExprValidBlock(cType)
 
    RETURN {|u|!Type(u) == "UE" .OR. (__dbgAlert("Expression error"), False)}
 
-FUNCTION __dbgInput(nRow, nCol, nWidth, cValue, bValid, cColor, nSize)
+Function __dbgInput(nRow, nCol, nWidth, cValue, bValid, cColor, nSize)
 
    LOCAL lOK := False
    LOCAL nKey
@@ -3481,7 +3481,7 @@ FUNCTION __dbgInput(nRow, nCol, nWidth, cValue, bValid, cColor, nSize)
 
    RETURN lOK
 
-FUNCTION __dbgAChoice(nTop, nLeft, nBottom, nRight, aItems, cColors)
+Function __dbgAChoice(nTop, nLeft, nBottom, nRight, aItems, cColors)
 
    LOCAL oBrw
    LOCAL oCol
@@ -3513,10 +3513,10 @@ FUNCTION __dbgAChoice(nTop, nLeft, nBottom, nRight, aItems, cColors)
 
    RETURN 0
 
-FUNCTION __dbgAlert(cMessage)
+Function __dbgAlert(cMessage)
    RETURN hb_gtAlert(cMessage, {"Ok"}, "W+/R", "W+/B")
 
-FUNCTION __dbgInkey()
+Function __dbgInkey()
 
    LOCAL nKey
    LOCAL lDebug
@@ -3530,7 +3530,7 @@ FUNCTION __dbgInkey()
 
    RETURN nKey
 
-FUNCTION __dbgSaveScreen(...)
+Function __dbgSaveScreen(...)
 
    LOCAL lAppCompatBuffer := hb_gtInfo(HB_GTI_COMPATBUFFER, False)
    LOCAL cScreen := SaveScreen(...)
@@ -3539,19 +3539,19 @@ FUNCTION __dbgSaveScreen(...)
 
    RETURN cScreen
 
-FUNCTION __dbgRestScreen(...)
+Function __dbgRestScreen(...)
 
    LOCAL lAppCompatBuffer := hb_gtInfo(HB_GTI_COMPATBUFFER, False)
 
    RestScreen(...)
    hb_gtInfo(HB_GTI_COMPATBUFFER, lAppCompatBuffer)
 
-   RETURN NIL
+   Return Nil
 
-FUNCTION __dbgTextToArray(cString)
+Function __dbgTextToArray(cString)
    RETURN hb_ATokens(cString, True)
 
-FUNCTION __dbgValToStr(uVal)
+Function __dbgValToStr(uVal)
 
    Switch ValType(uVal)
 #ifdef HB_CLP_STRICT
@@ -3582,7 +3582,7 @@ FUNCTION __dbgValToStr(uVal)
 
    RETURN "U"
 
-FUNCTION __dbgValToExp(uVal)
+Function __dbgValToExp(uVal)
 
    Switch ValType(uVal)
 #ifdef HB_CLP_STRICT

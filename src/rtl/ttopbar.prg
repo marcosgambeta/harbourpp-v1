@@ -56,7 +56,7 @@
 
 #ifdef HB_COMPAT_C53
 
-CREATE CLASS TopBarMenu FUNCTION HBTopBarMenu
+CREATE CLASS TopBarMenu Function HBTopBarMenu
 
    EXPORTED:
 
@@ -110,7 +110,7 @@ METHOD TopBarMenu:addItem(oItem)
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD TopBarMenu:delItem(nPos)
 
@@ -134,7 +134,7 @@ METHOD TopBarMenu:delItem(nPos)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD TopBarMenu:display()
 
@@ -203,7 +203,7 @@ METHOD TopBarMenu:display()
 
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD TopBarMenu:getFirst()
 
@@ -332,7 +332,7 @@ METHOD TopBarMenu:insItem(nPos, oItem)
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD TopBarMenu:select(nPos)
 
@@ -348,7 +348,7 @@ METHOD TopBarMenu:select(nPos)
       ::nCurrent := nPos
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD TopBarMenu:setItem(nPos, oItem)
 
@@ -359,7 +359,7 @@ METHOD TopBarMenu:setItem(nPos, oItem)
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD TopBarMenu:colorSpec(cColorSpec)
 
@@ -408,7 +408,7 @@ METHOD TopBarMenu:Init(nRow, nLeft, nRight)
    LOCAL cColor
 
    IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nRight)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    ::nLeft  := nLeft
@@ -428,11 +428,11 @@ METHOD TopBarMenu:Init(nRow, nLeft, nRight)
          hb_ColorIndex(cColor, CLR_BORDER)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 // --------------------------------------------
 
-FUNCTION TopBar(nRow, nLeft, nRight)
+Function TopBar(nRow, nLeft, nRight)
    RETURN HBTopBarMenu():New(nRow, nLeft, nRight)
 
 #endif

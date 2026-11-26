@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasSIZE()
+Function wasSIZE()
 RETURN was_SIZE():new()
 
 CLASS WAS_SIZE

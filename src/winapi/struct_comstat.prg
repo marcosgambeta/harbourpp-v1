@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasCOMSTAT()
+Function wasCOMSTAT()
 RETURN was_COMSTAT():new()
 
 CLASS WAS_COMSTAT

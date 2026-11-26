@@ -50,7 +50,7 @@
 
 #define _DIR_HEADER  1
 
-PROCEDURE __Dir(cFileMask)
+Procedure __Dir(cFileMask)
 
    LOCAL cPath
    LOCAL cName
@@ -90,7 +90,7 @@ PROCEDURE __Dir(cFileMask)
                         hb_BChar(0xE5) + hb_BChar(0xE6) + ;
                         hb_BChar(0xF5) + hb_BChar(0xF6)
 
-STATIC PROCEDURE PutDBF(aDirEntry)
+Static Procedure PutDBF(aDirEntry)
 
    LOCAL fhnd
    LOCAL buffer
@@ -114,7 +114,7 @@ STATIC PROCEDURE PutDBF(aDirEntry)
 
    RETURN
 
-STATIC PROCEDURE PutNormal(aDirEntry)
+Static Procedure PutNormal(aDirEntry)
 
    LOCAL cName
    LOCAL cExt

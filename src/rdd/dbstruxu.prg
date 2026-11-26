@@ -49,7 +49,7 @@
 
 #ifdef HB_CLP_UNDOC
 
-FUNCTION __FLedit(aStruct, aFieldList)
+Function __FLedit(aStruct, aFieldList)
    RETURN __dbStructFilter(aStruct, aFieldList)
 
 #endif

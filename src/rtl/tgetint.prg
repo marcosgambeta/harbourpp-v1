@@ -47,12 +47,12 @@
 
 REQUEST HB_PValue
 
-FUNCTION __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
+Function __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
 
    LOCAL oGet
 
    IF !hb_IsString(cVarName)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    IF !hb_IsEvalItem(bSetGet)
@@ -79,12 +79,12 @@ FUNCTION __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
 
    RETURN oGet
 
-FUNCTION __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
+Function __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
 
    LOCAL oGet
 
    IF !hb_IsString(cVarName) .OR. !hb_IsArray(aIndex)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    IF !hb_IsEvalItem(bGetArray)
@@ -99,7 +99,7 @@ FUNCTION __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
    ENDIF
 
    IF !ValType(Eval(bGetArray)) $ "AH"
-      RETURN NIL
+      Return Nil
    ENDIF
 
    oGet := GetNew(NIL, NIL, bGetArray, cVarName, cPicture)

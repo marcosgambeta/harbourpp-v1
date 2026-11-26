@@ -49,7 +49,7 @@
 #include "fileio.ch"
 
 
-STATIC FUNCTION hb_doScan(cPath, cMask, cAttr, cPathSep)
+Static Function hb_doScan(cPath, cMask, cAttr, cPathSep)
 
    LOCAL aFile
    LOCAL lMatch
@@ -72,13 +72,13 @@ STATIC FUNCTION hb_doScan(cPath, cMask, cAttr, cPathSep)
 
    RETURN aResult
 
-FUNCTION hb_DirScan(cPath, cFileMask, cAttr)
+Function hb_DirScan(cPath, cFileMask, cAttr)
    RETURN hb_DoScan(hb_DirSepAdd(hb_defaultValue(cPath, "")), ;
       IIf(hb_IsString(cFileMask), cFileMask, hb_osFileMask()), ;
       hb_defaultValue(cAttr, ""), ;
       hb_ps())
 
-FUNCTION hb_DirRemoveAll(cDir)
+Function hb_DirRemoveAll(cDir)
 
    LOCAL aFile
    LOCAL cPath
@@ -113,7 +113,7 @@ FUNCTION hb_DirRemoveAll(cDir)
 
    Return True
 
-FUNCTION hb_FileDelete(cFileMask, cAttr)
+Function hb_FileDelete(cFileMask, cAttr)
 
    LOCAL lAny := False
    LOCAL aFile

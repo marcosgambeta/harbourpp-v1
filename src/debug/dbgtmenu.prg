@@ -131,7 +131,7 @@ METHOD HBDbMenu:New()
 
    AAdd(::aMenus, Self)
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbMenu:AddItem(oMenuItem)
 
@@ -288,7 +288,7 @@ METHOD HBDbMenu:GetItemByIdent(uIdent)
       ENDIF
    NEXT
 
-   RETURN NIL
+   Return Nil
 
 METHOD PROCEDURE HBDbMenu:GoBottom()
 
@@ -491,7 +491,7 @@ METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
 
    RETURN
 
-FUNCTION __dbgAltToKey(nKey)
+Function __dbgAltToKey(nKey)
 
    LOCAL nIndex := AScan({ ;
       K_ALT_A, K_ALT_B, K_ALT_C, K_ALT_D, K_ALT_E, K_ALT_F, ;

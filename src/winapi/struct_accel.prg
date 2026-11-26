@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasACCEL()
+Function wasACCEL()
 RETURN was_ACCEL():new()
 
 CLASS WAS_ACCEL

@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasCOMBOBOXINFO()
+Function wasCOMBOBOXINFO()
 RETURN was_COMBOBOXINFO():new()
 
 CLASS WAS_COMBOBOXINFO

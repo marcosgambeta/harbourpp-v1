@@ -58,7 +58,7 @@
 // NOTE: Harbour is multithreading ready and Clipper only reentrant safe
 //       [vszakats]
 
-FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPictures, xColumnHeaders, ;
+Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPictures, xColumnHeaders, ;
       xHeadingSeparators, xColumnSeparators, xFootingSeparators, xColumnFootings)
 
    LOCAL nOldCUrsor
@@ -290,7 +290,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 // NOTE: CA-Cl*pper uses intermediate function CallUser()
 //       to execute user function. We're replicating this behavior
 //       for code which may check ProcName() results in user function
-STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
+Static Function CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
    LOCAL nPrevRecNo
    LOCAL nAction
@@ -362,11 +362,11 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
 // helper function to detect empty tables. It's not perfect but
 // it functionally uses the same conditions as CA-Cl*pper
-STATIC FUNCTION IsDbEmpty()
+Static Function IsDbEmpty()
    RETURN LastRec() == 0 .OR. (Bof() .AND. (Eof() .OR. RecNo() == LastRec() + 1))
 
 // Helper function: TBrowse skipBlock
-STATIC FUNCTION Skipped(nRecs, lAppend)
+Static Function Skipped(nRecs, lAppend)
 
    LOCAL nSkipped := 0
 

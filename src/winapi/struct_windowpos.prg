@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasWINDOWPOS()
+Function wasWINDOWPOS()
 RETURN was_WINDOWPOS():new()
 
 CLASS WAS_WINDOWPOS

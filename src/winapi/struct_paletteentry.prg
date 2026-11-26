@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasPALETTEENTRY()
+Function wasPALETTEENTRY()
 RETURN was_PALETTEENTRY():new()
 
 CLASS WAS_PALETTEENTRY

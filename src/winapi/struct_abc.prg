@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasABC()
+Function wasABC()
 RETURN was_ABC():new()
 
 CLASS WAS_ABC

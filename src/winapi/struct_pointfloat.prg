@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasPOINTFLOAT()
+Function wasPOINTFLOAT()
 RETURN was_POINTFLOAT():new()
 
 CLASS WAS_POINTFLOAT

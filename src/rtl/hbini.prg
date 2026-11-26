@@ -72,7 +72,7 @@
 STATIC s_cLineComment := ";"
 STATIC s_cHalfLineComment := "#"
 
-PROCEDURE hb_iniSetComment(cLc, cHlc)
+Procedure hb_iniSetComment(cLc, cHlc)
 
    IF hb_IsString(cLc)
       s_cLineComment := cLc
@@ -84,7 +84,7 @@ PROCEDURE hb_iniSetComment(cLc, cHlc)
 
    RETURN
 
-FUNCTION hb_iniNew(lAutoMain)
+Function hb_iniNew(lAutoMain)
 
    LOCAL hIni := {=>}
 
@@ -94,10 +94,10 @@ FUNCTION hb_iniNew(lAutoMain)
 
    RETURN hIni
 
-FUNCTION hb_iniRead(cFileSpec, lKeyCaseSens, cSplitters, lAutoMain)
+Function hb_iniRead(cFileSpec, lKeyCaseSens, cSplitters, lAutoMain)
    RETURN hb_iniReadStr(IIf(hb_IsString(cFileSpec), hb_iniFileLow(cFileSpec), ""), lKeyCaseSens, cSplitters, lAutoMain)
 
-FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
+Function hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
    LOCAL hIni := {=>}
 
@@ -113,7 +113,7 @@ FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
    RETURN hb_iniStringLow(hIni, hb_defaultValue(cData, ""), lKeyCaseSens, hb_defaultValue(cSplitters, "="), lAutoMain)
 
-STATIC FUNCTION hb_iniFileLow(cFileSpec)
+Static Function hb_iniFileLow(cFileSpec)
 
    LOCAL cFile
    LOCAL nLen
@@ -147,7 +147,7 @@ STATIC FUNCTION hb_iniFileLow(cFileSpec)
 
    RETURN cData
 
-STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain)
+Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain)
 
    LOCAL aKeyVal
    LOCAL hCurrentSection
@@ -225,7 +225,7 @@ STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
 
    RETURN hIni
 
-FUNCTION hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
+Function hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
    LOCAL hFile
    LOCAL lClose
@@ -264,14 +264,14 @@ FUNCTION hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
    Return True
 
-FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
+Function hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
    LOCAL cNewLine := hb_eol()
    LOCAL cSection
    LOCAL cBuffer := ""
 
    IF !hb_IsHash(hIni)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    IF hb_IsString(cCommentBegin) .AND. !Empty(cCommentBegin)

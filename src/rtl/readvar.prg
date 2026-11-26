@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-FUNCTION ReadVar(cVarName)
+Function ReadVar(cVarName)
 
    THREAD STATIC t_cVarName := ""
 

@@ -56,7 +56,7 @@
 
 #ifdef HB_COMPAT_C53
 
-CREATE CLASS MenuItem FUNCTION HBMenuItem
+CREATE CLASS MenuItem Function HBMenuItem
 
    EXPORTED:
 
@@ -180,14 +180,14 @@ METHOD MenuItem:Init(cCaption, boData, nShortcut, cMessage, nID)
    ::nShortcut := hb_defaultValue(nShortcut, 0)
    ::caption   := cCaption
 
-   RETURN Self
+   Return Self
 
-FUNCTION MenuItem(cCaption, boData, nShortcut, cMessage, nID)
+Function MenuItem(cCaption, boData, nShortcut, cMessage, nID)
    RETURN HBMenuItem():New(cCaption, boData, nShortcut, cMessage, nID)
 
 #ifdef HB_CLP_UNDOC
 
-FUNCTION __MIColumn(o, nColumn)
+Function __MIColumn(o, nColumn)
 
    IF hb_IsObject(o) .AND. o:ClassName() == "MENUITEM"
 
@@ -200,7 +200,7 @@ FUNCTION __MIColumn(o, nColumn)
 
    RETURN -1
 
-FUNCTION __MIRow(o, nRow)
+Function __MIRow(o, nRow)
 
    IF hb_IsObject(o) .AND. o:ClassName() == "MENUITEM"
 

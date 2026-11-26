@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasSYSTEM_INFO()
+Function wasSYSTEM_INFO()
 RETURN was_SYSTEM_INFO():new()
 
 CLASS WAS_SYSTEM_INFO

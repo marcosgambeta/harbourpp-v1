@@ -51,7 +51,7 @@
 #include "hboo.ch"
 #include "error.ch"
 
-FUNCTION HBObject()
+Function HBObject()
 
    STATIC s_oClass
 
@@ -131,19 +131,19 @@ FUNCTION HBObject()
 
    RETURN s_oClass:Instance()
 
-STATIC FUNCTION HBObject_New(...)
+Static Function HBObject_New(...)
 
    QSelf():Init(...)
 
    RETURN QSelf()
 
-STATIC FUNCTION HBObject_Init()
+Static Function HBObject_Init()
    RETURN QSelf()
 
-STATIC FUNCTION HBObject_Dftonerror(...)
+Static Function HBObject_Dftonerror(...)
    RETURN QSelf():MsgNotFound(__GetMessage(), ...)
 
-STATIC FUNCTION HBObject_Error(cDesc, cClass, cMsg, nCode)
+Static Function HBObject_Error(cDesc, cClass, cMsg, nCode)
 
    hb_default(@nCode, 1004)
 

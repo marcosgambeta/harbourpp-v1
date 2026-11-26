@@ -108,7 +108,7 @@ METHOD HBMemoEditor:MemoInit(xUserFunction)
       EndDo
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBMemoEditor:Edit()
 
@@ -151,7 +151,7 @@ METHOD HBMemoEditor:Edit()
       ::super:Edit()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 // I come here if I have an unknown key and it is not a configurable key
 // if there is an user function I leave to it its handling
@@ -194,7 +194,7 @@ METHOD HBMemoEditor:KeyboardHook(nKey)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBMemoEditor:IdleHook()
 
@@ -202,7 +202,7 @@ METHOD HBMemoEditor:IdleHook()
       ::xDo(ME_IDLE)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
 
@@ -307,11 +307,11 @@ METHOD HBMemoEditor:InsertState(lInsState)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 // ------------------------------------------
 
-FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunction, nLineLength, nTabSize, nTextBuffRow, nTextBuffColumn, nWindowRow, nWindowColumn)
+Function MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunction, nLineLength, nTabSize, nTextBuffRow, nTextBuffColumn, nWindowRow, nWindowColumn)
 
    LOCAL oEd
    LOCAL nOldCursor

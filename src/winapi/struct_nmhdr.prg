@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasNMHDR()
+Function wasNMHDR()
 RETURN was_NMHDR():new()
 
 CLASS WAS_NMHDR

@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasXFORM()
+Function wasXFORM()
 RETURN was_XFORM():new()
 
 CLASS WAS_XFORM

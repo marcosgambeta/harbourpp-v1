@@ -55,7 +55,7 @@ REQUEST HB_CODEPAGE_DE850
 REQUEST HB_CODEPAGE_EL737
 #endif
 
-FUNCTION hb_langSelect(cLangID, cCP)
+Function hb_langSelect(cLangID, cCP)
 
    LOCAL tmp
    LOCAL cCPDef
@@ -175,7 +175,7 @@ FUNCTION hb_langSelect(cLangID, cCP)
 
    RETURN __hb_langSelect(cLangID)
 
-STATIC FUNCTION __LangStdToLangHb(cLangStd)
+Static Function __LangStdToLangHb(cLangStd)
 
    LOCAL cLangHb := ""
 

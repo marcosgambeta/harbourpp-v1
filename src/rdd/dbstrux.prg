@@ -47,10 +47,10 @@
 
 #include "dbstruct.ch"
 
-FUNCTION __dbCopyStruct(cFileName, aFieldList)
+Function __dbCopyStruct(cFileName, aFieldList)
    RETURN dbCreate(cFileName, __dbStructFilter(dbStruct(), aFieldList))
 
-FUNCTION __dbCopyXStruct(cFileName)
+Function __dbCopyXStruct(cFileName)
 
    LOCAL nOldArea
    LOCAL aStruct
@@ -97,7 +97,7 @@ FUNCTION __dbCopyXStruct(cFileName)
 // NOTE: Compared to CA-Cl*pper, Harbour:
 //       (cCodePage, nConnection).
 
-FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnection)
+Function __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnection)
 
    LOCAL nOldArea := Select()
    LOCAL aStruct := {}
@@ -156,7 +156,7 @@ FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
 
 // NOTE: Internal helper function, CA-Cl*pper name is: __FLedit()
 
-FUNCTION __dbStructFilter(aStruct, aFieldList)
+Function __dbStructFilter(aStruct, aFieldList)
 
    LOCAL aStructFiltered
    LOCAL bFindName

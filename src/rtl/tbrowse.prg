@@ -292,14 +292,14 @@ CREATE CLASS TBrowse
    METHOD dispRow(nRow)                       // display TBrowse data
 
 #ifndef HB_BRW_STATICMOUSE
-   FRIEND FUNCTION _mBrwPos                     // helper function for MRow() and MCol() methods
+   FRIEND Function _mBrwPos                     // helper function for MRow() and MCol() methods
 #endif
 
 ENDCLASS
 
 
 
-FUNCTION TBrowseNew(nTop, nLeft, nBottom, nRight)
+Function TBrowseNew(nTop, nLeft, nBottom, nRight)
    RETURN TBrowse():new(nTop, nLeft, nBottom, nRight)
 
 
@@ -322,13 +322,13 @@ METHOD TBrowse:init(nTop, nLeft, nBottom, nRight)
 
    ::colorSpec := SetColor()
 
-   RETURN Self
+   Return Self
 
-STATIC FUNCTION _SKIP_RESULT(xResult)
+Static Function _SKIP_RESULT(xResult)
    RETURN IIf(hb_IsNumeric(xResult), Int(xResult), 0)
 
 
-STATIC PROCEDURE _DISP_FHSEP(nRow, nType, cColor, aColData)
+Static Procedure _DISP_FHSEP(nRow, nType, cColor, aColData)
 
    LOCAL aCol
    LOCAL cSep
@@ -390,7 +390,7 @@ STATIC PROCEDURE _DISP_FHSEP(nRow, nType, cColor, aColData)
    RETURN
 
 
-STATIC PROCEDURE _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColors, aColData)
+Static Procedure _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColors, aColData)
 
    LOCAL aCol
    LOCAL cName
@@ -454,7 +454,7 @@ METHOD TBrowse:dispFrames()
 
    ::lFrames := False
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:dispRow(nRow)
@@ -506,7 +506,7 @@ METHOD TBrowse:dispRow(nRow)
       DispEnd()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:colorRect(aRect, aColors)
@@ -541,7 +541,7 @@ METHOD TBrowse:colorRect(aRect, aColors)
       NEXT
    ENDIF
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:scrollBuffer(nRows)
@@ -582,7 +582,7 @@ METHOD TBrowse:scrollBuffer(nRows)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:readRecord(nRow)
@@ -725,7 +725,7 @@ METHOD TBrowse:setPosition()
 
    ::nMoveOffset := 0
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:stabilize()
@@ -847,7 +847,7 @@ METHOD TBrowse:forceStable()
    Do While !::stabilize()
    EndDo
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:colorValue(nColorIndex)
@@ -875,7 +875,7 @@ METHOD TBrowse:cellValue(nRow, nCol)
       RETURN ::aCellValues[nRow][nCol]
    ENDIF
 
-   RETURN NIL
+   Return Nil
 
 
 METHOD TBrowse:cellColor(nRow, nCol)
@@ -885,10 +885,10 @@ METHOD TBrowse:cellColor(nRow, nCol)
       RETURN ::aCellColors[nRow][nCol]
    ENDIF
 
-   RETURN NIL
+   Return Nil
 
 
-STATIC FUNCTION _DECODECOLORS(cColorSpec)
+Static Function _DECODECOLORS(cColorSpec)
 
    LOCAL aColors := {}
    LOCAL nColors := hb_tokenCount(cColorSpec, ",")
@@ -932,7 +932,7 @@ STATIC FUNCTION _DECODECOLORS(cColorSpec)
  * In CL5.3 headings and footings can have separated indexes (3 and 4)
  * but only when browser shows head/foot separator(s). [druzus]
  */
-STATIC FUNCTION _COLDEFCOLORS(aDefColorsIdx, nMaxColorIndex)
+Static Function _COLDEFCOLORS(aDefColorsIdx, nMaxColorIndex)
 
    LOCAL aColorsIdx := {_TBC_CLR_STANDARD, _TBC_CLR_SELECTED, _TBC_CLR_STANDARD, _TBC_CLR_STANDARD}
    LOCAL nColorIndex
@@ -960,7 +960,7 @@ STATIC FUNCTION _COLDEFCOLORS(aDefColorsIdx, nMaxColorIndex)
  * oCol:colorBlock is used only for cells so only 1st two color indexes
  * are significant. [druzus]
  */
-STATIC FUNCTION _CELLCOLORS(aCol, xValue, nMaxColorIndex)
+Static Function _CELLCOLORS(aCol, xValue, nMaxColorIndex)
 
    LOCAL aColors := {aCol[_TBCI_DEFCOLOR][_TBC_CLR_STANDARD], aCol[_TBCI_DEFCOLOR][_TBC_CLR_SELECTED]}
    LOCAL xColor := Eval(aCol[_TBCI_COLOBJECT]:colorBlock, xValue)
@@ -1033,7 +1033,7 @@ METHOD TBrowse:setUnstable()
    ::lHitBottom := False
    ::lStable    := False
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:invalidate()
@@ -1042,7 +1042,7 @@ METHOD TBrowse:invalidate()
    ::lInvalid := True
    ::lFrames := True
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:refreshAll()
@@ -1058,7 +1058,7 @@ METHOD TBrowse:refreshAll()
     */
    ::lRefresh := True
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:refreshCurrent()
@@ -1069,7 +1069,7 @@ METHOD TBrowse:refreshCurrent()
       ::aCellStatus[::nRowPos] := False
    ENDIF
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:up()
@@ -1077,7 +1077,7 @@ METHOD TBrowse:up()
    ::setUnstable()
    ::nMoveOffset--
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:down()
@@ -1085,7 +1085,7 @@ METHOD TBrowse:down()
    ::setUnstable()
    ::nMoveOffset++
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:pageUp()
@@ -1093,7 +1093,7 @@ METHOD TBrowse:pageUp()
    ::setUnstable()
    ::nMoveOffset -= ::rowCount
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:pageDown()
@@ -1101,7 +1101,7 @@ METHOD TBrowse:pageDown()
    ::setUnstable()
    ::nMoveOffset += ::rowCount
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:left()
@@ -1114,7 +1114,7 @@ METHOD TBrowse:left()
       ENDIF
    EndDo
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:right()
@@ -1127,14 +1127,14 @@ METHOD TBrowse:right()
       ENDIF
    EndDo
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:home()
 
    ::setUnstable()
    ::nColPos := IIf(::nLeftVisible < ::nRightVisible, ::nLeftVisible, ::nRightVisible)
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:end()
@@ -1142,7 +1142,7 @@ METHOD TBrowse:end()
    ::setUnstable()
    ::nColPos := ::nRightVisible
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:panLeft()
@@ -1158,7 +1158,7 @@ METHOD TBrowse:panLeft()
       ::nLeftVisible := nNewPos
    ENDIF
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:panRight()
@@ -1174,7 +1174,7 @@ METHOD TBrowse:panRight()
       ::nRightVisible := nNewPos
    ENDIF
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:panHome()
@@ -1182,7 +1182,7 @@ METHOD TBrowse:panHome()
    ::setUnstable()
    ::nColPos := _NEXTCOLUMN(::aColData, 1)
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:panEnd()
@@ -1190,7 +1190,7 @@ METHOD TBrowse:panEnd()
    ::setUnstable()
    ::nColPos := _PREVCOLUMN(::aColData, ::colCount)
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:goTop()
@@ -1208,7 +1208,7 @@ METHOD TBrowse:goTop()
    ::nMoveOffset := 0
    Eval(::bSkipBlock, 0)
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:goBottom()
@@ -1229,7 +1229,7 @@ METHOD TBrowse:goBottom()
    ::nMoveOffset := -nMoved
    Eval(::bSkipBlock, 0)
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:configure(nMode)
@@ -1245,7 +1245,7 @@ METHOD TBrowse:configure(nMode)
    ENDIF
    ::nConfigure := hb_bitOr(::nConfigure, nMode)
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:doConfigure()
@@ -1460,10 +1460,10 @@ METHOD TBrowse:doConfigure()
 
    ::nBufferPos := ::nRowPos
 
-   RETURN Self
+   Return Self
 
 
-STATIC PROCEDURE _GENLIMITRTE()
+Static Procedure _GENLIMITRTE()
 
    LOCAL oError := ErrorNew()
 
@@ -1484,7 +1484,7 @@ STATIC PROCEDURE _GENLIMITRTE()
 
 
 /* helper function to take headings and footing data */
-STATIC FUNCTION _DECODE_FH(cName, nHeight, nWidth)
+Static Function _DECODE_FH(cName, nHeight, nWidth)
 
    LOCAL i
 
@@ -1515,7 +1515,7 @@ STATIC FUNCTION _DECODE_FH(cName, nHeight, nWidth)
    RETURN nHeight != 0
 
 
-STATIC FUNCTION _MAXFREEZE(nColumns, aColData, nWidth)
+Static Function _MAXFREEZE(nColumns, aColData, nWidth)
 
    LOCAL aCol
    LOCAL lFirst
@@ -1558,7 +1558,7 @@ STATIC FUNCTION _MAXFREEZE(nColumns, aColData, nWidth)
    RETURN 0
 
 
-STATIC FUNCTION _NEXTCOLUMN(aColData, nCol)
+Static Function _NEXTCOLUMN(aColData, nCol)
 
    LOCAL aCol
 
@@ -1573,7 +1573,7 @@ STATIC FUNCTION _NEXTCOLUMN(aColData, nCol)
    RETURN 0
 
 
-STATIC FUNCTION _PREVCOLUMN(aColData, nCol)
+Static Function _PREVCOLUMN(aColData, nCol)
 
    LOCAL aCol
 
@@ -1588,7 +1588,7 @@ STATIC FUNCTION _PREVCOLUMN(aColData, nCol)
    RETURN 0
 
 
-STATIC FUNCTION _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
+Static Function _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
 
    LOCAL aCol
    LOCAL nCol
@@ -1628,7 +1628,7 @@ STATIC FUNCTION _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
    RETURN IIf(nLast == 0, nFrom - nStep, nLast)
 
 
-STATIC PROCEDURE _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
+Static Procedure _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
 
    LOCAL nPos
    LOCAL nFirst
@@ -1804,7 +1804,7 @@ METHOD TBrowse:setVisible()
 
    ENDIF
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:hiLite()
@@ -1832,7 +1832,7 @@ METHOD TBrowse:hiLite()
 
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 
 METHOD TBrowse:deHilite()
@@ -1860,7 +1860,7 @@ METHOD TBrowse:deHilite()
 
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 
 /* Returns the display width of a particular column */
@@ -2124,7 +2124,7 @@ METHOD TBrowse:addColumn(oCol)
    AAdd(::columns, oCol)
    ::configure(_TBR_CONF_COLUMNS)
 
-   RETURN Self
+   Return Self
 
 
 /* Delete a column object from a browse */
@@ -2191,7 +2191,7 @@ METHOD TBrowse:setColumn(nColumn, oCol)
             was fixed and it works as expected (except when wrong
             parameter is passed, when it returns NIL). [vszakats] */
 #ifdef HB_CLP_STRICT
-   RETURN Self
+   Return Self
 #else
    RETURN oPrevCol
 #endif
@@ -2473,7 +2473,7 @@ METHOD TBrowse:hitTest(mRow, mCol)
 
 
 #ifndef HB_BRW_STATICMOUSE
-STATIC PROCEDURE _mBrwPos(oBrw, mRow, mCol)
+Static Procedure _mBrwPos(oBrw, mRow, mCol)
 
    LOCAL nTop
    LOCAL nLeft
@@ -2684,7 +2684,7 @@ METHOD TBrowse:setStyle(nStyle, lNewValue)
    RETURN ::styles[nStyle]
 
 
-FUNCTION TBMouse(oBrw, nMRow, nMCol)
+Function TBMouse(oBrw, nMRow, nMCol)
 
    LOCAL n
 

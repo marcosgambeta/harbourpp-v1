@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasGRADIENT_RECT()
+Function wasGRADIENT_RECT()
 RETURN was_GRADIENT_RECT():new()
 
 CLASS WAS_GRADIENT_RECT

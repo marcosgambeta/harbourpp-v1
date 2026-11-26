@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasTRIVERTEX()
+Function wasTRIVERTEX()
 RETURN was_TRIVERTEX():new()
 
 CLASS WAS_TRIVERTEX

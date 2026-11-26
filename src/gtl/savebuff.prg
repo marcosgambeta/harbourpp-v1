@@ -47,11 +47,11 @@
 
 #include "hbgtinfo.ch"
 
-FUNCTION __XSaveGetChar(cSaveScreen, nPos)
+Function __XSaveGetChar(cSaveScreen, nPos)
    RETURN IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), Chr(hb_BPeek(cSaveScreen, nPos * 2 + 1)), hb_UChar(hb_BPeek(cSaveScreen, nPos * 4 + 2) * 256 + hb_BPeek(cSaveScreen, nPos * 4 + 1)))
 
-FUNCTION __XSaveGetColor(cSaveScreen, nPos)
+Function __XSaveGetColor(cSaveScreen, nPos)
    RETURN IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), hb_BPeek(cSaveScreen, nPos * 2 + 2), hb_BPeek(cSaveScreen, nPos * 4 + 3))
 
-FUNCTION __XSaveGetAttr(cSaveScreen, nPos)
+Function __XSaveGetAttr(cSaveScreen, nPos)
    RETURN IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), 0, hb_BPeek(cSaveScreen, nPos * 4 + 4))

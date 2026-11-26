@@ -49,7 +49,7 @@
 
 #ifdef HB_CLP_UNDOC
 
-FUNCTION _dtxCondSet(cFor, bFor, lAll, bWhile, bEval, nEvery, xDummy, nRecNo, nNext, nRecord, lRest)
+Function _dtxCondSet(cFor, bFor, lAll, bWhile, bEval, nEvery, xDummy, nRecNo, nNext, nRecord, lRest)
 
    HB_SYMBOL_UNUSED(xDummy)
 

@@ -77,7 +77,7 @@ METHOD HBDbHash:New(hHash, cVarName, lEditable)
 
    ::addWindows(::TheHash)
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbHash:addWindows(hHash, nRow)
 
@@ -131,7 +131,7 @@ METHOD HBDbHash:addWindows(hHash, nRow)
 
    ::aWindows[::nCurWindow]:ShowModal()
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDbHash:doGet(oBrowse, pItem, nSet)
 
@@ -237,22 +237,22 @@ METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
 
    ::aWindows[::nCurwindow]:SetCaption(cName + "[" + hb_ntos(oBrwSets:cargo[1]) + ".." + hb_ntos(Len(hHash)) + "]")
 
-   RETURN Self
+   Return Self
 
-FUNCTION __dbgHashes(hHash, cVarName, lEditable)
+Function __dbgHashes(hHash, cVarName, lEditable)
    RETURN HBDbHash():New(hHash, cVarName, lEditable)
 
-STATIC FUNCTION GetTopPos(nPos)
+Static Function GetTopPos(nPos)
    RETURN IIf((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
 
-STATIC FUNCTION GetBottomPos(nPos)
+Static Function GetBottomPos(nPos)
    RETURN IIf(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
 
-STATIC FUNCTION HashBrowseSkip(nPos, oBrwSets)
+Static Function HashBrowseSkip(nPos, oBrwSets)
    RETURN ;
       IIf(oBrwSets:cargo[1] + nPos < 1, -oBrwSets:cargo[1] + 1, ;
       IIf(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;
       Len(oBrwSets:cargo[2][1]) - oBrwSets:cargo[1], nPos))
 
-STATIC FUNCTION HashKeyString(hHash, nAt)
+Static Function HashKeyString(hHash, nAt)
    RETURN __dbgValToExp(hb_HKeyAt(hHash, nAt))

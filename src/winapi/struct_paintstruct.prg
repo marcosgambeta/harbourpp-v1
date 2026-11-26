@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasPAINTSTRUCT()
+Function wasPAINTSTRUCT()
 RETURN was_PAINTSTRUCT():new()
 
 CLASS WAS_PAINTSTRUCT

@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-FUNCTION TBrowseDB(nTop, nLeft, nBottom, nRight)
+Function TBrowseDB(nTop, nLeft, nBottom, nRight)
 
    LOCAL oBrowse := TBrowseNew(nTop, nLeft, nBottom, nRight)
 
@@ -57,7 +57,7 @@ FUNCTION TBrowseDB(nTop, nLeft, nBottom, nRight)
 
 #ifdef HB_CLP_STRICT
 
-FUNCTION __dbSkipper(nRecs)
+Function __dbSkipper(nRecs)
 
    LOCAL nSkipped := 0
 

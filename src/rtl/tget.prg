@@ -228,7 +228,7 @@ METHOD Get:assign()
       ::varPut(xValue)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:updateBuffer()
 
@@ -240,7 +240,7 @@ METHOD Get:updateBuffer()
       ::varGet()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:display()
 
@@ -352,7 +352,7 @@ METHOD Get:display()
 
    SetCursor(nOldCursor)
 
-   RETURN Self
+   Return Self
 
 /* ------------------------------------------------------------------------- */
 
@@ -361,7 +361,7 @@ METHOD Get:colorDisp(cColorSpec)
    ::colorSpec := cColorSpec
    ::display()
 
-   RETURN Self
+   Return Self
 
 METHOD Get:end()
 
@@ -401,7 +401,7 @@ METHOD Get:end()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:home()
 
@@ -413,7 +413,7 @@ METHOD Get:home()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:reset()
 
@@ -430,7 +430,7 @@ METHOD Get:reset()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:undo()
 
@@ -442,7 +442,7 @@ METHOD Get:undo()
       ::lChanged := False
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:setFocus()
 
@@ -481,7 +481,7 @@ METHOD Get:setFocus()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:killFocus()
 
@@ -503,7 +503,7 @@ METHOD Get:killFocus()
    ::original := NIL
    ::cBuffer  := NIL
 
-   RETURN Self
+   Return Self
 
 METHOD Get:varPut(xValue)
 
@@ -613,7 +613,7 @@ METHOD Get:overStrike(cChar)
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 /* NOTE: CA-Cl*pper will corrupt memory if cChar contains
          multiple chars. [vszakats] */
@@ -681,7 +681,7 @@ METHOD Get:insert(cChar)
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:right()
 
@@ -691,7 +691,7 @@ METHOD Get:right()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:left()
 
@@ -701,7 +701,7 @@ METHOD Get:left()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:wordLeft()
 
@@ -732,7 +732,7 @@ METHOD Get:wordLeft()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:wordRight()
 
@@ -763,7 +763,7 @@ METHOD Get:wordRight()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:toDecPos()
 
@@ -785,7 +785,7 @@ METHOD Get:toDecPos()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:backSpace()
 
@@ -794,7 +794,7 @@ METHOD Get:backSpace()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:delete()
 
@@ -803,7 +803,7 @@ METHOD Get:delete()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:delEnd()
 
@@ -822,7 +822,7 @@ METHOD Get:delEnd()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:delLeft()
 
@@ -830,7 +830,7 @@ METHOD Get:delLeft()
    ::deleteLow()
    ::right()
 
-   RETURN Self
+   Return Self
 
 METHOD Get:delRight()
 
@@ -838,7 +838,7 @@ METHOD Get:delRight()
    ::deleteLow()
    ::left()
 
-   RETURN Self
+   Return Self
 
 /* ::wordLeft()
    ::delWordRight() */
@@ -867,7 +867,7 @@ METHOD Get:delWordLeft()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:delWordRight()
 
@@ -892,7 +892,7 @@ METHOD Get:delWordRight()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 /* The METHOD ColorSpec and VAR cColorSpec allow to replace the
  * property ColorSpec for a function to control the content and
@@ -924,7 +924,7 @@ METHOD Get:setColorSpec(cColorSpec)
    /* NOTE: CA-Cl*pper oddity. [vszakats] */
    ELSEIF ValType(cColorSpec) $ "UNDTBA"
 
-      RETURN NIL
+      Return Nil
 
 #ifdef HB_COMPAT_C53
    /* NOTE: This code doesn't seem to make any sense, but seems to
@@ -1450,7 +1450,7 @@ METHOD Get:reform()
       ::nDispLen := IIf(::nPicLen == NIL, ::nMaxLen, ::nPicLen) // ?
    ENDIF
 
-   RETURN Self
+   Return Self
 
 #endif
 
@@ -1622,7 +1622,7 @@ METHOD Get:deleteLow()
 
    ::lChanged := True
 
-   RETURN NIL
+   Return Nil
 
 METHOD Get:DeleteAll()
 
@@ -1655,7 +1655,7 @@ METHOD Get:DeleteAll()
       ::pos     := ::FirstEditable()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD Get:IsEditable(nPos)
 
@@ -1944,7 +1944,7 @@ METHOD Get:Init(nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec)
    ::picture   := cPicture
    ::colorSpec := cColorSpec
 
-   RETURN Self
+   Return Self
 
-FUNCTION GetNew(nRow, nCol, bVarBlock, cVarName, cPicture, cColor)
+Function GetNew(nRow, nCol, bVarBlock, cVarName, cPicture, cColor)
    RETURN Get():New(nRow, nCol, bVarBlock, cVarName, cPicture, cColor)

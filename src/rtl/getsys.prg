@@ -54,9 +54,9 @@
 #define SOACTIVEGET     8
 #define SXREADVAR       9
 
-FUNCTION ReadModal(GetList, nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor)
+Function ReadModal(GetList, nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor)
 #else
-FUNCTION ReadModal(GetList)
+Function ReadModal(GetList)
 #endif
 
    LOCAL oGetList
@@ -97,7 +97,7 @@ FUNCTION ReadModal(GetList)
    RETURN oGetList:Updated()
 
 #ifdef HB_COMPAT_C53
-PROCEDURE GetReader(oGet, oGetList, oMenu, aMsg)
+Procedure GetReader(oGet, oGetList, oMenu, aMsg)
 
    HB_SYMBOL_UNUSED(oGetList)
 
@@ -105,14 +105,14 @@ PROCEDURE GetReader(oGet, oGetList, oMenu, aMsg)
 
    RETURN
 #else
-PROCEDURE GetReader(oGet)
+Procedure GetReader(oGet)
 
    oGet:Reader()
 
    RETURN
 #endif
 
-FUNCTION GetActive(oGet)
+Function GetActive(oGet)
 
    LOCAL oGetList := __GetListActive()
    LOCAL oGetActiveOld
@@ -139,9 +139,9 @@ FUNCTION GetActive(oGet)
       ENDIF
    ENDIF
 
-   RETURN NIL
+   Return Nil
 
-PROCEDURE GetDoSetKey(bKeyBlock, oGet)
+Procedure GetDoSetKey(bKeyBlock, oGet)
 
    LOCAL oGetList := __GetListActive()
 
@@ -152,13 +152,13 @@ PROCEDURE GetDoSetKey(bKeyBlock, oGet)
    RETURN
 
 #ifdef HB_COMPAT_C53
-PROCEDURE GetApplyKey(oGet, nKey, oGetList, oMenu, aMsg)
+Procedure GetApplyKey(oGet, nKey, oGetList, oMenu, aMsg)
 
    IF !hb_IsObject(oGetList)
       oGetList := __GetListActive()
    ENDIF
 #else
-PROCEDURE GetApplyKey(oGet, nKey)
+Procedure GetApplyKey(oGet, nKey)
 
    LOCAL oGetList := __GetListActive()
 #endif
@@ -174,9 +174,9 @@ PROCEDURE GetApplyKey(oGet, nKey)
    RETURN
 
 #ifdef HB_COMPAT_C53
-FUNCTION GetPreValidate(oGet, aMsg)
+Function GetPreValidate(oGet, aMsg)
 #else
-FUNCTION GetPreValidate(oGet)
+Function GetPreValidate(oGet)
 #endif
    LOCAL oGetList := __GetListActive()
 
@@ -191,9 +191,9 @@ FUNCTION GetPreValidate(oGet)
    Return False
 
 #ifdef HB_COMPAT_C53
-FUNCTION GetPostValidate(oGet, aMsg)
+Function GetPostValidate(oGet, aMsg)
 #else
-FUNCTION GetPostValidate(oGet)
+Function GetPostValidate(oGet)
 #endif
 
    LOCAL oGetList := __GetListActive()
@@ -208,19 +208,19 @@ FUNCTION GetPostValidate(oGet)
 
    Return False
 
-FUNCTION ReadExit(lExit)
+Function ReadExit(lExit)
    RETURN Set(_SET_EXIT, lExit)
 
-FUNCTION ReadInsert(lInsert)
+Function ReadInsert(lInsert)
    RETURN Set(_SET_INSERT, lInsert)
 
-FUNCTION Updated()
+Function Updated()
 
    LOCAL oGetList := __GetListLast()
 
    RETURN IIf(oGetList != NIL, oGetList:Updated(), False)
 
-PROCEDURE __KillRead()
+Procedure __KillRead()
 
    LOCAL oGetList := __GetListActive()
 
@@ -230,7 +230,7 @@ PROCEDURE __KillRead()
 
    RETURN
 
-FUNCTION ReadUpdated(lUpdated)
+Function ReadUpdated(lUpdated)
 
    LOCAL oGetList := __GetListLast()
 
@@ -244,7 +244,7 @@ FUNCTION ReadUpdated(lUpdated)
 
    Return False
 
-FUNCTION ReadKill(lKill)
+Function ReadKill(lKill)
 
    LOCAL oGetList := __GetListActive()
 
@@ -258,7 +258,7 @@ FUNCTION ReadKill(lKill)
 
    Return False
 
-FUNCTION ReadFormat(bFormat)
+Function ReadFormat(bFormat)
 
    LOCAL oGetList := __GetListActive()
 
@@ -270,9 +270,9 @@ FUNCTION ReadFormat(bFormat)
       ENDIF
    ENDIF
 
-   RETURN NIL
+   Return Nil
 
-PROCEDURE __SetFormat(bFormat)
+Procedure __SetFormat(bFormat)
 
    LOCAL oGetList := __GetListActive()
 
@@ -292,7 +292,7 @@ PROCEDURE __SetFormat(bFormat)
 #define _GET_RANGE_FROM 10
 #define _GET_RANGE_TO   11
 
-FUNCTION RangeCheck(oGet, xDummy, xLow, xHigh)
+Function RangeCheck(oGet, xDummy, xLow, xHigh)
 
    LOCAL xValue
    LOCAL cMessage

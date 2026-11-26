@@ -56,7 +56,7 @@
 
 REQUEST hb_ZCompress
 
-FUNCTION __hbdoc_FromSource(cFile, aErrMsg)
+Function __hbdoc_FromSource(cFile, aErrMsg)
 
    LOCAL aEntry := {}
 
@@ -66,7 +66,7 @@ FUNCTION __hbdoc_FromSource(cFile, aErrMsg)
 
    RETURN aEntry
 
-FUNCTION __hbdoc_DirLastModified(cDir)
+Function __hbdoc_DirLastModified(cDir)
 
    LOCAL aFile
    LOCAL cDocDir
@@ -97,7 +97,7 @@ FUNCTION __hbdoc_DirLastModified(cDir)
 
    RETURN tLast
 
-FUNCTION __hbdoc_LoadDir(cDir, cName, aErrMsg)
+Function __hbdoc_LoadDir(cDir, cName, aErrMsg)
 
    LOCAL hMeta
    LOCAL nCount
@@ -134,7 +134,7 @@ FUNCTION __hbdoc_LoadDir(cDir, cName, aErrMsg)
 
    RETURN aEntry
 
-STATIC PROCEDURE __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
+Static Procedure __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
 
    LOCAL aFile
    LOCAL nCount
@@ -153,7 +153,7 @@ STATIC PROCEDURE __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
 
    RETURN
 
-STATIC PROCEDURE __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
+Static Procedure __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
 
    LOCAL aFilenameTemplateMap := { ;
       "FUNCTION"   => "func_"  , ;
@@ -180,7 +180,7 @@ STATIC PROCEDURE __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
 
    RETURN
 
-STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
+Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
 
    LOCAL hEntry := NIL
    LOCAL cLine
@@ -253,7 +253,7 @@ STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
 
    RETURN
 
-FUNCTION __hbdoc_ToSource(aEntry)
+Function __hbdoc_ToSource(aEntry)
 
    LOCAL cSource := ""
    LOCAL hEntry
@@ -281,7 +281,7 @@ FUNCTION __hbdoc_ToSource(aEntry)
 
    RETURN cSource
 
-FUNCTION __hbdoc_FilterOut(cFile)
+Function __hbdoc_FilterOut(cFile)
 
    LOCAL lEntry := False
    LOCAL cLine
@@ -340,7 +340,7 @@ FUNCTION __hbdoc_FilterOut(cFile)
 #define _HBDOC_SIG_LEN   6
 #define _HBDOC_SIGNATURE (hb_BChar(0xC0) + hb_BChar(0x48) + hb_BChar(0x42) + hb_BChar(0x44) + hb_BChar(0x01) + hb_BChar(0x00))
 
-FUNCTION __hbdoc_SaveHBD(cFileName, aEntry)
+Function __hbdoc_SaveHBD(cFileName, aEntry)
 
    LOCAL fhnd
 
@@ -360,7 +360,7 @@ FUNCTION __hbdoc_SaveHBD(cFileName, aEntry)
 
    Return False
 
-FUNCTION __hbdoc_LoadHBD(cFileName)
+Function __hbdoc_LoadHBD(cFileName)
 
    LOCAL fhnd
    LOCAL aEntry := NIL

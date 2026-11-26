@@ -49,19 +49,19 @@
 
 // NOTE: The fifth parameters (cOrderName) is undocumented.
 
-FUNCTION dbCreateIndex(cOrderBagName, cKeyExpr, bKeyExpr, lUnique, cOrderName)
+Function dbCreateIndex(cOrderBagName, cKeyExpr, bKeyExpr, lUnique, cOrderName)
    RETURN ordCreate(cOrderBagName, cOrderName, cKeyExpr, bKeyExpr, lUnique)
 
-FUNCTION dbSetIndex(cIndexName)
+Function dbSetIndex(cIndexName)
    RETURN ordListAdd(cIndexName)
 
-FUNCTION dbClearIndex()
+Function dbClearIndex()
    RETURN ordListClear()
 
-FUNCTION dbReindex()
+Function dbReindex()
    RETURN ordListRebuild()
 
-PROCEDURE dbSetOrder(nOrderNum)
+Procedure dbSetOrder(nOrderNum)
 
    IF hb_IsString(nOrderNum) .AND. !Empty(Val(nOrderNum))
       nOrderNum := Val(nOrderNum)
@@ -71,10 +71,10 @@ PROCEDURE dbSetOrder(nOrderNum)
 
    RETURN
 
-FUNCTION IndexExt()
+Function IndexExt()
    RETURN ordBagExt()
 
-FUNCTION IndexKey(nOrder)
+Function IndexKey(nOrder)
 
    IF !hb_IsNumeric(nOrder)
       RETURN ordKey(nOrder)
@@ -86,5 +86,5 @@ FUNCTION IndexKey(nOrder)
 
    RETURN ""
 
-FUNCTION ordSetRelation(xArea, bRelation, cRelation)
+Function ordSetRelation(xArea, bRelation, cRelation)
    RETURN dbSetRelation(xArea, bRelation, cRelation, True)

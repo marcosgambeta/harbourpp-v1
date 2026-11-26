@@ -205,7 +205,7 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
    RETURN cObject
 
-STATIC FUNCTION ArrayToText(aArray, cName, nIndent)
+Static Function ArrayToText(aArray, cName, nIndent)
 
    LOCAL cArray := hb_eol() + Space(nIndent) + "ARRAY ::" + cName + " LEN " + hb_ntos(Len(aArray)) + hb_eol()
    LOCAL uValue

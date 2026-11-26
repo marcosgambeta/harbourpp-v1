@@ -67,7 +67,7 @@
 
 #define _LISTBOX_ITEMDATA(aItem)  IIf(aItem[_ITEM_xData] == NIL, aItem[_ITEM_cText], aItem[_ITEM_xData])
 
-CREATE CLASS ListBox FUNCTION HBListBox
+CREATE CLASS ListBox Function HBListBox
 
    PROTECTED:
 
@@ -176,7 +176,7 @@ METHOD ListBox:addItem(cText, xData)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:close()
 
@@ -186,7 +186,7 @@ METHOD ListBox:close()
       ::aSaveScr := NIL
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:delItem(nPos)
 
@@ -217,7 +217,7 @@ METHOD ListBox:delItem(nPos)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:display()
 
@@ -303,7 +303,7 @@ METHOD ListBox:display()
 
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:findText(cText, nPos, lCaseSensitive, lExact)
 
@@ -491,7 +491,7 @@ METHOD ListBox:insItem(nPos, cText, xData)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:killFocus()
 
@@ -518,7 +518,7 @@ METHOD ListBox:killFocus()
       SetCursor(::nCursor)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:nextItem()
 
@@ -528,7 +528,7 @@ METHOD ListBox:nextItem()
       ::changeItem(nOldValue := ::nValue, IIf(nOldValue == ::nItemCount, nOldValue, nOldValue + 1))
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:open()
 
@@ -540,7 +540,7 @@ METHOD ListBox:open()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:prevItem()
 
@@ -555,7 +555,7 @@ METHOD ListBox:prevItem()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:scroll(nMethod)
 
@@ -661,7 +661,7 @@ METHOD ListBox:scroll(nMethod)
       EndSwitch
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:select(xPos)
 
@@ -729,7 +729,7 @@ METHOD ListBox:setData(nPos, xData)
       ::aItems[nPos][_ITEM_xData] := xData
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:setFocus()
 
@@ -745,7 +745,7 @@ METHOD ListBox:setFocus()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:setItem(nPos, aItem)
 
@@ -762,7 +762,7 @@ METHOD ListBox:setText(nPos, cText)
       ::aItems[nPos][_ITEM_cText] := cText
    ENDIF
 
-   RETURN Self
+   Return Self
 
 /* --- */
 
@@ -805,7 +805,7 @@ METHOD ListBox:changeItem(nOldPos, nNewPos)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ListBox:scrollbarPos()
 
@@ -1036,7 +1036,7 @@ METHOD ListBox:Init(nTop, nLeft, nBottom, nRight, lDropDown)
    LOCAL cColor
 
    IF !hb_IsNumeric(nTop) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nBottom) .OR. !hb_IsNumeric(nRight)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    hb_default(@lDropDown, False)
@@ -1065,12 +1065,12 @@ METHOD ListBox:Init(nTop, nLeft, nBottom, nRight, lDropDown)
          hb_ColorIndex(cColor, CLR_BACKGROUND)
    ENDIF
 
-   RETURN Self
+   Return Self
 
-FUNCTION ListBox(nTop, nLeft, nBottom, nRight, lDropDown)
+Function ListBox(nTop, nLeft, nBottom, nRight, lDropDown)
    RETURN HBListBox():New(nTop, nLeft, nBottom, nRight, lDropDown)
 
-FUNCTION _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, lDropDown, lScrollBar, cBitmap)
+Function _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, lDropDown, lScrollBar, cBitmap)
 
    LOCAL o
    LOCAL xItem

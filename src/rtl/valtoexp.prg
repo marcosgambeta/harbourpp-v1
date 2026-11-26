@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-FUNCTION hb_CStr(xVal)
+Function hb_CStr(xVal)
 
    LOCAL v := ValType(xVal)
 
@@ -70,11 +70,11 @@ FUNCTION hb_CStr(xVal)
 
    RETURN "???:" + v
 
-FUNCTION hb_ValToExp(xVal, lRaw)
+Function hb_ValToExp(xVal, lRaw)
 
    RETURN s_valToExp(xVal, hb_defaultValue(lRaw, False))
 
-STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
+Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
    LOCAL cVal
    LOCAL cKey
@@ -169,7 +169,7 @@ STATIC FUNCTION s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
    RETURN cVal
 
-FUNCTION __itemSetRef(xVal, aRefs)
+Function __itemSetRef(xVal, aRefs)
 
    LOCAL aRef
 
@@ -179,7 +179,7 @@ FUNCTION __itemSetRef(xVal, aRefs)
 
    RETURN xVal
 
-FUNCTION __itemSetObj(xVal, aObjs)
+Function __itemSetObj(xVal, aObjs)
 
    LOCAL aRef
 
@@ -189,7 +189,7 @@ FUNCTION __itemSetObj(xVal, aObjs)
 
    RETURN xVal
 
-FUNCTION __itemSetObjRaw(xVal, aObjs)
+Function __itemSetObjRaw(xVal, aObjs)
 
    LOCAL aRef
 

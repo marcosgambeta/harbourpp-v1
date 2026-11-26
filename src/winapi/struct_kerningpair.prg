@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasKERNINGPAIR()
+Function wasKERNINGPAIR()
 RETURN was_KERNINGPAIR():new()
 
 CLASS WAS_KERNINGPAIR

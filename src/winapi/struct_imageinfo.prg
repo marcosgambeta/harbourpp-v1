@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasIMAGEINFO()
+Function wasIMAGEINFO()
 RETURN was_IMAGEINFO():new()
 
 CLASS WAS_IMAGEINFO

@@ -47,7 +47,7 @@
 
 #include "inkey.ch"
 
-PROCEDURE __SetFunction(nFunctionKey, xKeySeq)
+Procedure __SetFunction(nFunctionKey, xKeySeq)
 
    /* NOTE: CA-Cl*pper will not handle F11 and F12 here.
             This is a Harbour extension. [vszakats] */

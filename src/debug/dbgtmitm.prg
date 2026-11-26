@@ -79,7 +79,7 @@ METHOD HBDbMenuItem:New(cPrompt, bAction, lChecked, xIdent)
    ::lChecked := hb_defaultValue(lChecked, False)
    ::Ident    := xIdent
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbMenuItem:Display(cClrText, cClrHotKey)
 
@@ -93,4 +93,4 @@ METHOD HBDbMenuItem:Display(cClrText, cClrHotKey)
       hb_DispOutAtBox(::nRow, ::nCol, hb_UTF8ToStrBox("√"), cClrText)
    ENDIF
 
-   RETURN Self
+   Return Self

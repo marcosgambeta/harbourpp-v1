@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasMSG()
+Function wasMSG()
 RETURN was_MSG():new()
 
 CLASS WAS_MSG

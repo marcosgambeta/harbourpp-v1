@@ -50,7 +50,7 @@
 
 // NOTE: In CA-Cl*pper 5.2/5.3 the cMethod argument seems to be ignored.
 
-FUNCTION __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
+Function __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
 
    LOCAL oError
    LOCAL lError

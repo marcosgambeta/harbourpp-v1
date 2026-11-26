@@ -82,7 +82,7 @@
 #include "ord.ch"
 #include "hbsxdef.ch"
 
-FUNCTION sxChar(nLen, /* @ */ xKeyVal)
+Function sxChar(nLen, /* @ */ xKeyVal)
 
    Switch ValType(xKeyVal)
    Case "C"
@@ -111,7 +111,7 @@ FUNCTION sxChar(nLen, /* @ */ xKeyVal)
 
    RETURN xKeyVal
 
-FUNCTION sxNum(/* @ */ xKeyVal)
+Function sxNum(/* @ */ xKeyVal)
 
    Switch ValType(xKeyVal)
    Case "N"
@@ -134,7 +134,7 @@ FUNCTION sxNum(/* @ */ xKeyVal)
 
    RETURN xKeyVal
 
-FUNCTION sxDate(/* @ */ xKeyVal)
+Function sxDate(/* @ */ xKeyVal)
 
    Switch ValType(xKeyVal)
    Case "D"
@@ -156,7 +156,7 @@ FUNCTION sxDate(/* @ */ xKeyVal)
 
    RETURN xKeyVal
 
-FUNCTION sxLog(/* @ */ xKeyVal)
+Function sxLog(/* @ */ xKeyVal)
 
    Switch ValType(xKeyVal)
    Case "L"
@@ -183,7 +183,7 @@ FUNCTION sxLog(/* @ */ xKeyVal)
 
    RETURN xKeyVal
 
-FUNCTION sx_Compress(xVal)
+Function sx_Compress(xVal)
 
    LOCAL xRetVal
 
@@ -199,7 +199,7 @@ FUNCTION sx_Compress(xVal)
 
    RETURN xVal
 
-FUNCTION sx_Decompress(xVal)
+Function sx_Decompress(xVal)
 
    LOCAL xRetVal
 
@@ -215,7 +215,7 @@ FUNCTION sx_Decompress(xVal)
 
    RETURN xVal
 
-FUNCTION sx_TagInfo(cIndex)
+Function sx_TagInfo(cIndex)
 
    LOCAL aInfo
    LOCAL nOrds
@@ -243,7 +243,7 @@ FUNCTION sx_TagInfo(cIndex)
 
    RETURN {}
 
-FUNCTION sx_TagCount(xIndex)
+Function sx_TagCount(xIndex)
 
    LOCAL nTags := 0
    LOCAL cIndex
@@ -267,7 +267,7 @@ FUNCTION sx_TagCount(xIndex)
 
    RETURN nTags
 
-FUNCTION sx_Tags(xIndex)
+Function sx_Tags(xIndex)
 
    LOCAL aTagNames := {}
    LOCAL nOrder
@@ -292,7 +292,7 @@ FUNCTION sx_Tags(xIndex)
 
    RETURN aTagNames
 
-FUNCTION sx_SetTag(xTag, xIndex)
+Function sx_SetTag(xTag, xIndex)
 
    LOCAL lRet := False
    LOCAL nOrder := 0
@@ -342,7 +342,7 @@ FUNCTION sx_SetTag(xTag, xIndex)
 
    RETURN lRet
 
-FUNCTION sx_KillTag(xTag, xIndex)
+Function sx_KillTag(xTag, xIndex)
 
    LOCAL lRet := False
    LOCAL nOrder
@@ -403,16 +403,16 @@ FUNCTION sx_KillTag(xTag, xIndex)
 
    RETURN lRet
 
-FUNCTION sx_FileOrder()
+Function sx_FileOrder()
    RETURN dbOrderInfo(DBOI_BAGNUMBER)
 
-FUNCTION sx_SetFileOrd(nIndex)
+Function sx_SetFileOrd(nIndex)
    RETURN IIf(hb_IsNumeric(nIndex), ordSetFocus(sx_TagOrder(1, nIndex)), ordSetFocus())
 
-FUNCTION rdd_Count()
+Function rdd_Count()
    RETURN Len(rddList())
 
-FUNCTION rdd_Name(nRDD)
+Function rdd_Name(nRDD)
 
    LOCAL aRDD
 
@@ -425,7 +425,7 @@ FUNCTION rdd_Name(nRDD)
 
    RETURN ""
 
-FUNCTION rdd_Info(xID)
+Function rdd_Info(xID)
 
    LOCAL cRDD
 
@@ -455,34 +455,34 @@ FUNCTION rdd_Info(xID)
       hb_rddInfo(RDDI_ORDEREXT, NIL, cRDD), ;
       hb_rddInfo(RDDI_MEMOEXT, NIL, cRDD) }
 
-FUNCTION sx_IsDBT(cRDD)
+Function sx_IsDBT(cRDD)
    RETURN hb_rddInfo(RDDI_MEMOTYPE, NIL, cRDD) == DB_MEMO_DBT
 
-FUNCTION sx_MemoExt(cNewExt, cRDD)
+Function sx_MemoExt(cNewExt, cRDD)
    RETURN hb_rddInfo(RDDI_MEMOEXT, cNewExt, cRDD)
 
-FUNCTION sx_MemoBlk(nNewBlock, cRDD)
+Function sx_MemoBlk(nNewBlock, cRDD)
    RETURN hb_rddInfo(RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD)
 
-FUNCTION sx_SetMemoBlock(nNewBlock, cRDD)
+Function sx_SetMemoBlock(nNewBlock, cRDD)
    RETURN hb_rddInfo(RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD)
 
-FUNCTION sx_StrXCheck(lStrict, cRDD)
+Function sx_StrXCheck(lStrict, cRDD)
    RETURN hb_rddInfo(RDDI_STRICTSTRUCT, lStrict, cRDD)
 
-FUNCTION sx_LockRetry(nRetry, cRDD)
+Function sx_LockRetry(nRetry, cRDD)
    RETURN hb_rddInfo(RDDI_LOCKRETRY, nRetry, cRDD)
 
-FUNCTION sx_AutoOpen(lAuto, cRDD)
+Function sx_AutoOpen(lAuto, cRDD)
    RETURN hb_rddInfo(RDDI_AUTOOPEN, lAuto, cRDD)
 
-FUNCTION sx_AutoShare(lAuto, cRDD)
+Function sx_AutoShare(lAuto, cRDD)
    RETURN hb_rddInfo(RDDI_AUTOSHARE, lAuto, cRDD)
 
-FUNCTION sx_Blob2File(cFileName, cFldName)
+Function sx_Blob2File(cFileName, cFldName)
    RETURN dbFileGet(cFldName, cFileName, FILEGET_OVERWRITE)
 
-FUNCTION sx_File2Blob(cFileName, cFldName, nActionCode)
+Function sx_File2Blob(cFileName, cFldName, nActionCode)
 
    LOCAL nAction := 0
 
@@ -495,7 +495,7 @@ FUNCTION sx_File2Blob(cFileName, cFldName, nActionCode)
 
    RETURN dbFilePut(cFldName, cFileName, nAction)
 
-FUNCTION sx_dbCreate(cFileName, aStruct, cRDD)
+Function sx_dbCreate(cFileName, aStruct, cRDD)
 
    LOCAL aField
    LOCAL aDbStruct
@@ -521,7 +521,7 @@ FUNCTION sx_dbCreate(cFileName, aStruct, cRDD)
 
    RETURN dbCreate(cFileName, aDbStruct, cRDD)
 
-FUNCTION sx_VSigLen(xField)
+Function sx_VSigLen(xField)
 
    LOCAL nResult := 0
    LOCAL nField := 0
@@ -543,7 +543,7 @@ FUNCTION sx_VSigLen(xField)
 
    RETURN nResult
 
-FUNCTION sx_VFGet(cExpr, nLen)
+Function sx_VFGet(cExpr, nLen)
 
    /* Our RDDs does not use any internal flags to cut V-Fields so
       we can simply evaluate given expression */
@@ -552,9 +552,9 @@ FUNCTION sx_VFGet(cExpr, nLen)
       RETURN PadR(&cExpr, nLen)  /* NOTE: Macro operator! */
    ENDIF
 
-   RETURN NIL
+   Return Nil
 
-FUNCTION sx_IsLocked(xRec)
+Function sx_IsLocked(xRec)
 
    LOCAL xRecord
 
@@ -572,7 +572,7 @@ FUNCTION sx_IsLocked(xRec)
 
    Return False
 
-FUNCTION sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
+Function sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
 
    LOCAL cPrevTrigger := ""
 

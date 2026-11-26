@@ -59,7 +59,7 @@
 
 #ifdef HB_COMPAT_C53
 
-CREATE CLASS RadioButtn FUNCTION HBRadioButton
+CREATE CLASS RadioButtn Function HBRadioButton
 
    EXPORTED:
 
@@ -117,7 +117,7 @@ METHOD RadioButtn:setFocus()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioButtn:select(lState)
 
@@ -130,7 +130,7 @@ METHOD RadioButtn:select(lState)
       Eval(::bSBlock)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioButtn:killFocus()
 
@@ -144,7 +144,7 @@ METHOD RadioButtn:killFocus()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioButtn:display()
 
@@ -176,7 +176,7 @@ METHOD RadioButtn:display()
 
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD RadioButtn:isAccel(xKey)
 
@@ -313,7 +313,7 @@ METHOD RadioButtn:Init(nRow, nCol, cCaption, cData)
    LOCAL cColor
 
    IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nCol)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    ::nCapRow  := nRow
@@ -337,9 +337,9 @@ METHOD RadioButtn:Init(nRow, nCol, cCaption, cData)
          hb_ColorIndex(cColor, CLR_BACKGROUND)
    ENDIF
 
-   RETURN Self
+   Return Self
 
-FUNCTION RadioButto(nRow, nCol, cCaption, cData) // NOTE: cData argument is undocumented
+Function RadioButto(nRow, nCol, cCaption, cData) // NOTE: cData argument is undocumented
    RETURN HBRadioButton():New(nRow, nCol, cCaption, cData)
 
 #endif

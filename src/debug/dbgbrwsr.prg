@@ -120,7 +120,7 @@ METHOD HBDbBrowser:New(nTop, nLeft, nBottom, nRight, oParentWindow)
    ::nBottom := nBottom
    ::nRight := nRight
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbBrowser:Configure()
 
@@ -132,7 +132,7 @@ METHOD HBDbBrowser:Configure()
    AFill(ASize(::aRowState, ::rowCount), False)
    ::lConfigured := True
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbBrowser:SetColorSpec(cColors)
 
@@ -159,7 +159,7 @@ METHOD HBDbBrowser:MoveCursor(nSkip)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbBrowser:DispRow(nRow, lHiLite)
 
@@ -197,7 +197,7 @@ METHOD HBDbBrowser:DispRow(nRow, lHiLite)
       DispEnd()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbBrowser:ForceStable()
 
@@ -217,7 +217,7 @@ METHOD HBDbBrowser:ForceStable()
    SetPos(::nTop + ::rowPos - 1, ::nLeft)
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbBrowser:GoTo(nRow)
 
@@ -247,7 +247,7 @@ METHOD HBDbBrowser:GoBottom()
       ::rowPos += nScroll
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbBrowser:Resize(nTop, nLeft, nBottom, nRight)
 
@@ -274,7 +274,7 @@ METHOD HBDbBrowser:Resize(nTop, nLeft, nBottom, nRight)
       ::Configure():ForceStable()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 CREATE CLASS HBDbColumn
 
@@ -294,7 +294,7 @@ METHOD HBDbColumn:New(cHeading, bBlock)
    HB_SYMBOL_UNUSED(cHeading)
    ::block := bBlock
 
-   RETURN Self
+   Return Self
 
-FUNCTION HBDbColumnNew(cHeading, bBlock)
+Function HBDbColumnNew(cHeading, bBlock)
    RETURN HBDbColumn():New(cHeading, bBlock)

@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasTIMECAPS()
+Function wasTIMECAPS()
 RETURN was_TIMECAPS():new()
 
 CLASS WAS_TIMECAPS

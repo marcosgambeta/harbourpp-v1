@@ -60,7 +60,7 @@
 
 #ifdef HB_COMPAT_C53
 
-CREATE CLASS PopupMenu FUNCTION HBPopupMenu
+CREATE CLASS PopupMenu Function HBPopupMenu
 
    EXPORTED:
 
@@ -128,7 +128,7 @@ METHOD PopupMenu:addItem(oItem)
 
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PopupMenu:close(lCloseChild)
 
@@ -149,7 +149,7 @@ METHOD PopupMenu:close(lCloseChild)
       ::nCurrent := 0
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PopupMenu:delItem(nPos)
 
@@ -173,7 +173,7 @@ METHOD PopupMenu:delItem(nPos)
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PopupMenu:display()
 
@@ -263,7 +263,7 @@ METHOD PopupMenu:display()
 
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PopupMenu:getAccel(xKey)
 
@@ -417,7 +417,7 @@ METHOD PopupMenu:insItem(nPos, oItem)
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PopupMenu:isOpen()
    RETURN ::aSaveScr != NIL
@@ -458,7 +458,7 @@ METHOD PopupMenu:open()
 
    ::display()
 
-   RETURN Self
+   Return Self
 
 METHOD PopupMenu:select(nPos)
 
@@ -474,7 +474,7 @@ METHOD PopupMenu:select(nPos)
       ::nCurrent := nPos
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PopupMenu:setItem(nPos, oItem)
 
@@ -484,7 +484,7 @@ METHOD PopupMenu:setItem(nPos, oItem)
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)
    ENDIF
 
-   RETURN Self // NOTE: CA-Cl*pper returns NIL, which is wrong.
+   Return Self // NOTE: CA-Cl*pper returns NIL, which is wrong.
 
 METHOD PopupMenu:setMetrics()
 
@@ -505,7 +505,7 @@ METHOD PopupMenu:setMetrics()
    ::nBottom := ::nTop + ::nItemCount + 1
    ::nRight := ::nLeft + ::nWidth + 1
 
-   RETURN Self
+   Return Self
 
 METHOD PopupMenu:border(cBorder)
 
@@ -619,9 +619,9 @@ METHOD PopupMenu:Init(nTop, nLeft, nBottom, nRight)
          hb_ColorIndex(cColor, CLR_BORDER)
    ENDIF
 
-   RETURN Self
+   Return Self
 
-FUNCTION Popup(nTop, nLeft, nBottom, nRight)
+Function Popup(nTop, nLeft, nBottom, nRight)
    RETURN HBPopupMenu():New(nTop, nLeft, nBottom, nRight)
 
 #endif

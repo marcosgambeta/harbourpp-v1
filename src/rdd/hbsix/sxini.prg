@@ -56,7 +56,7 @@
 
 MEMVAR SxIniInfo
 
-STATIC FUNCTION _sx_INIlogical(cVal)
+Static Function _sx_INIlogical(cVal)
 
    Switch Upper(cVal)
    Case ".T."
@@ -71,9 +71,9 @@ STATIC FUNCTION _sx_INIlogical(cVal)
       Return False
    EndSwitch
 
-   RETURN NIL
+   Return Nil
 
-FUNCTION _sx_IniInit(nArea)
+Function _sx_IniInit(nArea)
 
    LOCAL xShared
    LOCAL xReadOnly
@@ -143,7 +143,7 @@ FUNCTION _sx_IniInit(nArea)
 
    Return False
 
-FUNCTION sx_IniHeader(cHeaderName, nArea)
+Function sx_IniHeader(cHeaderName, nArea)
 
    IF nArea == NIL
       nArea := Select()

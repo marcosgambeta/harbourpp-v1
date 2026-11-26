@@ -77,7 +77,7 @@ METHOD HBDbArray:New(aArray, cVarName, lEditable)
 
    ::addWindows(::TheArray)
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbArray:addWindows(aArray, nRow)
 
@@ -127,7 +127,7 @@ METHOD HBDbArray:addWindows(aArray, nRow)
 
    ::aWindows[::nCurWindow]:ShowModal()
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDbArray:doGet(oBrowse, pItem, nSet)
 
@@ -229,18 +229,18 @@ METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
 
    ::aWindows[::nCurWindow]:SetCaption(cName + "[" + hb_ntos(oBrwSets:cargo[1]) + ".." + hb_ntos(Len(aArray)) + "]")
 
-   RETURN Self
+   Return Self
 
-FUNCTION __dbgArrays(aArray, cVarName, lEditable)
+Function __dbgArrays(aArray, cVarName, lEditable)
    RETURN HBDbArray():New(aArray, cVarName, lEditable)
 
-STATIC FUNCTION GetTopPos(nPos)
+Static Function GetTopPos(nPos)
    RETURN IIf((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
 
-STATIC FUNCTION GetBottomPos(nPos)
+Static Function GetBottomPos(nPos)
    RETURN IIf(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
 
-STATIC FUNCTION ArrayBrowseSkip(nPos, oBrwSets)
+Static Function ArrayBrowseSkip(nPos, oBrwSets)
    RETURN ;
       IIf(oBrwSets:cargo[1] + nPos < 1, -oBrwSets:cargo[1] + 1, ;
       IIf(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;

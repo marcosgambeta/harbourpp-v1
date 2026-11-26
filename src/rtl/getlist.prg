@@ -49,7 +49,7 @@
 
 THREAD STATIC t_oGetListActive
 
-PROCEDURE __GetListSetActive(oGetList)
+Procedure __GetListSetActive(oGetList)
 
    IF t_oGetListActive != NIL
       t_oGetListActive:HasFocus := False
@@ -65,10 +65,10 @@ PROCEDURE __GetListSetActive(oGetList)
 
 // NOTE: Using a separate function for maximum speed
 
-FUNCTION __GetListActive()
+Function __GetListActive()
    RETURN t_oGetListActive
 
-FUNCTION __GetListLast(oGetListLast)
+Function __GetListLast(oGetListLast)
 
    THREAD STATIC t_oGetListLast
 

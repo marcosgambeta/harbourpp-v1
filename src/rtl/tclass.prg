@@ -66,7 +66,7 @@
 
 REQUEST HBObject
 
-FUNCTION HBClass()
+Function HBClass()
 
    STATIC s_hClass  /* NOTE: Automatically defaults to NIL */
 
@@ -153,7 +153,7 @@ FUNCTION HBClass()
    In case of direct class creation (without the help of preprocessor) xSuper can be
    either NIL or contain the name of the superclass. */
 
-STATIC FUNCTION New(cClassName, xSuper, sClassFunc, lModuleFriendly)
+Static Function New(cClassName, xSuper, sClassFunc, lModuleFriendly)
 
    LOCAL Self := QSelf()
    LOCAL i
@@ -193,7 +193,7 @@ STATIC FUNCTION New(cClassName, xSuper, sClassFunc, lModuleFriendly)
 
    RETURN QSelf()
 
-STATIC PROCEDURE Create(/* MetaClass */)
+Static Procedure Create(/* MetaClass */)
 
    LOCAL Self := QSelf()
    LOCAL n
@@ -276,10 +276,10 @@ STATIC PROCEDURE Create(/* MetaClass */)
 
    RETURN
 
-STATIC FUNCTION Instance()
+Static Function Instance()
    RETURN __clsInst(QSelf():hClass)
 
-STATIC PROCEDURE AddData(cData, xInit, cType, nScope, lNoinit)
+Static Procedure AddData(cData, xInit, cType, nScope, lNoinit)
 
    /* Default Init for Logical and numeric */
    IF !hb_defaultValue(lNoInit, False) .AND. cType != NIL .AND. xInit == NIL
@@ -310,7 +310,7 @@ STATIC PROCEDURE AddData(cData, xInit, cType, nScope, lNoinit)
 
    RETURN
 
-STATIC PROCEDURE AddMultiData(cType, xInit, nScope, aData, lNoInit)
+Static Procedure AddMultiData(cType, xInit, nScope, aData, lNoInit)
 
    LOCAL cData
 
@@ -322,7 +322,7 @@ STATIC PROCEDURE AddMultiData(cType, xInit, nScope, aData, lNoInit)
 
    RETURN
 
-STATIC PROCEDURE AddClassData(cData, xInit, cType, nScope, lNoInit)
+Static Procedure AddClassData(cData, xInit, cType, nScope, lNoInit)
 
    /* Default Init for Logical and numeric */
    IF !hb_defaultValue(lNoInit, False) .AND. cType != NIL .AND. xInit == NIL
@@ -353,7 +353,7 @@ STATIC PROCEDURE AddClassData(cData, xInit, cType, nScope, lNoInit)
 
    RETURN
 
-STATIC PROCEDURE AddMultiClsData(cType, xInit, nScope, aData, lNoInit)
+Static Procedure AddMultiClsData(cType, xInit, nScope, aData, lNoInit)
 
    LOCAL cData
 
@@ -365,31 +365,31 @@ STATIC PROCEDURE AddMultiClsData(cType, xInit, nScope, aData, lNoInit)
 
    RETURN
 
-STATIC PROCEDURE AddInline(cMethod, bCode, nScope)
+Static Procedure AddInline(cMethod, bCode, nScope)
 
    AAdd(QSelf():aInlines, {cMethod, bCode, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
 
    RETURN
 
-STATIC PROCEDURE AddMethod(cMethod, sFuncSym, nScope)
+Static Procedure AddMethod(cMethod, sFuncSym, nScope)
 
    AAdd(QSelf():aMethods, {cMethod, sFuncSym, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
 
    RETURN
 
-STATIC PROCEDURE AddClsMethod(cMethod, sFuncSym, nScope)
+Static Procedure AddClsMethod(cMethod, sFuncSym, nScope)
 
    AAdd(QSelf():aClsMethods, {cMethod, sFuncSym, hb_bitOr(hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED), HB_OO_CLSTP_CLASS)})
 
    RETURN
 
-STATIC PROCEDURE AddVirtual(cMethod)
+Static Procedure AddVirtual(cMethod)
 
    AAdd(QSelf():aVirtuals, cMethod)
 
    RETURN
 
-STATIC PROCEDURE AddDelegate(xMethod, cDelegMsg, cObject, nScope)
+Static Procedure AddDelegate(xMethod, cDelegMsg, cObject, nScope)
 
    LOCAL mth
 
@@ -404,7 +404,7 @@ STATIC PROCEDURE AddDelegate(xMethod, cDelegMsg, cObject, nScope)
 
    RETURN
 
-STATIC PROCEDURE AddFriendClass(...)
+Static Procedure AddFriendClass(...)
 
    LOCAL Self := QSelf()
 
@@ -412,7 +412,7 @@ STATIC PROCEDURE AddFriendClass(...)
 
    RETURN
 
-STATIC PROCEDURE AddFriendFunc(...)
+Static Procedure AddFriendFunc(...)
 
    LOCAL Self := QSelf()
 
@@ -420,17 +420,17 @@ STATIC PROCEDURE AddFriendFunc(...)
 
    RETURN
 
-STATIC PROCEDURE SetOnError(sFuncPtr)
+Static Procedure SetOnError(sFuncPtr)
 
    QSelf():sOnError := sFuncPtr
 
    RETURN
 
-STATIC PROCEDURE SetDestructor(sFuncPtr)
+Static Procedure SetDestructor(sFuncPtr)
 
    QSelf():sDestructor := sFuncPtr
 
    RETURN
 
-STATIC FUNCTION InitClass()
+Static Function InitClass()
    RETURN QSelf()

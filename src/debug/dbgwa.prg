@@ -54,7 +54,7 @@
 
 REQUEST FieldGet
 
-PROCEDURE __dbgShowWorkAreas()
+Procedure __dbgShowWorkAreas()
 
    LOCAL oDlg
    LOCAL oCol
@@ -155,7 +155,7 @@ PROCEDURE __dbgShowWorkAreas()
 
    RETURN
 
-STATIC PROCEDURE DlgWorkAreaPaint(oDlg, aBrw)
+Static Procedure DlgWorkAreaPaint(oDlg, aBrw)
 
    LOCAL oDebug := __dbg()
 
@@ -198,7 +198,7 @@ STATIC PROCEDURE DlgWorkAreaPaint(oDlg, aBrw)
 
    RETURN
 
-STATIC PROCEDURE DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ */ aInfo)
+Static Procedure DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ */ aInfo)
 
    LOCAL oDebug := __dbg()
    LOCAL nAlias
@@ -252,7 +252,7 @@ STATIC PROCEDURE DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ *
 
    RETURN
 
-STATIC PROCEDURE WorkAreasKeyPressed(nKey, oBrw, nTotal)
+Static Procedure WorkAreasKeyPressed(nKey, oBrw, nTotal)
 
    Switch nKey
    Case K_UP
@@ -301,7 +301,7 @@ STATIC PROCEDURE WorkAreasKeyPressed(nKey, oBrw, nTotal)
 
    RETURN
 
-STATIC FUNCTION DbfInfo()
+Static Function DbfInfo()
 
    LOCAL nFor
    LOCAL xValue
@@ -342,7 +342,7 @@ STATIC FUNCTION DbfInfo()
 
    RETURN aInfo
 
-STATIC PROCEDURE UpdateInfo(oDlg, cAlias)
+Static Procedure UpdateInfo(oDlg, cAlias)
 
    LOCAL nOldArea
 
@@ -368,5 +368,5 @@ STATIC PROCEDURE UpdateInfo(oDlg, cAlias)
 
    RETURN
 
-STATIC FUNCTION dbFilterInfo()
+Static Function dbFilterInfo()
    RETURN IIf(Empty(dbFilter()), IIf(Empty(hb_dbGetFilter()), "", "{|| ... }"), dbFilter())

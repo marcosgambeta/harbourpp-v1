@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasBITMAP()
+Function wasBITMAP()
 RETURN was_BITMAP():new()
 
 CLASS WAS_BITMAP

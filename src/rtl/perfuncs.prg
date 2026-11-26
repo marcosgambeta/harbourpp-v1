@@ -47,7 +47,7 @@
 
 THREAD STATIC t_aObjects
 
-FUNCTION hb_SetObject(oSelf, bConstructor)
+Function hb_SetObject(oSelf, bConstructor)
 
    IF t_aObjects == NIL
       t_aObjects := {}
@@ -58,7 +58,7 @@ FUNCTION hb_SetObject(oSelf, bConstructor)
 
    RETURN oSelf
 
-FUNCTION hb_EndObject()
+Function hb_EndObject()
 
    LOCAL oSelf
 

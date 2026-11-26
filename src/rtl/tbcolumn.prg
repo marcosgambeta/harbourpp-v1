@@ -206,7 +206,7 @@ METHOD TBColumn:Init(cHeading, bBlock)
    ::cHeading := cHeading  /* NOTE: CA-Cl*pper allows any type here. [vszakats] */
    ::bBlock := bBlock      /* NOTE: CA-Cl*pper allows any type here. [vszakats] */
 
-   RETURN Self
+   Return Self
 
-FUNCTION TBColumnNew(cHeading, bBlock)
+Function TBColumnNew(cHeading, bBlock)
    RETURN TBColumn():New(cHeading, bBlock)

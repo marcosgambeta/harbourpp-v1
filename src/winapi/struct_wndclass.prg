@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasWNDCLASS()
+Function wasWNDCLASS()
 RETURN was_WNDCLASS():new()
 
 CLASS WAS_WNDCLASS

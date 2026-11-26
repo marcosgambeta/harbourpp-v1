@@ -211,7 +211,7 @@ METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, 
 
    Set(_SET_MARGIN, OldMargin)
 
-   RETURN Self
+   Return Self
 
 METHOD HBLabelForm:ExecuteLabel()
 
@@ -279,7 +279,7 @@ METHOD HBLabelForm:ExecuteLabel()
       ::nCurrentCol++
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBLabelForm:SampleLabels()
 
@@ -321,7 +321,7 @@ METHOD HBLabelForm:SampleLabels()
       ENDIF
    EndDo
 
-   RETURN Self
+   Return Self
 
 METHOD HBLabelForm:LoadLabel(cLblFile)
 
@@ -397,11 +397,11 @@ METHOD HBLabelForm:LoadLabel(cLblFile)
 
    RETURN aLabel
 
-FUNCTION __LabelForm(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
+Function __LabelForm(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
    RETURN HBLabelForm():New(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
-STATIC PROCEDURE PrintIt(cString)
+Static Procedure PrintIt(cString)
 
    QQOut(hb_defaultValue(cString, ""))
    QOut()

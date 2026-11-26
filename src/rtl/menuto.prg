@@ -22,7 +22,7 @@ THREAD STATIC t_nPointer := 1
 
 // NOTE: <cColor> parameter is a Harbour extension.
 
-FUNCTION __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
+Function __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
 
    IF t_nPointer < 1
       t_nPointer := 1
@@ -46,7 +46,7 @@ FUNCTION __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
 
    Return False
 
-FUNCTION __MenuTo(bBlock, cVariable)
+Function __MenuTo(bBlock, cVariable)
 
    LOCAL nKey
    LOCAL cKey
@@ -286,7 +286,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
 
 #ifdef HB_COMPAT_C53
 
-STATIC FUNCTION HitTest(aMenu, nMRow, nMCol)
+Static Function HitTest(aMenu, nMRow, nMCol)
 
    LOCAL aMenuItem
 

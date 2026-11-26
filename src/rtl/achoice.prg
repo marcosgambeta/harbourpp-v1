@@ -16,7 +16,7 @@
 //       as the xSelect parameter (both when supplied as is, or as an
 //       array of codeblocks). [vszakats]
 
-FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos, nHiLiteRow)
+Function AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos, nHiLiteRow)
 
    LOCAL nNumCols           // Number of columns in the window
    LOCAL nNumRows           // Number of rows in the window
@@ -557,7 +557,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
    RETURN nPos
 
-STATIC FUNCTION HitTest(nTop, nLeft, nBottom, nRight, mRow, mCol)
+Static Function HitTest(nTop, nLeft, nBottom, nRight, mRow, mCol)
 
    IF mCol >= nLeft .AND. mCol <= nRight .AND. mRow >= nTop .AND. mRow <= nBottom
       RETURN mRow - nTop + 1
@@ -565,7 +565,7 @@ STATIC FUNCTION HitTest(nTop, nLeft, nBottom, nRight, mRow, mCol)
 
    RETURN 0
 
-STATIC PROCEDURE DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos, nAtTop, nArrLen, nRowsClr)
+Static Procedure DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos, nAtTop, nArrLen, nRowsClr)
 
    LOCAL nCntr
    LOCAL nRow       // Screen row
@@ -592,7 +592,7 @@ STATIC PROCEDURE DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
 
    RETURN
 
-STATIC PROCEDURE DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
+Static Procedure DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
 
    ColorSelect(IIf(lSelect .AND. hb_IsString(cLine), IIf(lHiLite, CLR_ENHANCED, CLR_STANDARD), CLR_UNSELECTED))
 
@@ -605,7 +605,7 @@ STATIC PROCEDURE DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
 
    RETURN
 
-STATIC FUNCTION Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems, alSelect, acItems)
+Static Function Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems, alSelect, acItems)
 
    LOCAL nCntr
 
@@ -633,7 +633,7 @@ STATIC FUNCTION Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems,
 
    RETURN AC_IDLE
 
-STATIC FUNCTION Ach_Select(alSelect, nPos)
+Static Function Ach_Select(alSelect, nPos)
 
    LOCAL sel
 

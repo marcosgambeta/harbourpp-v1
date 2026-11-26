@@ -47,7 +47,7 @@
 
 #ifdef HB_COMPAT_C53
 
-FUNCTION GetClrPair(cColor, nColor)
+Function GetClrPair(cColor, nColor)
 
    LOCAL nPos
 
@@ -57,7 +57,7 @@ FUNCTION GetClrPair(cColor, nColor)
 
    RETURN SubStr(cColor, nPos, GetPairLen(cColor, nColor))
 
-FUNCTION SetClrPair(cColor, nColor, cNewColor)
+Function SetClrPair(cColor, nColor, cNewColor)
 
    LOCAL nPos
 
@@ -67,7 +67,7 @@ FUNCTION SetClrPair(cColor, nColor, cNewColor)
 
    RETURN Stuff(cColor, nPos, GetPairLen(cColor, nColor), cNewColor)
 
-FUNCTION GetPairPos(cColor, nColor)
+Function GetPairPos(cColor, nColor)
 
    LOCAL nPos := 1
    LOCAL nSep
@@ -82,7 +82,7 @@ FUNCTION GetPairPos(cColor, nColor)
 
    RETURN nPos
 
-FUNCTION GetPairLen(cColor, nColor)
+Function GetPairLen(cColor, nColor)
 
    LOCAL nPos
    LOCAL nLen
@@ -93,7 +93,7 @@ FUNCTION GetPairLen(cColor, nColor)
 
    RETURN IIf((nLen := At(",", SubStr(cColor, nPos))) == 0, Len(cColor) - nPos + 1, nLen - 1)
 
-FUNCTION GetClrFore(cColor)
+Function GetClrFore(cColor)
 
    LOCAL nPos
 
@@ -103,7 +103,7 @@ FUNCTION GetClrFore(cColor)
 
    RETURN Left(cColor, nPos - 1)
 
-FUNCTION GetClrBack(cColor)
+Function GetClrBack(cColor)
 
    LOCAL nPos
 
@@ -113,28 +113,28 @@ FUNCTION GetClrBack(cColor)
 
    RETURN SubStr(cColor, nPos + 1)
 
-FUNCTION RadGrDefCo(cColor)
+Function RadGrDefCo(cColor)
    RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 3, 1, 4))
 
-FUNCTION RadItDefCo(cColor)
+Function RadItDefCo(cColor)
    RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 5, 2, 2, 1, 1, 4))
 
-FUNCTION ListBDefCo(cColor)
+Function ListBDefCo(cColor)
    RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 5, 5, 2, 3, 1, 4))
 
-FUNCTION ComboDefCo(cColor)
+Function ComboDefCo(cColor)
    RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N", "W/N"), ApplyDefau(cColor, 5, 5, 5, 2, 3, 1, 4, 1))
 
-FUNCTION CheckDefCo(cColor)
+Function CheckDefCo(cColor)
    RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 2, 1, 4))
 
-FUNCTION ButtnDefCo(cColor)
+Function ButtnDefCo(cColor)
    RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "N/W", "W+/N", "W+/N"), ApplyDefau(cColor, 5, 2, 1, 4))
 
-FUNCTION MenuDefCol(cColor)
+Function MenuDefCol(cColor)
    RETURN IIf(IsDefColor(), ApplyDefau(cColor, "N/W", "W/N", "W+/W", "W+/N", "N+/W", "W/N"), ApplyDefau(cColor, 5, 2, 4, 2, 1, 3))
 
-FUNCTION ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8)
+Function ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8)
 
    LOCAL cSetColor
    LOCAL aSetColor

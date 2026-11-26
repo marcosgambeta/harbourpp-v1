@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasCAPDRIVERCAPS()
+Function wasCAPDRIVERCAPS()
 RETURN was_CAPDRIVERCAPS():new()
 
 CLASS WAS_CAPDRIVERCAPS

@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasBLENDFUNCTION()
+Function wasBLENDFUNCTION()
 RETURN was_BLENDFUNCTION():new()
 
 CLASS WAS_BLENDFUNCTION

@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasRECT()
+Function wasRECT()
 RETURN was_RECT():new()
 
 CLASS WAS_RECT

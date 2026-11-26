@@ -47,7 +47,7 @@
 
 #include "inkey.ch"
 
-FUNCTION ReadKey()
+Function ReadKey()
 
    LOCAL nKey
 

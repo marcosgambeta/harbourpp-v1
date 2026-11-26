@@ -48,7 +48,7 @@
 
 #ifdef HB_COMPAT_C53
 
-PROCEDURE GUIReader(oGet, oGetlist, oMenu, aMsg)
+Procedure GUIReader(oGet, oGetlist, oMenu, aMsg)
 
    IF !hb_IsObject(oGetList)
       oGetList := __GetListActive()
@@ -60,7 +60,7 @@ PROCEDURE GUIReader(oGet, oGetlist, oMenu, aMsg)
 
    RETURN
 
-PROCEDURE GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
+Procedure GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
 
    IF !hb_IsObject(oGetList)
       oGetList := __GetListActive()
@@ -72,19 +72,19 @@ PROCEDURE GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
 
    RETURN
 
-FUNCTION GUIPreValidate(oGet, oGUI, aMsg)
+Function GUIPreValidate(oGet, oGUI, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
    RETURN IIf(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), False)
 
-FUNCTION GUIPostValidate(oGet, oGUI, aMsg)
+Function GUIPostValidate(oGet, oGUI, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
    RETURN IIf(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), False)
 
-PROCEDURE TBReader(oGet, oGetList, oMenu, aMsg)
+Procedure TBReader(oGet, oGetList, oMenu, aMsg)
 
    IF !hb_IsObject(oGetList)
       oGetList := __GetListActive()
@@ -96,7 +96,7 @@ PROCEDURE TBReader(oGet, oGetList, oMenu, aMsg)
 
    RETURN
 
-PROCEDURE TBApplyKey(oGet, oTB, oGetList, nKey, aMsg)
+Procedure TBApplyKey(oGet, oTB, oGetList, nKey, aMsg)
 
    IF !hb_IsObject(oGetList)
       oGetList := __GetListActive()
@@ -108,7 +108,7 @@ PROCEDURE TBApplyKey(oGet, oTB, oGetList, nKey, aMsg)
 
    RETURN
 
-FUNCTION Accelerator(oGetList, nKey, aMsg)
+Function Accelerator(oGetList, nKey, aMsg)
 
    IF !hb_IsObject(oGetList)
       oGetList := __GetListActive()
@@ -116,7 +116,7 @@ FUNCTION Accelerator(oGetList, nKey, aMsg)
 
    RETURN IIf(oGetList != NIL, oGetlist:Accelerator(nKey, aMsg), 0)
 
-FUNCTION HitTest(oGetList, nMRow, nMCol, aMsg)
+Function HitTest(oGetList, nMRow, nMCol, aMsg)
 
    IF !hb_IsObject(oGetList)
       oGetList := __GetListActive()
@@ -124,7 +124,7 @@ FUNCTION HitTest(oGetList, nMRow, nMCol, aMsg)
 
    RETURN IIf(oGetList != NIL, oGetlist:hitTest(nMRow, nMCol, aMsg), 0)
 
-PROCEDURE ShowGetMsg(oGet, aMsg)
+Procedure ShowGetMsg(oGet, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
@@ -134,7 +134,7 @@ PROCEDURE ShowGetMsg(oGet, aMsg)
 
    RETURN
 
-PROCEDURE EraseGetMsg(oGet, aMsg)
+Procedure EraseGetMsg(oGet, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
@@ -146,7 +146,7 @@ PROCEDURE EraseGetMsg(oGet, aMsg)
 
    RETURN
 
-FUNCTION ReadStats(nElement, xNewValue)
+Function ReadStats(nElement, xNewValue)
 
    LOCAL oGetList := __GetListActive()
 
@@ -158,6 +158,6 @@ FUNCTION ReadStats(nElement, xNewValue)
       ENDIF
    ENDIF
 
-   RETURN NIL
+   Return Nil
 
 #endif

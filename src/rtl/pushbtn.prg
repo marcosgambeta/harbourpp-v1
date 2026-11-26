@@ -60,7 +60,7 @@
 
 #ifdef HB_COMPAT_C53
 
-CREATE CLASS PushButton FUNCTION HBPushButton
+CREATE CLASS PushButton Function HBPushButton
 
    EXPORTED:
 
@@ -122,7 +122,7 @@ METHOD PushButton:setFocus()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PushButton:select(nPos)
 
@@ -154,7 +154,7 @@ METHOD PushButton:select(nPos)
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PushButton:killFocus()
 
@@ -168,7 +168,7 @@ METHOD PushButton:killFocus()
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PushButton:hitTest(nMRow, nMCol)
 
@@ -245,7 +245,7 @@ METHOD PushButton:display()
 
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD PushButton:bitmap(cBitmap)
 
@@ -333,7 +333,7 @@ METHOD PushButton:Init(nRow, nCol, cCaption)
    LOCAL cColor
 
    IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nCol)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    __defaultNIL(@cCaption, "")
@@ -353,12 +353,12 @@ METHOD PushButton:Init(nRow, nCol, cCaption)
          hb_ColorIndex(cColor, CLR_BACKGROUND)
    ENDIF
 
-   RETURN Self
+   Return Self
 
-FUNCTION PushButton(nRow, nCol, cCaption)
+Function PushButton(nRow, nCol, cCaption)
    RETURN HBPushButton():New(nRow, nCol, cCaption)
 
-FUNCTION _PushButt_(cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, nSizeX, nSizeY, nCapXOff, nCapYOff, cBitmap, nBmpXOff, nBmpYOff)
+Function _PushButt_(cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, nSizeX, nSizeY, nCapXOff, nCapYOff, cBitmap, nBmpXOff, nBmpYOff)
 
    LOCAL o := HBPushButton():New(Row(), Col(), cCaption)
 

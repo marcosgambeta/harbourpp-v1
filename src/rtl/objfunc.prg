@@ -50,7 +50,7 @@
 #include "error.ch"
 #include "hboo.ch"
 
-FUNCTION __objHasData(oObject, cSymbol)
+Function __objHasData(oObject, cSymbol)
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -59,7 +59,7 @@ FUNCTION __objHasData(oObject, cSymbol)
    RETURN ;
       __objHasMsg(oObject, cSymbol) .AND. __objHasMsg(oObject, "_" + cSymbol)
 
-FUNCTION __objHasMethod(oObject, cSymbol)
+Function __objHasMethod(oObject, cSymbol)
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -68,7 +68,7 @@ FUNCTION __objHasMethod(oObject, cSymbol)
    RETURN ;
       __objHasMsg(oObject, cSymbol) .AND. !__objHasMsg(oObject, "_" + cSymbol)
 
-FUNCTION __objGetMsgList(oObject, lDataMethod, nClassType)
+Function __objGetMsgList(oObject, lDataMethod, nClassType)
 
    LOCAL aInfo
    LOCAL aData
@@ -100,7 +100,7 @@ FUNCTION __objGetMsgList(oObject, lDataMethod, nClassType)
 
    RETURN aData
 
-FUNCTION __objGetMethodList(oObject)
+Function __objGetMethodList(oObject)
 
    IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -108,7 +108,7 @@ FUNCTION __objGetMethodList(oObject)
 
    RETURN __objGetMsgList(oObject, False)
 
-FUNCTION __objGetValueList(oObject, aExcept)
+Function __objGetValueList(oObject, aExcept)
 
    LOCAL aData
    LOCAL cSymbol
@@ -128,7 +128,7 @@ FUNCTION __objGetValueList(oObject, aExcept)
 
    RETURN aData
 
-FUNCTION __objSetValueList(oObject, aData)
+Function __objSetValueList(oObject, aData)
 
    IF hb_IsObject(oObject)
       AEval(aData, {|aItem|__objSendMsg(oObject, "_" + aItem[HB_OO_DATA_SYMBOL], aItem[HB_OO_DATA_VALUE])})
@@ -138,7 +138,7 @@ FUNCTION __objSetValueList(oObject, aData)
 
    RETURN oObject
 
-FUNCTION __objAddMethod(oObject, cSymbol, nFuncPtr)
+Function __objAddMethod(oObject, cSymbol, nFuncPtr)
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol) .OR. !hb_IsSymbol(nFuncPtr)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -148,7 +148,7 @@ FUNCTION __objAddMethod(oObject, cSymbol, nFuncPtr)
 
    RETURN oObject
 
-FUNCTION __objAddInline(oObject, cSymbol, bInline)
+Function __objAddInline(oObject, cSymbol, bInline)
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -158,7 +158,7 @@ FUNCTION __objAddInline(oObject, cSymbol, bInline)
 
    RETURN oObject
 
-FUNCTION __objAddData(oObject, cSymbol)
+Function __objAddData(oObject, cSymbol)
 
    LOCAL nSeq
    LOCAL hClass
@@ -174,7 +174,7 @@ FUNCTION __objAddData(oObject, cSymbol)
 
    RETURN oObject
 
-FUNCTION __objModMethod(oObject, cSymbol, nFuncPtr)
+Function __objModMethod(oObject, cSymbol, nFuncPtr)
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol) .OR. !hb_IsSymbol(nFuncPtr)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -184,7 +184,7 @@ FUNCTION __objModMethod(oObject, cSymbol, nFuncPtr)
 
    RETURN oObject
 
-FUNCTION __objModInline(oObject, cSymbol, bInline)
+Function __objModInline(oObject, cSymbol, bInline)
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol) .OR. !hb_IsBlock(bInline)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -194,7 +194,7 @@ FUNCTION __objModInline(oObject, cSymbol, bInline)
 
    RETURN oObject
 
-FUNCTION __objDelMethod(oObject, cSymbol)
+Function __objDelMethod(oObject, cSymbol)
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -204,10 +204,10 @@ FUNCTION __objDelMethod(oObject, cSymbol)
 
    RETURN oObject
 
-FUNCTION __objDelInline(oObject, cSymbol)
+Function __objDelInline(oObject, cSymbol)
    RETURN __objDelMethod(oObject, cSymbol)
 
-FUNCTION __objDelData(oObject, cSymbol)
+Function __objDelData(oObject, cSymbol)
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -219,7 +219,7 @@ FUNCTION __objDelData(oObject, cSymbol)
 
    RETURN oObject
 
-FUNCTION __objDerivedFrom(oObject, xSuper)
+Function __objDerivedFrom(oObject, xSuper)
 
    LOCAL cClassName
 
@@ -238,7 +238,7 @@ FUNCTION __objDerivedFrom(oObject, xSuper)
 
    RETURN __clsParent(oObject:ClassH, cClassName)
 
-FUNCTION __objGetProperties(oObject, lAllExported)
+Function __objGetProperties(oObject, lAllExported)
 
    LOCAL msg
    LOCAL aMsgList := __clsGetProperties(oObject:classH, lAllExported)

@@ -175,7 +175,7 @@ METHOD HBEditor:Init(cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength
    ::nFirstCol := ::nCol - hb_defaultValue(nWndCol, 0)
    ::Resize(hb_defaultValue(nTop, 0), hb_defaultValue(nLeft, 0), hb_defaultValue(nBottom, MaxRow()), hb_defaultValue(nRight, MaxCol()))
 
-   RETURN Self
+   Return Self
 
 // Redefines editor window size and refreshes it
 METHOD HBEditor:Resize(nTop, nLeft, nBottom, nRight)
@@ -219,21 +219,21 @@ METHOD HBEditor:AddLine(cLine, lSoftCR)
 
    AAdd(::aText, HBTextLine():New(cLine, lSoftCR))
 
-   RETURN Self
+   Return Self
 
 // Insert a line of text at a defined row
 METHOD HBEditor:InsertLine(cLine, lSoftCR, nRow)
 
    hb_AIns(::aText, nRow, HBTextLine():New(cLine, lSoftCR), True)
 
-   RETURN Self
+   Return Self
 
 // Remove a line of text
 METHOD HBEditor:RemoveLine(nRow)
 
    hb_ADel(::aText, nRow, True)
 
-   RETURN Self
+   Return Self
 
 // Return line n of text
 METHOD HBEditor:GetLine(nRow)
@@ -284,13 +284,13 @@ METHOD HBEditor:Display()
    EndDo
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD HBEditor:RefreshLine()
 
    hb_DispOutAt(::Row(), ::nLeft, SubStrPad(::GetLine(::nRow), ::nFirstCol, ::nNumCols), ::LineColor(::nRow))
 
-   RETURN Self
+   Return Self
 
 // Returns color string to use to draw nRow (current line if nRow is empty)
 METHOD HBEditor:LineColor(nRow)
@@ -349,7 +349,7 @@ METHOD HBEditor:GoTo(nRow, nCol, nRefreshMode)
    ENDIF
    SetPos(::Row(), ::Col())
 
-   RETURN Self
+   Return Self
 
 // Returns current line position on the screen
 METHOD HBEditor:Row()
@@ -589,7 +589,7 @@ METHOD HBEditor:Edit(nPassedKey)
       ENDIF
    EndDo
 
-   RETURN Self
+   Return Self
 
 // browse text without editing
 METHOD HBEditor:BrowseText(nPassedKey)
@@ -622,7 +622,7 @@ METHOD HBEditor:BrowseText(nPassedKey)
       ENDIF
    EndDo
 
-   RETURN Self
+   Return Self
 
 // This method can be overloaded by HBEditor descendants to handle custom keys.
 METHOD HBEditor:KeyboardHook(nKey)
@@ -632,11 +632,11 @@ METHOD HBEditor:KeyboardHook(nKey)
       ::lExitEdit := True
    ENDIF
 
-   RETURN Self
+   Return Self
 
 // There are no more keys to handle. Can I do something for you?
 METHOD HBEditor:IdleHook()
-   RETURN Self
+   Return Self
 
 // Reform paragraph
 METHOD HBEditor:ReformParagraph()
@@ -671,7 +671,7 @@ METHOD HBEditor:InsertState(lInsState)
       SetCursor(IIf(lInsState, SC_INSERT, SC_NORMAL))
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBEditor:ExitState()
    RETURN ::lExitEdit
@@ -693,7 +693,7 @@ METHOD HBEditor:Hilite()
 
    ::SetColor(cEnhanced + hb_BRight(::cColorSpec, hb_BLen(::cColorSpec) - hb_BLen(cEnhanced)))
 
-   RETURN Self
+   Return Self
 
 METHOD HBEditor:DeHilite()
 
@@ -702,7 +702,7 @@ METHOD HBEditor:DeHilite()
 
    ::SetColor(cStandard + hb_BRight(::cColorSpec, hb_BLen(::cColorSpec) - hb_BLen(cStandard)))
 
-   RETURN Self
+   Return Self
 
 METHOD HBEditor:RowPos()
    RETURN ::nRow
@@ -731,7 +731,7 @@ METHOD HBEditor:hitTest(nMRow, nMCol)
    RETURN HTNOWHERE
 
 
-STATIC FUNCTION Text2Array(cText, nWordWrapCol, nTabWidth)
+Static Function Text2Array(cText, nWordWrapCol, nTabWidth)
 
    LOCAL aArray := {}
 
@@ -744,13 +744,13 @@ STATIC FUNCTION Text2Array(cText, nWordWrapCol, nTabWidth)
 
    RETURN aArray
 
-STATIC FUNCTION SubStrPad(cText, nFrom, nLen)
+Static Function SubStrPad(cText, nFrom, nLen)
    RETURN hb_UPadR(hb_USubStr(cText, nFrom, nLen), nLen)
 
-STATIC FUNCTION TabCount(nTabWidth, nCol)
+Static Function TabCount(nTabWidth, nCol)
    RETURN Int(nTabWidth - (nCol - 1) % nTabWidth)
 
-STATIC FUNCTION SkipWord(cText, nPos)
+Static Function SkipWord(cText, nPos)
 
    Do While nPos < hb_ULen(cText) .AND. hb_USubStr(cText, nPos, 1) == " "
       ++nPos
@@ -761,7 +761,7 @@ STATIC FUNCTION SkipWord(cText, nPos)
 
    RETURN nPos
 
-STATIC FUNCTION NextWord(cText, nPos)
+Static Function NextWord(cText, nPos)
 
    IF (nPos := hb_UAt(" ", cText, nPos)) == 0
       nPos := hb_ULen(cText) + 1
@@ -772,7 +772,7 @@ STATIC FUNCTION NextWord(cText, nPos)
 
    RETURN nPos
 
-STATIC FUNCTION PrevWord(cText, nPos)
+Static Function PrevWord(cText, nPos)
 
    Do While nPos > 1 .AND. hb_USubStr(cText, --nPos, 1) == " "
    EndDo

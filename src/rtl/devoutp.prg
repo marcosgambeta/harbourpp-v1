@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-PROCEDURE DevOutPict(xValue, cPicture, cColor)
+Procedure DevOutPict(xValue, cPicture, cColor)
 
    IF ValType(xValue) $ "CMNDTL"
       DevOut(Transform(xValue, cPicture), cColor)

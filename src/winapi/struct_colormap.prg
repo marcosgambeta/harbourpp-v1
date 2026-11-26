@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasCOLORMAP()
+Function wasCOLORMAP()
 RETURN was_COLORMAP():new()
 
 CLASS WAS_COLORMAP

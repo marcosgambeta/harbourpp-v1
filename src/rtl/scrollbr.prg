@@ -59,7 +59,7 @@
 
 #ifdef HB_COMPAT_C53
 
-CREATE CLASS ScrollBar FUNCTION HBScrollBar
+CREATE CLASS ScrollBar Function HBScrollBar
 
    EXPORTED:
 
@@ -390,7 +390,7 @@ METHOD ScrollBar:Init(nStart, nEnd, nOffset, bSBlock, nOrient)
       !ValType(bSBlock) $ "BU" .OR. ;
       !hb_IsNumeric(nOrient) .OR. ;
       (nOrient != SCROLL_VERTICAL .AND. nOrient != SCROLL_HORIZONTAL)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    ::end        := nEnd
@@ -414,9 +414,9 @@ METHOD ScrollBar:Init(nStart, nEnd, nOffset, bSBlock, nOrient)
    cColor := SetColor()
    ::cColorSpec := hb_ColorIndex(cColor, CLR_UNSELECTED) + "," + hb_ColorIndex(cColor, CLR_ENHANCED)
 
-   RETURN Self
+   Return Self
 
-FUNCTION ScrollBar(nStart, nEnd, nOffset, bSBlock, nOrient)
+Function ScrollBar(nStart, nEnd, nOffset, bSBlock, nOrient)
    RETURN HBScrollBar():New(nStart, nEnd, nOffset, bSBlock, nOrient)
 
 #endif

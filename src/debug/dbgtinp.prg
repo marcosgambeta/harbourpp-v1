@@ -91,7 +91,7 @@ METHOD HBDbInput:new(nRow, nCol, nWidth, cValue, cColor, nSize)
 
    ::setColor(cColor)
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbInput:SetColor(cColor)
 
@@ -100,14 +100,14 @@ METHOD HBDbInput:SetColor(cColor)
       ::acColor[2] := ::acColor[1]
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbInput:newPos(nRow, nCol)
 
    ::nRow := nRow
    ::nCol := nCol
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbInput:getValue()
    RETURN ::cValue
@@ -117,7 +117,7 @@ METHOD HBDbInput:setValue(cValue)
    ::cValue := PadR(cValue, ::nSize)
    ::nPos := Min(::nSize, Len(RTrim(::cValue)) + 1)
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbInput:display()
 
@@ -128,14 +128,14 @@ METHOD HBDbInput:display()
    ENDIF
    hb_DispOutAt(::nRow, ::nCol, SubStr(::cValue, ::nFirst, ::nWidth), ::acColor[2])
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbInput:showCursor()
 
    SetPos(::nRow, ::nCol + ::nPos - ::nFirst)
    SetCursor(IIf(Set(_SET_INSERT), SC_INSERT, SC_NORMAL))
 
-   RETURN Self
+   Return Self
 
 METHOD HBDbInput:applyKey(nKey)
 
@@ -196,4 +196,4 @@ METHOD HBDbInput:applyKey(nKey)
       ::display()
    ENDIF
 
-   RETURN Self
+   Return Self

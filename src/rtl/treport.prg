@@ -424,14 +424,14 @@ METHOD Init(cFrmName AS STRING, ;
       BREAK xBreakVal
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD PrintIt(cString AS STRING) CLASS HBReportForm
 
    QQOut(hb_defaultValue(cString, ""))
    QOut()
 
-   RETURN Self
+   Return Self
 
 METHOD EjectPage() CLASS HBReportForm
 
@@ -439,7 +439,7 @@ METHOD EjectPage() CLASS HBReportForm
       EJECT
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD ReportHeader() CLASS HBReportForm
 
@@ -532,7 +532,7 @@ METHOD ReportHeader() CLASS HBReportForm
    ::nLinesLeft := ::aReportData[RPT_LINES] - Len(aPageHeader)
    ::nMaxLinesAvail := ::aReportData[RPT_LINES] - Len(aPageHeader)
 
-   RETURN Self
+   Return Self
 
 METHOD ExecuteReport() CLASS HBReportForm
 
@@ -808,7 +808,7 @@ METHOD ExecuteReport() CLASS HBReportForm
       ENDIF
    ENDIF    // Was this a summary report?
 
-   RETURN Self
+   Return Self
 
 METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
 
@@ -1038,7 +1038,7 @@ METHOD GetExpr(nPointer AS NUMERIC) CLASS HBReportForm
 
    RETURN cString
 
-STATIC FUNCTION Occurs(cSearch, cTarget)
+Static Function Occurs(cSearch, cTarget)
 
    LOCAL nPos
    LOCAL nCount := 0
@@ -1055,7 +1055,7 @@ STATIC FUNCTION Occurs(cSearch, cTarget)
 
    RETURN nCount
 
-STATIC FUNCTION XMLCOUNT(cString, nLineLength, nTabSize, lWrap)
+Static Function XMLCOUNT(cString, nLineLength, nTabSize, lWrap)
 
    hb_default(@nLineLength, 79)
    hb_default(@nTabSize, 4)
@@ -1066,7 +1066,7 @@ STATIC FUNCTION XMLCOUNT(cString, nLineLength, nTabSize, lWrap)
 
    RETURN MLCount(RTrim(cString), nLineLength, nTabSize, lWrap)
 
-STATIC FUNCTION XMEMOLINE(cString, nLineLength, nLineNumber, nTabSize, lWrap)
+Static Function XMEMOLINE(cString, nLineLength, nLineNumber, nTabSize, lWrap)
 
    hb_default(@nLineLength, 79)
    hb_default(@nTabSize, 4)
@@ -1077,7 +1077,7 @@ STATIC FUNCTION XMEMOLINE(cString, nLineLength, nLineNumber, nTabSize, lWrap)
 
    RETURN MemoLine(cString, nLineLength, nLineNumber, nTabSize, lWrap)
 
-STATIC FUNCTION ParseHeader(cHeaderString, nFields)
+Static Function ParseHeader(cHeaderString, nFields)
 
    LOCAL cItem
    LOCAL nItemCount := 0
@@ -1169,7 +1169,7 @@ METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBRe
 
    RETURN aColumn
 
-STATIC FUNCTION MakeAStr(uVar, cType)
+Static Function MakeAStr(uVar, cType)
 
    Switch Asc(cType)
    Case Asc("D")
@@ -1188,8 +1188,8 @@ STATIC FUNCTION MakeAStr(uVar, cType)
 
    RETURN "INVALID EXPRESSION"
 
-FUNCTION __ReportForm(cFRMName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lPlain, cHeading, lBEject, lSummary)
+Function __ReportForm(cFRMName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lPlain, cHeading, lBEject, lSummary)
 
    HBReportForm():New(cFrmName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lPlain, cHeading, lBEject, lSummary)
 
-   RETURN NIL
+   Return Nil

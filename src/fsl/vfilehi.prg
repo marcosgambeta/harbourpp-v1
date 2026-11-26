@@ -45,7 +45,7 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-FUNCTION hb_vfDirBuild(cDir)
+Function hb_vfDirBuild(cDir)
 
    LOCAL cDirTemp
    LOCAL cDirItem
@@ -96,7 +96,7 @@ FUNCTION hb_vfDirBuild(cDir)
 
    Return True
 
-FUNCTION hb_vfDirUnbuild(cDir)
+Function hb_vfDirUnbuild(cDir)
 
    LOCAL tmp
 
@@ -126,7 +126,7 @@ FUNCTION hb_vfDirUnbuild(cDir)
 
    Return True
 
-FUNCTION hb_vfNameExists(cName)
+Function hb_vfNameExists(cName)
    RETURN ;
       hb_vfExists(cName) .OR. ;
       hb_vfDirExists(cName)

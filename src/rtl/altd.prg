@@ -48,7 +48,7 @@
 #define ALTD_DISABLE  0
 #define ALTD_ENABLE   1
 
-PROCEDURE AltD(nAction)
+Procedure AltD(nAction)
 
    IF PCount() == 0
 

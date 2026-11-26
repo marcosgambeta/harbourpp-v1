@@ -47,13 +47,13 @@
 
 #include "error.ch"
 
-PROCEDURE ErrorSys()
+Procedure ErrorSys()
 
    ErrorBlock({|oError|DefError(oError)})
 
    RETURN
 
-STATIC FUNCTION DefError(oError)
+Static Function DefError(oError)
 
    LOCAL cMessage
    LOCAL cOSError
@@ -139,7 +139,7 @@ STATIC FUNCTION DefError(oError)
 
    Return False
 
-STATIC FUNCTION ErrorMessage(oError)
+Static Function ErrorMessage(oError)
 
    // start error message
    LOCAL cMessage := IIf(oError:severity > ES_WARNING, "Error", "Warning") + " "

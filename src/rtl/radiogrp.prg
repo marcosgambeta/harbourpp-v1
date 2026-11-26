@@ -61,7 +61,7 @@
 
 #ifdef HB_COMPAT_C53
 
-CREATE CLASS RadioGroup FUNCTION HBRadioGroup
+CREATE CLASS RadioGroup Function HBRadioGroup
 
    EXPORTED:
 
@@ -137,7 +137,7 @@ METHOD RadioGroup:addItem(oRadioButton)
       ::nItemCount++
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:delItem(nPos)
 
@@ -152,7 +152,7 @@ METHOD RadioGroup:delItem(nPos)
       ::xBuffer := IIf(hb_IsNumeric(::xBuffer), ::nValue, ::cTextValue)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:display()
 
@@ -199,7 +199,7 @@ METHOD RadioGroup:display()
 
    DispEnd()
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:getAccel(xKey)
 
@@ -332,7 +332,7 @@ METHOD RadioGroup:killFocus()
       SetCursor(::nCursor)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:setFocus()
 
@@ -363,7 +363,7 @@ METHOD RadioGroup:setFocus()
       ENDIF
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:nextItem()
 
@@ -373,7 +373,7 @@ METHOD RadioGroup:nextItem()
       ::changeButton(nValue := ::nValue, IIf(nValue == ::nItemCount, 1, nValue + 1))
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:prevItem()
 
@@ -393,7 +393,7 @@ METHOD RadioGroup:prevItem()
       ::changeButton(nValue, nPos)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:select(xValue)
 
@@ -435,7 +435,7 @@ METHOD RadioGroup:select(xValue)
 
    EndSwitch
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:setColor(cColorSpec)
 
@@ -445,7 +445,7 @@ METHOD RadioGroup:setColor(cColorSpec)
       item:colorSpec := cColorSpec
    NEXT
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:setStyle(cStyle)
 
@@ -455,7 +455,7 @@ METHOD RadioGroup:setStyle(cStyle)
       item:style := cStyle
    NEXT
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:changeButton(nUnselect, nSelect)
 
@@ -483,7 +483,7 @@ METHOD RadioGroup:changeButton(nUnselect, nSelect)
 
    MSetCursor(nOldMCur)
 
-   RETURN Self
+   Return Self
 
 METHOD RadioGroup:bottom(nBottom)
 
@@ -604,7 +604,7 @@ METHOD RadioGroup:Init(nTop, nLeft, nBottom, nRight)
    LOCAL cColor
 
    IF !hb_IsNumeric(nTop) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nBottom) .OR. !hb_IsNumeric(nRight)
-      RETURN NIL
+      Return Nil
    ENDIF
 
    ::nTop    := nTop
@@ -624,12 +624,12 @@ METHOD RadioGroup:Init(nTop, nLeft, nBottom, nRight)
          hb_ColorIndex(cColor, CLR_BACKGROUND)
    ENDIF
 
-   RETURN Self
+   Return Self
 
-FUNCTION RadioGroup(nTop, nLeft, nBottom, nRight)
+Function RadioGroup(nTop, nLeft, nBottom, nRight)
    RETURN HBRadioGroup():New(nTop, nLeft, nBottom, nRight)
 
-FUNCTION _RadioGrp_(nTop, nLeft, nBottom, nRight, xValue, aItems, cCaption, cMessage, cColorSpec, bFBlock)
+Function _RadioGrp_(nTop, nLeft, nBottom, nRight, xValue, aItems, cCaption, cMessage, cColorSpec, bFBlock)
 
    LOCAL o
 

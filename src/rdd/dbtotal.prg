@@ -55,7 +55,7 @@
 //       - won't crash with "No exported method: EVAL" if xKey is not
 //         block and table is not indexed.
 
-FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD, nConnection, cCodePage)
+Function __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD, nConnection, cCodePage)
 
    LOCAL nOldArea
    LOCAL nNewArea
@@ -184,7 +184,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
 
    Return True
 
-STATIC FUNCTION __GetField(cField)
+Static Function __GetField(cField)
 
    LOCAL nCurrArea := Select()
    LOCAL nPos
@@ -215,5 +215,5 @@ STATIC FUNCTION __GetField(cField)
 
    RETURN FieldBlock(cField)
 
-FUNCTION __dbTransRec(nDstArea, aFieldsStru)
+Function __dbTransRec(nDstArea, aFieldsStru)
    RETURN __dbTrans(nDstArea, aFieldsStru, NIL, NIL, 1)

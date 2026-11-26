@@ -50,13 +50,13 @@
 ANNOUNCE SYSINIT
 
 // NOTE: For complete compatibility
-PROCEDURE CLIPPER520()
+Procedure CLIPPER520()
    RETURN
 
 #ifdef HB_COMPAT_C53
 
 // NOTE: For complete compatibility
-PROCEDURE CLIPPER530()
+Procedure CLIPPER530()
    RETURN
 
 #endif
@@ -65,7 +65,7 @@ PROCEDURE CLIPPER530()
 // startup or in MT mode when new HVM thread is registered to initialize
 // basic VM settings like public variable GetList and ErrorBlock() by
 // calling ErrorSys() function.
-PROCEDURE __HBVMInit()
+Procedure __HBVMInit()
 
    MEMVAR GetList
 
@@ -76,7 +76,7 @@ PROCEDURE __HBVMInit()
    RETURN
 
 
-PROCEDURE __SetHelpK()
+Procedure __SetHelpK()
 
    SetKey(K_F1, {|p, l, v|__XHelp(p, l, v)})
 

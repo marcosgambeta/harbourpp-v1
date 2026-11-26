@@ -48,7 +48,7 @@
 
 #ifdef HB_CLP_UNDOC
 
-FUNCTION _eInstVar(...)
+Function _eInstVar(...)
 #ifdef HB_COMPAT_C53
    RETURN __eInstVar53(...)
 #else

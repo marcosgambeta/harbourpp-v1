@@ -62,4 +62,4 @@ METHOD HBTextLine:Init(cLine, lSoftCR)
    ::cText := hb_defaultValue(cLine, "")
    ::lSoftCR := hb_defaultValue(lSoftCR, False)
 
-   RETURN Self
+   Return Self

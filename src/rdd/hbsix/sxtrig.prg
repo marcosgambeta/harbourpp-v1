@@ -50,7 +50,7 @@
 
 #include "hbsxdef.ch"
 
-FUNCTION sx_DefTrigger(nEvent, nArea, nFieldPos, xTrigVal)
+Function sx_DefTrigger(nEvent, nArea, nFieldPos, xTrigVal)
 
    HB_SYMBOL_UNUSED(nArea)
    HB_SYMBOL_UNUSED(nFieldPos)

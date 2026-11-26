@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasMONITORINFO()
+Function wasMONITORINFO()
 RETURN was_MONITORINFO():new()
 
 CLASS WAS_MONITORINFO

@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasSCROLLBARINFO()
+Function wasSCROLLBARINFO()
 RETURN was_SCROLLBARINFO():new()
 
 CLASS WAS_SCROLLBARINFO

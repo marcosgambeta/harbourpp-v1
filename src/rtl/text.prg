@@ -50,7 +50,7 @@ THREAD STATIC t_lOldPrinter
 THREAD STATIC t_lOldExtra
 THREAD STATIC t_cOldExtraFile
 
-PROCEDURE __TextSave(cFile)
+Procedure __TextSave(cFile)
 
    t_cFile := cFile
 
@@ -63,7 +63,7 @@ PROCEDURE __TextSave(cFile)
 
    RETURN
 
-PROCEDURE __TextRestore()
+Procedure __TextRestore()
 
    IF t_cFile == "PRINTER"
       Set(_SET_PRINTER, t_lOldPrinter)

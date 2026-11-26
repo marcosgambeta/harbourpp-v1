@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasSYSTEMTIME()
+Function wasSYSTEMTIME()
 RETURN was_SYSTEMTIME():new()
 
 CLASS WAS_SYSTEMTIME

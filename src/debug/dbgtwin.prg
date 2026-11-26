@@ -114,7 +114,7 @@ METHOD HBDbWindow:New(nTop, nLeft, nBottom, nRight, cCaption, cColor)
    ::cCaption := cCaption
    ::cColor   := hb_defaultValue(cColor, __dbgColors()[1])
 
-   RETURN Self
+   Return Self
 
 METHOD PROCEDURE HBDbWindow:Clear()
 
@@ -344,7 +344,7 @@ METHOD HBDbWindow:Resize(nTop, nLeft, nBottom, nRight)
       (!hb_IsNumeric(nLeft) .OR. nLeft == ::nLeft) .AND. ;
       (!hb_IsNumeric(nBottom) .OR. nBottom == ::nBottom) .AND. ;
       (!hb_IsNumeric(nRight) .OR. nRight == ::nRight)
-      RETURN Self
+      Return Self
    ENDIF
 
    IF (lShow := ::lVisible)
@@ -372,4 +372,4 @@ METHOD HBDbWindow:Resize(nTop, nLeft, nBottom, nRight)
       ::Show(::lFocused)
    ENDIF
 
-   RETURN Self
+   Return Self

@@ -66,7 +66,7 @@
 #define _HBMEM_SIG_LEN   6
 #define _HBMEM_SIGNATURE (hb_BChar(0xC0) + hb_BChar(0x48) + hb_BChar(0x42) + hb_BChar(0x56) + hb_BChar(0x01) + hb_BChar(0x00))
 
-PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
+Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
 
    LOCAL nCount
    LOCAL xValue
@@ -150,7 +150,7 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
 
    RETURN
 
-FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
+Function hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
 
    LOCAL item
    LOCAL cName
@@ -253,4 +253,4 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
       Eval(ErrorBlock(), oError)
    ENDIF
 
-   RETURN NIL
+   Return Nil

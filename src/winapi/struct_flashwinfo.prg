@@ -32,7 +32,7 @@
 
 #include "hbclass.ch"
 
-FUNCTION wasFLASHWINFO()
+Function wasFLASHWINFO()
 RETURN was_FLASHWINFO():new()
 
 CLASS WAS_FLASHWINFO

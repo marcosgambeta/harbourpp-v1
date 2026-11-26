@@ -595,6 +595,6 @@ METHOD HBMenuSys:Init(oMenu)
 
    ::oMenu := oMenu
 
-   RETURN Self
+   Return Self
 
 #endif

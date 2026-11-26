@@ -149,21 +149,21 @@ METHOD HBBrwText:New(nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumb
       ::LoadFile(cFileName)
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBBrwText:GotoLine(n)
 
    ::oBrw:MoveCursor(n - ::nRow)
    ::RefreshAll()
 
-   RETURN Self
+   Return Self
 
 METHOD HBBrwText:SetActiveLine(n)
 
    ::nActiveLine := n
    ::RefreshAll()
 
-   RETURN Self
+   Return Self
 
 METHOD HBBrwText:GetLine()
    RETURN IIf(::lLineNumbers, PadR(hb_ntos(::nRow) + ":", ::nLineNoLen), "") + ;
@@ -227,7 +227,7 @@ METHOD HBBrwText:Resize(nTop, nLeft, nBottom, nRight)
       ::nWidth := ::nRight - ::nLeft + 1
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
 

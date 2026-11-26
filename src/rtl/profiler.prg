@@ -113,7 +113,7 @@ METHOD HBProfileEntity:init(cName, aInfo)
    ::nCalls := aInfo[1]
    ::nTicks := aInfo[2]
 
-   RETURN Self
+   Return Self
 
 ACCESS nSeconds CLASS HBProfileEntity
    RETURN hb_Clocks2Secs(::nTicks)
@@ -210,13 +210,13 @@ METHOD HBProfile:init()
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:reset()
 
    ::aProfile := {}
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:ignoreSymbol(cSymbol)
    RETURN hb_LeftEq(cSymbol, "HBPROFILE") .OR. cSymbol == "__SETPROFILER"
@@ -246,7 +246,7 @@ METHOD HBProfile:gatherFunctions()
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:gatherMethods()
 
@@ -281,7 +281,7 @@ METHOD HBProfile:gatherMethods()
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:gather()
 
@@ -293,7 +293,7 @@ METHOD HBProfile:gather()
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:forEach(b)
 
@@ -303,7 +303,7 @@ METHOD HBProfile:forEach(b)
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:sort(b)
 
@@ -313,7 +313,7 @@ METHOD HBProfile:sort(b)
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:nameSort()
 
@@ -323,7 +323,7 @@ METHOD HBProfile:nameSort()
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:callSort()
 
@@ -333,7 +333,7 @@ METHOD HBProfile:callSort()
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:timeSort()
 
@@ -343,7 +343,7 @@ METHOD HBProfile:timeSort()
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfile:totalCalls()
 
@@ -406,7 +406,7 @@ METHOD HBProfileLowLevel:gather()
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileLowLevel:gatherOPCodes()
 
@@ -423,7 +423,7 @@ METHOD HBProfileLowLevel:gatherOPCodes()
       ENDIF
    NEXT
 
-   RETURN Self
+   Return Self
 
 // ---
 
@@ -456,13 +456,13 @@ METHOD HBProfileReport:init(oProfile)
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReport:writeLines(aLines)
 
    AEval(aLines, {|c|QOut(c)})
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReport:header()
    RETURN { ;
@@ -473,7 +473,7 @@ METHOD HBProfileReport:emitHeader()
 
    ::writeLines(::Header())
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReport:line(oEntity)
    RETURN { ;
@@ -487,7 +487,7 @@ METHOD HBProfileReport:emitLine(oEntity)
 
    ::writeLines(::line(oEntity))
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReport:generate(bFilter)
 
@@ -499,7 +499,7 @@ METHOD HBProfileReport:generate(bFilter)
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 // ---
 
@@ -525,7 +525,7 @@ METHOD HBProfileReportToFile:writeLines(aLines)
       AEval(aLines, {|c|FWrite(::hFile, c + hb_eol())})
    ENDIF
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReportToFile:generate(bFilter, cFile)
 
@@ -540,7 +540,7 @@ METHOD HBProfileReportToFile:generate(bFilter, cFile)
 
    __SetProfiler(lProfile)
 
-   RETURN Self
+   Return Self
 
 // ---
 
@@ -564,7 +564,7 @@ METHOD HBProfileReportToArray:writeLines(aLines)
 
    AEval(aLines, {|c|AAdd(::aReport, c)})
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReportToArray:generate(bFilter)
 
@@ -616,14 +616,14 @@ ENDCLASS
 
 // No header required.
 METHOD HBProfileReportToTBrowse:emitHeader()
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReportToTBrowse:emitLine(oEntity)
 
    // Don't "emit" anything, simply add the entity to the array.
    AAdd(::aReport, oEntity)
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReportToTBrowse:generate(bFilter, nTop, nLeft, nBottom, nRight)
 
@@ -659,7 +659,7 @@ METHOD HBProfileReportToTBrowse:addColumns(oBrowse)
    oBrowse:addColumn(TBColumnNew("Mean;Ticks",   {|| Str(::currentEntity():nMeanTicks,   11, 2)}))
    oBrowse:addColumn(TBColumnNew("Mean;Seconds", {|| Str(::currentEntity():nMeanSeconds, 11, 2)}))
 
-   RETURN Self
+   Return Self
 
 METHOD HBProfileReportToTBrowse:currentEntity()
    RETURN ::aReport[::nEntity]

@@ -57,11 +57,11 @@
 #ifdef HB_COMPAT_C53
 
 // Standard Menu System Modal handling for Menu Items
-FUNCTION MenuModal(oTopMenu, nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
+Function MenuModal(oTopMenu, nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
    RETURN HBMenuSys():New(oTopMenu):modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
 
 // Dummy function
-FUNCTION ShowMsg(aMsg, lMode)
+Function ShowMsg(aMsg, lMode)
 
    HB_SYMBOL_UNUSED(aMsg)
    HB_SYMBOL_UNUSED(lMode)
@@ -69,7 +69,7 @@ FUNCTION ShowMsg(aMsg, lMode)
    Return False
 
 // ShortCut processing for initial Get or Menu Item.
-FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
+Function IsShortcut(oMenu, nKey, /* @ */ nID)
 
    LOCAL nItem
    LOCAL nTotal
@@ -122,7 +122,7 @@ FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
 
 // Navigates to the next Get or Menu Item from the
 // Current if more than one uses the same ShortCut.
-FUNCTION IsQuick(oMenu, nKey, /* @ */ nID)
+Function IsQuick(oMenu, nKey, /* @ */ nID)
 
    LOCAL nItem
    LOCAL nTotal
