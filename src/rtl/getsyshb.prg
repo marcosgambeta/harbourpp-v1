@@ -55,13 +55,13 @@ Function hb_GetReadVar(oGet)
          Switch ValType(xSubScript)
          Case "C"
             cName += '["' + xSubScript + '"]'
-            EXIT
+            Exit
          Case "D"
             cName += "[0d" + DToS(xSubScript) + "]"
-            EXIT
+            Exit
          Case "T"
             cName += '[t"' + hb_TSToStr(xSubScript, True) + '"]'
-            EXIT
+            Exit
          Otherwise
             cName += "[" + hb_ntos(xSubScript) + "]"
          EndSwitch

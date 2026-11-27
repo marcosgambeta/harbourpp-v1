@@ -156,7 +156,7 @@ Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
             cVal := IIf(lRaw, "__itemSetObjRaw( ", "__itemSetObj( ") + cVal + ", {" + cObjs + "} )"
          ENDIF
       ENDIF
-      EXIT
+      Exit
    Case "P" ; RETURN "<pointer>"
    Case "B" ; RETURN "{|| ... }"
    Otherwise

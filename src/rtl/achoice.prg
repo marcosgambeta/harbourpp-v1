@@ -440,17 +440,17 @@ Function AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
       Case (!lUserFunc .OR. nMode == AC_EXCEPT) .AND. !(cKey := Upper(hb_keyChar(nKey))) == ""
 
          // Find next selectable item
-         FOR nNewPos := nPos + 1 TO nItems
+         For nNewPos := nPos + 1 To nItems
             IF Ach_Select(alSelect, nNewPos) .AND. hb_LeftEqI(acItems[nNewPos], cKey)
-               EXIT
+               Exit
             ENDIF
-         NEXT
+         Next
          IF nNewPos == nItems + 1
-            FOR nNewPos := 1 TO nPos - 1
+            For nNewPos := 1 To nPos - 1
                IF Ach_Select(alSelect, nNewPos) .AND. hb_LeftEqI(acItems[nNewPos], cKey)
-                  EXIT
+                  Exit
                ENDIF
-            NEXT
+            Next
          ENDIF
 
          IF nNewPos != nPos
@@ -492,22 +492,22 @@ Function AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
                ENDIF
                lFinished := True
                nPos      := 0
-               EXIT
+               Exit
             Case AC_SELECT
                IF nPos != 0
                   DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, True, False, nNumCols)
                ENDIF
                lFinished := True
-               EXIT
+               Exit
             Case AC_CONT
                // Do nothing
                nMode := AC_IDLE
-               EXIT
+               Exit
             Case AC_GOTO
                // Do nothing. The next keystroke won't be read and
                // this keystroke will be processed as a goto.
                nMode := AC_EXCEPT
-               EXIT
+               Exit
             EndSwitch
 
             IF nPos > 0 .AND. nMode != AC_EXCEPT
@@ -575,7 +575,7 @@ Static Procedure DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
 
    DispBegin()
 
-   FOR nCntr := 1 TO Min(nNumRows, nRowsClr)
+   For nCntr := 1 To Min(nNumRows, nRowsClr)
 
       nRow   := nTop + nCntr - 1
       nIndex := nCntr + nAtTop - 1
@@ -586,7 +586,7 @@ Static Procedure DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
          ColorSelect(CLR_STANDARD)
          hb_DispOutAt(nRow, nLeft, Space(nRight - nLeft + 1))
       ENDIF
-   NEXT
+   Next
 
    DispEnd()
 
@@ -611,7 +611,7 @@ Static Function Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems,
 
    nFrstItem := nLastItem := nItems := 0
 
-   FOR nCntr := 1 TO Len(acItems)
+   For nCntr := 1 To Len(acItems)
       IF hb_IsString(acItems[nCntr]) .AND. Len(acItems[nCntr]) > 0
          nItems++
          IF Ach_Select(alSelect, nCntr)
@@ -622,9 +622,9 @@ Static Function Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems,
             ENDIF
          ENDIF
       ELSE
-         EXIT
+         Exit
       ENDIF
-   NEXT
+   Next
 
    IF nFrstItem == 0
       nLastItem := nItems

@@ -108,16 +108,16 @@ Function _sx_IniInit(nArea)
             Switch item:__enumKey()
             Case "SHARED"
                xShared := _sx_INIlogical(item)
-               EXIT
+               Exit
             Case "READONLY"
                xReadOnly := _sx_INIlogical(item)
-               EXIT
+               Exit
             Case "ALIAS"
                xAlias := item
-               EXIT
+               Exit
             Case "TRIGGER"
                xTrigger := item
-               EXIT
+               Exit
             EndSwitch
          Next
          IF xTrigger != NIL

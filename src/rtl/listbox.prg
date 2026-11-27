@@ -280,9 +280,9 @@ METHOD ListBox:display()
          nEnd := ::nItemCount
       ENDIF
 
-      FOR nItem := ::nTopItem TO nEnd
+      For nItem := ::nTopItem To nEnd
          hb_DispOutAt(nTop++, nLeft, PadR(::aItems[nItem][_ITEM_cText], nSize), IIf(nItem == ::nValue, cColor4, cColor3))
-      NEXT
+      Next
    ENDIF
 
    IF !Empty(cCaption := ::cCaption)
@@ -599,20 +599,20 @@ METHOD ListBox:scroll(nMethod)
                   nSize      := Min(Max((nThumbPos * (nTotal - nBarLength - 2) + 2 * nBarLength + 1 - nTotal) / (nBarLength - 1), 1), nTotal)
                   nCurrent   := ::oVScroll:current()
                   IF nSize - nCurrent > 0
-                     FOR nCount := 1 TO nSize - nCurrent
+                     For nCount := 1 To nSize - nCurrent
                         ::scroll(HTSCROLLUNITINC)
-                     NEXT
+                     Next
                   ELSE
-                     FOR nCount := 1 TO nCurrent - nSize
+                     For nCount := 1 To nCurrent - nSize
                         ::scroll(HTSCROLLUNITDEC)
-                     NEXT
+                     Next
                   ENDIF
 
                   nPrevMRow := nMRow
                ENDIF
             ENDIF
          EndDo
-         EXIT
+         Exit
 
       Case HTSCROLLUNITDEC
 
@@ -621,7 +621,7 @@ METHOD ListBox:scroll(nMethod)
             ::oVScroll:current := ::scrollbarPos()
             ::display()
          ENDIF
-         EXIT
+         Exit
 
       Case HTSCROLLUNITINC
 
@@ -630,7 +630,7 @@ METHOD ListBox:scroll(nMethod)
             ::oVScroll:current := ::scrollbarPos()
             ::display()
          ENDIF
-         EXIT
+         Exit
 
       Case HTSCROLLBLOCKDEC
 
@@ -641,7 +641,7 @@ METHOD ListBox:scroll(nMethod)
             ::oVScroll:current := ::scrollbarPos()
             ::display()
          ENDIF
-         EXIT
+         Exit
 
       Case HTSCROLLBLOCKINC
 
@@ -656,7 +656,7 @@ METHOD ListBox:scroll(nMethod)
             ::oVScroll:current := ::scrollbarPos()
             ::display()
          ENDIF
-         EXIT
+         Exit
 
       EndSwitch
    ENDIF

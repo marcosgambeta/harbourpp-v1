@@ -158,7 +158,7 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
                IF cLine == "c-format"
                ELSE
                   cErrorMsg := hb_StrFormat("unsupported flag: %1$s", cLine)
-                  EXIT
+                  Exit
                ENDIF
 #endif
             ENDIF
@@ -173,7 +173,7 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
             IF nMode == _I18N_CONTEXT
                IF cValue == NIL
                   cErrorMsg := "undefined msgctxt value"
-                  EXIT
+                  Exit
                ENDIF
                aItem[_I18N_CONTEXT] := cValue
             ENDIF
@@ -187,7 +187,7 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
                nIndex := Val(SubStr(cLine, n)) + 1
                IF nIndex < 1
                   cErrorMsg := "wrong plural form index"
-                  EXIT
+                  Exit
                ENDIF
                Do While IsDigit(SubStr(cLine, n, 1))
                   ++n
@@ -195,11 +195,11 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
             ENDIF
             IF nIndex != nOldIndex + 1
                cErrorMsg := "wrong plural form index"
-               EXIT
+               Exit
             ENDIF
             IF cValue == NIL
                cErrorMsg := "undefined msgid value"
-               EXIT
+               Exit
             ENDIF
             aItem[_I18N_PLURAL] := True
             AAdd(aItem[_I18N_MSGID], cValue)
@@ -211,7 +211,7 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
             nMode := _I18N_MSGSTR
             IF cValue == NIL
                cErrorMsg := "undefined msgid value"
-               EXIT
+               Exit
             ENDIF
             AAdd(aItem[_I18N_MSGID], cValue)
             cValue := NIL
@@ -234,11 +234,11 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
             cLine := LTrim(SubStr(cLine, n + 1))
             IF nIndex < 0 .OR. nIndex != nOldIndex + 1
                cErrorMsg := "wrong translation index"
-               EXIT
+               Exit
             ENDIF
             IF cValue == NIL
                cErrorMsg := hb_StrFormat("undefined %1$s value", IIf(nMode == _I18N_MSGID, "msgid", "msgstr"))
-               EXIT
+               Exit
             ENDIF
             aItem[_I18N_PLURAL] := True
             AAdd(aItem[nMode], cValue)
@@ -247,7 +247,7 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
          ELSEIF Empty(cLine) .AND. nMode == _I18N_MSGSTR
             IF cValue == NIL
                cErrorMsg := "undefined msgstr value"
-               EXIT
+               Exit
             ENDIF
             AAdd(aItem[_I18N_MSGSTR], cValue)
             AAdd(aTrans, aItem)
@@ -260,7 +260,7 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
       IF lCont .OR. !Empty(cLine)
          IF (nMode != _I18N_CONTEXT .AND. nMode != _I18N_MSGID .AND. nMode != _I18N_MSGSTR) .OR. !__i18n_strDecode(cLine, @cValue, @lCont)
             cErrorMsg := "unrecognized line"
-            EXIT
+            Exit
          ENDIF
       ENDIF
    Next
@@ -343,7 +343,7 @@ Function __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTrans
             IF hb_IsString(tmp)
                cString := tmp
             ENDIF
-         NEXT
+         Next
       ENDIF
       IF !lKeepSource
          item[_I18N_SOURCE] := ""
@@ -356,12 +356,12 @@ Function __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTrans
          For Each cString In item[_I18N_MSGSTR]
             IF !Empty(cString) .AND. !cString == item[_I18N_MSGID][cString:__enumIndex()]
                lVoid := False
-               EXIT
+               Exit
             ENDIF
-         NEXT
+         Next
          IF lVoid
             hb_ADel(item:__enumBase(), item:__enumIndex(), True)
-            LOOP
+            Loop
          ENDIF
       Next
    ENDIF
@@ -406,10 +406,10 @@ Function __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSour
          Switch msg:__enumIndex()
          Case 1
             cPOT += "msgid "
-            EXIT
+            Exit
          Case 2
             cPOT += "msgid_plural "
-            EXIT
+            Exit
          Otherwise
             cPOT += "msgid_plural" + hb_ntos(msg:__enumIndex() - 1) + " "
          EndSwitch

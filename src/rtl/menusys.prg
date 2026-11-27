@@ -104,7 +104,7 @@ Function IsShortcut(oMenu, nKey, /* @ */ nID)
       ENDIF
 
       // Loop to wrap around through TopMenu from Current Item:
-      FOR i := 1 TO nTotal
+      For i := 1 To nTotal
 
          IF (oItem := oMenu:getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
 
@@ -114,7 +114,7 @@ Function IsShortcut(oMenu, nKey, /* @ */ nID)
          IF ++nItem > nTotal
             nItem := 1
          ENDIF
-      NEXT
+      Next
 
    EndCase
 
@@ -133,13 +133,13 @@ Function IsQuick(oMenu, nKey, /* @ */ nID)
 
       nTotal := oMenu:itemCount
 
-      FOR nItem := 1 TO nTotal
+      For nItem := 1 To nTotal
 
          IF (oItem := oMenu:getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. IsQuick(oItem:data, nKey, @nID)
 
             Return True
          ENDIF
-      NEXT
+      Next
 
    ELSEIF !(oItem := oMenu:getItem(nShortCut)):isPopUp() .AND. oItem:enabled
 

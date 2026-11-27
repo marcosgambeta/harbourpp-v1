@@ -69,78 +69,78 @@ Function hb_langSelect(cLangID, cCP)
 
       // Emulate legacy Harbour language modules for compatibility
       Switch Upper(cLangID)
-      Case "BE866"  ; cCPDef := "BG866" ; cLangIDBase := "be" ; EXIT
-      Case "BEWIN"  ; cCPDef := "BGWIN" ; cLangIDBase := "be" ; EXIT
-      Case "BG866"  ; cCPDef := "BG866" ; cLangIDBase := "bg" ; EXIT
-      Case "BGISO"  ; cCPDef := "BGISO" ; cLangIDBase := "bg" ; EXIT
-      Case "BGMIK"  ; cCPDef := "BGMIK" ; cLangIDBase := "bg" ; EXIT
-      Case "BGWIN"  ; cCPDef := "BGWIN" ; cLangIDBase := "bg" ; EXIT
-      Case "CS852"  ; cCPDef := "CS852" ; cLangIDBase := "cs" ; EXIT
-      Case "CSISO"  ; cCPDef := "CSISO" ; cLangIDBase := "cs" ; EXIT
-      Case "CSKAM"  ; cCPDef := "CSKAMC"; cLangIDBase := "cs" ; EXIT
-      Case "CSWIN"  ; cCPDef := "CSWIN" ; cLangIDBase := "cs" ; EXIT
-      Case "DEWIN"  ; cCPDef := "DEWIN" ; cLangIDBase := "de" ; EXIT
-      Case "ELWIN"  ; cCPDef := "ELWIN" ; cLangIDBase := "el" ; EXIT
-      Case "ESWIN"  ; cCPDef := "ESWIN" ; cLangIDBase := "es" ; EXIT
-      Case "HE862"  ; cCPDef := "HE862" ; cLangIDBase := "he" ; EXIT
-      Case "HEWIN"  ; cCPDef := "HEWIN" ; cLangIDBase := "he" ; EXIT
-      Case "HR646"  ; cCPDef := "HR646" ; cLangIDBase := "hr" ; EXIT
-      Case "HR852"  ; cCPDef := "HR852" ; cLangIDBase := "hr" ; EXIT
-      Case "HRISO"  ; cCPDef := "HRISO" ; cLangIDBase := "hr" ; EXIT
-      Case "HRWIN"  ; cCPDef := "HRWIN" ; cLangIDBase := "hr" ; EXIT
-      Case "HU852"  ; cCPDef := "HU852" ; cLangIDBase := "hu" ; EXIT
-      Case "HUISO"  ; cCPDef := "HUISO" ; cLangIDBase := "hu" ; EXIT
-      Case "HUWIN"  ; cCPDef := "HUWIN" ; cLangIDBase := "hu" ; EXIT
-      Case "IS850"  ; cCPDef := "IS850" ; cLangIDBase := "is" ; EXIT
-      Case "LTWIN"  ; cCPDef := "LTWIN" ; cLangIDBase := "lt" ; EXIT
-      Case "PL852"  ; cCPDef := "PL852" ; cLangIDBase := "pl" ; EXIT
-      Case "PLISO"  ; cCPDef := "PLISO" ; cLangIDBase := "pl" ; EXIT
-      Case "PLMAZ"  ; cCPDef := "PLMAZ" ; cLangIDBase := "pl" ; EXIT
-      Case "PLWIN"  ; cCPDef := "PLWIN" ; cLangIDBase := "pl" ; EXIT
-      Case "PTISO"  ; cCPDef := "PTISO" ; cLangIDBase := "pt" ; EXIT
-      Case "RU866"  ; cCPDef := "RU866" ; cLangIDBase := "ru" ; EXIT
-      Case "RUKOI8" ; cCPDef := "RUKOI8"; cLangIDBase := "ru" ; EXIT
-      Case "RUWIN"  ; cCPDef := "RU1251"; cLangIDBase := "ru" ; EXIT
-      Case "SK852"  ; cCPDef := "SK852" ; cLangIDBase := "sk" ; EXIT
-      Case "SKISO"  ; cCPDef := "SKISO" ; cLangIDBase := "sk" ; EXIT
-      Case "SKKAM"  ; cCPDef := "SKKAMC"; cLangIDBase := "sk" ; EXIT
-      Case "SKWIN"  ; cCPDef := "SKWIN" ; cLangIDBase := "sk" ; EXIT
-      Case "SL646"  ; cCPDef := "SL646" ; cLangIDBase := "sl" ; EXIT
-      Case "SL852"  ; cCPDef := "SL852" ; cLangIDBase := "sl" ; EXIT
-      Case "SLISO"  ; cCPDef := "SLISO" ; cLangIDBase := "sl" ; EXIT
-      Case "SLWIN"  ; cCPDef := "SLWIN" ; cLangIDBase := "sl" ; EXIT
-      Case "SR852"  ; cCPDef := "SL852" ; cLangIDBase := "sr_lat" ; EXIT
-      Case "SRISO"  ; cCPDef := "SLISO" ; cLangIDBase := "sr_lat" ; EXIT
-      Case "SRWIN"  ; cCPDef := "SRWIN" ; cLangIDBase := "sr_cyr" ; EXIT
-      Case "SVWIN"  ; cCPDef := "SVWIN" ; cLangIDBase := "sv" ; EXIT
-      Case "TR857"  ; cCPDef := "TR857" ; cLangIDBase := "tr" ; EXIT
-      Case "TRWIN"  ; cCPDef := "TRWIN" ; cLangIDBase := "tr" ; EXIT
-      Case "UA866"  ; cCPDef := "UA866" ; cLangIDBase := "uk" ; EXIT
-      Case "UADOS"  ; cCPDef := "UA1125"; cLangIDBase := "uk" ; EXIT
-      Case "UAKOI8" ; cCPDef := "UAKOI8"; cLangIDBase := "uk" ; EXIT
-      Case "UAWIN"  ; cCPDef := "UA1251"; cLangIDBase := "uk" ; EXIT
-      Case "ZHB5"   ; cCPDef := "BIG5"  ; cLangIDBase := "zh" ; EXIT
-      Case "ZHGB"   ; cCPDef := "GBK"   ; cLangIDBase := "zh_sim" ; EXIT
+      Case "BE866"  ; cCPDef := "BG866" ; cLangIDBase := "be" ; Exit
+      Case "BEWIN"  ; cCPDef := "BGWIN" ; cLangIDBase := "be" ; Exit
+      Case "BG866"  ; cCPDef := "BG866" ; cLangIDBase := "bg" ; Exit
+      Case "BGISO"  ; cCPDef := "BGISO" ; cLangIDBase := "bg" ; Exit
+      Case "BGMIK"  ; cCPDef := "BGMIK" ; cLangIDBase := "bg" ; Exit
+      Case "BGWIN"  ; cCPDef := "BGWIN" ; cLangIDBase := "bg" ; Exit
+      Case "CS852"  ; cCPDef := "CS852" ; cLangIDBase := "cs" ; Exit
+      Case "CSISO"  ; cCPDef := "CSISO" ; cLangIDBase := "cs" ; Exit
+      Case "CSKAM"  ; cCPDef := "CSKAMC"; cLangIDBase := "cs" ; Exit
+      Case "CSWIN"  ; cCPDef := "CSWIN" ; cLangIDBase := "cs" ; Exit
+      Case "DEWIN"  ; cCPDef := "DEWIN" ; cLangIDBase := "de" ; Exit
+      Case "ELWIN"  ; cCPDef := "ELWIN" ; cLangIDBase := "el" ; Exit
+      Case "ESWIN"  ; cCPDef := "ESWIN" ; cLangIDBase := "es" ; Exit
+      Case "HE862"  ; cCPDef := "HE862" ; cLangIDBase := "he" ; Exit
+      Case "HEWIN"  ; cCPDef := "HEWIN" ; cLangIDBase := "he" ; Exit
+      Case "HR646"  ; cCPDef := "HR646" ; cLangIDBase := "hr" ; Exit
+      Case "HR852"  ; cCPDef := "HR852" ; cLangIDBase := "hr" ; Exit
+      Case "HRISO"  ; cCPDef := "HRISO" ; cLangIDBase := "hr" ; Exit
+      Case "HRWIN"  ; cCPDef := "HRWIN" ; cLangIDBase := "hr" ; Exit
+      Case "HU852"  ; cCPDef := "HU852" ; cLangIDBase := "hu" ; Exit
+      Case "HUISO"  ; cCPDef := "HUISO" ; cLangIDBase := "hu" ; Exit
+      Case "HUWIN"  ; cCPDef := "HUWIN" ; cLangIDBase := "hu" ; Exit
+      Case "IS850"  ; cCPDef := "IS850" ; cLangIDBase := "is" ; Exit
+      Case "LTWIN"  ; cCPDef := "LTWIN" ; cLangIDBase := "lt" ; Exit
+      Case "PL852"  ; cCPDef := "PL852" ; cLangIDBase := "pl" ; Exit
+      Case "PLISO"  ; cCPDef := "PLISO" ; cLangIDBase := "pl" ; Exit
+      Case "PLMAZ"  ; cCPDef := "PLMAZ" ; cLangIDBase := "pl" ; Exit
+      Case "PLWIN"  ; cCPDef := "PLWIN" ; cLangIDBase := "pl" ; Exit
+      Case "PTISO"  ; cCPDef := "PTISO" ; cLangIDBase := "pt" ; Exit
+      Case "RU866"  ; cCPDef := "RU866" ; cLangIDBase := "ru" ; Exit
+      Case "RUKOI8" ; cCPDef := "RUKOI8"; cLangIDBase := "ru" ; Exit
+      Case "RUWIN"  ; cCPDef := "RU1251"; cLangIDBase := "ru" ; Exit
+      Case "SK852"  ; cCPDef := "SK852" ; cLangIDBase := "sk" ; Exit
+      Case "SKISO"  ; cCPDef := "SKISO" ; cLangIDBase := "sk" ; Exit
+      Case "SKKAM"  ; cCPDef := "SKKAMC"; cLangIDBase := "sk" ; Exit
+      Case "SKWIN"  ; cCPDef := "SKWIN" ; cLangIDBase := "sk" ; Exit
+      Case "SL646"  ; cCPDef := "SL646" ; cLangIDBase := "sl" ; Exit
+      Case "SL852"  ; cCPDef := "SL852" ; cLangIDBase := "sl" ; Exit
+      Case "SLISO"  ; cCPDef := "SLISO" ; cLangIDBase := "sl" ; Exit
+      Case "SLWIN"  ; cCPDef := "SLWIN" ; cLangIDBase := "sl" ; Exit
+      Case "SR852"  ; cCPDef := "SL852" ; cLangIDBase := "sr_lat" ; Exit
+      Case "SRISO"  ; cCPDef := "SLISO" ; cLangIDBase := "sr_lat" ; Exit
+      Case "SRWIN"  ; cCPDef := "SRWIN" ; cLangIDBase := "sr_cyr" ; Exit
+      Case "SVWIN"  ; cCPDef := "SVWIN" ; cLangIDBase := "sv" ; Exit
+      Case "TR857"  ; cCPDef := "TR857" ; cLangIDBase := "tr" ; Exit
+      Case "TRWIN"  ; cCPDef := "TRWIN" ; cLangIDBase := "tr" ; Exit
+      Case "UA866"  ; cCPDef := "UA866" ; cLangIDBase := "uk" ; Exit
+      Case "UADOS"  ; cCPDef := "UA1125"; cLangIDBase := "uk" ; Exit
+      Case "UAKOI8" ; cCPDef := "UAKOI8"; cLangIDBase := "uk" ; Exit
+      Case "UAWIN"  ; cCPDef := "UA1251"; cLangIDBase := "uk" ; Exit
+      Case "ZHB5"   ; cCPDef := "BIG5"  ; cLangIDBase := "zh" ; Exit
+      Case "ZHGB"   ; cCPDef := "GBK"   ; cLangIDBase := "zh_sim" ; Exit
       Otherwise
          // Case sensitive legacy IDs. Lowercase flavours denote new
          // language module IDs, so they won't be recognized as
          // compatibility ones. INCOMPATIBLE.
          Switch cLangID
-         Case "CA"     ; cCPDef := "DE850" ; cLangIDBase := "ca" ; EXIT
-         Case "DE"     ; cCPDef := "DE850" ; cLangIDBase := "de" ; EXIT
-         Case "EL"     ; cCPDef := "EL737" ; cLangIDBase := "el" ; EXIT
-         Case "EO"     ; cCPDef := "DE850" ; cLangIDBase := "eo" ; EXIT
-         Case "ES"     ; cCPDef := "DE850" ; cLangIDBase := "es" ; EXIT
-         Case "EU"     ; cCPDef := "DE850" ; cLangIDBase := "eu" ; EXIT
-         Case "FR"     ; cCPDef := "DE850" ; cLangIDBase := "fr" ; EXIT
-         Case "GL"     ; cCPDef := "DE850" ; cLangIDBase := "gl" ; EXIT
-         Case "ID"     ; cCPDef := "EN"    ; cLangIDBase := "id" ; EXIT
-         Case "IT"     ; cCPDef := "DE850" ; cLangIDBase := "it" ; EXIT
+         Case "CA"     ; cCPDef := "DE850" ; cLangIDBase := "ca" ; Exit
+         Case "DE"     ; cCPDef := "DE850" ; cLangIDBase := "de" ; Exit
+         Case "EL"     ; cCPDef := "EL737" ; cLangIDBase := "el" ; Exit
+         Case "EO"     ; cCPDef := "DE850" ; cLangIDBase := "eo" ; Exit
+         Case "ES"     ; cCPDef := "DE850" ; cLangIDBase := "es" ; Exit
+         Case "EU"     ; cCPDef := "DE850" ; cLangIDBase := "eu" ; Exit
+         Case "FR"     ; cCPDef := "DE850" ; cLangIDBase := "fr" ; Exit
+         Case "GL"     ; cCPDef := "DE850" ; cLangIDBase := "gl" ; Exit
+         Case "ID"     ; cCPDef := "EN"    ; cLangIDBase := "id" ; Exit
+         Case "IT"     ; cCPDef := "DE850" ; cLangIDBase := "it" ; Exit
          // INCOMPATIBILITY: "KO" (Korean) using CP949 is not supported anymore.
-         Case "NL"     ; cCPDef := "EN"    ; cLangIDBase := "nl" ; EXIT
-         Case "PT"     ; cCPDef := "DE850" ; cLangIDBase := "pt" ; EXIT
-         Case "RO"     ; cCPDef := "CS852" ; cLangIDBase := "ro" ; EXIT
-         Case "SV"     ; cCPDef := "DE850" ; cLangIDBase := "sv" ; EXIT
+         Case "NL"     ; cCPDef := "EN"    ; cLangIDBase := "nl" ; Exit
+         Case "PT"     ; cCPDef := "DE850" ; cLangIDBase := "pt" ; Exit
+         Case "RO"     ; cCPDef := "CS852" ; cLangIDBase := "ro" ; Exit
+         Case "SV"     ; cCPDef := "DE850" ; cLangIDBase := "sv" ; Exit
          EndSwitch
       EndSwitch
 
@@ -182,56 +182,56 @@ Static Function __LangStdToLangHb(cLangStd)
    IF hb_IsString(cLangStd)
       Switch Lower(StrTran(cLangStd, "_", "-"))
 #if 0
-      Case "af-za"      ; EXIT
-      Case "af"         ; EXIT
-      Case "ar-ae"      ; EXIT
-      Case "ar-bh"      ; EXIT
-      Case "ar-dz"      ; EXIT
-      Case "ar-eg"      ; EXIT
-      Case "ar-iq"      ; EXIT
-      Case "ar-jo"      ; EXIT
-      Case "ar-kw"      ; EXIT
-      Case "ar-lb"      ; EXIT
-      Case "ar-ly"      ; EXIT
-      Case "ar-ma"      ; EXIT
-      Case "ar-om"      ; EXIT
-      Case "ar-qa"      ; EXIT
-      Case "ar-sa"      ; EXIT
-      Case "ar-sy"      ; EXIT
-      Case "ar-tn"      ; EXIT
-      Case "ar-ye"      ; EXIT
-      Case "ar"         ; EXIT
-      Case "az-az-cyrl" ; EXIT
-      Case "az-az-latn" ; EXIT
-      Case "az"         ; EXIT
-      Case "be-by"      ; EXIT
+      Case "af-za"      ; Exit
+      Case "af"         ; Exit
+      Case "ar-ae"      ; Exit
+      Case "ar-bh"      ; Exit
+      Case "ar-dz"      ; Exit
+      Case "ar-eg"      ; Exit
+      Case "ar-iq"      ; Exit
+      Case "ar-jo"      ; Exit
+      Case "ar-kw"      ; Exit
+      Case "ar-lb"      ; Exit
+      Case "ar-ly"      ; Exit
+      Case "ar-ma"      ; Exit
+      Case "ar-om"      ; Exit
+      Case "ar-qa"      ; Exit
+      Case "ar-sa"      ; Exit
+      Case "ar-sy"      ; Exit
+      Case "ar-tn"      ; Exit
+      Case "ar-ye"      ; Exit
+      Case "ar"         ; Exit
+      Case "az-az-cyrl" ; Exit
+      Case "az-az-latn" ; Exit
+      Case "az"         ; Exit
+      Case "be-by"      ; Exit
 #endif
-      Case "be"         ; cLangHb := "be" ; EXIT
+      Case "be"         ; cLangHb := "be" ; Exit
       Case "bg-bg"
-      Case "bg"         ; cLangHb := "bg" ; EXIT
+      Case "bg"         ; cLangHb := "bg" ; Exit
       Case "ca-es"
-      Case "ca"         ; cLangHb := "ca" ; EXIT
+      Case "ca"         ; cLangHb := "ca" ; Exit
 #if 0
-      Case "cy-gb"      ; EXIT
+      Case "cy-gb"      ; Exit
 #endif
       Case "cs-cz"
-      Case "cs"         ; cLangHb := "cs" ; EXIT
+      Case "cs"         ; cLangHb := "cs" ; Exit
 #if 0
-      Case "da-dk"      ; EXIT
-      Case "da"         ; EXIT
+      Case "da-dk"      ; Exit
+      Case "da"         ; Exit
 #endif
-      Case "de-at"      ; cLangHb := "de_at" ; EXIT
+      Case "de-at"      ; cLangHb := "de_at" ; Exit
       Case "de-ch"
       Case "de-de"
       Case "de-li"
       Case "de-lu"
-      Case "de"         ; cLangHb := "de" ; EXIT
+      Case "de"         ; cLangHb := "de" ; Exit
 #if 0
-      Case "div-mv"     ; EXIT
-      Case "div"        ; EXIT
+      Case "div-mv"     ; Exit
+      Case "div"        ; Exit
 #endif
       Case "el-gr"
-      Case "el"         ; cLangHb := "el" ; EXIT
+      Case "el"         ; cLangHb := "el" ; Exit
       Case "en-au"
       Case "en-bz"
       Case "en-ca"
@@ -245,9 +245,9 @@ Static Function __LangStdToLangHb(cLangStd)
       Case "en-us"
       Case "en-za"
       Case "en-zw"
-      Case "en"         ; cLangHb := "en" ; EXIT
-      Case "eo"         ; cLangHb := "eo" ; EXIT
-      Case "es-419"     ; cLangHb := "es_419" ; EXIT
+      Case "en"         ; cLangHb := "en" ; Exit
+      Case "eo"         ; cLangHb := "eo" ; Exit
+      Case "es-419"     ; cLangHb := "es_419" ; Exit
       Case "es-ar"
       Case "es-bo"
       Case "es-cl"
@@ -267,20 +267,20 @@ Static Function __LangStdToLangHb(cLangStd)
       Case "es-sv"
       Case "es-uy"
       Case "es-ve"
-      Case "es"         ; cLangHb := "es" ; EXIT
+      Case "es"         ; cLangHb := "es" ; Exit
 #if 0
-      Case "et-ee"      ; EXIT
-      Case "et"         ; EXIT
+      Case "et-ee"      ; Exit
+      Case "et"         ; Exit
 #endif
       Case "eu-es"
-      Case "eu"         ; cLangHb := "eu" ; EXIT
+      Case "eu"         ; cLangHb := "eu" ; Exit
 #if 0
-      Case "fa-ir"      ; EXIT
-      Case "fa"         ; EXIT
-      Case "fi-fi"      ; EXIT
-      Case "fi"         ; EXIT
-      Case "fo-fo"      ; EXIT
-      Case "fo"         ; EXIT
+      Case "fa-ir"      ; Exit
+      Case "fa"         ; Exit
+      Case "fi-fi"      ; Exit
+      Case "fi"         ; Exit
+      Case "fo-fo"      ; Exit
+      Case "fo"         ; Exit
 #endif
       Case "fr-be"
       Case "fr-ca"
@@ -288,140 +288,140 @@ Static Function __LangStdToLangHb(cLangStd)
       Case "fr-fr"
       Case "fr-lu"
       Case "fr-mc"
-      Case "fr"         ; cLangHb := "fr" ; EXIT
+      Case "fr"         ; cLangHb := "fr" ; Exit
       Case "gl-es"
-      Case "gl"         ; cLangHb := "gl" ; EXIT
+      Case "gl"         ; cLangHb := "gl" ; Exit
 #if 0
-      Case "gu-in"      ; EXIT
-      Case "gu"         ; EXIT
+      Case "gu-in"      ; Exit
+      Case "gu"         ; Exit
 #endif
       Case "he-il"
-      Case "he"         ; cLangHb := "he" ; EXIT
+      Case "he"         ; cLangHb := "he" ; Exit
 #if 0
-      Case "hi-in"      ; EXIT
-      Case "hi"         ; EXIT
+      Case "hi-in"      ; Exit
+      Case "hi"         ; Exit
 #endif
       Case "hr-hr"
-      Case "hr"         ; cLangHb := "hr" ; EXIT
+      Case "hr"         ; cLangHb := "hr" ; Exit
       Case "hu-hu"
-      Case "hu"         ; cLangHb := "hu" ; EXIT
+      Case "hu"         ; cLangHb := "hu" ; Exit
 #if 0
-      Case "hy-am"      ; EXIT
-      Case "hy"         ; EXIT
+      Case "hy-am"      ; Exit
+      Case "hy"         ; Exit
 #endif
       Case "id-id"
-      Case "id"         ; cLangHb := "id" ; EXIT
+      Case "id"         ; cLangHb := "id" ; Exit
       Case "is-is"
-      Case "is"         ; cLangHb := "is" ; EXIT
+      Case "is"         ; cLangHb := "is" ; Exit
       Case "it-ch"
       Case "it-it"
-      Case "it"         ; cLangHb := "it" ; EXIT
+      Case "it"         ; cLangHb := "it" ; Exit
 #if 0
-      Case "ja-jp"      ; EXIT
-      Case "ja"         ; EXIT
-      Case "ka-ge"      ; EXIT
-      Case "ka"         ; EXIT
-      Case "kk-kz"      ; EXIT
-      Case "kk"         ; EXIT
-      Case "kn-in"      ; EXIT
-      Case "kn"         ; EXIT
+      Case "ja-jp"      ; Exit
+      Case "ja"         ; Exit
+      Case "ka-ge"      ; Exit
+      Case "ka"         ; Exit
+      Case "kk-kz"      ; Exit
+      Case "kk"         ; Exit
+      Case "kn-in"      ; Exit
+      Case "kn"         ; Exit
 #endif
       Case "ko-kr"
-      Case "ko"         ; cLangHb := "ko" ; EXIT
+      Case "ko"         ; cLangHb := "ko" ; Exit
 #if 0
-      Case "kok-in"     ; EXIT
-      Case "kok"        ; EXIT
-      Case "ky-kz"      ; EXIT
-      Case "ky"         ; EXIT
+      Case "kok-in"     ; Exit
+      Case "kok"        ; Exit
+      Case "ky-kz"      ; Exit
+      Case "ky"         ; Exit
 #endif
       Case "lt-lt"
-      Case "lt"         ; cLangHb := "lt" ; EXIT
+      Case "lt"         ; cLangHb := "lt" ; Exit
 #if 0
-      Case "lv-lv"      ; EXIT
-      Case "lv"         ; EXIT
-      Case "mk-mk"      ; EXIT
-      Case "mk"         ; EXIT
-      Case "mn-mn"      ; EXIT
-      Case "mn"         ; EXIT
-      Case "mr-in"      ; EXIT
-      Case "mr"         ; EXIT
-      Case "ms-bn"      ; EXIT
-      Case "ms-my"      ; EXIT
-      Case "ms"         ; EXIT
-      Case "nb-no"      ; EXIT
+      Case "lv-lv"      ; Exit
+      Case "lv"         ; Exit
+      Case "mk-mk"      ; Exit
+      Case "mk"         ; Exit
+      Case "mn-mn"      ; Exit
+      Case "mn"         ; Exit
+      Case "mr-in"      ; Exit
+      Case "mr"         ; Exit
+      Case "ms-bn"      ; Exit
+      Case "ms-my"      ; Exit
+      Case "ms"         ; Exit
+      Case "nb-no"      ; Exit
 #endif
       Case "nl-be"
       Case "nl-nl"
-      Case "nl"         ; cLangHb := "nl" ; EXIT
+      Case "nl"         ; cLangHb := "nl" ; Exit
 #if 0
-      Case "nn-no"      ; EXIT
-      Case "no"         ; EXIT
-      Case "pa-in"      ; EXIT
-      Case "pa"         ; EXIT
+      Case "nn-no"      ; Exit
+      Case "no"         ; Exit
+      Case "pa-in"      ; Exit
+      Case "pa"         ; Exit
 #endif
       Case "pl-pl"
-      Case "pl"         ; cLangHb := "pl" ; EXIT
-      Case "pt-br"      ; cLangHb := "pt_br" ; EXIT
+      Case "pl"         ; cLangHb := "pl" ; Exit
+      Case "pt-br"      ; cLangHb := "pt_br" ; Exit
       Case "pt-pt"
-      Case "pt"         ; cLangHb := "pt" ; EXIT
+      Case "pt"         ; cLangHb := "pt" ; Exit
       Case "ro-ro"
-      Case "ro"         ; cLangHb := "ro" ; EXIT
+      Case "ro"         ; cLangHb := "ro" ; Exit
       Case "ru-ru"
-      Case "ru"         ; cLangHb := "ru" ; EXIT
+      Case "ru"         ; cLangHb := "ru" ; Exit
 #if 0
-      Case "sa-in"      ; EXIT
-      Case "sa"         ; EXIT
+      Case "sa-in"      ; Exit
+      Case "sa"         ; Exit
 #endif
       Case "sk-sk"
-      Case "sk"         ; cLangHb := "sk" ; EXIT
+      Case "sk"         ; cLangHb := "sk" ; Exit
       Case "sl-si"
-      Case "sl"         ; cLangHb := "sl" ; EXIT
+      Case "sl"         ; cLangHb := "sl" ; Exit
 #if 0
-      Case "sq-al"      ; EXIT
-      Case "sq"         ; EXIT
+      Case "sq-al"      ; Exit
+      Case "sq"         ; Exit
 #endif
-      Case "sr-sp-cyrl" ; cLangHb := "sr_cyr" ; EXIT
-      Case "sr-sp-latn" ; cLangHb := "sr_lat" ; EXIT
+      Case "sr-sp-cyrl" ; cLangHb := "sr_cyr" ; Exit
+      Case "sr-sp-latn" ; cLangHb := "sr_lat" ; Exit
       Case "sv-fi"
       Case "sv-se"
-      Case "sv"         ; cLangHb := "sv" ; EXIT
+      Case "sv"         ; cLangHb := "sv" ; Exit
 #if 0
-      Case "sw-ke"      ; EXIT
-      Case "sw"         ; EXIT
-      Case "syr-sy"     ; EXIT
-      Case "syr"        ; EXIT
-      Case "ta-in"      ; EXIT
-      Case "ta"         ; EXIT
-      Case "te-in"      ; EXIT
-      Case "te"         ; EXIT
-      Case "th-th"      ; EXIT
-      Case "th"         ; EXIT
+      Case "sw-ke"      ; Exit
+      Case "sw"         ; Exit
+      Case "syr-sy"     ; Exit
+      Case "syr"        ; Exit
+      Case "ta-in"      ; Exit
+      Case "ta"         ; Exit
+      Case "te-in"      ; Exit
+      Case "te"         ; Exit
+      Case "th-th"      ; Exit
+      Case "th"         ; Exit
 #endif
       Case "tr-tr"
-      Case "tr"         ; cLangHb := "tr" ; EXIT
+      Case "tr"         ; cLangHb := "tr" ; Exit
 #if 0
-      Case "tt-ru"      ; EXIT
-      Case "tt"         ; EXIT
+      Case "tt-ru"      ; Exit
+      Case "tt"         ; Exit
 #endif
       Case "uk-ua"
-      Case "uk"         ; cLangHb := "uk" ; EXIT
+      Case "uk"         ; cLangHb := "uk" ; Exit
 #if 0
-      Case "ur-pk"      ; EXIT
-      Case "ur"         ; EXIT
-      Case "uz-uz-cyrl" ; EXIT
-      Case "uz-uz-latn" ; EXIT
-      Case "uz"         ; EXIT
-      Case "vi-vn"      ; EXIT
-      Case "vi"         ; EXIT
+      Case "ur-pk"      ; Exit
+      Case "ur"         ; Exit
+      Case "uz-uz-cyrl" ; Exit
+      Case "uz-uz-latn" ; Exit
+      Case "uz"         ; Exit
+      Case "vi-vn"      ; Exit
+      Case "vi"         ; Exit
 #endif
-      Case "zh-chs"     ; cLangHb := "zh_sim" ; EXIT
+      Case "zh-chs"     ; cLangHb := "zh_sim" ; Exit
       Case "zh-cht"
       Case "zh-cn"
       Case "zh-hk"
       Case "zh-mo"
       Case "zh-sg"
       Case "zh-tw"
-      Case "zh"         ; cLangHb := "zh" ; EXIT
+      Case "zh"         ; cLangHb := "zh" ; Exit
       EndSwitch
    ENDIF
 

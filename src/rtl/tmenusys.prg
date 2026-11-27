@@ -183,7 +183,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
 
       IF (bKeyBlock := SetKey(nKey)) != NIL
          Eval(bKeyBlock, ProcName(1), ProcLine(1), "")
-         LOOP
+         Loop
       ENDIF
 
       Do Case
@@ -291,7 +291,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
             ::ShowMsg(False)
             nReturn := ::execute()
             IF nReturn != 0
-               EXIT
+               Exit
             ENDIF
          ENDIF
 
@@ -306,7 +306,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
             ENDIF
 
             nReturn := -1  // Bail out if at the top menu item
-            EXIT
+            Exit
          ENDIF
 
       Case nKey == K_LBUTTONDOWN
@@ -320,7 +320,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                   ::PopMenu()
                ENDIF
                nReturn := -1
-               EXIT
+               Exit
             ENDIF
 
             IF IS_IN(::oMenu:ClassName(), "POPUPMENU|HB_POPUPMENU")
@@ -363,7 +363,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                ::ShowMsg(False)
                nReturn := ::execute()
                IF nReturn != 0
-                  EXIT
+                  Exit
                ENDIF
             ENDIF
          ENDIF
@@ -378,7 +378,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                ::ShowMsg(False)
                nReturn := ::execute()
                IF nReturn != 0
-                  EXIT
+                  Exit
                ENDIF
             ENDIF
             ::ShowMsg(True)
@@ -387,7 +387,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
       Case IsShortcut(oTopMenu, nKey, @nReturn)
 
          IF nReturn != 0
-            EXIT
+            Exit
          ENDIF
 
       Case GetList != NIL .AND. (nNewItem := Accelerator(GetList, nKey, ::GetMsgArray())) != 0
@@ -399,7 +399,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
          ENDIF
 
          nReturn := -1
-         EXIT
+         Exit
 
       Case (nNewItem := oTopMenu:getAccel(nKey)) != 0  // check for the top menu item accelerator key
 
@@ -413,7 +413,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
                ::ShowMsg(False)
                nReturn := ::execute()
                IF nReturn != 0
-                  EXIT
+                  Exit
                ENDIF
             ENDIF
             ::ShowMsg(True)
@@ -538,7 +538,7 @@ METHOD HBMenuSys:Execute()
    NOTE: Formal parameters received here were passed by reference. */
 METHOD HBMenuSys:MHitTest(oNewMenu, nNewLevel, nNewItem)
 
-   FOR nNewLevel := ::nMenuLevel TO 1 STEP -1
+   For nNewLevel := ::nMenuLevel To 1 Step -1
 
       oNewMenu := ::aMenuList[nNewLevel]
       nNewItem := oNewMenu:hitTest(MRow(), MCol())
@@ -549,7 +549,7 @@ METHOD HBMenuSys:MHitTest(oNewMenu, nNewLevel, nNewItem)
       Case nNewItem > 0 .AND. oNewMenu:getItem(nNewItem):enabled
          Return True  // Test for the mouse on an enabled item in the menu
       EndCase
-   NEXT
+   Next
 
    Return False
 

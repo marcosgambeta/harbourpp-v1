@@ -231,7 +231,7 @@ METHOD HBProfile:gatherFunctions()
    // For each known symbol.
    // TODO: Question: Will the symbol count have changed because
    //                 we've created variables?
-   FOR n := 1 TO nSymCount
+   For n := 1 To nSymCount
 
       // Is the symbol a function?
       IF __dynsIsFun(n)
@@ -242,7 +242,7 @@ METHOD HBProfile:gatherFunctions()
             AAdd(::aProfile, HBProfileFunction():new(cName, __dynsGetPrf(n)))
          ENDIF
       ENDIF
-   NEXT
+   Next
 
    __SetProfiler(lProfile)
 
@@ -266,14 +266,14 @@ METHOD HBProfile:gatherMethods()
          // Collect class members.
          nMembers := Len(aMembers := __classSel(n))
 
-         FOR nMember := 1 TO nMembers
+         For nMember := 1 To nMembers
 
             // If we've got a member name...
             IF !Empty(aMembers[nMember])
                // Add it to the profile.
                AAdd(::aProfile, HBProfileMethod():new(cClass + ":" + aMembers[nMember], __GetMsgPrf(n, aMembers[nMember])))
             ENDIF
-         NEXT
+         Next
       ENDIF
 
       ++n
@@ -415,13 +415,13 @@ METHOD HBProfileLowLevel:gatherOPCodes()
    Local nOP
 
    // Loop over all the Harbour OP codes. Note that they start at 0.
-   FOR nOP := 0 TO nMax - 1
+   For nOP := 0 To nMax - 1
       // If we're not ignoring this opcode.
       IF !::ignoreSymbol(cName := "OPCODE( " + Str(nOP, 3) + " )")
          // Add it to the profile.
          AAdd(::aProfile, HBProfileOpcode():new(cName, __opGetPrf(nOP)))
       ENDIF
-   NEXT
+   Next
 
    Return Self
 

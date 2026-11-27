@@ -98,7 +98,7 @@ Function ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
    Local nDirPos
    Local aFileInfo
 
-   FOR nDirPos := 1 TO nDirLen
+   For nDirPos := 1 To nDirLen
 
       aFileInfo := aDir[nDirPos]
 
@@ -118,6 +118,6 @@ Function ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
          aAttr[nDirPos] := aFileInfo[F_ATTR]
       ENDIF
 
-   NEXT
+   Next
 
    RETURN nDirLen

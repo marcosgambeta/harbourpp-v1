@@ -70,7 +70,7 @@ Function __dbSkipper(nRecs)
             dbSkip()
             IF Eof()
                dbSkip(-1)
-               EXIT
+               Exit
             ENDIF
             ++nSkipped
          EndDo
@@ -78,7 +78,7 @@ Function __dbSkipper(nRecs)
          Do While nSkipped > nRecs
             dbSkip(-1)
             IF Bof()
-               EXIT
+               Exit
             ENDIF
             --nSkipped
          EndDo

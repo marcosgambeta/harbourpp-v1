@@ -129,7 +129,7 @@ Static Function hb_iniFileLow(cFileSpec)
    For Each cFile In aFiles
       IF !Empty(cFile) .AND. hb_FileExists(cFile)
          IF (hFile := FOpen(cFile)) != F_ERROR
-            EXIT
+            Exit
          ENDIF
       ENDIF
    Next
@@ -174,20 +174,20 @@ Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
          cLine := hb_StrShrink(cLine, 2)
          // ... but proceed if stream over
          IF !cData:__enumIsLast()
-            LOOP
+            Loop
          ENDIF
       ENDIF
 
       // Skip void lines
       IF Empty(cLine)
-         LOOP
+         Loop
       ENDIF
 
       // remove eventual comments
       IF !Empty(aKeyVal := hb_regexSplit(reComment, cLine))
          IF Empty(cLine := AllTrim(aKeyVal[1]))
             // Skip all comment lines
-            LOOP
+            Loop
          ENDIF
       ENDIF
 
@@ -196,7 +196,7 @@ Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
          // ignore void includes
          aKeyVal[2] := AllTrim(aKeyVal[2])
          IF Len(aKeyVal[2]) == 0
-            LOOP
+            Loop
          ENDIF
          hb_iniStringLow(hIni, hb_iniFileLow(aKeyVal[2]), lKeyCaseSens, cSplitters, lAutoMain)
       // Is it a NEW section?
@@ -300,12 +300,12 @@ Function hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       IF lAutoMain
          // When lAutoMain is on, skip section named 'MAIN'
          IF cSection:__enumKey == "MAIN"
-            LOOP
+            Loop
          ENDIF
       ELSE
          // When lAutoMain is off, skip all the top-level variables.
          IF !hb_IsHash(cSection)
-            LOOP
+            Loop
          ENDIF
       ENDIF
 

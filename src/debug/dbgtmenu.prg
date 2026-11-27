@@ -435,39 +435,39 @@ METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
             ::EvalAction()
          ENDIF
       ENDIF
-      EXIT
+      Exit
 
    Case K_ESC
       ::Close()
-      EXIT
+      Exit
 
    Case K_LEFT
       ::GoLeft()
-      EXIT
+      Exit
 
    Case K_RIGHT
       ::GoRight()
-      EXIT
+      Exit
 
    Case K_DOWN
       ::GoDown()
-      EXIT
+      Exit
 
    Case K_UP
       ::GoUp()
-      EXIT
+      Exit
 
    Case K_ENTER
       ::EvalAction()
-      EXIT
+      Exit
 
    Case K_HOME
       ::GoTop()
-      EXIT
+      Exit
 
    Case K_END
       ::GoBottom()
-      EXIT
+      Exit
 
    Otherwise
 

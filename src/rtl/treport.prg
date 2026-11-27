@@ -287,13 +287,13 @@ METHOD Init(cFrmName AS STRING, ;
       ::aReportTotals := Array(Len(::aReportData[RPT_GROUPS]) + 1, Len(::aReportData[RPT_COLUMNS]))
 
       // Column total elements
-      FOR nCol := 1 TO Len(::aReportData[RPT_COLUMNS])
+      For nCol := 1 To Len(::aReportData[RPT_COLUMNS])
          IF ::aReportData[RPT_COLUMNS][nCol][RCT_TOTAL]
-            FOR nGroup := 1 TO Len(::aReportTotals)
+            For nGroup := 1 To Len(::aReportTotals)
                ::aReportTotals[nGroup][nCol] := 0
-            NEXT
+            Next
          ENDIF
-      NEXT
+      Next
 
       // Initialize ::aGroupTotals as an array
       ::aGroupTotals := Array(Len(::aReportData[RPT_GROUPS]))
@@ -303,19 +303,19 @@ METHOD Init(cFrmName AS STRING, ;
 
       // Generate any totals that may have been identified
       // Make a pass through all the groups
-      FOR nGroup := Len(::aReportData[RPT_GROUPS]) TO 1 STEP -1
+      For nGroup := Len(::aReportData[RPT_GROUPS]) To 1 Step -1
 
          // make sure group has subtotals
          lAnySubTotals := False
          For Each aCol In ::aReportData[RPT_COLUMNS]
             IF aCol[RCT_TOTAL]
                lAnySubTotals := True
-               EXIT              // NOTE
+               Exit              // NOTE
             ENDIF
          Next
 
          IF !lAnySubTotals
-            LOOP                 // NOTE
+            Loop                 // NOTE
          ENDIF
 
          // Check to see if we need to eject the page
@@ -333,7 +333,7 @@ METHOD Init(cFrmName AS STRING, ;
 
          // Print the second line
          QQOut(Space(::aReportData[RPT_LMARGIN]))
-         FOR nCol := 1 TO Len(::aReportData[RPT_COLUMNS])
+         For nCol := 1 To Len(::aReportData[RPT_COLUMNS])
             IF nCol > 1
                QQOut(" ")
             ENDIF
@@ -342,18 +342,18 @@ METHOD Init(cFrmName AS STRING, ;
             ELSE
                QQOut(Space(::aReportData[RPT_COLUMNS][nCol][RCT_WIDTH]))
             ENDIF
-         NEXT
+         Next
 
          // Send an EOL for the last line
          QOut()
-      NEXT
+      Next
 
       // Any report totals?
       lAnyTotals := False
       For Each aCol In ::aReportData[RPT_COLUMNS]
          IF aCol[RCT_TOTAL]
             lAnyTotals := True
-            EXIT
+            Exit
          ENDIF
       Next
 
@@ -374,7 +374,7 @@ METHOD Init(cFrmName AS STRING, ;
 
          // Print the second line
          QQOut(Space(::aReportData[RPT_LMARGIN]))
-         FOR nCol := 1 TO Len(::aReportData[RPT_COLUMNS])
+         For nCol := 1 To Len(::aReportData[RPT_COLUMNS])
             IF nCol > 1
                QQOut(" ")
             ENDIF
@@ -383,7 +383,7 @@ METHOD Init(cFrmName AS STRING, ;
             ELSE
                QQOut(Space(::aReportData[RPT_COLUMNS][nCol][RCT_WIDTH]))
             ENDIF
-         NEXT
+         Next
 
          // Send an EOL for the last line
          QOut()
@@ -466,9 +466,9 @@ METHOD ReportHeader() CLASS HBReportForm
          For Each cLine In aTempPgHeader
             nLinesInHeader := Max(XMLCOUNT(LTrim(cLine), nHeadingLength), 1)
 
-            FOR nHeadLine := 1 TO nLinesInHeader
+            For nHeadLine := 1 To nLinesInHeader
                AAdd(aPageHeader, Space(15) + PadC(RTrim(XMEMOLINE(LTrim(cLine), nHeadingLength, nHeadLine)), nHeadingLength))
-            NEXT
+            Next
          Next
 
          aPageHeader[1] := Stuff(aPageHeader[1], 1, 14, __natMsg(_RFRM_PAGENO) + Str(::nPageNumber, 6))
@@ -481,12 +481,12 @@ METHOD ReportHeader() CLASS HBReportForm
 
       nLinesInHeader := Max(XMLCOUNT(LTrim(cLine)), 1)
 
-      FOR nHeadLine := 1 TO nLinesInHeader
+      For nHeadLine := 1 To nLinesInHeader
 
          cHeader := RTrim(XMEMOLINE(LTrim(cLine), NIL, nHeadLine))
          AAdd(aPageHeader, Space((nRPageSize - ::aReportData[RPT_LMARGIN] - ;
             Len(cHeader)) / 2) + cHeader)
-      NEXT
+      Next
    Next
 
    AAdd(aPageHeader, "")  // S87 compatibility
@@ -499,12 +499,12 @@ METHOD ReportHeader() CLASS HBReportForm
    For Each aCol In ::aReportData[RPT_COLUMNS]
       ASize(aCol[RCT_HEADER], nMaxColLength)
    Next
-   FOR nLine := 1 TO nMaxColLength
+   For nLine := 1 To nMaxColLength
       AAdd(aPageHeader, "")
-   NEXT
+   Next
 
    For Each aCol In ::aReportData[RPT_COLUMNS]    // Cycle through the columns
-      FOR nLine := 1 TO nMaxColLength
+      For nLine := 1 To nMaxColLength
          IF !aCol:__enumIsFirst()
             aPageHeader[nLinesInHeader + nLine] += " "
          ENDIF
@@ -517,7 +517,7 @@ METHOD ReportHeader() CLASS HBReportForm
             aPageHeader[nLinesInHeader + nLine] += ;
                PadR(aCol[RCT_HEADER][nLine], aCol[RCT_WIDTH])
          ENDIF
-      NEXT
+      Next
    Next
 
    // Insert the two blank lines between the heading and the actual data
@@ -550,26 +550,26 @@ METHOD ExecuteReport() CLASS HBReportForm
 
    // Add to the main column totals
 
-   FOR nCol := 1 TO Len(::aReportData[RPT_COLUMNS])
+   For nCol := 1 To Len(::aReportData[RPT_COLUMNS])
       IF ::aReportData[RPT_COLUMNS][nCol][RCT_TOTAL]
          // If this column should be totaled, do it
          ::aReportTotals[1][nCol] += Eval(::aReportData[RPT_COLUMNS][nCol][RCT_EXP])
       ENDIF
-   NEXT
+   Next
 
    // Determine if any of the groups have changed.  If so, add the appropriate
    // line to aRecordHeader for totaling out the previous records
    IF !::lFirstPass                       // Don't bother first time through
 
       // Make a pass through all the groups
-      FOR nGroup := Len(::aReportData[RPT_GROUPS]) TO 1 STEP -1
+      For nGroup := Len(::aReportData[RPT_GROUPS]) To 1 Step -1
 
          // make sure group has subtotals
          lAnySubTotals := False
          For Each aCol In ::aReportData[RPT_COLUMNS]
             IF aCol[RCT_TOTAL]
                lAnySubTotals := True
-               EXIT              // NOTE
+               Exit              // NOTE
             ENDIF
          Next
 
@@ -579,7 +579,7 @@ METHOD ExecuteReport() CLASS HBReportForm
          ENDIF
 
          IF !lAnySubTotals
-            LOOP                 // NOTE
+            Loop                 // NOTE
          ENDIF
 
          //  For subgroup processing: check if group has been changed
@@ -598,7 +598,7 @@ METHOD ExecuteReport() CLASS HBReportForm
             // Cycle through the columns, adding either the group
             // amount from ::aReportTotals or spaces wide enough for
             // the non-totaled columns
-            FOR nCol := 1 TO Len(::aReportData[RPT_COLUMNS])
+            For nCol := 1 To Len(::aReportData[RPT_COLUMNS])
                IF ::aReportData[RPT_COLUMNS][nCol][RCT_TOTAL]
                   aRecordHeader[Len(aRecordHeader)] += Transform(::aReportTotals[nGroup + 1][nCol], ::aReportData[RPT_COLUMNS][nCol][RCT_PICT])
                   // Zero out the group totals column from aReportTotals
@@ -608,11 +608,11 @@ METHOD ExecuteReport() CLASS HBReportForm
                      Space(::aReportData[RPT_COLUMNS][nCol][RCT_WIDTH])
                ENDIF
                aRecordHeader[Len(aRecordHeader)] += " "
-            NEXT
+            Next
             // Get rid of the extra space from the last column
             aRecordHeader[Len(aRecordHeader)] := hb_StrShrink(ATail(aRecordHeader))
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    IF Len(aRecordHeader) > 0 .AND. lEjectGrp .AND. lGroupChanged
@@ -643,7 +643,7 @@ METHOD ExecuteReport() CLASS HBReportForm
    // new group headers need to be generated
 
    // Cycle through the groups
-   FOR nGroup := 1 TO Len(::aReportData[RPT_GROUPS])
+   For nGroup := 1 To Len(::aReportData[RPT_GROUPS])
       // If the group has changed
       IF !(MakeAStr(Eval(::aReportData[RPT_GROUPS][nGroup][RGT_EXP]), ::aReportData[RPT_GROUPS][nGroup][RGT_TYPE]) == ::aGroupTotals[nGroup])
 
@@ -662,7 +662,7 @@ METHOD ExecuteReport() CLASS HBReportForm
             ::aReportData[RPT_GROUPS][nGroup][RGT_HEADER] + " " + ;
             MakeAStr(Eval(::aReportData[RPT_GROUPS][nGroup][RGT_EXP]), ::aReportData[RPT_GROUPS][nGroup][RGT_TYPE]))
       ENDIF
-   NEXT
+   Next
 
    ::lFirstPass := False
 
@@ -696,20 +696,20 @@ METHOD ExecuteReport() CLASS HBReportForm
    ENDIF
 
    // Add to the group totals
-   FOR nCol := 1 TO Len(::aReportData[RPT_COLUMNS])
+   For nCol := 1 To Len(::aReportData[RPT_COLUMNS])
       // If this column should be totaled, do it
       IF ::aReportData[RPT_COLUMNS][nCol][RCT_TOTAL]
          // Cycle through the groups
-         FOR nGroup := 1 TO Len(::aReportTotals) - 1
+         For nGroup := 1 To Len(::aReportTotals) - 1
             ::aReportTotals[nGroup + 1][nCol] += Eval(::aReportData[RPT_COLUMNS][nCol][RCT_EXP])
-         NEXT
+         Next
       ENDIF
-   NEXT
+   Next
 
    // Reset the group expressions in aGroupTotals
-   FOR nGroup := 1 TO Len(::aReportData[RPT_GROUPS])
+   For nGroup := 1 To Len(::aReportData[RPT_GROUPS])
       ::aGroupTotals[nGroup] := MakeAStr(Eval(::aReportData[RPT_GROUPS][nGroup][RGT_EXP]), ::aReportData[RPT_GROUPS][nGroup][RGT_TYPE])
-   NEXT
+   Next
 
    // Only run through the record detail if this is NOT a summary report
    IF !::aReportData[RPT_SUMMARY]
@@ -731,7 +731,7 @@ METHOD ExecuteReport() CLASS HBReportForm
 
       // Load the current record into aRecordToPrint
       For Each aCol In ::aReportData[RPT_COLUMNS]
-         FOR nLine := 1 TO nMaxLines
+         For nLine := 1 To nMaxLines
             // Check to see if it's a memo or character
             IF aCol[RCT_TYPE] $ "CM"
                //  Load the current line of the current column into cLine
@@ -755,7 +755,7 @@ METHOD ExecuteReport() CLASS HBReportForm
                aRecordToPrint[nLine] += " "
             ENDIF
             aRecordToPrint[nLine] += cLine
-         NEXT
+         Next
       Next
 
       // Determine if aRecordToPrint will fit on the current page
@@ -800,10 +800,10 @@ METHOD ExecuteReport() CLASS HBReportForm
          // Double space problem in REPORT FORM at the bottom of the page
          IF ::nLinesLeft >= ::aReportData[RPT_SPACING] - 1
 
-            FOR nLine := 2 TO ::aReportData[RPT_SPACING]
+            For nLine := 2 To ::aReportData[RPT_SPACING]
                ::PrintIt()
                ::nLinesLeft--
-            NEXT
+            Next
          ENDIF
       ENDIF
    ENDIF    // Was this a summary report?
@@ -855,7 +855,7 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
       // Search through default path; attempt to open report file
       For Each cPath In hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
          IF (nFrmHandle := FOpen(hb_DirSepAdd(cPath) + cFrmFile)) != F_ERROR
-            EXIT
+            Exit
          ENDIF
       Next
    ENDIF
@@ -931,7 +931,7 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
             // now retract the empty headings
             Do While nHeaderIndex > 0
                IF !Empty(aHeader[nHeaderIndex])
-                  EXIT
+                  Exit
                ENDIF
                nHeaderIndex--
             EndDo
@@ -981,9 +981,9 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
 
             // Process columns
             nFieldOffset := 12      // dBASE skips first 12 byte fields block.
-            FOR nCount := 1 TO nColCount
+            For nCount := 1 To nColCount
                AAdd(aReport[RPT_COLUMNS], ::GetColumn(cFieldsBuff, @nFieldOffset))
-            NEXT
+            Next
          ENDIF
       ENDIF
       FClose(nFrmHandle)
@@ -1142,13 +1142,13 @@ METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBRe
       Case "C"
       Case "M"
          aColumn[RCT_PICT] := Replicate("X", aColumn[RCT_WIDTH])
-         EXIT
+         Exit
       Case "D"
          aColumn[RCT_PICT] := "@D"
-         EXIT
+         Exit
       Case "T"
          aColumn[RCT_PICT] := "@T"
-         EXIT
+         Exit
       Case "N"
          IF aColumn[RCT_DECIMALS] != 0
             aColumn[RCT_PICT] := ;
@@ -1157,10 +1157,10 @@ METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBRe
          ELSE
             aColumn[RCT_PICT] := Replicate("9", aColumn[RCT_WIDTH])
          ENDIF
-         EXIT
+         Exit
       Case "L"
          aColumn[RCT_PICT] := "@L" + Replicate("X", aColumn[RCT_WIDTH] - 1)
-         EXIT
+         Exit
       EndSwitch
    ENDIF
 

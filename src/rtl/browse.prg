@@ -89,9 +89,9 @@ Function Browse(nTop, nLeft, nBottom, nRight)
    oBrw:HeadSep := " " + hb_UTF8ToStrBox("═")
    oBrw:SkipBlock := {|nRecs|Skipped(nRecs, lAppend)}
 
-   FOR n := 1 TO FCount()
+   For n := 1 To FCount()
       oBrw:AddColumn(TBColumnNew(FieldName(n), FieldBlock(FieldName(n))))
-   NEXT
+   Next
 
    IF Eof()
       dbGoTop()
@@ -138,7 +138,7 @@ Function Browse(nTop, nLeft, nBottom, nRight)
          nKey := Inkey(0)
          IF (bAction := SetKey(nKey)) != NIL
             Eval(bAction, ProcName(1), ProcLine(1), "")
-            LOOP
+            Loop
          ENDIF
       ENDIF
 
@@ -148,7 +148,7 @@ Function Browse(nTop, nLeft, nBottom, nRight)
       Case K_LBUTTONDOWN
       Case K_LDBLCLK
          TBMouse(oBrw, MRow(), MCol())
-         EXIT
+         Exit
 #endif
 #ifndef HB_CLP_STRICT
       Case K_MWFORWARD
@@ -159,7 +159,7 @@ Function Browse(nTop, nLeft, nBottom, nRight)
          ELSE
             oBrw:Up()
          ENDIF
-         EXIT
+         Exit
 
 #ifndef HB_CLP_STRICT
       Case K_MWBACKWARD
@@ -170,7 +170,7 @@ Function Browse(nTop, nLeft, nBottom, nRight)
          ELSE
             oBrw:Down()
          ENDIF
-         EXIT
+         Exit
 
       Case K_PGUP
          IF lAppend
@@ -178,7 +178,7 @@ Function Browse(nTop, nLeft, nBottom, nRight)
          ELSE
             oBrw:PageUp()
          ENDIF
-         EXIT
+         Exit
 
       Case K_PGDN
          IF lAppend
@@ -186,7 +186,7 @@ Function Browse(nTop, nLeft, nBottom, nRight)
          ELSE
             oBrw:PageDown()
          ENDIF
-         EXIT
+         Exit
 
       Case K_CTRL_PGUP
          IF lAppend
@@ -194,7 +194,7 @@ Function Browse(nTop, nLeft, nBottom, nRight)
          ELSE
             oBrw:GoTop()
          ENDIF
-         EXIT
+         Exit
 
       Case K_CTRL_PGDN
          IF lAppend
@@ -202,45 +202,45 @@ Function Browse(nTop, nLeft, nBottom, nRight)
          ELSE
             oBrw:GoBottom()
          ENDIF
-         EXIT
+         Exit
 
       Case K_LEFT
          oBrw:Left()
-         EXIT
+         Exit
 
       Case K_RIGHT
          oBrw:Right()
-         EXIT
+         Exit
 
       Case K_HOME
          oBrw:Home()
-         EXIT
+         Exit
 
       Case K_END
          oBrw:End()
-         EXIT
+         Exit
 
       Case K_CTRL_LEFT
          oBrw:panLeft()
-         EXIT
+         Exit
 
       Case K_CTRL_RIGHT
          oBrw:panRight()
-         EXIT
+         Exit
 
       Case K_CTRL_HOME
          oBrw:panHome()
-         EXIT
+         Exit
 
       Case K_CTRL_END
          oBrw:panEnd()
-         EXIT
+         Exit
 
       Case K_INS
          IF lAppend
             SetCursor(IIf(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))
          ENDIF
-         EXIT
+         Exit
 
       Case K_DEL
          IF RecNo() != LastRec() + 1
@@ -250,7 +250,7 @@ Function Browse(nTop, nLeft, nBottom, nRight)
                dbDelete()
             ENDIF
          ENDIF
-         EXIT
+         Exit
 
       Case K_ENTER
          IF lAppend .OR. RecNo() != LastRec() + 1
@@ -259,11 +259,11 @@ Function Browse(nTop, nLeft, nBottom, nRight)
             nKey := K_DOWN
             lKeyPressed := True
          ENDIF
-         EXIT
+         Exit
 
       Case K_ESC
          lContinue := False
-         EXIT
+         Exit
 
       Otherwise
          IF !hb_keyChar(nKey) == ""
@@ -421,7 +421,7 @@ Static Function Skipped(nRecs, lAppend)
                ELSE
                   dbSkip(-1)
                ENDIF
-               EXIT
+               Exit
             ENDIF
             ++nSkipped
          EndDo
@@ -429,7 +429,7 @@ Static Function Skipped(nRecs, lAppend)
          Do While nSkipped > nRecs
             dbSkip(-1)
             IF Bof()
-               EXIT
+               Exit
             ENDIF
             --nSkipped
          EndDo

@@ -245,9 +245,9 @@ METHOD HBLabelForm:ExecuteLabel()
    ASize(aBuffer, Len(::aLabelData[LBL_FIELDS]))
 
    // Add aBuffer to ::aBandToPrint
-   FOR nField := 1 TO Len(::aLabelData[LBL_FIELDS])
+   For nField := 1 To Len(::aLabelData[LBL_FIELDS])
       ::aBandToPrint[nField] += IIf(aBuffer[nField] == NIL, ::cBlank, aBuffer[nField])
-   NEXT
+   Next
 
    IF ::nCurrentCol == ::aLabelData[LBL_ACROSS]
 
@@ -263,14 +263,14 @@ METHOD HBLabelForm:ExecuteLabel()
       AEval(::aBandToPrint, {|BandLine|PrintIt(BandLine)})
 
       nMoreLines := ::aLabelData[LBL_HEIGHT] - Len(::aBandToPrint)
-      FOR nField := 1 TO nMoreLines
+      For nField := 1 To nMoreLines
          PrintIt()
-      NEXT
+      Next
 
       // Add the spaces between the label lines
-      FOR nField := 1 TO ::aLabelData[LBL_LINES]
+      For nField := 1 To ::aLabelData[LBL_LINES]
          PrintIt()
-      NEXT
+      Next
 
       // Clear out the band
       AFill(::aBandToPrint, Space(::aLabelData[LBL_LMARGIN]))
@@ -302,9 +302,9 @@ METHOD HBLabelForm:SampleLabels()
       AEval(aBand, {|BandLine|PrintIt(BandLine)})
 
       // Add the spaces between the label lines
-      FOR nField := 1 TO ::aLabelData[LBL_LINES]
+      For nField := 1 To ::aLabelData[LBL_LINES]
          PrintIt()
-      NEXT
+      Next
 
       // Prompt for more
       DispOutAt(Row(), 0, __natMsg(_LF_SAMPLES) + " (" + __natMsg(_LF_YN) + ")")
@@ -350,7 +350,7 @@ METHOD HBLabelForm:LoadLabel(cLblFile)
       // Search through default path; attempt to open label file
       For Each cPath In hb_ATokens(StrTran(Set(_SET_DEFAULT), ",", ";"), ";")
          IF (nHandle := FOpen(hb_DirSepAdd(cPath) + cLblFile)) != F_ERROR
-            EXIT
+            Exit
          ENDIF
       Next
    ENDIF
@@ -375,7 +375,7 @@ METHOD HBLabelForm:LoadLabel(cLblFile)
          aLabel[LBL_SPACES]  := Bin2W(hb_BSubStr(cBuff, SPACESOFFSET, SPACESSIZE))
          aLabel[LBL_ACROSS]  := Bin2W(hb_BSubStr(cBuff, ACROSSOFFSET, ACROSSSIZE))
 
-         FOR i := 1 TO aLabel[LBL_HEIGHT]
+         For i := 1 To aLabel[LBL_HEIGHT]
 
             // Get the text of the expression
             cFieldText := RTrim(hb_BSubStr(cBuff, nOffset, FIELDSIZE))
@@ -389,7 +389,7 @@ METHOD HBLabelForm:LoadLabel(cLblFile)
                   /* LF_TEXT */ cFieldText, ;
                   /* LF_BLANK */ True})
             ENDIF
-         NEXT
+         Next
       ENDIF
 
       FClose(nHandle) // Close file

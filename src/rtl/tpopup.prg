@@ -321,11 +321,11 @@ METHOD PopupMenu:getNext()
 
    Local nPos
 
-   FOR nPos := ::nCurrent + 1 TO ::nItemCount
+   For nPos := ::nCurrent + 1 To ::nItemCount
       IF ::aItems[nPos]:enabled
          RETURN nPos
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -333,11 +333,11 @@ METHOD PopupMenu:getPrev()
 
    Local nPos
 
-   FOR nPos := ::nCurrent - 1 TO 1 STEP -1
+   For nPos := ::nCurrent - 1 To 1 Step -1
       IF ::aItems[nPos]:enabled
          RETURN nPos
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 

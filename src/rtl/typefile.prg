@@ -96,7 +96,7 @@ Procedure __TypeFile(cFile, lPrint)
       For Each cPath In hb_ATokens(cTmp, ";")
          IF hb_FileExists(cTmp := hb_FNameMerge(cPath, cName, cExt))
             cFile := cTmp
-            EXIT
+            Exit
          ENDIF
       Next
    ENDIF

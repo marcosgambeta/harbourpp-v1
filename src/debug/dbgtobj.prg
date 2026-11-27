@@ -201,31 +201,31 @@ METHOD PROCEDURE HBDbObject:SetsKeyPressed(nKey, oBrwSets)
    Switch nKey
    Case K_UP
       oBrwSets:Up()
-      EXIT
+      Exit
 
    Case K_DOWN
       oBrwSets:Down()
-      EXIT
+      Exit
 
    Case K_HOME
    Case K_CTRL_PGUP
    Case K_CTRL_HOME
       oBrwSets:GoTop()
-      EXIT
+      Exit
 
    Case K_END
    Case K_CTRL_PGDN
    Case K_CTRL_END
       oBrwSets:GoBottom()
-      EXIT
+      Exit
 
    Case K_PGDN
       oBrwSets:pageDown()
-      EXIT
+      Exit
 
    Case K_PGUP
       oBrwSets:PageUp()
-      EXIT
+      Exit
 
    Case K_ENTER
 

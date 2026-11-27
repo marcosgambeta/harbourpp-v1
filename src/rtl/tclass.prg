@@ -288,21 +288,21 @@ Static Procedure AddData(cData, xInit, cType, nScope, lNoinit)
       Case Asc("L")   /* Logical */
       Case Asc("l")   /* Logical */
          xInit := False
-         EXIT
+         Exit
       Case Asc("I")   /* Numeric or Integer */
       Case Asc("i")   /* Numeric or Integer */
       Case Asc("N")   /* Numeric or Integer */
       Case Asc("n")   /* Numeric or Integer */
          xInit := 0
-         EXIT
+         Exit
       Case Asc("D")   /* Date */
       Case Asc("d")   /* Date */
          xInit := hb_SToD()
-         EXIT
+         Exit
       Case Asc("T")   /* Timestamp */
       Case Asc("t")   /* Timestamp */
          xInit := hb_SToT()
-         EXIT
+         Exit
       EndSwitch
    ENDIF
 
@@ -331,21 +331,21 @@ Static Procedure AddClassData(cData, xInit, cType, nScope, lNoInit)
       Case Asc("L")   /* Logical */
       Case Asc("l")   /* Logical */
          xInit := False
-         EXIT
+         Exit
       Case Asc("I")   /* Numeric or Integer */
       Case Asc("i")   /* Numeric or Integer */
       Case Asc("N")   /* Numeric or Integer */
       Case Asc("n")   /* Numeric or Integer */
          xInit := 0
-         EXIT
+         Exit
       Case Asc("D")   /* Date */
       Case Asc("d")   /* Date */
          xInit := hb_SToD()
-         EXIT
+         Exit
       Case Asc("T")   /* Timestamp */
       Case Asc("t")   /* Timestamp */
          xInit := hb_SToT()
-         EXIT
+         Exit
       EndSwitch
    ENDIF
 

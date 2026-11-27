@@ -341,51 +341,51 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
    Switch nKey
    Case K_UP
       oGet:exitState := GE_UP
-      EXIT
+      Exit
 
    Case K_SH_TAB
       oGet:exitState := GE_UP
-      EXIT
+      Exit
 
    Case K_DOWN
       oGet:exitState := GE_DOWN
-      EXIT
+      Exit
 
    Case K_TAB
       oGet:exitState := GE_DOWN
-      EXIT
+      Exit
 
    Case K_ENTER
       oGet:exitState := GE_ENTER
-      EXIT
+      Exit
 
    Case K_ESC
       IF Set(_SET_ESCAPE)
          oGet:undo()
          oGet:exitState := GE_ESCAPE
       ENDIF
-      EXIT
+      Exit
 
    Case K_PGUP
       oGet:exitState := GE_WRITE
-      EXIT
+      Exit
 
    Case K_PGDN
       oGet:exitState := GE_WRITE
-      EXIT
+      Exit
 
    Case K_CTRL_HOME
       oGet:exitState := GE_TOP
-      EXIT
+      Exit
 
 #ifdef CTRL_END_SPECIAL
    Case K_CTRL_END
       oGet:exitState := GE_BOTTOM
-      EXIT
+      Exit
 #else
    Case K_CTRL_W
       oGet:exitState := GE_WRITE
-      EXIT
+      Exit
 #endif
 
 #ifdef HB_COMPAT_C53
@@ -414,7 +414,7 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
             IF oGet:typeOut
                // reset typeout:
                oGet:home()
-               EXIT
+               Exit
             ENDIF
 
          EndDo
@@ -426,7 +426,7 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
             IF oGet:typeOut
                // reset typeout:
                oGet:end()
-               EXIT
+               Exit
             ENDIF
 
          EndDo
@@ -438,61 +438,61 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
       ELSE
          oGet:exitState := GE_NOEXIT
       ENDIF
-      EXIT
+      Exit
 #endif
 
    Case K_UNDO
       oGet:undo()
-      EXIT
+      Exit
 
    Case K_HOME
       oGet:home()
-      EXIT
+      Exit
 
    Case K_END
       oGet:end()
-      EXIT
+      Exit
 
    Case K_RIGHT
       oGet:right()
-      EXIT
+      Exit
 
    Case K_LEFT
       oGet:left()
-      EXIT
+      Exit
 
    Case K_CTRL_RIGHT
       oGet:wordRight()
-      EXIT
+      Exit
 
    Case K_CTRL_LEFT
       oGet:wordLeft()
-      EXIT
+      Exit
 
    Case K_BS
       oGet:backSpace()
-      EXIT
+      Exit
 
    Case K_DEL
       oGet:delete()
-      EXIT
+      Exit
 
    Case K_CTRL_T
       oGet:delWordRight()
-      EXIT
+      Exit
 
    Case K_CTRL_Y
       oGet:delEnd()
-      EXIT
+      Exit
 
    Case K_CTRL_BS
       oGet:delWordLeft()
-      EXIT
+      Exit
 
    Case K_INS
       Set(_SET_INSERT, !Set(_SET_INSERT))
       ::ShowScoreboard()
-      EXIT
+      Exit
 
    Otherwise
 
@@ -683,27 +683,27 @@ METHOD HBGetList:Settle(nPos, lInit)
    Switch nExitState
    Case GE_UP
       nPos--
-      EXIT
+      Exit
 
    Case GE_DOWN
       nPos++
-      EXIT
+      Exit
 
    Case GE_TOP
       nPos := 1
       ::lBumpTop := True
       nExitState := GE_DOWN
-      EXIT
+      Exit
 
    Case GE_BOTTOM
       nPos := Len(::aGetList)
       ::lBumpBot := True
       nExitState := GE_UP
-      EXIT
+      Exit
 
    Case GE_ENTER
       nPos++
-      EXIT
+      Exit
 
    Case GE_SHORTCUT
       RETURN ::nNextGet
@@ -890,7 +890,7 @@ METHOD HBGetList:GUIReader(oGet, oMenu, aMsg)
       Case "RADIOGROUP"
          IF hb_IsNumeric(oGet:varGet())
             oGet:varPut(oGUI:value)
-            EXIT
+            Exit
          ENDIF
          // fallthrough
       Otherwise
@@ -1002,41 +1002,41 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
    Switch nKey
    Case K_UP
       oGet:exitState := GE_UP
-      EXIT
+      Exit
 
    Case K_SH_TAB
       oGet:exitState := GE_UP
-      EXIT
+      Exit
 
    Case K_DOWN
       oGet:exitState := GE_DOWN
-      EXIT
+      Exit
 
    Case K_TAB
       oGet:exitState := GE_DOWN
-      EXIT
+      Exit
 
    Case K_ENTER
       oGet:exitState := GE_ENTER
-      EXIT
+      Exit
 
    Case K_ESC
       IF Set(_SET_ESCAPE)
          oGet:exitState := GE_ESCAPE
       ENDIF
-      EXIT
+      Exit
 
    Case K_PGUP
       oGet:exitState := GE_WRITE
-      EXIT
+      Exit
 
    Case K_PGDN
       oGet:exitState := GE_WRITE
-      EXIT
+      Exit
 
    Case K_CTRL_HOME
       oGet:exitState := GE_TOP
-      EXIT
+      Exit
 
 
 #ifdef CTRL_END_SPECIAL
@@ -1044,14 +1044,14 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
    // Both ^W and ^End go to the last GET
    Case K_CTRL_END
       oGet:exitState := GE_BOTTOM
-      EXIT
+      Exit
 
 #else
 
    // Both ^W and ^End terminate the READ (the default)
    Case K_CTRL_W
       oGet:exitState := GE_WRITE
-      EXIT
+      Exit
 
 #endif
 
@@ -1104,7 +1104,7 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
          oGUI:Display()
       ENDIF
 
-      EXIT
+      Exit
 
    EndSwitch
 
@@ -1164,7 +1164,7 @@ METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
       Case "RADIOGROUP"
          IF hb_IsNumeric(oGet:varGet())
             xNewValue := oGUI:value
-            EXIT
+            Exit
          ENDIF
          // fallthrough
       Otherwise
@@ -1234,11 +1234,11 @@ METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
    Switch nKey
    Case K_TAB
       oGet:exitState := GE_DOWN
-      EXIT
+      Exit
 
    Case K_SH_TAB
       oGet:exitState := GE_UP
-      EXIT
+      Exit
 
    Case K_ENTER
 #ifndef HB_CLP_STRICT
@@ -1247,27 +1247,27 @@ METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
       ENDIF
 #endif
       oGet:exitState := GE_ENTER
-      EXIT
+      Exit
 
    Case K_ESC
       IF Set(_SET_ESCAPE)
          oGet:exitState := GE_ESCAPE
       ENDIF
-      EXIT
+      Exit
 
 #ifdef CTRL_END_SPECIAL
 
    // Both ^W and ^End go to the last GET
    Case K_CTRL_END
       oGet:exitState := GE_BOTTOM
-      EXIT
+      Exit
 
 #else
 
    // Both ^W and ^End terminate the READ (the default)
    Case K_CTRL_W
       oGet:exitState := GE_WRITE
-      EXIT
+      Exit
 
 #endif
 
@@ -1296,7 +1296,7 @@ METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
          ENDIF
       ENDIF
 
-      EXIT
+      Exit
 
    EndSwitch
 
@@ -1354,7 +1354,7 @@ METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
             nProcessed := oTB:ApplyKey(nKey)
             IF nProcessed == TBR_EXIT
                oGet:exitState := GE_ESCAPE
-               EXIT
+               Exit
 
             ELSEIF nProcessed == TBR_EXCEPTION
                ::TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
@@ -1409,8 +1409,8 @@ METHOD HBGetList:Accelerator(nKey, aMsg)
    nStart := ::nPos + 1
    nEnd   := Len(::aGetList)
 
-   FOR nIteration := 1 TO 2
-      FOR nGet := nStart TO nEnd
+   For nIteration := 1 To 2
+      For nGet := nStart To nEnd
 
          oGet  := ::aGetList[nGet]
 
@@ -1451,11 +1451,11 @@ METHOD HBGetList:Accelerator(nKey, aMsg)
 
             RETURN nGet
          ENDIF
-      NEXT
+      Next
 
       nStart := 1
       nEnd   := ::nPos - 1
-   NEXT
+   Next
 
    RETURN 0
 
@@ -1469,7 +1469,7 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
    For Each oGet In ::aGetList
       IF (::nHitCode := oGet:hitTest(nMRow, nMCol)) != HTNOWHERE
          ::nNextGet := oGet:__enumIndex()
-         EXIT
+         Exit
       ENDIF
    Next
 
@@ -1483,13 +1483,13 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
       IF lGUI .AND. !::GUIPostValidate(::aGetList[::nPos], ::aGetList[::nPos]:control, aMsg)
 
          ::nNextGet := 0
-         // EXIT  // Commented out.
+         // Exit  // Commented out.
          RETURN 0  // Changed.
 
       ELSEIF !lGUI .AND. !::GetPostValidate(::aGetList[::nPos], aMsg)
 
          ::nNextGet := 0
-         // EXIT  // Commented out.
+         // Exit  // Commented out.
          RETURN 0  // Changed.
 
       ENDIF
@@ -1500,18 +1500,18 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
       IF lGUI .AND. !::GUIPreValidate(::aGetList[::nNextGet], ::aGetList[::nNextGet]:control, aMsg)
 
          ::nNextGet := 0
-         // EXIT  // Commented out.
+         // Exit  // Commented out.
          RETURN ::nNextGet  // Changed.
 
       ELSEIF !lGUI .AND. !::GetPreValidate(::aGetList[::nNextGet], aMsg)
 
          ::nNextGet := 0
-         // EXIT  // Commented out.
+         // Exit  // Commented out.
          RETURN ::nNextGet  // Changed.
 
       ENDIF
 
-      // EXIT  // Commented out.
+      // Exit  // Commented out.
       RETURN ::nNextGet  // Changed.
    // EndDo  // Commented out.
 
@@ -1545,46 +1545,46 @@ METHOD HBGetList:ReadStats(nElement, xNewValue)
    Local xRetVal
 
    Switch nElement
-   Case SLUPDATED      ; xRetVal := ::lUpdated       ; EXIT
-   Case SBFORMAT       ; xRetVal := ::bFormat        ; EXIT
-   Case SLKILLREAD     ; xRetVal := ::lKillRead      ; EXIT
-   Case SLBUMPTOP      ; xRetVal := ::lBumpTop       ; EXIT
-   Case SLBUMPBOT      ; xRetVal := ::lBumpBot       ; EXIT
-   Case SNLASTEXIT     ; xRetVal := ::nLastExitState ; EXIT
-   Case SNLASTPOS      ; xRetVal := ::nLastPos       ; EXIT
-   Case SOACTIVEGET    ; xRetVal := ::oActiveGet     ; EXIT
-   Case SXREADVAR      ; xRetVal := ::cVarName       ; EXIT
-   Case SCREADPROCNAME ; xRetVal := ::cReadProcName  ; EXIT
-   Case SNREADPROCLINE ; xRetVal := ::nReadProcLine  ; EXIT
-   Case SNNEXTGET      ; xRetVal := ::nNextGet       ; EXIT
-   Case SNHITCODE      ; xRetVal := ::nHitCode       ; EXIT
-   Case SNPOS          ; xRetVal := ::nPos           ; EXIT
-   Case SCSCRSVMSG     ; xRetVal := ::cMsgSaveS      ; EXIT
-   Case SNMENUID       ; xRetVal := ::nMenuID        ; EXIT
-   Case SNSVCURSOR     ; xRetVal := ::nSaveCursor    ; EXIT
+   Case SLUPDATED      ; xRetVal := ::lUpdated       ; Exit
+   Case SBFORMAT       ; xRetVal := ::bFormat        ; Exit
+   Case SLKILLREAD     ; xRetVal := ::lKillRead      ; Exit
+   Case SLBUMPTOP      ; xRetVal := ::lBumpTop       ; Exit
+   Case SLBUMPBOT      ; xRetVal := ::lBumpBot       ; Exit
+   Case SNLASTEXIT     ; xRetVal := ::nLastExitState ; Exit
+   Case SNLASTPOS      ; xRetVal := ::nLastPos       ; Exit
+   Case SOACTIVEGET    ; xRetVal := ::oActiveGet     ; Exit
+   Case SXREADVAR      ; xRetVal := ::cVarName       ; Exit
+   Case SCREADPROCNAME ; xRetVal := ::cReadProcName  ; Exit
+   Case SNREADPROCLINE ; xRetVal := ::nReadProcLine  ; Exit
+   Case SNNEXTGET      ; xRetVal := ::nNextGet       ; Exit
+   Case SNHITCODE      ; xRetVal := ::nHitCode       ; Exit
+   Case SNPOS          ; xRetVal := ::nPos           ; Exit
+   Case SCSCRSVMSG     ; xRetVal := ::cMsgSaveS      ; Exit
+   Case SNMENUID       ; xRetVal := ::nMenuID        ; Exit
+   Case SNSVCURSOR     ; xRetVal := ::nSaveCursor    ; Exit
    Otherwise           ; xRetVal := NIL
    EndSwitch
 
    IF PCount() > 1
 
       Switch nElement
-      Case SLUPDATED      ; ::lUpdated       := xNewValue ; EXIT
-      Case SBFORMAT       ; ::bFormat        := xNewValue ; EXIT
-      Case SLKILLREAD     ; ::lKillRead      := xNewValue ; EXIT
-      Case SLBUMPTOP      ; ::lBumpTop       := xNewValue ; EXIT
-      Case SLBUMPBOT      ; ::lBumpBot       := xNewValue ; EXIT
-      Case SNLASTEXIT     ; ::nLastExitState := xNewValue ; EXIT
-      Case SNLASTPOS      ; ::nLastPos       := xNewValue ; EXIT
-      Case SOACTIVEGET    ; ::oActiveGet     := xNewValue ; EXIT
-      Case SXREADVAR      ; ::xReadVar       := xNewValue ; EXIT
-      Case SCREADPROCNAME ; ::cReadProcName  := xNewValue ; EXIT
-      Case SNREADPROCLINE ; ::nReadProcLine  := xNewValue ; EXIT
-      Case SNNEXTGET      ; ::nNextGet       := xNewValue ; EXIT
-      Case SNHITCODE      ; ::nHitCode       := xNewValue ; EXIT
-      Case SNPOS          ; ::nPos           := xNewValue ; EXIT
-      Case SCSCRSVMSG     ; ::cMsgSaveS      := xNewValue ; EXIT
-      Case SNMENUID       ; ::nMenuID        := xNewValue ; EXIT
-      Case SNSVCURSOR     ; ::nSaveCursor    := xNewValue ; EXIT
+      Case SLUPDATED      ; ::lUpdated       := xNewValue ; Exit
+      Case SBFORMAT       ; ::bFormat        := xNewValue ; Exit
+      Case SLKILLREAD     ; ::lKillRead      := xNewValue ; Exit
+      Case SLBUMPTOP      ; ::lBumpTop       := xNewValue ; Exit
+      Case SLBUMPBOT      ; ::lBumpBot       := xNewValue ; Exit
+      Case SNLASTEXIT     ; ::nLastExitState := xNewValue ; Exit
+      Case SNLASTPOS      ; ::nLastPos       := xNewValue ; Exit
+      Case SOACTIVEGET    ; ::oActiveGet     := xNewValue ; Exit
+      Case SXREADVAR      ; ::xReadVar       := xNewValue ; Exit
+      Case SCREADPROCNAME ; ::cReadProcName  := xNewValue ; Exit
+      Case SNREADPROCLINE ; ::nReadProcLine  := xNewValue ; Exit
+      Case SNNEXTGET      ; ::nNextGet       := xNewValue ; Exit
+      Case SNHITCODE      ; ::nHitCode       := xNewValue ; Exit
+      Case SNPOS          ; ::nPos           := xNewValue ; Exit
+      Case SCSCRSVMSG     ; ::cMsgSaveS      := xNewValue ; Exit
+      Case SNMENUID       ; ::nMenuID        := xNewValue ; Exit
+      Case SNSVCURSOR     ; ::nSaveCursor    := xNewValue ; Exit
       EndSwitch
    ENDIF
 

@@ -404,7 +404,7 @@ METHOD RadioGroup:select(xValue)
    Case "C"
 
       nLen := ::nItemCount
-      FOR nPos := 1 TO nLen
+      For nPos := 1 To nLen
          IF ::aItems[nPos]:data == xValue
 
             IF ::xBuffer == NIL
@@ -413,14 +413,14 @@ METHOD RadioGroup:select(xValue)
 
             ::changeButton(::nValue, nPos)
 
-            EXIT
+            Exit
          ENDIF
-      NEXT
+      Next
 
       IF nPos > nLen
          ::xBuffer := xValue
       ENDIF
-      EXIT
+      Exit
 
    Case "N"
 
@@ -431,7 +431,7 @@ METHOD RadioGroup:select(xValue)
 
          ::changeButton(::nValue, xValue)
       ENDIF
-      EXIT
+      Exit
 
    EndSwitch
 

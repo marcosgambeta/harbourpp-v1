@@ -148,14 +148,14 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
       ENDIF
 
       // Loop to wrap around through TopMenu from Current Item:
-      FOR i := 1 TO nTotal
+      For i := 1 To nTotal
          IF (oItem := ::getItem(nItem)):enabled .AND. oItem:isPopUp() .AND. oItem:data:isQuick(nKey, @nID)
             Return True
          ENDIF
          IF ++nItem > nTotal
             nItem := 1
          ENDIF
-      NEXT
+      Next
 
    EndCase
 

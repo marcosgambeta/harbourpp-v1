@@ -87,22 +87,22 @@ Function sxChar(nLen, /* @ */ xKeyVal)
    Switch ValType(xKeyVal)
    Case "C"
    Case "M"
-      EXIT
+      Exit
    Case "N"
       xKeyVal := Str(xKeyVal)
-      EXIT
+      Exit
    Case "D"
       xKeyVal := DToS(xKeyVal)
-      EXIT
+      Exit
    Case "T"
       xKeyVal := hb_TToS(xKeyVal)
-      EXIT
+      Exit
    Case "L"
       xKeyVal := IIf(xKeyVal, "T", "F")
-      EXIT
+      Exit
    Otherwise
       xKeyVal := IIf(hb_IsNumeric(nLen), "", Space(10))
-      EXIT
+      Exit
    EndSwitch
 
    IF hb_IsNumeric(nLen)
@@ -115,21 +115,21 @@ Function sxNum(/* @ */ xKeyVal)
 
    Switch ValType(xKeyVal)
    Case "N"
-      EXIT
+      Exit
    Case "C"
    Case "M"
       xKeyVal := Val(xKeyVal)
-      EXIT
+      Exit
    Case "T"
    Case "D"
       xKeyVal := xKeyVal - hb_SToD()
-      EXIT
+      Exit
    Case "L"
       xKeyVal := IIf(xKeyVal, 1, 0)
-      EXIT
+      Exit
    Otherwise
       xKeyVal := 0.00
-      EXIT
+      Exit
    EndSwitch
 
    RETURN xKeyVal
@@ -138,20 +138,20 @@ Function sxDate(/* @ */ xKeyVal)
 
    Switch ValType(xKeyVal)
    Case "D"
-      EXIT
+      Exit
    Case "T"
       xKeyVal := hb_TToD(xKeyVal)
-      EXIT
+      Exit
    Case "C"
    Case "M"
       xKeyVal := CToD(xKeyVal)
-      EXIT
+      Exit
    Case "N"
       xKeyVal := hb_SToD() + xKeyVal
-      EXIT
+      Exit
    Otherwise
       xKeyVal := hb_SToD()
-      EXIT
+      Exit
    EndSwitch
 
    RETURN xKeyVal
@@ -160,25 +160,25 @@ Function sxLog(/* @ */ xKeyVal)
 
    Switch ValType(xKeyVal)
    Case "L"
-      EXIT
+      Exit
    Case "C"
    Case "M"
       Switch xKeyVal
       Case  "T";  Case  "t";  Case  "Y";  Case  "y"
       Case ".T."; Case ".t."; Case ".Y."; Case ".y."
          xKeyVal := True
-         EXIT
+         Exit
       Otherwise
          xKeyVal := False
-         EXIT
+         Exit
       EndSwitch
-      EXIT
+      Exit
    Case "N"
       xKeyVal := xKeyVal != 0
-      EXIT
+      Exit
    Otherwise
       xKeyVal := False
-      EXIT
+      Exit
    EndSwitch
 
    RETURN xKeyVal
@@ -230,14 +230,14 @@ Function sx_TagInfo(cIndex)
       ELSE
          nFirst := 1
       ENDIF
-      FOR i := nFirst TO nOrds
+      For i := nFirst To nOrds
          aInfo[i][1] := ordName(i)
          aInfo[i][2] := ordKey(i)
          aInfo[i][3] := ordFor(i)
          aInfo[i][4] := ordIsUnique(i)
          aInfo[i][5] := ordDescend(i)
          aInfo[i][6] := ordCustom(i)
-      NEXT
+      Next
       RETURN aInfo
    ENDIF
 
@@ -505,17 +505,17 @@ Function sx_dbCreate(cFileName, aStruct, cRDD)
       Switch aField[DBS_TYPE]
       Case "V"
          aField[DBS_LEN] += 6
-         EXIT
+         Exit
       Case "D"
          IF aField[DBS_LEN] == 3
             aField[DBS_TYPE] := "V"
          ENDIF
-         EXIT
+         Exit
       Case "I"
          IF aField[DBS_LEN] == 4
             aField[DBS_TYPE] := "V"
          ENDIF
-         EXIT
+         Exit
       EndSwitch
    Next
 
@@ -586,18 +586,18 @@ Function sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
          Switch nAction
          Case TRIGGER_ENABLE
             dbInfo(DBI_TRIGGER, True)
-            EXIT
+            Exit
          Case TRIGGER_DISABLE
             dbInfo(DBI_TRIGGER, False)
-            EXIT
+            Exit
          Case TRIGGER_REMOVE
             dbInfo(DBI_TRIGGER, "")
-            EXIT
+            Exit
          Case TRIGGER_INSTALL
             IF hb_IsString(cTriggerName)
                dbInfo(DBI_TRIGGER, cTriggerName)
             ENDIF
-            EXIT
+            Exit
          EndSwitch
       ENDIF
    ENDIF

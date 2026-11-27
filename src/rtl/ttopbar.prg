@@ -160,7 +160,7 @@ METHOD TopBarMenu:display()
       nCaptionLen := Len(cCaption)
 
       IF nCaptionLen == 0
-         LOOP
+         Loop
       ENDIF
 
       IF nLeft > nRight - nCaptionLen
@@ -236,11 +236,11 @@ METHOD TopBarMenu:getNext()
 
    Local n
 
-   FOR n := ::nCurrent + 1 TO ::nItemCount
+   For n := ::nCurrent + 1 To ::nItemCount
       IF ::aItems[n]:enabled
          RETURN n
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 
@@ -248,11 +248,11 @@ METHOD TopBarMenu:getPrev()
 
    Local n
 
-   FOR n := ::nCurrent - 1 TO 1 STEP -1
+   For n := ::nCurrent - 1 To 1 Step -1
       IF ::aItems[n]:enabled
          RETURN n
       ENDIF
-   NEXT
+   Next
 
    RETURN 0
 

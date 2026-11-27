@@ -373,15 +373,15 @@ METHOD Get:end()
       nLastCharPos := Len(RTrim(::cBuffer)) + 1
       /* check for spaces before non-template chars */
       IF nLastCharPos > 2 .AND. !::IsEditable(nLastCharPos - 1)
-         FOR nFor := nLastCharPos - 2 TO ::FirstEditable() STEP -1
+         For nFor := nLastCharPos - 2 To ::FirstEditable() Step -1
             IF ::IsEditable(nFor)
                IF Empty(SubStr(::cBuffer, nFor, 1))
                   nLastCharPos := nFor
                ELSE
-                  EXIT
+                  Exit
                ENDIF
             ENDIF
-         NEXT
+         Next
       ENDIF
       nLastCharPos := Min(nLastCharPos, ::nMaxEdit)
       IF ::nPos < nLastCharPos .OR. ::nPos == ::LastEditable()
@@ -389,12 +389,12 @@ METHOD Get:end()
       ELSE
          nPos := ::nMaxEdit
       ENDIF
-      FOR nFor := nPos TO ::FirstEditable() STEP -1
+      For nFor := nPos To ::FirstEditable() Step -1
          IF ::IsEditable(nFor)
             ::pos := nFor
-            EXIT
+            Exit
          ENDIF
-      NEXT
+      Next
       ::lClear := False
       ::typeOut := (::nPos == 0)
       ::lSuppDisplay := True
@@ -517,13 +517,13 @@ METHOD Get:varPut(xValue)
       IF hb_IsArray(aSubs) .AND. !Empty(aSubs)
          nLen := Len(aSubs)
          aValue := Eval(::bBlock)
-         FOR i := 1 TO nLen - 1
+         For i := 1 To nLen - 1
             IF hb_IsNumeric(aSubs[i]) .OR. (hb_IsHash(aValue) .AND. ValType(aSubs[i]) $ "CDT")
                aValue := aValue[aSubs[i]]
             ELSE
-               EXIT
+               Exit
             ENDIF
-         NEXT
+         Next
          IF hb_IsNumeric(aSubs[i]) .OR. (hb_IsHash(aValue) .AND. ValType(aSubs[i]) $ "CDT")
             aValue[aSubs[i]] := xValue
          ENDIF
@@ -548,13 +548,13 @@ METHOD Get:varGet()
       IF hb_IsArray(aSubs) .AND. !Empty(aSubs)
          nLen := Len(aSubs)
          xValue := Eval(::bBlock)
-         FOR i := 1 TO nLen
+         For i := 1 To nLen
             IF hb_IsNumeric(aSubs[i]) .OR. (hb_IsHash(xValue) .AND. ValType(aSubs[i]) $ "CDT")
                xValue := xValue[aSubs[i]]
             ELSE
-               EXIT
+               Exit
             ENDIF
-         NEXT
+         Next
       ELSE
          xValue := Eval(::bBlock)
       ENDIF
@@ -661,11 +661,11 @@ METHOD Get:insert(cChar)
 
             IF ::lPicComplex
                /* Calculating different nMaxEdit for ::lPicComplex */
-               FOR nFor := ::nPos TO nMaxEdit
+               For nFor := ::nPos To nMaxEdit
                   IF !::IsEditable(nFor)
-                     EXIT
+                     Exit
                   ENDIF
-               NEXT
+               Next
                nMaxEdit := nFor
                ::cBuffer := Left(Stuff(Left(::cBuffer, nMaxEdit - 2), ::nPos, 0, cChar) + SubStr(::cBuffer, nMaxEdit), ::nMaxLen)
             ELSE
@@ -972,18 +972,18 @@ METHOD Get:setPos(nPos)
             /* NOTE: CA-Cl*pper has a bug where negative nPos value will be translated to 16bit unsigned int,
                      so the behaviour will be different in this case. [vszakats] */
 
-            FOR tmp := nPos TO ::nMaxLen
+            For tmp := nPos To ::nMaxLen
                IF ::IsEditable(tmp)
                   ::nPos := tmp
                   RETURN nPos
                ENDIF
-            NEXT
-            FOR tmp := nPos - 1 TO 1 STEP -1
+            Next
+            For tmp := nPos - 1 To 1 Step -1
                IF ::IsEditable(tmp)
                   ::nPos := tmp
                   RETURN nPos
                ENDIF
-            NEXT
+            Next
 
             ::nPos := ::nMaxLen + 1
             ::typeOut := True
@@ -1052,13 +1052,13 @@ METHOD Get:picture(cPicture)
                ENDIF
 
                IF (nAt := At("S", ::cPicFunc)) > 0
-                  FOR nFor := nAt + 1 TO Len(::cPicFunc)
+                  For nFor := nAt + 1 To Len(::cPicFunc)
                      IF IsDigit(SubStr(::cPicFunc, nFor, 1))
                         cNum += SubStr(::cPicFunc, nFor, 1)
                      ELSE
-                        EXIT
+                        Exit
                      ENDIF
-                  NEXT
+                  Next
                   IF Val(cNum) > 0
                      ::nPicLen := Val(cNum)
                   ENDIF
@@ -1096,7 +1096,7 @@ METHOD Get:picture(cPicture)
             For Each cChar In "yYmMdD"
                ::cPicMask := StrTran(::cPicMask, cChar, "9")
             Next
-            EXIT
+            Exit
 
          Case "T"
 
@@ -1104,7 +1104,7 @@ METHOD Get:picture(cPicture)
             For Each cChar In "yYmMdDhHsSfF"
                ::cPicMask := StrTran(::cPicMask, cChar, "9")
             Next
-            EXIT
+            Exit
 
          Case "N"
 
@@ -1117,7 +1117,7 @@ METHOD Get:picture(cPicture)
                   ::cPicMask := Replicate("9", Len(cNum))
                ENDIF
             ENDIF
-            EXIT
+            Exit
 
          Case "C"
 
@@ -1127,7 +1127,7 @@ METHOD Get:picture(cPicture)
                   ::cPicFunc := ""
                ENDIF
             ENDIF
-            EXIT
+            Exit
 
          EndSwitch
 
@@ -1140,7 +1140,7 @@ METHOD Get:picture(cPicture)
          For Each cChar In hb_asciiUpper(::cPicMask)
             IF !(cChar $ "!ANX9#")
                ::lPicComplex := True
-               EXIT
+               Exit
             ENDIF
          Next
       ENDIF
@@ -1196,7 +1196,7 @@ METHOD Get:PutMask(xValue, lEdit)
    ::nMaxEdit := ::nMaxLen
 
    IF lEdit .AND. ::cType == "N" .AND. !Empty(cPicMask)
-      FOR nFor := 1 TO ::nMaxLen
+      For nFor := 1 To ::nMaxLen
          cChar := SubStr(cPicMask, nFor, 1)
          IF cChar $ ",." .AND. SubStr(cBuffer, nFor, 1) $ ",." // " " FIXME
             IF "E" $ cPicFunc
@@ -1204,7 +1204,7 @@ METHOD Get:PutMask(xValue, lEdit)
             ENDIF
             cBuffer := Stuff(cBuffer, nFor, 1, cChar)
          ENDIF
-      NEXT
+      Next
       IF ::lEdit .AND. Empty(xValue)
          cBuffer := StrTran(cBuffer, "0", " ")
       ENDIF
@@ -1246,15 +1246,15 @@ METHOD Get:unTransform()
 
             IF "R" $ ::cPicFunc
                xValue := ""
-               FOR nFor := 1 TO Len(::cPicMask)
+               For nFor := 1 To Len(::cPicMask)
                   IF hb_asciiUpper(SubStr(::cPicMask, nFor, 1)) $ "ANX9#!LY"
                      xValue += SubStr(cBuffer, nFor, 1)
                   ENDIF
-               NEXT
+               Next
             ELSE
                xValue := cBuffer
             ENDIF
-            EXIT
+            Exit
 
          Case "N"
 
@@ -1263,15 +1263,15 @@ METHOD Get:unTransform()
                lMinus := True
             ENDIF
             IF !lMinus
-               FOR nFor := 1 TO ::nMaxLen
+               For nFor := 1 To ::nMaxLen
                   IF ::IsEditable(nFor) .AND. IsDigit(SubStr(cBuffer, nFor, 1))
-                     EXIT
+                     Exit
                   ENDIF
                   IF SubStr(cBuffer, nFor, 1) $ "-(" .AND. !(SubStr(cBuffer, nFor, 1) == SubStr(::cPicMask, nFor, 1))
                      lMinus := True
-                     EXIT
+                     Exit
                   ENDIF
-               NEXT
+               Next
             ENDIF
             cBuffer := Space(::FirstEditable() - 1) + SubStr(cBuffer, ::FirstEditable(), ::LastEditable() - ::FirstEditable() + 1)
 
@@ -1281,11 +1281,11 @@ METHOD Get:unTransform()
             ENDIF
 
             IF "D" $ ::cPicFunc .OR. "T" $ ::cPicFunc
-               FOR nFor := ::FirstEditable() TO ::LastEditable()
+               For nFor := ::FirstEditable() To ::LastEditable()
                   IF !::IsEditable(nFor)
                      cBuffer := Left(cBuffer, nFor - 1) + Chr(1) + SubStr(cBuffer, nFor + 1)
                   ENDIF
-               NEXT
+               Next
             ELSE
                IF "E" $ ::cPicFunc
                   cBuffer := Left(cBuffer, ::FirstEditable() - 1) + ;
@@ -1298,7 +1298,7 @@ METHOD Get:unTransform()
                ENDIF
 
                lHasDec := False
-               FOR nFor := ::FirstEditable() TO ::LastEditable()
+               For nFor := ::FirstEditable() To ::LastEditable()
                   IF ::IsEditable(nFor)
                      IF lHasDec .AND. SubStr(cBuffer, nFor, 1) == " "
                         cBuffer := Left(cBuffer, nFor - 1) + "0" + SubStr(cBuffer, nFor + 1)
@@ -1310,7 +1310,7 @@ METHOD Get:unTransform()
                         cBuffer := Left(cBuffer, nFor - 1) + Chr(1) + SubStr(cBuffer, nFor + 1)
                      ENDIF
                   ENDIF
-               NEXT
+               Next
             ENDIF
 
             cBuffer := StrTran(cBuffer, Chr(1))
@@ -1320,11 +1320,11 @@ METHOD Get:unTransform()
             cBuffer := PadL(StrTran(cBuffer, " "), Len(cBuffer))
 
             IF lMinus
-               FOR nFor := 1 TO Len(cBuffer)
+               For nFor := 1 To Len(cBuffer)
                   IF IsDigit(SubStr(cBuffer, nFor, 1)) .OR. SubStr(cBuffer, nFor, 1) == "."
-                     EXIT
+                     Exit
                   ENDIF
-               NEXT
+               Next
                nFor--
                IF nFor > 0
                   cBuffer := Left(cBuffer, nFor - 1) + "-" + SubStr(cBuffer, nFor + 1)
@@ -1335,13 +1335,13 @@ METHOD Get:unTransform()
 
             xValue := hb_Val(cBuffer)
 
-            EXIT
+            Exit
 
          Case "L"
 
             cBuffer := Upper(cBuffer)
             xValue := "T" $ cBuffer .OR. "Y" $ cBuffer .OR. hb_langMessage(HB_LANG_ITEM_BASE_TEXT + 1) $ cBuffer
-            EXIT
+            Exit
 
          Case "D"
 
@@ -1349,12 +1349,12 @@ METHOD Get:unTransform()
                cBuffer := SubStr(cBuffer, 4, 3) + SubStr(cBuffer, 1, 3) + SubStr(cBuffer, 7)
             ENDIF
             xValue := CToD(cBuffer)
-            EXIT
+            Exit
 
          Case "T"
 
             xValue := hb_CToT(cBuffer)
-            EXIT
+            Exit
 
          EndSwitch
 
@@ -1402,11 +1402,11 @@ METHOD Get:firstEditable()
          RETURN 1
       ENDIF
 
-      FOR nFor := 2 TO ::nMaxLen
+      For nFor := 2 To ::nMaxLen
          IF ::IsEditable(nFor)
             RETURN nFor
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    RETURN 0
@@ -1417,11 +1417,11 @@ METHOD Get:lastEditable()
 
    IF ::nMaxLen != NIL
 
-      FOR nFor := ::nMaxLen TO 1 STEP -1
+      For nFor := ::nMaxLen To 1 Step -1
          IF ::IsEditable(nFor)
             RETURN nFor
          ENDIF
-      NEXT
+      Next
    ENDIF
 
    RETURN 0
@@ -1606,11 +1606,11 @@ METHOD Get:deleteLow()
 
    IF ::lPicComplex
       /* Calculating different nMaxLen for ::lPicComplex */
-      FOR n := ::nPos TO nMaxLen
+      For n := ::nPos To nMaxLen
          IF !::IsEditable(n)
-            EXIT
+            Exit
          ENDIF
-      NEXT
+      Next
       nMaxLen := n - 1
    ENDIF
 
@@ -1635,20 +1635,20 @@ METHOD Get:DeleteAll()
       Switch ::cType
       Case "C"
          xValue := Space(::nMaxlen)
-         EXIT
+         Exit
       Case "N"
          xValue := 0
          ::lMinus2 := False
-         EXIT
+         Exit
       Case "D"
          xValue := hb_SToD()
-         EXIT
+         Exit
       Case "T"
          xValue := hb_SToT()
-         EXIT
+         Exit
       Case "L"
          xValue := False
-         EXIT
+         Exit
       EndSwitch
 
       ::cBuffer := ::PutMask(xValue)
@@ -1707,28 +1707,28 @@ METHOD Get:Input(cChar)
          Case !(cChar $ "0123456789+")
             RETURN ""
          EndCase
-         EXIT
+         Exit
 
       Case "D"
 
          IF !(cChar $ "0123456789")
             RETURN ""
          ENDIF
-         EXIT
+         Exit
 
       Case "T"
 
          IF !(cChar $ "0123456789")
             RETURN ""
          ENDIF
-         EXIT
+         Exit
 
       Case "L"
 
          IF !(Upper(cChar) $ "YNTF")
             RETURN ""
          ENDIF
-         EXIT
+         Exit
 
       EndSwitch
    ENDIF

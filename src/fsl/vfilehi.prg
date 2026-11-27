@@ -114,12 +114,12 @@ Function hb_vfDirUnbuild(cDir)
             Return False
          ENDIF
          IF (tmp := RAt(hb_ps(), cDir)) == 0  // FIXME: use hb_URAt() function
-            EXIT
+            Exit
          ENDIF
          cDir := Left(cDir, tmp - 1)
          IF !hb_osDriveSeparator() == "" .AND. ;
             Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator()
-            EXIT
+            Exit
          ENDIF
       EndDo
    ENDIF

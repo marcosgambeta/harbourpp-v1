@@ -144,39 +144,39 @@ METHOD HBDbInput:applyKey(nKey)
    Switch nKey
    Case K_HOME
       ::nPos := 1
-      EXIT
+      Exit
    Case K_END
       ::nPos := Len(RTrim(::cValue)) + 1
       IF ::nPos > ::nSize
          ::nPos := ::nSize
       ENDIF
-      EXIT
+      Exit
    Case K_LEFT
       IF ::nPos > 1
          ::nPos--
       ENDIF
-      EXIT
+      Exit
    Case K_RIGHT
       IF ::nPos < ::nSize
          ::nPos++
       ENDIF
-      EXIT
+      Exit
    Case K_DEL
       ::cValue := Stuff(::cValue, ::nPos, 1, "") + " "
-      EXIT
+      Exit
    Case K_BS
       IF ::nPos > 1
          ::cValue := Stuff(::cValue, --::nPos, 1, "") + " "
       ENDIF
-      EXIT
+      Exit
    Case K_CTRL_Y
    Case K_CTRL_DEL
       ::cValue := Space(::nSize)
       ::nPos := 1
-      EXIT
+      Exit
    Case K_INS
       Set(_SET_INSERT, !Set(_SET_INSERT))
-      EXIT
+      Exit
    Otherwise
       IF hb_keyChar(nKey) == ""
          lUpdate := False

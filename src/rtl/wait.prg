@@ -70,7 +70,7 @@ Function __Wait(xPrompt)
             cKey := Chr(0)
          ENDIF
 
-         EXIT
+         Exit
       ENDIF
 
    EndDo

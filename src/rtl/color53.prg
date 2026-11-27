@@ -73,12 +73,12 @@ Function GetPairPos(cColor, nColor)
    Local nSep
    Local n
 
-   FOR n := 2 TO nColor
+   For n := 2 To nColor
       IF (nSep := At(",", SubStr(cColor, nPos))) == 0
          RETURN 0
       ENDIF
       nPos += nSep
-   NEXT
+   Next
 
    RETURN nPos
 
@@ -163,7 +163,7 @@ Function ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xCl
    nColors  := PCount() - 1
    cClrDefa := cColor
 
-   FOR n := 1 TO nColors
+   For n := 1 To nColors
 
       xNewColor := aNewColor[n]
       cClrToSet := GetClrPair(cClrDefa, n)
@@ -181,7 +181,7 @@ Function ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xCl
       ELSE
          cClrDefa := SetClrPair(cClrDefa, n, IIf(hb_IsNumeric(xNewColor), aSetColor[xNewColor], xNewColor))
       ENDIF
-   NEXT
+   Next
 
    RETURN cClrDefa
 

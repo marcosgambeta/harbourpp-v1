@@ -169,7 +169,7 @@ Function __MenuTo(bBlock, cVariable)
 #endif
 
          IF lExit
-            EXIT
+            Exit
          ENDIF
 
          nKey := 0
@@ -199,7 +199,7 @@ Function __MenuTo(bBlock, cVariable)
          Switch nKey
 #ifdef HB_COMPAT_C53
          Case K_MOUSEMOVE
-            EXIT
+            Exit
          Case K_LBUTTONDOWN
          Case K_LDBLCLK
             IF (nMouseClik := HitTest(t_aLevel[nPointer - 1], MRow(), MCol())) > 0
@@ -210,44 +210,44 @@ Function __MenuTo(bBlock, cVariable)
             IF nKey == K_LDBLCLK
                lExit := True
             ENDIF
-            EXIT
+            Exit
 #endif
          Case K_DOWN
          Case K_RIGHT
             IF ++n > nArrLen
                n := IIf(Set(_SET_WRAP), 1, nArrLen)
             ENDIF
-            EXIT
+            Exit
          Case K_UP
          Case K_LEFT
             IF --n < 1
                n := IIf(Set(_SET_WRAP), nArrLen, 1)
             ENDIF
-            EXIT
+            Exit
          Case K_HOME
             n := 1
-            EXIT
+            Exit
          Case K_END
             n := nArrLen
-            EXIT
+            Exit
          Case K_ENTER
          Case K_PGUP
          Case K_PGDN
             lExit := True
-            EXIT
+            Exit
          Case K_ESC
             n := 0
-            EXIT
+            Exit
          Otherwise
             // did user hit a hot key?
             IF Len(cKey := Upper(hb_keyChar(nKey))) > 0
-               FOR y := 1 TO nArrLen
+               For y := 1 To nArrLen
                   IF hb_LeftEqI(LTrim(t_aLevel[nPointer - 1][y][_ITM_PROMPT]), cKey)
                      n := y
                      lExit := True
-                     EXIT
+                     Exit
                   ENDIF
-               NEXT
+               Next
             ENDIF
          EndSwitch
 

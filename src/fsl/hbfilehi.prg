@@ -154,7 +154,7 @@ Function hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
       cTestBase   += aPathBase[tmp]
       cTestTarget += aPathTarget[tmp]
       IF !hb_FileMatch(cTestBase, cTestTarget)
-         EXIT
+         Exit
       ENDIF
       ++tmp
    EndDo
@@ -212,12 +212,12 @@ Static Function s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
    ENDIF
 
    cDir := ""
-   FOR tmp := nFrom TO nTo
+   For tmp := nFrom To nTo
       cDir += aPath[tmp]
       IF nFrom < nTo
          cDir += hb_ps()
       ENDIF
-   NEXT
+   Next
 
    RETURN hb_FNameMerge(hb_DirSepDel(hb_DirSepAdd(cDirPrefix) + cDir), cFileName)
 
@@ -336,12 +336,12 @@ Function hb_DirUnbuild(cDir)
             Return False
          ENDIF
          IF (tmp := RAt(hb_ps(), cDir)) == 0  // FIXME: use hb_URAt() function
-            EXIT
+            Exit
          ENDIF
          cDir := Left(cDir, tmp - 1)
          IF !hb_osDriveSeparator() == "" .AND. ;
             Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator()
-            EXIT
+            Exit
          ENDIF
       EndDo
    ENDIF

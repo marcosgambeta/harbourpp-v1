@@ -109,7 +109,7 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          IF hb_IsString(aCol) .AND. !Empty(aCol)
             nColCount++
          ELSE
-            EXIT
+            Exit
          ENDIF
       Next
    ELSE
@@ -122,7 +122,7 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
    // Generate the TBrowse columns
 
-   FOR nPos := 1 TO nColCount
+   For nPos := 1 To nColCount
 
       IF hb_IsArray(acColumns)
          cBlock := acColumns[nPos]
@@ -183,7 +183,7 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
       ENDIF
 
       oBrowse:addColumn(oColumn)
-   NEXT
+   Next
 
    nOldCUrsor := SetCursor(SC_NONE)
 
@@ -199,15 +199,15 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
       Do While True
          nKey := Inkey()
          IF oBrowse:stabilize()
-            EXIT
+            Exit
          ENDIF
 #ifdef HB_COMPAT_C53
          IF nKey != 0 .AND. nKey != K_MOUSEMOVE
-            EXIT
+            Exit
          ENDIF
 #else
          IF nKey != 0
-            EXIT
+            Exit
          ENDIF
 #endif
       EndDo
@@ -228,7 +228,7 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
             oBrowse:deHilite()
             IF (bBlock := SetKey(nKey)) != NIL
                Eval(bBlock, ProcName(1), ProcLine(1), "")
-               LOOP
+               Loop
             ENDIF
          ELSE
             lFlag := True
@@ -245,12 +245,12 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
             Case K_PGDN
             Case K_CTRL_PGDN
                oBrowse:hitBottom := True
-               LOOP
+               Loop
             Case K_UP
             Case K_PGUP
             Case K_CTRL_PGUP
                oBrowse:hitTop := True
-               LOOP
+               Loop
             EndSwitch
          ENDIF
 #endif
@@ -259,22 +259,22 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          Case K_LBUTTONDOWN
          Case K_LDBLCLK
             TBMouse(oBrowse, MRow(), MCol())
-            EXIT
+            Exit
 #endif
-         Case K_DOWN          ; oBrowse:down()     ; EXIT
-         Case K_UP            ; oBrowse:up()       ; EXIT
-         Case K_PGDN          ; oBrowse:pageDown() ; EXIT
-         Case K_PGUP          ; oBrowse:pageUp()   ; EXIT
-         Case K_CTRL_PGUP     ; oBrowse:goTop()    ; EXIT
-         Case K_CTRL_PGDN     ; oBrowse:goBottom() ; EXIT
-         Case K_RIGHT         ; oBrowse:right()    ; EXIT
-         Case K_LEFT          ; oBrowse:left()     ; EXIT
-         Case K_HOME          ; oBrowse:home()     ; EXIT
-         Case K_END           ; oBrowse:end()      ; EXIT
-         Case K_CTRL_LEFT     ; oBrowse:panLeft()  ; EXIT
-         Case K_CTRL_RIGHT    ; oBrowse:panRight() ; EXIT
-         Case K_CTRL_HOME     ; oBrowse:panHome()  ; EXIT
-         Case K_CTRL_END      ; oBrowse:panEnd()   ; EXIT
+         Case K_DOWN          ; oBrowse:down()     ; Exit
+         Case K_UP            ; oBrowse:up()       ; Exit
+         Case K_PGDN          ; oBrowse:pageDown() ; Exit
+         Case K_PGUP          ; oBrowse:pageUp()   ; Exit
+         Case K_CTRL_PGUP     ; oBrowse:goTop()    ; Exit
+         Case K_CTRL_PGDN     ; oBrowse:goBottom() ; Exit
+         Case K_RIGHT         ; oBrowse:right()    ; Exit
+         Case K_LEFT          ; oBrowse:left()     ; Exit
+         Case K_HOME          ; oBrowse:home()     ; Exit
+         Case K_END           ; oBrowse:end()      ; Exit
+         Case K_CTRL_LEFT     ; oBrowse:panLeft()  ; Exit
+         Case K_CTRL_RIGHT    ; oBrowse:panRight() ; Exit
+         Case K_CTRL_HOME     ; oBrowse:panHome()  ; Exit
+         Case K_CTRL_END      ; oBrowse:panEnd()   ; Exit
          Otherwise
             lContinue := CallUser(oBrowse, xUserFunc, nKey, @lAppend, @lFlag)
             lDoIdleCall := False
@@ -388,7 +388,7 @@ Static Function Skipped(nRecs, lAppend)
                ELSE
                   dbSkip(-1)
                ENDIF
-               EXIT
+               Exit
             ENDIF
             nSkipped++
          EndDo
@@ -396,7 +396,7 @@ Static Function Skipped(nRecs, lAppend)
          Do While nSkipped > nRecs
             dbSkip(-1)
             IF Bof()
-               EXIT
+               Exit
             ENDIF
             nSkipped--
          EndDo

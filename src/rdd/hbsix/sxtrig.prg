@@ -62,33 +62,33 @@ Function sx_DefTrigger(nEvent, nArea, nFieldPos, xTrigVal)
       _sx_IniInit(nArea)
 #endif
       sx_SetTrigger(TRIGGER_REMOVE)
-      EXIT
+      Exit
    Case EVENT_POSTUSE
-      EXIT
+      Exit
    Case EVENT_UPDATE
-      EXIT
+      Exit
    Case EVENT_APPEND
-      EXIT
+      Exit
    Case EVENT_DELETE
-      EXIT
+      Exit
    Case EVENT_RECALL
-      EXIT
+      Exit
    Case EVENT_PACK
-      EXIT
+      Exit
    Case EVENT_ZAP
-      EXIT
+      Exit
    Case EVENT_PUT
-      EXIT
+      Exit
    Case EVENT_GET
-      EXIT
+      Exit
    Case EVENT_PRECLOSE
-      EXIT
+      Exit
    Case EVENT_POSTCLOSE
-      EXIT
+      Exit
    Case EVENT_PREMEMOPACK
-      EXIT
+      Exit
    Case EVENT_POSTMEMOPACK
-      EXIT
+      Exit
    EndSwitch
 
    Return True

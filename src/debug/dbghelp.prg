@@ -109,7 +109,7 @@ Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
          oBrw:ForceStable()
          ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
-      EXIT
+      Exit
 
    Case K_DOWN
 
@@ -118,7 +118,7 @@ Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
          oBrw:ForceStable()
          ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
-      EXIT
+      Exit
 
    Case K_HOME
 
@@ -127,7 +127,7 @@ Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
          oBrw:ForceStable()
          ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
-      EXIT
+      Exit
 
    Case K_END
 
@@ -136,13 +136,13 @@ Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
          oBrw:ForceStable()
          ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
-      EXIT
+      Exit
 
    Case K_PGUP
    Case K_CTRL_B
 
       ShowTopic(oDlg, aTopics, oBrw:Cargo, -1)  // Skip to previous page
-      EXIT
+      Exit
 
    Case K_PGDN
 #if 0
@@ -151,26 +151,26 @@ Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
    Case K_SPACE
 
       ShowTopic(oDlg, aTopics, oBrw:Cargo, 1)  // Skip to next page
-      EXIT
+      Exit
 
    Case K_LBUTTONDOWN
 
       IF (nSkip := MRow() - oDlg:nTop - oBrw:RowPos) != 0
          IF nSkip > 0
-            FOR n := 1 TO nSkip
+            For n := 1 To nSkip
                oBrw:Down()
                oBrw:Stabilize()
-            NEXT
+            Next
          ELSE
-            FOR n := 1 TO nSkip + 2 STEP -1
+            For n := 1 To nSkip + 2 Step -1
                oBrw:Up()
                oBrw:Stabilize()
-            NEXT
+            Next
          ENDIF
          oBrw:ForceStable()
          ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
       ENDIF
-      EXIT
+      Exit
 
    EndSwitch
 
@@ -200,7 +200,7 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
       Case 0  // Show first page
 
          oDebug:nHelpPage := 1
-         EXIT
+         Exit
 
       Case 1  // Show next page
 
@@ -209,7 +209,7 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
          ELSE
             RETURN
          ENDIF
-         EXIT
+         Exit
 
       Case -1  // Show previous page
 
@@ -218,7 +218,7 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
          ELSE
             RETURN
          ENDIF
-         EXIT
+         Exit
 
       EndSwitch
    ENDIF
@@ -227,9 +227,9 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
    nRowsToPaint := Min(nRows, Len(aTopics[nTopic][2]) - ((oDebug:nHelpPage - 1) * nRows))
 
-   FOR n := 1 TO nRowsToPaint
+   For n := 1 To nRowsToPaint
       hb_DispOutAt(2 + n, 16, aTopics[nTopic][2][((oDebug:nHelpPage - 1) * nRows) + n], oDlg:cColor)
-   NEXT
+   Next
 
    hb_DispOutAt(oDlg:nBottom, oDlg:nRight - 16, " Page " + Str(oDebug:nHelpPage, 1) + " of " + Str(nPages, 1) + " ", oDlg:cColor)
 

@@ -108,16 +108,16 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
                   cProp := SubStr(AllTrim(SubStr(cLine, 7, RAt(" AS ", cLine) - 7)), 3)
                   uValue := &(aTail(aWords))():CreateNew()
                ENDIF
-               EXIT
+               Exit
             Case "ENDOBJECT"
                ASize(aObjects, Len(aObjects) - 1)
-               EXIT
+               Exit
             Case "ARRAY"
                IF hb_LeftEq(aWords[2], "::")
                   cProp := SubStr(AllTrim(SubStr(cLine, 6, RAt(" LEN ", cLine) - 6)), 3)
                   uValue := Array(Val(ATail(aWords)))
                ENDIF
-               EXIT
+               Exit
             EndSwitch
          ENDIF
 
@@ -134,7 +134,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
       END SEQUENCE
 
       IF Empty(aObjects)
-         EXIT
+         Exit
       ENDIF
    Next
 
@@ -175,19 +175,19 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
          Case "A"
             cObject += ArrayToText(uValue, cProp, nIndent + _INDENT)
             lSpacer := True
-            EXIT
+            Exit
 
          Case "O"
             IF __objDerivedFrom(uValue, "HBPersistent")
                cObject += uValue:SaveToText(cProp, nIndent)
                lSpacer := True
             ENDIF
-            EXIT
+            Exit
 
          Case "B"
          Case "P"
             // ignore codeblock and pointer items
-            EXIT
+            Exit
 
          Otherwise
             IF lSpacer
@@ -215,18 +215,18 @@ Static Function ArrayToText(aArray, cName, nIndent)
       Switch ValType(uValue)
       Case "A"
          cArray += ArrayToText(uValue, cName + "[" + hb_ntos(uValue:__enumIndex()) + "]", nIndent + _INDENT) + hb_eol()
-         EXIT
+         Exit
 
       Case "O"
          IF __objDerivedFrom(uValue, "HBPersistent")
             cArray += uValue:SaveToText(cName + "[" + hb_ntos(uValue:__enumIndex()) + "]", nIndent)
          ENDIF
-         EXIT
+         Exit
 
       Case "B"
       Case "P"
          // ignore codeblock and pointer items
-         EXIT
+         Exit
 
       Otherwise
          IF uValue:__enumIsFirst()

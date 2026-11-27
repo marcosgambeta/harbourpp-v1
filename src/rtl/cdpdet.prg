@@ -254,37 +254,37 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
 
    Switch Lower(cCtryStd)
 #if 0
-   Case "af-za"      ; EXIT
-   Case "af"         ; EXIT
-   Case "ar-ae"      ; EXIT
-   Case "ar-bh"      ; EXIT
-   Case "ar-dz"      ; EXIT
-   Case "ar-eg"      ; EXIT
-   Case "ar-iq"      ; EXIT
-   Case "ar-jo"      ; EXIT
-   Case "ar-kw"      ; EXIT
-   Case "ar-lb"      ; EXIT
-   Case "ar-ly"      ; EXIT
-   Case "ar-ma"      ; EXIT
-   Case "ar-om"      ; EXIT
-   Case "ar-qa"      ; EXIT
-   Case "ar-sa"      ; EXIT
-   Case "ar-sy"      ; EXIT
-   Case "ar-tn"      ; EXIT
-   Case "ar-ye"      ; EXIT
-   Case "ar"         ; EXIT
-   Case "az-az-cyrl" ; EXIT
-   Case "az-az-latn" ; EXIT
-   Case "az"         ; EXIT
-   Case "be-by"      ; EXIT
-   Case "be"         ; EXIT
+   Case "af-za"      ; Exit
+   Case "af"         ; Exit
+   Case "ar-ae"      ; Exit
+   Case "ar-bh"      ; Exit
+   Case "ar-dz"      ; Exit
+   Case "ar-eg"      ; Exit
+   Case "ar-iq"      ; Exit
+   Case "ar-jo"      ; Exit
+   Case "ar-kw"      ; Exit
+   Case "ar-lb"      ; Exit
+   Case "ar-ly"      ; Exit
+   Case "ar-ma"      ; Exit
+   Case "ar-om"      ; Exit
+   Case "ar-qa"      ; Exit
+   Case "ar-sa"      ; Exit
+   Case "ar-sy"      ; Exit
+   Case "ar-tn"      ; Exit
+   Case "ar-ye"      ; Exit
+   Case "ar"         ; Exit
+   Case "az-az-cyrl" ; Exit
+   Case "az-az-latn" ; Exit
+   Case "az"         ; Exit
+   Case "be-by"      ; Exit
+   Case "be"         ; Exit
 #endif
    Case "bg-bg"
    Case "bg"         ; RETURN "BG"
 #if 0
-   Case "ca-es"      ; EXIT
-   Case "ca"         ; EXIT
-   Case "cy-gb"      ; EXIT
+   Case "ca-es"      ; Exit
+   Case "ca"         ; Exit
+   Case "cy-gb"      ; Exit
 #endif
    Case "cs-cz"
    Case "cs"         ; RETURN "CS"
@@ -297,8 +297,8 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "de-lu"
    Case "de"         ; RETURN "DE"
 #if 0
-   Case "div-mv"     ; EXIT
-   Case "div"        ; EXIT
+   Case "div-mv"     ; Exit
+   Case "div"        ; Exit
 #endif
    Case "el-gr"
    Case "el"         ; RETURN "EL"
@@ -317,7 +317,7 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "en-zw"
    Case "en"         ; RETURN "EN"
 #if 0
-   Case "eo"         ; EXIT
+   Case "eo"         ; Exit
 #endif
    Case "es-419"
    Case "es-ar"
@@ -341,18 +341,18 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "es-ve"
    Case "es"         ; RETURN "ES"
 #if 0
-   Case "et-ee"      ; EXIT
-   Case "et"         ; EXIT
-   Case "eu-es"      ; EXIT
-   Case "eu"         ; EXIT
-   Case "fa-ir"      ; EXIT
-   Case "fa"         ; EXIT
+   Case "et-ee"      ; Exit
+   Case "et"         ; Exit
+   Case "eu-es"      ; Exit
+   Case "eu"         ; Exit
+   Case "fa-ir"      ; Exit
+   Case "fa"         ; Exit
 #endif
    Case "fi-fi"
    Case "fi"         ; RETURN "FI"
 #if 0
-   Case "fo-fo"      ; EXIT
-   Case "fo"         ; EXIT
+   Case "fo-fo"      ; Exit
+   Case "fo"         ; Exit
 #endif
    Case "fr-be"
    Case "fr-ca"
@@ -362,26 +362,26 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "fr-mc"
    Case "fr"         ; RETURN "FR"
 #if 0
-   Case "gl-es"      ; EXIT
-   Case "gl"         ; EXIT
-   Case "gu-in"      ; EXIT
-   Case "gu"         ; EXIT
+   Case "gl-es"      ; Exit
+   Case "gl"         ; Exit
+   Case "gu-in"      ; Exit
+   Case "gu"         ; Exit
 #endif
    Case "he-il"
    Case "he"         ; RETURN "HE"
 #if 0
-   Case "hi-in"      ; EXIT
-   Case "hi"         ; EXIT
+   Case "hi-in"      ; Exit
+   Case "hi"         ; Exit
 #endif
    Case "hr-hr"
    Case "hr"         ; RETURN "HR"
    Case "hu-hu"
    Case "hu"         ; RETURN "HU"
 #if 0
-   Case "hy-am"      ; EXIT
-   Case "hy"         ; EXIT
-   Case "id-id"      ; EXIT
-   Case "id"         ; EXIT
+   Case "hy-am"      ; Exit
+   Case "hy"         ; Exit
+   Case "id-id"      ; Exit
+   Case "id"         ; Exit
 #endif
    Case "is-is"
    Case "is"         ; RETURN "IS"
@@ -389,47 +389,47 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "it-it"
    Case "it"         ; RETURN "IT"
 #if 0
-   Case "ja-jp"      ; EXIT
-   Case "ja"         ; EXIT
-   Case "ka-ge"      ; EXIT
-   Case "ka"         ; EXIT
-   Case "kk-kz"      ; EXIT
-   Case "kk"         ; EXIT
-   Case "kn-in"      ; EXIT
-   Case "kn"         ; EXIT
-   Case "ko-kr"      ; EXIT
-   Case "ko"         ; EXIT
-   Case "kok-in"     ; EXIT
-   Case "kok"        ; EXIT
-   Case "ky-kz"      ; EXIT
-   Case "ky"         ; EXIT
+   Case "ja-jp"      ; Exit
+   Case "ja"         ; Exit
+   Case "ka-ge"      ; Exit
+   Case "ka"         ; Exit
+   Case "kk-kz"      ; Exit
+   Case "kk"         ; Exit
+   Case "kn-in"      ; Exit
+   Case "kn"         ; Exit
+   Case "ko-kr"      ; Exit
+   Case "ko"         ; Exit
+   Case "kok-in"     ; Exit
+   Case "kok"        ; Exit
+   Case "ky-kz"      ; Exit
+   Case "ky"         ; Exit
 #endif
    Case "lt-lt"
    Case "lt"         ; RETURN "LT"
 #if 0
-   Case "lv-lv"      ; EXIT
-   Case "lv"         ; EXIT
-   Case "mk-mk"      ; EXIT
-   Case "mk"         ; EXIT
-   Case "mn-mn"      ; EXIT
-   Case "mn"         ; EXIT
-   Case "mr-in"      ; EXIT
-   Case "mr"         ; EXIT
-   Case "ms-bn"      ; EXIT
-   Case "ms-my"      ; EXIT
-   Case "ms"         ; EXIT
-   Case "nb-no"      ; EXIT
+   Case "lv-lv"      ; Exit
+   Case "lv"         ; Exit
+   Case "mk-mk"      ; Exit
+   Case "mk"         ; Exit
+   Case "mn-mn"      ; Exit
+   Case "mn"         ; Exit
+   Case "mr-in"      ; Exit
+   Case "mr"         ; Exit
+   Case "ms-bn"      ; Exit
+   Case "ms-my"      ; Exit
+   Case "ms"         ; Exit
+   Case "nb-no"      ; Exit
 #endif
    Case "nl-be"
    Case "nl-nl"
    Case "nl"         ; RETURN "NL"
 #if 0
-   Case "nn-no"      ; EXIT
+   Case "nn-no"      ; Exit
 #endif
    Case "no"         ; RETURN "NO"
 #if 0
-   Case "pa-in"      ; EXIT
-   Case "pa"         ; EXIT
+   Case "pa-in"      ; Exit
+   Case "pa"         ; Exit
 #endif
    Case "pl-pl"
    Case "pl"         ; RETURN "PL"
@@ -441,16 +441,16 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "ru-ru"
    Case "ru"         ; RETURN "RU"
 #if 0
-   Case "sa-in"      ; EXIT
-   Case "sa"         ; EXIT
+   Case "sa-in"      ; Exit
+   Case "sa"         ; Exit
 #endif
    Case "sk-sk"
    Case "sk"         ; RETURN "SK"
    Case "sl-si"
    Case "sl"         ; RETURN "SL"
 #if 0
-   Case "sq-al"      ; EXIT
-   Case "sq"         ; EXIT
+   Case "sq-al"      ; Exit
+   Case "sq"         ; Exit
 #endif
    Case "sr-sp-cyrl"
    Case "sr-sp-latn" ; RETURN "SR"
@@ -458,41 +458,41 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "sv-se"
    Case "sv"         ; RETURN "SV"
 #if 0
-   Case "sw-ke"      ; EXIT
-   Case "sw"         ; EXIT
-   Case "syr-sy"     ; EXIT
-   Case "syr"        ; EXIT
-   Case "ta-in"      ; EXIT
-   Case "ta"         ; EXIT
-   Case "te-in"      ; EXIT
-   Case "te"         ; EXIT
-   Case "th-th"      ; EXIT
-   Case "th"         ; EXIT
+   Case "sw-ke"      ; Exit
+   Case "sw"         ; Exit
+   Case "syr-sy"     ; Exit
+   Case "syr"        ; Exit
+   Case "ta-in"      ; Exit
+   Case "ta"         ; Exit
+   Case "te-in"      ; Exit
+   Case "te"         ; Exit
+   Case "th-th"      ; Exit
+   Case "th"         ; Exit
 #endif
    Case "tr-tr"
    Case "tr"         ; RETURN "TR"
 #if 0
-   Case "tt-ru"      ; EXIT
-   Case "tt"         ; EXIT
+   Case "tt-ru"      ; Exit
+   Case "tt"         ; Exit
 #endif
    Case "uk-ua"
    Case "uk"         ; RETURN "UA"
 #if 0
-   Case "ur-pk"      ; EXIT
-   Case "ur"         ; EXIT
-   Case "uz-uz-cyrl" ; EXIT
-   Case "uz-uz-latn" ; EXIT
-   Case "uz"         ; EXIT
-   Case "vi-vn"      ; EXIT
-   Case "vi"         ; EXIT
-   Case "zh-chs"     ; EXIT
-   Case "zh-cht"     ; EXIT
-   Case "zh-cn"      ; EXIT
-   Case "zh-hk"      ; EXIT
-   Case "zh-mo"      ; EXIT
-   Case "zh-sg"      ; EXIT
-   Case "zh-tw"      ; EXIT
-   Case "zh"         ; EXIT
+   Case "ur-pk"      ; Exit
+   Case "ur"         ; Exit
+   Case "uz-uz-cyrl" ; Exit
+   Case "uz-uz-latn" ; Exit
+   Case "uz"         ; Exit
+   Case "vi-vn"      ; Exit
+   Case "vi"         ; Exit
+   Case "zh-chs"     ; Exit
+   Case "zh-cht"     ; Exit
+   Case "zh-cn"      ; Exit
+   Case "zh-hk"      ; Exit
+   Case "zh-mo"      ; Exit
+   Case "zh-sg"      ; Exit
+   Case "zh-tw"      ; Exit
+   Case "zh"         ; Exit
 #endif
    EndSwitch
 

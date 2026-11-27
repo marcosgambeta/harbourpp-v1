@@ -143,14 +143,14 @@ Static Function __JoinList(nMaster, nDetail, nResult, aStruct)
    Local nPos
    Local i
 
-   FOR i := 1 TO Len(aStruct)
+   For i := 1 To Len(aStruct)
       Do Case
       Case (nPos := (nMaster)->(FieldPos(aStruct[i][DBS_NAME]))) != 0
          AAdd(aList, { nResult, nMaster, nPos, i })
       Case (nPos := (nDetail)->(FieldPos(aStruct[i][DBS_NAME]))) != 0
          AAdd(aList, { nResult, nDetail, nPos, i })
       EndCase
-   NEXT
+   Next
 
    RETURN aList
 

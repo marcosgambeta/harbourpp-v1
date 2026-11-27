@@ -369,15 +369,15 @@ METHOD HBEditor:MoveCursor(nKey)
       ELSE
          ::Goto(::nFirstRow + ::nNumRows, ::nCol)
       ENDIF
-      EXIT
+      Exit
 
    Case K_PGDN
       ::Goto(::nRow + ::nNumRows - 1, ::nCol)
-      EXIT
+      Exit
 
    Case K_CTRL_PGDN
       ::Goto(::LineCount, -1)
-      EXIT
+      Exit
 
    Case K_UP
       IF ::lEditAllow
@@ -385,19 +385,19 @@ METHOD HBEditor:MoveCursor(nKey)
       ELSE
          ::Goto(::nFirstRow - 1, ::nCol)
       ENDIF
-      EXIT
+      Exit
 
    Case K_PGUP
       ::Goto(::nRow - ::nNumRows + 1, ::nCol)
-      EXIT
+      Exit
 
    Case K_CTRL_PGUP
       ::Goto(1, 1)
-      EXIT
+      Exit
 
    Case K_RIGHT
       ::Goto(::nRow, ::nCol + 1)
-      EXIT
+      Exit
 
    Case K_CTRL_RIGHT
       // Resolve K_CTRL_B and K_CTRL_RIGHT Cl*pper keycode collision
@@ -405,28 +405,28 @@ METHOD HBEditor:MoveCursor(nKey)
          Return False
       ENDIF
       ::Goto(::nRow, NextWord(::GetLine(::nRow), ::nCol))
-      EXIT
+      Exit
 
    Case K_LEFT
    Case K_BS
       ::Goto(::nRow, ::nCol - 1)
-      EXIT
+      Exit
 
    Case K_CTRL_LEFT
       ::Goto(::nRow, PrevWord(::GetLine(::nRow), ::nCol))
-      EXIT
+      Exit
 
    Case K_HOME
       ::Goto(::nRow, 1)
-      EXIT
+      Exit
 
    Case K_CTRL_HOME
       ::Goto(::nFirstRow, 1)
-      EXIT
+      Exit
 
    Case K_END
       ::Goto(::nRow, -1)
-      EXIT
+      Exit
 
    Case K_CTRL_END
       // Resolve K_CTRL_W and K_CTRL_END Cl*pper keycode collision
@@ -434,15 +434,15 @@ METHOD HBEditor:MoveCursor(nKey)
          Return False
       ENDIF
       ::Goto(::nFirstRow + ::nNumRows - 1, -1)
-      EXIT
+      Exit
 
    Case K_ENTER
       ::Goto(::nRow + 1, 1)
-      EXIT
+      Exit
 
    Case K_TAB
       ::Goto(::nRow, ::nCol + TabCount(::nTabWidth, ::nCol))
-      EXIT
+      Exit
 
    Otherwise
       Return False
@@ -585,7 +585,7 @@ METHOD HBEditor:Edit(nPassedKey)
       EndCase
 
       IF nPassedKey != NIL
-         EXIT
+         Exit
       ENDIF
    EndDo
 
@@ -618,7 +618,7 @@ METHOD HBEditor:BrowseText(nPassedKey)
       ENDIF
 
       IF nPassedKey != NIL
-         EXIT
+         Exit
       ENDIF
    EndDo
 

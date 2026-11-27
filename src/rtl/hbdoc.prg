@@ -211,7 +211,7 @@ Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
                hEntry[tmp:__enumKey()] := tmp
             Next
          ENDIF
-         EXIT
+         Exit
       Case "$END$"
          IF hEntry == NIL
             _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $END$ without $DOC$", cFileName, nLine))
@@ -219,7 +219,7 @@ Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
             AAdd(aEntry, hEntry)
          ENDIF
          hEntry := NIL
-         EXIT
+         Exit
       Otherwise
          IF hEntry == NIL
             // Ignore line outside entry. Don't warn, this is normal.
@@ -271,9 +271,9 @@ Function __hbdoc_ToSource(aEntry)
                For Each cLine In hb_ATokens(StrTran(item, Chr(13)), Chr(10))
                   cLineOut := IIf(Len(cLine) == 0, "", Space(4) + cLine)
                   cSource += IIf(Empty(cLineOut), "", "  " + cLineOut) + hb_eol()
-               NEXT
+               Next
             ENDIF
-         NEXT
+         Next
          cSource += "   $END$" + hb_eol()
          cSource += " */" + hb_eol()
       Next
@@ -297,11 +297,11 @@ Function __hbdoc_FilterOut(cFile)
       Switch AllTrim(SubStr(cLine, 4))
       Case "$DOC$"
          lEntry := True
-         EXIT
+         Exit
       Case "$END$"
          lEntry := False
          nToSkip := 1
-         EXIT
+         Exit
       Otherwise
          IF !lEntry
             IF nToSkip > 0

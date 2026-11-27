@@ -207,12 +207,12 @@ METHOD HBDbBrowser:ForceStable()
       ::Configure()
    ENDIF
    DispBegin()
-   FOR nRow := 1 TO ::rowCount
+   For nRow := 1 To ::rowCount
       IF !::aRowState[nRow]
          ::DispRow(nRow, nRow == ::rowPos)
          ::aRowState[nRow] := True
       ENDIF
-   NEXT
+   Next
    ::GoTo(::nFirstVisible + ::rowPos - 1)
    SetPos(::nTop + ::rowPos - 1, ::nLeft)
    DispEnd()

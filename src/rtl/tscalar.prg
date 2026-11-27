@@ -274,9 +274,9 @@ METHOD Array:Do(b)
 
    Local i
 
-   FOR i := 1 TO Len(Self)
+   For i := 1 To Len(Self)
       b:Eval(Self[i], i)
-   NEXT
+   Next
 
    Return Self
 

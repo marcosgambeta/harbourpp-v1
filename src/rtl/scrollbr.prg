@@ -127,9 +127,9 @@ METHOD ScrollBar:display()
 
       IF ::nOrient == SCROLL_VERTICAL
 
-         FOR nPos := nStart + 1 TO nEnd
+         For nPos := nStart + 1 To nEnd
             hb_DispOutAt(nPos, nOffset, SubStr(cStyle, 2, 1), cColor)
-         NEXT
+         Next
 
          cColor := hb_ColorIndex(::cColorSpec, 1)
          hb_DispOutAt(nStart, nOffset, SubStr(cStyle, 1, 1), cColor)
@@ -404,11 +404,11 @@ METHOD ScrollBar:Init(nStart, nEnd, nOffset, bSBlock, nOrient)
    Case SCROLL_VERTICAL
       ::cStyle := SB_UPARROW + SB_THUMB + SB_TRACK + SB_DNARROW
       ::aBitmaps := {"arrow_u.bmu", "arrow_d.bmu", "arrow_e.bmu"}
-      EXIT
+      Exit
    Case SCROLL_HORIZONTAL
       ::cStyle := SB_LEFTARROW + SB_THUMB + SB_TRACK + SB_RIGHTARROW
       ::aBitmaps := {"arrow_l.bmu", "arrow_r.bmu", "arrow_e.bmu"}
-      EXIT
+      Exit
    EndSwitch
 
    cColor := SetColor()

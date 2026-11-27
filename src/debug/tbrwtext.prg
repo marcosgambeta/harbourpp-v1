@@ -243,13 +243,13 @@ METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
    Case 0 // From Top
       ::GoTop()
       bMove := {||::Skip(1)}
-      EXIT
+      Exit
    Case 1 // Forward
       bMove := {||::Skip(1)}
-      EXIT
+      Exit
    Case 2 // Backward
       bMove := {||::Skip(-1)}
-      EXIT
+      Exit
    EndSwitch
 
    n := ::nRow
@@ -259,7 +259,7 @@ METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
          lFound := True
          ::oBrw:MoveCursor(::nRow - n)
          ::RefreshAll()
-         EXIT
+         Exit
       ENDIF
    EndDo
 

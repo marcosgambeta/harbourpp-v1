@@ -218,14 +218,14 @@ METHOD PROCEDURE HBDbWindow:ShowModal()
       Switch nKey
       Case K_ESC
          lExit := True
-         EXIT
+         Exit
 
       Case K_LBUTTONDOWN
          IF MRow() == ::nTop .AND. MCol() >= ::nLeft + 1 .AND. ;
             MCol() <= ::nLeft + 3
             lExit := True
          ENDIF
-         EXIT
+         Exit
 
       EndSwitch
    EndDo
@@ -269,7 +269,7 @@ METHOD PROCEDURE HBDbWindow:Move()
             ::nTop--
             ::nBottom--
          ENDIF
-         EXIT
+         Exit
 
       Case K_DOWN
 
@@ -277,7 +277,7 @@ METHOD PROCEDURE HBDbWindow:Move()
             ::nTop++
             ::nBottom++
          ENDIF
-         EXIT
+         Exit
 
       Case K_LEFT
 
@@ -285,7 +285,7 @@ METHOD PROCEDURE HBDbWindow:Move()
             ::nLeft--
             ::nRight--
          ENDIF
-         EXIT
+         Exit
 
       Case K_RIGHT
 
@@ -293,7 +293,7 @@ METHOD PROCEDURE HBDbWindow:Move()
             ::nLeft++
             ::nRight++
          ENDIF
-         EXIT
+         Exit
 
       Case K_ESC
 
@@ -301,12 +301,12 @@ METHOD PROCEDURE HBDbWindow:Move()
          ::nLeft   := nOldLeft
          ::nBottom := nOldBottom
          ::nRight  := nOldRight
-         EXIT
+         Exit
 
       EndSwitch
 
       IF nKey == K_ESC .OR. nKey == K_ENTER
-         EXIT
+         Exit
       ENDIF
    EndDo
 

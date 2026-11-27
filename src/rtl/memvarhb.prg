@@ -95,7 +95,7 @@ Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
 
       For Each nScope In {HB_MV_PUBLIC, HB_MV_PRIVATE}
          nCount := __mvDbgInfo(nScope)
-         FOR tmp := 1 TO nCount
+         For tmp := 1 To nCount
             xValue := __mvDbgInfo(nScope, tmp, @cName)
             IF ValType(xValue) $ "CNDTL"
                lMatch := hb_WildMatchI(cMask, cName)
@@ -103,7 +103,7 @@ Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
                   AAdd(aVars, {cName, xValue})
                ENDIF
             ENDIF
-         NEXT
+         Next
       Next
 
       nRetries := 0
@@ -122,10 +122,10 @@ Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
             oError:tries       := ++nRetries
 
             IF hb_defaultValue(Eval(ErrorBlock(), oError), False)
-               LOOP
+               Loop
             ENDIF
          ENDIF
-         EXIT
+         Exit
       EndDo
 
       IF fhnd != F_ERROR
@@ -195,10 +195,10 @@ Function hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
             oError:tries       := ++nRetries
 
             IF hb_defaultValue(Eval(ErrorBlock(), oError), False)
-               LOOP
+               Loop
             ENDIF
          ENDIF
-         EXIT
+         Exit
       EndDo
 
       IF fhnd == F_ERROR

@@ -241,13 +241,13 @@ Static Procedure DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ *
          aBrw[3]:Dehilite()
          UpdateInfo(oDlg, aAlias[aBrw[1]:Cargo][2])
       ENDIF
-      EXIT
+      Exit
    Case 2
       WorkAreasKeyPressed(nKey, aBrw[2], Len(aInfo))
-      EXIT
+      Exit
    Case 3
       WorkAreasKeyPressed(nKey, aBrw[3], Len(aStruc))
-      EXIT
+      Exit
    EndSwitch
 
    RETURN
@@ -263,7 +263,7 @@ Static Procedure WorkAreasKeyPressed(nKey, oBrw, nTotal)
          oBrw:Up()
          oBrw:ForceStable()
       ENDIF
-      EXIT
+      Exit
 
    Case K_DOWN
 
@@ -273,7 +273,7 @@ Static Procedure WorkAreasKeyPressed(nKey, oBrw, nTotal)
          oBrw:Down()
          oBrw:ForceStable()
       ENDIF
-      EXIT
+      Exit
 
    Case K_HOME
    Case K_CTRL_PGUP
@@ -284,7 +284,7 @@ Static Procedure WorkAreasKeyPressed(nKey, oBrw, nTotal)
          oBrw:GoTop()
          oBrw:ForceStable()
       ENDIF
-      EXIT
+      Exit
 
    Case K_END
    Case K_CTRL_PGDN
@@ -295,7 +295,7 @@ Static Procedure WorkAreasKeyPressed(nKey, oBrw, nTotal)
          oBrw:GoBottom()
          oBrw:ForceStable()
       ENDIF
-      EXIT
+      Exit
 
    EndSwitch
 
@@ -319,7 +319,7 @@ Static Function DbfInfo()
       Space(8) + "Index order: " + hb_ntos(IndexOrd()), ;
       Space(4) + "Current Record" }
 
-   FOR nFor := 1 TO FCount()
+   For nFor := 1 To FCount()
 
       xValue := __dbg():GetExprValue("FieldGet(" + hb_ntos(nFor) + ")")
 
@@ -327,7 +327,7 @@ Static Function DbfInfo()
       Case "C"
       Case "M"
          cValue := xValue
-         EXIT
+         Exit
 #ifdef HB_CLP_STRICT
       Case "L"
          cValue := IIf(xValue, "T", "F")
@@ -338,7 +338,7 @@ Static Function DbfInfo()
 
       AAdd(aInfo, Space(8) + PadR(FieldName(nFor), 10) + " = " + PadR(cValue, 19))
 
-   NEXT
+   Next
 
    RETURN aInfo
 

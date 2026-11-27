@@ -102,9 +102,9 @@ METHOD HBMemoEditor:MemoInit(xUserFunction)
             // At this time there is no input from user of MemoEdit() only handling
             // of values returned by ::xUserFunction, so I pass NIL as the key code.
             ::HandleUserKey(NIL, nUdfReturn)
-            LOOP
+            Loop
          EndSwitch
-         EXIT
+         Exit
       EndDo
    ENDIF
 
@@ -135,7 +135,7 @@ METHOD HBMemoEditor:Edit()
 
          IF (bKeyBlock := SetKey(nKeyStd)) != NIL
             Eval(bKeyBlock)
-            LOOP
+            Loop
          ENDIF
 
          // Is it a configurable key?
@@ -223,7 +223,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
       ELSE
          Return False
       ENDIF
-      EXIT
+      Exit
 
    Case ME_DATA
       IF hb_IsNumeric(nKey)
@@ -234,33 +234,33 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
       ELSE
          Return False
       ENDIF
-      EXIT
+      Exit
 
    Case ME_TOGGLEWRAP
       ::lWordWrap := !::lWordWrap
-      EXIT
+      Exit
 
    Case ME_TOGGLESCROLL
       // TODO: HBEditor does not support vertical scrolling of text inside window without moving cursor position
-      EXIT
+      Exit
 
    Case ME_WORDRIGHT
       ::super:MoveCursor(K_CTRL_RIGHT)
-      EXIT
+      Exit
 
    Case ME_BOTTOMRIGHT
       ::super:MoveCursor(K_CTRL_END)
-      EXIT
+      Exit
 
 #ifndef HB_CLP_STRICT
    Case ME_PASTE  // Xbase++ compatibility
       hb_gtInfo(HB_GTI_CLIPBOARDPASTE, True)
-      EXIT
+      Exit
 #endif
 
    Case ME_IGNORE
       // do nothing
-      EXIT
+      Exit
 
    Otherwise
 
