@@ -52,8 +52,8 @@
 
 Function __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
 
-   LOCAL oError
-   LOCAL lError
+   Local oError
+   Local lError
 
    IF ValType(xValue) == cType
       lError := False

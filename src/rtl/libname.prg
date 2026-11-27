@@ -47,9 +47,9 @@
 
 Function hb_libName(cLibName, cLibDir)
 
-   LOCAL cDir
-   LOCAL cName
-   LOCAL cExt
+   Local cDir
+   Local cName
+   Local cExt
 
    IF hb_IsString(cLibName)
 

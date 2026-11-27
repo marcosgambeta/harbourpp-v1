@@ -51,9 +51,9 @@
 
 Static Function hb_doScan(cPath, cMask, cAttr, cPathSep)
 
-   LOCAL aFile
-   LOCAL lMatch
-   LOCAL aResult := {}
+   Local aFile
+   Local lMatch
+   Local aResult := {}
 
    For Each aFile In hb_vfDirectory(cPath + hb_osFileMask(), cAttr + "D")
       lMatch := hb_FileMatch(aFile[F_NAME], cMask)
@@ -80,10 +80,10 @@ Function hb_DirScan(cPath, cFileMask, cAttr)
 
 Function hb_DirRemoveAll(cDir)
 
-   LOCAL aFile
-   LOCAL cPath
-   LOCAL cFile
-   LOCAL nAttr
+   Local aFile
+   Local cPath
+   Local cFile
+   Local nAttr
 
    IF !Empty(cDir) .AND. hb_vfDirExists(cDir)
       cPath := hb_DirSepDel(cDir)
@@ -115,12 +115,12 @@ Function hb_DirRemoveAll(cDir)
 
 Function hb_FileDelete(cFileMask, cAttr)
 
-   LOCAL lAny := False
-   LOCAL aFile
-   LOCAL cPath
-   LOCAL cFile
-   LOCAL cAttrMask
-   LOCAL nAttr
+   Local lAny := False
+   Local aFile
+   Local cPath
+   Local cFile
+   Local cAttrMask
+   Local nAttr
 
    IF hb_IsString(cFileMask) .AND. !Empty(cFileMask) .AND. !hb_vfDirExists(cFileMask)
       cPath := hb_FNameDir(cFileMask)

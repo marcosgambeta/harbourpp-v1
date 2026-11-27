@@ -72,8 +72,8 @@ Static Function __i18n_strEncode(cStr)
 
 Static Function __i18n_strDecode(cLine, cValue, lCont)
 
-   LOCAL lRet := False
-   LOCAL cText
+   Local lRet := False
+   Local cText
 
    cText := hb_StrCDecode(cLine, @lCont)
    IF cText != NIL
@@ -92,18 +92,18 @@ Static Function __i18n_strDecode(cLine, cValue, lCont)
 
 Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
 
-   LOCAL cLine
-   LOCAL cValue
-   LOCAL nMode
-   LOCAL nIndex
-   LOCAL nOldIndex
-   LOCAL nLine
-   LOCAL n
-   LOCAL aTrans
-   LOCAL aItem
-   LOCAL aLines
-   LOCAL lCont
-   LOCAL hFile
+   Local cLine
+   Local cValue
+   Local nMode
+   Local nIndex
+   Local nOldIndex
+   Local nLine
+   Local n
+   Local aTrans
+   Local aItem
+   Local aLines
+   Local lCont
+   Local hFile
 
    __i18n_fileName(@cFile)
    IF (hFile := FOpen(cFile)) == F_ERROR
@@ -292,8 +292,8 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
 
 Static Function __i18n_IsBOM_UTF8(cFileName)
 
-   LOCAL fhnd
-   LOCAL cBuffer
+   Local fhnd
+   Local cBuffer
 
    IF (fhnd := FOpen(cFileName)) != F_ERROR
       cBuffer := hb_FReadLen(fhnd, hb_BLen(_UTF8_BOM))
@@ -310,8 +310,8 @@ Function __i18n_potArraySort(aTrans)
 
 Static Function __i18n_ItemToStr(item)
 
-   LOCAL cSource := item[_I18N_SOURCE]
-   LOCAL tmp
+   Local cSource := item[_I18N_SOURCE]
+   Local tmp
 
    hb_default(@cSource, "")
 
@@ -328,10 +328,10 @@ Static Function __i18n_ItemToStr(item)
 
 Function __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTransformTranslation)
 
-   LOCAL item
-   LOCAL cString
-   LOCAL lVoid
-   LOCAL tmp
+   Local item
+   Local cString
+   Local lVoid
+   Local tmp
 
    hb_default(@lKeepSource, True)
    hb_default(@lKeepVoidTranslations, True)
@@ -370,14 +370,14 @@ Function __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTrans
 
 Function __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSourceRef)
 
-   LOCAL aItem
-   LOCAL hFile
-   LOCAL lRet
-   LOCAL lPlural
-   LOCAL cEOL
-   LOCAL cPOT
-   LOCAL cFlg
-   LOCAL msg
+   Local aItem
+   Local hFile
+   Local lRet
+   Local lPlural
+   Local cEOL
+   Local cPOT
+   Local cFlg
+   Local msg
 
    hb_default(@lVersionNo, True)
    hb_default(@lSourceRef, True)
@@ -443,10 +443,10 @@ Function __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSour
 
 Function __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
 
-   LOCAL aItem
-   LOCAL cContext
-   LOCAL hTrans
-   LOCAL hContext
+   Local aItem
+   Local cContext
+   Local hTrans
+   Local hContext
 
    hb_default(@lEmpty, False)
    IF !hb_IsHash(hI18N)
@@ -476,11 +476,11 @@ Function __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
 
 Function __i18n_potArrayTrans(aTrans, hI18N)
 
-   LOCAL aItem
-   LOCAL hContext
-   LOCAL cContext
-   LOCAL hTrans
-   LOCAL xTrans
+   Local aItem
+   Local hContext
+   Local cContext
+   Local hTrans
+   Local xTrans
 
    hTrans := hI18N["CONTEXT"]
 
@@ -505,10 +505,10 @@ Function __i18n_potArrayTrans(aTrans, hI18N)
 
 Function __i18n_hashJoin(hTrans, hTrans2)
 
-   LOCAL hContext
-   LOCAL hCtx
-   LOCAL hDstCtx
-   LOCAL xTrans
+   Local hContext
+   Local hCtx
+   Local hDstCtx
+   Local xTrans
 
    hContext := hTrans["CONTEXT"]
    For Each hCtx In hTrans2["CONTEXT"]
@@ -528,10 +528,10 @@ Function __i18n_hashJoin(hTrans, hTrans2)
 
 Function __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
 
-   LOCAL aItem
-   LOCAL aDest
-   LOCAL aSrc
-   LOCAL ctx
+   Local aItem
+   Local aDest
+   Local aSrc
+   Local ctx
 
    IF !hb_IsHash(hIndex)
       hIndex := {=>}
@@ -574,8 +574,8 @@ Function __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
 
 Function hb_i18n_LoadPOT(cFile, pI18N, cErrorMsg)
 
-   LOCAL aTrans
-   LOCAL hI18N
+   Local aTrans
+   Local hI18N
 
    IF (aTrans := __i18n_potArrayLoad(cFile, @cErrorMsg)) != NIL
       IF hb_IsPointer(pI18N)
@@ -592,16 +592,16 @@ Function hb_i18n_LoadPOT(cFile, pI18N, cErrorMsg)
 
 Function hb_i18n_SavePOT(cFile, pI18N, /* @ */ cErrorMsg)
 
-   LOCAL hI18N
-   LOCAL hFile
-   LOCAL lRet := True
-   LOCAL cEOL
-   LOCAL cPOT
-   LOCAL cFlg
-   LOCAL context
-   LOCAL trans
-   LOCAL msgctxt
-   LOCAL msgstr
+   Local hI18N
+   Local hFile
+   Local lRet := True
+   Local cEOL
+   Local cPOT
+   Local cFlg
+   Local context
+   Local trans
+   Local msgctxt
+   Local msgstr
 
    IF hb_IsPointer(pI18N)
       hI18N := __i18n_hashTable(pI18N)

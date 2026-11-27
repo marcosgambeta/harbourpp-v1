@@ -57,18 +57,18 @@
 
 Function __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD, nConnection, cCodePage)
 
-   LOCAL nOldArea
-   LOCAL nNewArea
-   LOCAL aNewDbStruct
-   LOCAL aGetField
-   LOCAL aFieldsSum
-   LOCAL lDbTransRecord
-   LOCAL xCurKey
-   LOCAL bWhileBlock
-   LOCAL bForBlock
-   LOCAL bKeyBlock
-   LOCAL oError
-   LOCAL lError := False
+   Local nOldArea
+   Local nNewArea
+   Local aNewDbStruct
+   Local aGetField
+   Local aFieldsSum
+   Local lDbTransRecord
+   Local xCurKey
+   Local bWhileBlock
+   Local bForBlock
+   Local bKeyBlock
+   Local oError
+   Local lError := False
 
    Do Case
    Case hb_IsEvalItem(xWhile)
@@ -186,9 +186,9 @@ Function __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
 
 Static Function __GetField(cField)
 
-   LOCAL nCurrArea := Select()
-   LOCAL nPos
-   LOCAL oError
+   Local nCurrArea := Select()
+   Local nPos
+   Local oError
 
    // Is the field aliased?
    IF (nPos := At("->", cField)) > 0

@@ -246,10 +246,10 @@ METHOD HBEditor:LineLen(nRow)
 // Converts an array of text lines to a String
 METHOD HBEditor:GetText(lSoftCR)
 
-   LOCAL cText
-   LOCAL cEOL
-   LOCAL cSoftCR
-   LOCAL oLine
+   Local cText
+   Local cEOL
+   Local cSoftCR
+   Local oLine
 
    cEOL := hb_eol()
    cSoftCR := IIf(::lWordWrap, IIf(hb_defaultValue(lSoftCR, False), Chr(141) + Chr(10), ""), cEOL)
@@ -271,9 +271,9 @@ METHOD HBEditor:LineCount()
 
 METHOD HBEditor:Display()
 
-   LOCAL nRow
-   LOCAL nLine
-   LOCAL nCount
+   Local nRow
+   Local nLine
+   Local nCount
 
    DispBegin()
    nRow := ::nTop
@@ -302,8 +302,8 @@ METHOD HBEditor:LineColor(nRow)
 // Set current column and row in edited text
 METHOD HBEditor:GoTo(nRow, nCol, nRefreshMode)
 
-   LOCAL nFirstRow := ::nFirstRow
-   LOCAL nFirstCol := ::nFirstCol
+   Local nFirstRow := ::nFirstRow
+   Local nFirstCol := ::nFirstCol
 
    hb_default(@nRefreshMode, _REFRESH_NONE)
 
@@ -453,12 +453,12 @@ METHOD HBEditor:MoveCursor(nKey)
 // Edits text
 METHOD HBEditor:Edit(nPassedKey)
 
-   LOCAL nKey
-   LOCAL nKeyStd
-   LOCAL nPos
-   LOCAL cKey
-   LOCAL bKeyBlock
-   LOCAL oLine
+   Local nKey
+   Local nKeyStd
+   Local nPos
+   Local cKey
+   Local bKeyBlock
+   Local oLine
 
    IF !::lEditAllow
       RETURN ::BrowseText(nPassedKey)
@@ -594,9 +594,9 @@ METHOD HBEditor:Edit(nPassedKey)
 // browse text without editing
 METHOD HBEditor:BrowseText(nPassedKey)
 
-   LOCAL nKey
-   LOCAL nKeyStd
-   LOCAL bKeyBlock
+   Local nKey
+   Local nKeyStd
+   Local bKeyBlock
 
    Do While !::lExitEdit
       IF nPassedKey == NIL
@@ -641,11 +641,11 @@ METHOD HBEditor:IdleHook()
 // Reform paragraph
 METHOD HBEditor:ReformParagraph()
 
-   LOCAL lNext := True
-   LOCAL cText := ""
-   LOCAL nLine
-   LOCAL nRow
-   LOCAL nCol
+   Local lNext := True
+   Local cText := ""
+   Local nLine
+   Local nRow
+   Local nCol
 
    nCol := Min(hb_ULen(::aText[::nRow]:cText) + 1, ::nCol)
    Do While lNext .AND. ::nRow <= Len(::aText)
@@ -678,7 +678,7 @@ METHOD HBEditor:ExitState()
 
 METHOD HBEditor:SetColor(cColorString)
 
-   LOCAL cOldColor := ::cColorSpec
+   Local cOldColor := ::cColorSpec
 
    IF hb_IsString(cColorString)
       ::cColorSpec := cColorString
@@ -689,7 +689,7 @@ METHOD HBEditor:SetColor(cColorString)
 METHOD HBEditor:Hilite()
 
    // Swap CLR_STANDARD and CLR_ENHANCED
-   LOCAL cEnhanced := hb_tokenGet(::cColorSpec, 2, ",") + "," + hb_tokenGet(::cColorSpec, 1, ",")
+   Local cEnhanced := hb_tokenGet(::cColorSpec, 2, ",") + "," + hb_tokenGet(::cColorSpec, 1, ",")
 
    ::SetColor(cEnhanced + hb_BRight(::cColorSpec, hb_BLen(::cColorSpec) - hb_BLen(cEnhanced)))
 
@@ -698,7 +698,7 @@ METHOD HBEditor:Hilite()
 METHOD HBEditor:DeHilite()
 
    // Swap CLR_STANDARD and CLR_ENHANCED back to their original position inside cColorSpec
-   LOCAL cStandard := hb_tokenGet(::cColorSpec, 2, ",") + "," + hb_tokenGet(::cColorSpec, 1, ",")
+   Local cStandard := hb_tokenGet(::cColorSpec, 2, ",") + "," + hb_tokenGet(::cColorSpec, 1, ",")
 
    ::SetColor(cStandard + hb_BRight(::cColorSpec, hb_BLen(::cColorSpec) - hb_BLen(cStandard)))
 
@@ -733,7 +733,7 @@ METHOD HBEditor:hitTest(nMRow, nMCol)
 
 Static Function Text2Array(cText, nWordWrapCol, nTabWidth)
 
-   LOCAL aArray := {}
+   Local aArray := {}
 
    hb_MLEval(cText, {|cLine, lSoftCR|AAdd(aArray, HBTextLine():New(cLine, lSoftCR))}, ;
              IIf(nWordWrapCol != NIL, nWordWrapCol + 1, 0xFFFF), nTabWidth, nWordWrapCol != NIL)

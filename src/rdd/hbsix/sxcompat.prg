@@ -185,7 +185,7 @@ Function sxLog(/* @ */ xKeyVal)
 
 Function sx_Compress(xVal)
 
-   LOCAL xRetVal
+   Local xRetVal
 
    Switch ValType(xVal)
    Case "C"
@@ -201,7 +201,7 @@ Function sx_Compress(xVal)
 
 Function sx_Decompress(xVal)
 
-   LOCAL xRetVal
+   Local xRetVal
 
    Switch ValType(xVal)
    Case "C"
@@ -217,10 +217,10 @@ Function sx_Decompress(xVal)
 
 Function sx_TagInfo(cIndex)
 
-   LOCAL aInfo
-   LOCAL nOrds
-   LOCAL nFirst
-   LOCAL i
+   Local aInfo
+   Local nOrds
+   Local nFirst
+   Local i
 
    IF Used() .AND. (nOrds := ordCount(cIndex)) > 0
       aInfo := Array(nOrds, 6)
@@ -245,9 +245,9 @@ Function sx_TagInfo(cIndex)
 
 Function sx_TagCount(xIndex)
 
-   LOCAL nTags := 0
-   LOCAL cIndex
-   LOCAL nOrder
+   Local nTags := 0
+   Local cIndex
+   Local nOrder
 
    IF Used()
       Do Case
@@ -269,9 +269,9 @@ Function sx_TagCount(xIndex)
 
 Function sx_Tags(xIndex)
 
-   LOCAL aTagNames := {}
-   LOCAL nOrder
-   LOCAL nTags
+   Local aTagNames := {}
+   Local nOrder
+   Local nTags
 
    IF Used()
       Do Case
@@ -294,10 +294,10 @@ Function sx_Tags(xIndex)
 
 Function sx_SetTag(xTag, xIndex)
 
-   LOCAL lRet := False
-   LOCAL nOrder := 0
-   LOCAL nOldOrd
-   LOCAL cIndex
+   Local lRet := False
+   Local nOrder := 0
+   Local nOldOrd
+   Local cIndex
 
    IF Used() .AND. ValType(xTag) $ "CN"
       IF hb_IsNumeric(xTag)
@@ -344,9 +344,9 @@ Function sx_SetTag(xTag, xIndex)
 
 Function sx_KillTag(xTag, xIndex)
 
-   LOCAL lRet := False
-   LOCAL nOrder
-   LOCAL cIndex
+   Local lRet := False
+   Local nOrder
+   Local cIndex
 
    IF hb_IsLogical(xTag)
       IF xTag
@@ -414,7 +414,7 @@ Function rdd_Count()
 
 Function rdd_Name(nRDD)
 
-   LOCAL aRDD
+   Local aRDD
 
    IF hb_IsNumeric(nRDD) .AND. nRDD >= 1
       aRDD := rddList()
@@ -427,7 +427,7 @@ Function rdd_Name(nRDD)
 
 Function rdd_Info(xID)
 
-   LOCAL cRDD
+   Local cRDD
 
    Do Case
    Case hb_IsNumeric(xID)
@@ -484,7 +484,7 @@ Function sx_Blob2File(cFileName, cFldName)
 
 Function sx_File2Blob(cFileName, cFldName, nActionCode)
 
-   LOCAL nAction := 0
+   Local nAction := 0
 
    IF hb_bitAnd(nActionCode, BLOB_FILECOMPRESS) != 0
       nAction := hb_bitOr(nAction, FILEPUT_COMPRESS)
@@ -497,8 +497,8 @@ Function sx_File2Blob(cFileName, cFldName, nActionCode)
 
 Function sx_dbCreate(cFileName, aStruct, cRDD)
 
-   LOCAL aField
-   LOCAL aDbStruct
+   Local aField
+   Local aDbStruct
 
    aDbStruct := AClone(aStruct)
    For Each aField In aDbStruct
@@ -523,8 +523,8 @@ Function sx_dbCreate(cFileName, aStruct, cRDD)
 
 Function sx_VSigLen(xField)
 
-   LOCAL nResult := 0
-   LOCAL nField := 0
+   Local nResult := 0
+   Local nField := 0
 
    IF Used()
       Do Case
@@ -556,7 +556,7 @@ Function sx_VFGet(cExpr, nLen)
 
 Function sx_IsLocked(xRec)
 
-   LOCAL xRecord
+   Local xRecord
 
    IF Used()
       xRecord := IIf(xRec == NIL, RecNo(), xRec)
@@ -574,7 +574,7 @@ Function sx_IsLocked(xRec)
 
 Function sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
 
-   LOCAL cPrevTrigger := ""
+   Local cPrevTrigger := ""
 
    IF hb_IsNumeric(nAction)
       IF nAction == TRIGGER_PENDING

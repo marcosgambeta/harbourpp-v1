@@ -126,7 +126,7 @@ METHOD PushButton:setFocus()
 
 METHOD PushButton:select(nPos)
 
-   LOCAL nCurPos := nPos
+   Local nCurPos := nPos
 
    IF ::lHasFocus
       ::lbuffer := True
@@ -172,10 +172,10 @@ METHOD PushButton:killFocus()
 
 METHOD PushButton:hitTest(nMRow, nMCol)
 
-   LOCAL nCurrentPos := 1
-   LOCAL nLen := Len(::cCaption)
-   LOCAL nStyleLen
-   LOCAL nAccelPos
+   Local nCurrentPos := 1
+   Local nLen := Len(::cCaption)
+   Local nStyleLen
+   Local nAccelPos
 
    IF (nAccelPos := At("&", ::cCaption)) > 0 .AND. nAccelPos < nLen
       nLen--
@@ -196,12 +196,12 @@ METHOD PushButton:hitTest(nMRow, nMCol)
 
 METHOD PushButton:display()
 
-   LOCAL cColor
-   LOCAL cStyle := ::cStyle
-   LOCAL cCaption := ::cCaption
-   LOCAL nRow := ::nRow
-   LOCAL nCol := ::nCol
-   LOCAL nPos
+   Local cColor
+   Local cStyle := ::cStyle
+   Local cCaption := ::cCaption
+   Local nRow := ::nRow
+   Local nCol := ::nCol
+   Local nPos
 
    DispBegin()
 
@@ -330,7 +330,7 @@ METHOD PushButton:style(cStyle)
 
 METHOD PushButton:Init(nRow, nCol, cCaption)
 
-   LOCAL cColor
+   Local cColor
 
    IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nCol)
       Return Nil
@@ -360,7 +360,7 @@ Function PushButton(nRow, nCol, cCaption)
 
 Function _PushButt_(cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, nSizeX, nSizeY, nCapXOff, nCapYOff, cBitmap, nBmpXOff, nBmpYOff)
 
-   LOCAL o := HBPushButton():New(Row(), Col(), cCaption)
+   Local o := HBPushButton():New(Row(), Col(), cCaption)
 
    o:message   := cMessage
    o:colorSpec := cColorSpec

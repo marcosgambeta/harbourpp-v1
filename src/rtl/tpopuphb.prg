@@ -72,8 +72,8 @@ METHOD hb_PopupMenu:shadowed(lShadowed)
 
 METHOD hb_PopupMenu:setCoors(nRow, nCol, lTop)
 
-   LOCAL oItem
-   LOCAL nDif
+   Local oItem
+   Local nDif
 
    ::setMetrics()
 
@@ -122,11 +122,11 @@ METHOD hb_PopupMenu:setCoors(nRow, nCol, lTop)
 
 METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
 
-   LOCAL nItem
-   LOCAL nTotal
-   LOCAL nShortCut
-   LOCAL oItem
-   LOCAL i
+   Local nItem
+   Local nTotal
+   Local nShortCut
+   Local oItem
+   Local i
 
    Do Case
    // Test and assign top menu item shortCut, enabled, and !PopUp:
@@ -163,8 +163,8 @@ METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
 
 METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
 
-   LOCAL nShortCut
-   LOCAL oItem
+   Local nShortCut
+   Local oItem
 
    IF (nShortCut := ::getShortCt(nKey)) == 0
 

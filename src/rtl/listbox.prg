@@ -221,18 +221,18 @@ METHOD ListBox:delItem(nPos)
 
 METHOD ListBox:display()
 
-   LOCAL nItem
-   LOCAL nEnd
-   LOCAL cColor4
-   LOCAL cColor3
-   LOCAL cColorAny
-   LOCAL cColorScrl
-   LOCAL nTop := ::nTop
-   LOCAL nLeft := ::nLeft
-   LOCAL nSize := ::nRight - nLeft + 1
-   LOCAL cHotBox
-   LOCAL cCaption
-   LOCAL nPos
+   Local nItem
+   Local nEnd
+   Local cColor4
+   Local cColor3
+   Local cColorAny
+   Local cColorScrl
+   Local nTop := ::nTop
+   Local nLeft := ::nLeft
+   Local nSize := ::nRight - nLeft + 1
+   Local cHotBox
+   Local cCaption
+   Local nPos
 
    IF ::lHasFocus
       cHotBox   := ::cHotBox
@@ -307,8 +307,8 @@ METHOD ListBox:display()
 
 METHOD ListBox:findText(cText, nPos, lCaseSensitive, lExact)
 
-   LOCAL nPosFound
-   LOCAL bSearch
+   Local nPosFound
+   Local bSearch
 
 #ifndef HB_CLP_STRICT
    /* NOTE: Cl*pper will RTE if passed a non-string cText */
@@ -350,8 +350,8 @@ METHOD ListBox:findText(cText, nPos, lCaseSensitive, lExact)
          the same conditions. */
 METHOD ListBox:findData(xData, nPos, lCaseSensitive, lExact)
 
-   LOCAL nPosFound
-   LOCAL bSearch
+   Local nPosFound
+   Local bSearch
 
    hb_default(@nPos, 1)
    hb_default(@lCaseSensitive, True)
@@ -393,9 +393,9 @@ METHOD ListBox:getText(nPos)
 
 METHOD ListBox:hitTest(nMRow, nMCol)
 
-   LOCAL nTop := ::nTop
-   LOCAL nOffset := 0
-   LOCAL nHit := 0
+   Local nTop := ::nTop
+   Local nOffset := 0
+   Local nHit := 0
 
    // Check hit on the scrollbar
    IF ::lIsOpen .AND. ::oVScroll != NIL .AND. (nHit := ::oVScroll:hitTest(nMRow, nMCol)) != 0
@@ -495,7 +495,7 @@ METHOD ListBox:insItem(nPos, cText, xData)
 
 METHOD ListBox:killFocus()
 
-   LOCAL nOldMCur
+   Local nOldMCur
 
    IF ::lHasFocus
       ::lHasFocus := False
@@ -522,7 +522,7 @@ METHOD ListBox:killFocus()
 
 METHOD ListBox:nextItem()
 
-   LOCAL nOldValue
+   Local nOldValue
 
    IF ::lHasFocus .AND. ::nItemCount > 0
       ::changeItem(nOldValue := ::nValue, IIf(nOldValue == ::nItemCount, nOldValue, nOldValue + 1))
@@ -544,7 +544,7 @@ METHOD ListBox:open()
 
 METHOD ListBox:prevItem()
 
-   LOCAL nOldValue
+   Local nOldValue
 
    IF ::lHasFocus .AND. ::nItemCount > 0
 
@@ -559,18 +559,18 @@ METHOD ListBox:prevItem()
 
 METHOD ListBox:scroll(nMethod)
 
-   LOCAL nPos
-   LOCAL nTopItem
-   LOCAL nItemCount
-   LOCAL nThumbPos
-   LOCAL nCurrent
-   LOCAL nBarLength
-   LOCAL nTotal
-   LOCAL nSize
-   LOCAL nMRow
-   LOCAL nPrevMRow
-   LOCAL nKey
-   LOCAL nCount
+   Local nPos
+   Local nTopItem
+   Local nItemCount
+   Local nThumbPos
+   Local nCurrent
+   Local nBarLength
+   Local nTotal
+   Local nSize
+   Local nMRow
+   Local nPrevMRow
+   Local nKey
+   Local nCount
 
    IF hb_IsNumeric(nMethod)
 
@@ -665,9 +665,9 @@ METHOD ListBox:scroll(nMethod)
 
 METHOD ListBox:select(xPos)
 
-   LOCAL nValue
-   LOCAL nPos
-   LOCAL cType := ValType(xPos)
+   Local nValue
+   Local nPos
+   Local cType := ValType(xPos)
 
    Do Case
    Case cType == "C"
@@ -768,7 +768,7 @@ METHOD ListBox:setText(nPos, cText)
 
 METHOD ListBox:changeItem(nOldPos, nNewPos)
 
-   LOCAL nValue
+   Local nValue
 
    IF nOldPos != nNewPos
 
@@ -809,9 +809,9 @@ METHOD ListBox:changeItem(nOldPos, nNewPos)
 
 METHOD ListBox:scrollbarPos()
 
-   LOCAL nSize   := ::nBottom - ::nTop - IIf(::lDropDown, 2, 1)
-   LOCAL nCount  := ::nItemCount
-   LOCAL nLength := ::oVScroll:barLength
+   Local nSize   := ::nBottom - ::nTop - IIf(::lDropDown, 2, 1)
+   Local nCount  := ::nItemCount
+   Local nLength := ::oVScroll:barLength
 
 #ifndef HB_CLP_STRICT
    /* NOTE: Cl*pper will RTE with non default division by zero error handler */
@@ -1033,7 +1033,7 @@ METHOD ListBox:vScroll(oVScroll)
 
 METHOD ListBox:Init(nTop, nLeft, nBottom, nRight, lDropDown)
 
-   LOCAL cColor
+   Local cColor
 
    IF !hb_IsNumeric(nTop) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nBottom) .OR. !hb_IsNumeric(nRight)
       Return Nil
@@ -1072,8 +1072,8 @@ Function ListBox(nTop, nLeft, nBottom, nRight, lDropDown)
 
 Function _ListBox_(nTop, nLeft, nBottom, nRight, xPos, aItems, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, lDropDown, lScrollBar, cBitmap)
 
-   LOCAL o
-   LOCAL xItem
+   Local o
+   Local xItem
 
    IF (o := HBListBox():New(nTop, nLeft, nBottom, nRight, lDropDown)) != NIL
 

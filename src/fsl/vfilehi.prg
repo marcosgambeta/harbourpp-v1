@@ -47,9 +47,9 @@
 
 Function hb_vfDirBuild(cDir)
 
-   LOCAL cDirTemp
-   LOCAL cDirItem
-   LOCAL tmp
+   Local cDirTemp
+   Local cDirItem
+   Local tmp
 
    IF !hb_IsString(cDir)
       Return False
@@ -98,7 +98,7 @@ Function hb_vfDirBuild(cDir)
 
 Function hb_vfDirUnbuild(cDir)
 
-   LOCAL tmp
+   Local tmp
 
    IF !hb_IsString(cDir)
       Return False

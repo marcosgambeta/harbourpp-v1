@@ -81,12 +81,12 @@ METHOD HBDbHash:New(hHash, cVarName, lEditable)
 
 METHOD HBDbHash:addWindows(hHash, nRow)
 
-   LOCAL oBrwSets
-   LOCAL nSize := Len(hHash)
-   LOCAL oWndSets
-   LOCAL nColWidth
-   LOCAL oCol
-   LOCAL nKeyLen
+   Local oBrwSets
+   Local nSize := Len(hHash)
+   Local oWndSets
+   Local nColWidth
+   Local oCol
+   Local nKeyLen
 
    IF nSize < MaxRow() - 2
       IF hb_IsNumeric(nRow)
@@ -135,8 +135,8 @@ METHOD HBDbHash:addWindows(hHash, nRow)
 
 METHOD PROCEDURE HBDbHash:doGet(oBrowse, pItem, nSet)
 
-   LOCAL oErr
-   LOCAL cValue
+   Local oErr
+   Local cValue
 
    // make sure browse is stable
    oBrowse:forceStable()
@@ -156,9 +156,9 @@ METHOD PROCEDURE HBDbHash:doGet(oBrowse, pItem, nSet)
 
 METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
 
-   LOCAL nSet := oBrwSets:cargo[1]
-   LOCAL cOldname := ::hashName
-   LOCAL uValue
+   Local nSet := oBrwSets:cargo[1]
+   Local cOldname := ::hashName
+   Local uValue
 
    Switch nKey
    Case K_UP

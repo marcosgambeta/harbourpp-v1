@@ -44,19 +44,19 @@ Function Alert(cMessage, aOptions, cColorNorm)
 
    cMessage := StrTran(cMessage, ";", Chr(10))
 
-   LOCAL cColorHigh
+   Local cColorHigh
 
    IF !hb_IsString(cColorNorm) .OR. Empty(cColorNorm)
       cColorNorm := "W+/R"  // first pair color (Box line and Text)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
       cColorNorm := hb_ColorIndex(cColorNorm, CLR_STANDARD)
-      LOCAL nPos
+      Local nPos
       cColorHigh := hb_StrReplace(IIf((nPos := At("/", cColorNorm)) > 0, SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), "N/" + cColorNorm), "+*")
    ENDIF
 
-   LOCAL cOption
-   LOCAL aOptionsOK := {}
+   Local cOption
+   Local aOptionsOK := {}
    For Each cOption In hb_defaultValue(aOptions, {})
       IF hb_IsString(cOption) .AND. !Empty(cOption)
          AAdd(aOptionsOK, cOption)
@@ -95,8 +95,8 @@ Function hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
       Return Nil
    ENDIF
 
-   LOCAL cMessage
-   LOCAL cString
+   Local cMessage
+   Local cString
 
    Do Case
    Case hb_IsArray(xMessage)
@@ -115,18 +115,18 @@ Function hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
       cMessage := hb_CStr(xMessage)
    EndCase
 
-   LOCAL cColorHigh
+   Local cColorHigh
 
    IF !hb_IsString(cColorNorm) .OR. Empty(cColorNorm)
       cColorNorm := "W+/R"  // first pair color (Box line and Text)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
       cColorNorm := hb_ColorIndex(cColorNorm, CLR_STANDARD)
-      LOCAL nPos
+      Local nPos
       cColorHigh := hb_StrReplace(IIf((nPos := At("/", cColorNorm)) > 0, SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), "N/" + cColorNorm), "+*")
    ENDIF
 
-   LOCAL aOptionsOK := {}
+   Local aOptionsOK := {}
    For Each cString In hb_defaultValue(aOptions, {})
       IF hb_IsString(cString) .AND. !Empty(cString)
          AAdd(aOptionsOK, cString)

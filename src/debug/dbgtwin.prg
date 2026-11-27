@@ -202,8 +202,8 @@ METHOD PROCEDURE HBDbWindow:Show(lFocused)
 
 METHOD PROCEDURE HBDbWindow:ShowModal()
 
-   LOCAL lExit := False
-   LOCAL nKey
+   Local lExit := False
+   Local nKey
 
    ::lShadow := True
    ::Show()
@@ -252,11 +252,11 @@ METHOD PROCEDURE HBDbWindow:LDblClick(nMRow, nMCol)
 
 METHOD PROCEDURE HBDbWindow:Move()
 
-   LOCAL nOldTop    := ::nTop
-   LOCAL nOldLeft   := ::nLeft
-   LOCAL nOldBottom := ::nbottom
-   LOCAL nOldRight  := ::nright
-   LOCAL nKey
+   Local nOldTop    := ::nTop
+   Local nOldLeft   := ::nLeft
+   Local nOldBottom := ::nbottom
+   Local nOldRight  := ::nright
+   Local nKey
 
    Do While True
       __dbgRestScreen(NIL, NIL, NIL, NIL, ::cBackImage)
@@ -326,7 +326,7 @@ METHOD PROCEDURE HBDbWindow:KeyPressed(nKey)
 
 METHOD PROCEDURE HBDbWindow:LoadColors()
 
-   LOCAL aClr := __dbgColors()
+   Local aClr := __dbgColors()
 
    ::cColor := aClr[1]
 
@@ -338,7 +338,7 @@ METHOD PROCEDURE HBDbWindow:LoadColors()
 
 METHOD HBDbWindow:Resize(nTop, nLeft, nBottom, nRight)
 
-   LOCAL lShow
+   Local lShow
 
    IF (!hb_IsNumeric(nTop) .OR. nTop == ::nTop) .AND. ;
       (!hb_IsNumeric(nLeft) .OR. nLeft == ::nLeft) .AND. ;

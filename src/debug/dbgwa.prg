@@ -56,18 +56,18 @@ REQUEST FieldGet
 
 Procedure __dbgShowWorkAreas()
 
-   LOCAL oDlg
-   LOCAL oCol
-   LOCAL aAlias := {}
-   LOCAL aBrw[3]
-   LOCAL aStruc
-   LOCAL aInfo
-   LOCAL cColor := IIf(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
-   LOCAL n1
-   LOCAL n2
-   LOCAL n3 := 1
-   LOCAL cur_id
-   LOCAL nOldArea := Select()
+   Local oDlg
+   Local oCol
+   Local aAlias := {}
+   Local aBrw[3]
+   Local aStruc
+   Local aInfo
+   Local cColor := IIf(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
+   Local n1
+   Local n2
+   Local n3 := 1
+   Local cur_id
+   Local nOldArea := Select()
 
    hb_WAEval({|| AAdd(aAlias, {Select(), Alias()}) })
 
@@ -157,7 +157,7 @@ Procedure __dbgShowWorkAreas()
 
 Static Procedure DlgWorkAreaPaint(oDlg, aBrw)
 
-   LOCAL oDebug := __dbg()
+   Local oDebug := __dbg()
 
    // Display captions
 
@@ -200,8 +200,8 @@ Static Procedure DlgWorkAreaPaint(oDlg, aBrw)
 
 Static Procedure DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ */ aInfo)
 
-   LOCAL oDebug := __dbg()
-   LOCAL nAlias
+   Local oDebug := __dbg()
+   Local nAlias
 
    IF nKey == K_TAB .OR. nKey == K_SH_TAB
       aBrw[oDebug:nWaFocus]:Dehilite()
@@ -303,10 +303,10 @@ Static Procedure WorkAreasKeyPressed(nKey, oBrw, nTotal)
 
 Static Function DbfInfo()
 
-   LOCAL nFor
-   LOCAL xValue
-   LOCAL cValue
-   LOCAL aInfo := { ;
+   Local nFor
+   Local xValue
+   Local cValue
+   Local aInfo := { ;
       "[" + hb_ntos(Select(Alias())) + "] " + Alias(), ;
       Space(4) + "Current Driver", ;
       Space(8) + rddName(), ;
@@ -344,7 +344,7 @@ Static Function DbfInfo()
 
 Static Procedure UpdateInfo(oDlg, cAlias)
 
-   LOCAL nOldArea
+   Local nOldArea
 
    IF Empty(cAlias)
       RETURN

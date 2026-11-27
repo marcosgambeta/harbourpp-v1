@@ -52,21 +52,21 @@
 
 Procedure __TypeFile(cFile, lPrint)
 
-   LOCAL nHandle
-   LOCAL cBuffer
-   LOCAL nRead
-   LOCAL nHasRead
-   LOCAL nSize
-   LOCAL nBuffer
-   LOCAL oErr
-   LOCAL nRetries
-   LOCAL aSaveSet[2]
-   LOCAL cDir
-   LOCAL cName
-   LOCAL cExt
-   LOCAL cTmp
-   LOCAL cPath
-   LOCAL i
+   Local nHandle
+   Local cBuffer
+   Local nRead
+   Local nHasRead
+   Local nSize
+   Local nBuffer
+   Local oErr
+   Local nRetries
+   Local aSaveSet[2]
+   Local cDir
+   Local cName
+   Local cExt
+   Local cTmp
+   Local cPath
+   Local i
 
    hb_default(@lPrint, False)
 

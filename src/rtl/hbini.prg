@@ -86,7 +86,7 @@ Procedure hb_iniSetComment(cLc, cHlc)
 
 Function hb_iniNew(lAutoMain)
 
-   LOCAL hIni := {=>}
+   Local hIni := {=>}
 
    IF hb_defaultValue(lAutoMain, True)
       hIni["MAIN"] := {=>}
@@ -99,7 +99,7 @@ Function hb_iniRead(cFileSpec, lKeyCaseSens, cSplitters, lAutoMain)
 
 Function hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
-   LOCAL hIni := {=>}
+   Local hIni := {=>}
 
    // Default case sensitiveness for keys
    hb_default(@lKeyCaseSens, True)
@@ -115,11 +115,11 @@ Function hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
 Static Function hb_iniFileLow(cFileSpec)
 
-   LOCAL cFile
-   LOCAL nLen
-   LOCAL hFile
-   LOCAL cData
-   LOCAL aFiles := hb_ATokens(cFileSpec, hb_osPathListSeparator())
+   Local cFile
+   Local nLen
+   Local hFile
+   Local cData
+   Local aFiles := hb_ATokens(cFileSpec, hb_osPathListSeparator())
 
    IF Empty(aFiles)
       aFiles := {cFileSpec}
@@ -149,13 +149,13 @@ Static Function hb_iniFileLow(cFileSpec)
 
 Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain)
 
-   LOCAL aKeyVal
-   LOCAL hCurrentSection
-   LOCAL cLine
-   LOCAL reComment
-   LOCAL reInclude
-   LOCAL reSection
-   LOCAL reSplitters
+   Local aKeyVal
+   Local hCurrentSection
+   Local cLine
+   Local reComment
+   Local reInclude
+   Local reSection
+   Local reSplitters
 
    reComment := hb_regexComp(s_cHalfLineComment + "|^[ \t]*" + s_cLineComment)
    reInclude := hb_regexComp("include (.*)")
@@ -227,9 +227,9 @@ Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
 
 Function hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
-   LOCAL hFile
-   LOCAL lClose
-   LOCAL cBuffer
+   Local hFile
+   Local lClose
+   Local cBuffer
 
    cBuffer := hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
@@ -266,9 +266,9 @@ Function hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
 Function hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
-   LOCAL cNewLine := hb_eol()
-   LOCAL cSection
-   LOCAL cBuffer := ""
+   Local cNewLine := hb_eol()
+   Local cSection
+   Local cBuffer := ""
 
    IF !hb_IsHash(hIni)
       Return Nil

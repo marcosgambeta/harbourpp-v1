@@ -85,7 +85,7 @@ METHOD HBMemoEditor:UserFunctionIsValid()
 
 METHOD HBMemoEditor:MemoInit(xUserFunction)
 
-   LOCAL nUdfReturn
+   Local nUdfReturn
 
    // Save/Init object internal representation of user function
    ::xUserFunction := xUserFunction
@@ -112,12 +112,12 @@ METHOD HBMemoEditor:MemoInit(xUserFunction)
 
 METHOD HBMemoEditor:Edit()
 
-   LOCAL nKey
-   LOCAL nKeyStd
+   Local nKey
+   Local nKeyStd
    // NOTE: K_ALT_W is not compatible with Cl*pper exit memo and save key, but I cannot discriminate
    //       K_CTRL_W and K_CTRL_END from Harbour code.
-   LOCAL hConfigurableKeys := {K_CTRL_Y =>, K_CTRL_T =>, K_CTRL_B =>, K_CTRL_V =>, K_ALT_W =>, K_ESC =>}
-   LOCAL bKeyBlock
+   Local hConfigurableKeys := {K_CTRL_Y =>, K_CTRL_T =>, K_CTRL_B =>, K_CTRL_V =>, K_ALT_W =>, K_ESC =>}
+   Local bKeyBlock
 
    // If I have an user function I need to trap configurable keys and ask to
    // user function if handle them the standard way or not
@@ -157,10 +157,10 @@ METHOD HBMemoEditor:Edit()
 // if there is an user function I leave to it its handling
 METHOD HBMemoEditor:KeyboardHook(nKey)
 
-   LOCAL nYesNoKey
-   LOCAL cBackScr
-   LOCAL nRow
-   LOCAL nCol
+   Local nYesNoKey
+   Local cBackScr
+   Local nRow
+   Local nCol
 
    IF ::UserFunctionIsValid() .AND. !::lCallKeyboardHook  // To avoid recursive calls in endless loop. [jarabal]
 
@@ -277,10 +277,10 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
 
 METHOD HBMemoEditor:xDo(nStatus)
 
-   LOCAL nOldRow := ::Row()
-   LOCAL nOldCol := ::Col()
-   LOCAL nOldCur := SetCursor()
-   LOCAL xResult := Do(::xUserFunction, nStatus, ::nRow, ::nCol - 1)
+   Local nOldRow := ::Row()
+   Local nOldCol := ::Col()
+   Local nOldCur := SetCursor()
+   Local xResult := Do(::xUserFunction, nStatus, ::nRow, ::nCol - 1)
 
    SetPos(nOldRow, nOldCol)
    SetCursor(nOldCur)
@@ -313,8 +313,8 @@ METHOD HBMemoEditor:InsertState(lInsState)
 
 Function MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunction, nLineLength, nTabSize, nTextBuffRow, nTextBuffColumn, nWindowRow, nWindowColumn)
 
-   LOCAL oEd
-   LOCAL nOldCursor
+   Local oEd
+   Local nOldCursor
 
    hb_default(@nLeft           , 0)
    hb_default(@nRight          , MaxCol())

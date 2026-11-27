@@ -233,8 +233,8 @@ METHOD Array:Add(x)
 
 METHOD Array:Collect(b)
 
-   LOCAL elem
-   LOCAL result := {}
+   Local elem
+   Local result := {}
 
    For Each elem In Self
       IF Eval(b, elem)
@@ -272,7 +272,7 @@ METHOD Array:IsScalar()
 
 METHOD Array:Do(b)
 
-   LOCAL i
+   Local i
 
    FOR i := 1 TO Len(Self)
       b:Eval(Self[i], i)
@@ -282,7 +282,7 @@ METHOD Array:Do(b)
 
 METHOD Array:IndexOf(x)
 
-   LOCAL elem
+   Local elem
 
    For Each elem In Self
       IF elem == x

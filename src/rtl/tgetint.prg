@@ -49,7 +49,7 @@ REQUEST HB_PValue
 
 Function __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
 
-   LOCAL oGet
+   Local oGet
 
    IF !hb_IsString(cVarName)
       Return Nil
@@ -81,7 +81,7 @@ Function __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
 
 Function __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
 
-   LOCAL oGet
+   Local oGet
 
    IF !hb_IsString(cVarName) .OR. !hb_IsArray(aIndex)
       Return Nil

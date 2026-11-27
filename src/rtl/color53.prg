@@ -49,7 +49,7 @@
 
 Function GetClrPair(cColor, nColor)
 
-   LOCAL nPos
+   Local nPos
 
    IF (nPos := GetPairPos(cColor, nColor)) == 0
       RETURN ""
@@ -59,7 +59,7 @@ Function GetClrPair(cColor, nColor)
 
 Function SetClrPair(cColor, nColor, cNewColor)
 
-   LOCAL nPos
+   Local nPos
 
    IF (nPos := GetPairPos(cColor, nColor)) == 0
       RETURN ""
@@ -69,9 +69,9 @@ Function SetClrPair(cColor, nColor, cNewColor)
 
 Function GetPairPos(cColor, nColor)
 
-   LOCAL nPos := 1
-   LOCAL nSep
-   LOCAL n
+   Local nPos := 1
+   Local nSep
+   Local n
 
    FOR n := 2 TO nColor
       IF (nSep := At(",", SubStr(cColor, nPos))) == 0
@@ -84,8 +84,8 @@ Function GetPairPos(cColor, nColor)
 
 Function GetPairLen(cColor, nColor)
 
-   LOCAL nPos
-   LOCAL nLen
+   Local nPos
+   Local nLen
 
    IF (nPos := GetPairPos(cColor, nColor)) == 0
       RETURN 0
@@ -95,7 +95,7 @@ Function GetPairLen(cColor, nColor)
 
 Function GetClrFore(cColor)
 
-   LOCAL nPos
+   Local nPos
 
    IF (nPos := At("/", cColor)) == 0
       RETURN ""
@@ -105,7 +105,7 @@ Function GetClrFore(cColor)
 
 Function GetClrBack(cColor)
 
-   LOCAL nPos
+   Local nPos
 
    IF (nPos := At("/", cColor)) == 0
       RETURN ""
@@ -136,16 +136,16 @@ Function MenuDefCol(cColor)
 
 Function ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8)
 
-   LOCAL cSetColor
-   LOCAL aSetColor
-   LOCAL aNewcolor
-   LOCAL nColors
-   LOCAL cClrDefa
-   LOCAL cClrToSet
-   LOCAL cClrFore
-   LOCAL cClrBack
-   LOCAL xNewColor
-   LOCAL n
+   Local cSetColor
+   Local aSetColor
+   Local aNewcolor
+   Local nColors
+   Local cClrDefa
+   Local cClrToSet
+   Local cClrFore
+   Local cClrBack
+   Local xNewColor
+   Local n
 
    Switch PCount()
    Case 0

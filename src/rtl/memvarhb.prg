@@ -68,16 +68,16 @@
 
 Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
 
-   LOCAL nCount
-   LOCAL xValue
-   LOCAL cName
-   LOCAL nScope
-   LOCAL lMatch
-   LOCAL aVars
-   LOCAL fhnd
-   LOCAL tmp
-   LOCAL oError
-   LOCAL nRetries
+   Local nCount
+   Local xValue
+   Local cName
+   Local nScope
+   Local lMatch
+   Local aVars
+   Local fhnd
+   Local tmp
+   Local oError
+   Local nRetries
 
    IF hb_IsString(cFileName)
 
@@ -152,15 +152,15 @@ Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
 
 Function hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
 
-   LOCAL item
-   LOCAL cName
-   LOCAL lMatch
-   LOCAL aVars
-   LOCAL cBuffer
-   LOCAL xValue
-   LOCAL fhnd
-   LOCAL oError
-   LOCAL nRetries
+   Local item
+   Local cName
+   Local lMatch
+   Local aVars
+   Local cBuffer
+   Local xValue
+   Local fhnd
+   Local oError
+   Local nRetries
 
    IF hb_IsString(cFileName)
 

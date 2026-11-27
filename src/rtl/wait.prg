@@ -49,9 +49,9 @@
 
 Function __Wait(xPrompt)
 
-   LOCAL nKey
-   LOCAL cKey
-   LOCAL bBlock
+   Local nKey
+   Local cKey
+   Local bBlock
 
    // TODO: Here we can use Lang API to localize default message
    QOut(IIf(xPrompt == NIL, "Press any key to continue...", xPrompt))

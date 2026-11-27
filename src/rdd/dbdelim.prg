@@ -56,10 +56,10 @@ Function __dbDelim(lExport, cFile, cDelimArg, aFields, bFor, bWhile, nNext, nRec
 
 #ifdef HB_CLP_STRICT
 
-   LOCAL nSrcArea
-   LOCAL nDstArea
-   LOCAL aStruct
-   LOCAL cRDD := "DELIM"
+   Local nSrcArea
+   Local nDstArea
+   Local aStruct
+   Local cRDD := "DELIM"
 
    IF lExport
       nSrcArea := Select()

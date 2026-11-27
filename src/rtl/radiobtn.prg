@@ -121,7 +121,7 @@ METHOD RadioButtn:setFocus()
 
 METHOD RadioButtn:select(lState)
 
-   LOCAL lOldState := ::lBuffer
+   Local lOldState := ::lBuffer
 
    ::lBuffer := IIf(hb_IsLogical(lState), lState, !::lBuffer)
 
@@ -148,10 +148,10 @@ METHOD RadioButtn:killFocus()
 
 METHOD RadioButtn:display()
 
-   LOCAL cColor
-   LOCAL cStyle := ::cStyle
-   LOCAL nPos
-   LOCAL cOldCaption
+   Local cColor
+   Local cStyle := ::cStyle
+   Local nPos
+   Local cOldCaption
 
    DispBegin()
 
@@ -180,7 +180,7 @@ METHOD RadioButtn:display()
 
 METHOD RadioButtn:isAccel(xKey)
 
-   LOCAL cKey
+   Local cKey
 
    Do Case
    Case hb_IsString(xKey)
@@ -195,8 +195,8 @@ METHOD RadioButtn:isAccel(xKey)
 
 METHOD RadioButtn:hitTest(nMRow, nMCol)
 
-   LOCAL nPos
-   LOCAL nLen
+   Local nPos
+   Local nLen
 
    IF nMRow == ::Row .AND. nMCol >= ::Col .AND. nMCol < ::Col + 3
       RETURN HTCLIENT
@@ -310,7 +310,7 @@ METHOD RadioButtn:style(cStyle)
 
 METHOD RadioButtn:Init(nRow, nCol, cCaption, cData)
 
-   LOCAL cColor
+   Local cColor
 
    IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nCol)
       Return Nil

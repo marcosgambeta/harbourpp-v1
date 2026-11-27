@@ -83,7 +83,7 @@ METHOD HBDbMenuItem:New(cPrompt, bAction, lChecked, xIdent)
 
 METHOD HBDbMenuItem:Display(cClrText, cClrHotKey)
 
-   LOCAL nAt
+   Local nAt
 
    hb_DispOutAt(::nRow, ::nCol, StrTran(::cPrompt, "~"), cClrText)
 

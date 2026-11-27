@@ -61,21 +61,21 @@
 Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPictures, xColumnHeaders, ;
       xHeadingSeparators, xColumnSeparators, xFootingSeparators, xColumnFootings)
 
-   LOCAL nOldCUrsor
-   LOCAL nKey
-   LOCAL lContinue
-   LOCAL nPos
-   LOCAL nAliasPos
-   LOCAL nColCount
-   LOCAL lDoIdleCall
-   LOCAL lAppend
-   LOCAL lFlag
-   LOCAL cHeading
-   LOCAL cBlock
-   LOCAL bBlock
-   LOCAL oBrowse
-   LOCAL oColumn
-   LOCAL aCol
+   Local nOldCUrsor
+   Local nKey
+   Local lContinue
+   Local nPos
+   Local nAliasPos
+   Local nColCount
+   Local lDoIdleCall
+   Local lAppend
+   Local lFlag
+   Local cHeading
+   Local cBlock
+   Local bBlock
+   Local oBrowse
+   Local oColumn
+   Local aCol
 
    IF !Used()
       Return False
@@ -292,9 +292,9 @@ Function dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 //       for code which may check ProcName() results in user function
 Static Function CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
-   LOCAL nPrevRecNo
-   LOCAL nAction
-   LOCAL nMode := ;
+   Local nPrevRecNo
+   Local nAction
+   Local nMode := ;
       IIf(nKey != 0,                  DE_EXCEPT,    ;
       IIf(!lAppend .AND. IsDbEmpty(), DE_EMPTY,     ;
       IIf(oBrowse:hitBottom,          DE_HITBOTTOM, ;
@@ -368,7 +368,7 @@ Static Function IsDbEmpty()
 // Helper function: TBrowse skipBlock
 Static Function Skipped(nRecs, lAppend)
 
-   LOCAL nSkipped := 0
+   Local nSkipped := 0
 
    IF LastRec() != 0
       Do Case

@@ -59,8 +59,8 @@ Function ReadModal(GetList, nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor
 Function ReadModal(GetList)
 #endif
 
-   LOCAL oGetList
-   LOCAL oSaveGetList
+   Local oGetList
+   Local oSaveGetList
 
    IF Empty(GetList)
       SetPos(MaxRow() - 1, 0)
@@ -114,8 +114,8 @@ Procedure GetReader(oGet)
 
 Function GetActive(oGet)
 
-   LOCAL oGetList := __GetListActive()
-   LOCAL oGetActiveOld
+   Local oGetList := __GetListActive()
+   Local oGetActiveOld
 
    THREAD STATIC t_oGetActive
 
@@ -143,7 +143,7 @@ Function GetActive(oGet)
 
 Procedure GetDoSetKey(bKeyBlock, oGet)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
       oGetList:GetDoSetKey(bKeyBlock, oGet)
@@ -160,7 +160,7 @@ Procedure GetApplyKey(oGet, nKey, oGetList, oMenu, aMsg)
 #else
 Procedure GetApplyKey(oGet, nKey)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 #endif
 
    IF oGetList != NIL
@@ -178,7 +178,7 @@ Function GetPreValidate(oGet, aMsg)
 #else
 Function GetPreValidate(oGet)
 #endif
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
 #ifdef HB_COMPAT_C53
@@ -196,7 +196,7 @@ Function GetPostValidate(oGet, aMsg)
 Function GetPostValidate(oGet)
 #endif
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
 #ifdef HB_COMPAT_C53
@@ -216,13 +216,13 @@ Function ReadInsert(lInsert)
 
 Function Updated()
 
-   LOCAL oGetList := __GetListLast()
+   Local oGetList := __GetListLast()
 
    RETURN IIf(oGetList != NIL, oGetList:Updated(), False)
 
 Procedure __KillRead()
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
       oGetList:KillRead(True)
@@ -232,7 +232,7 @@ Procedure __KillRead()
 
 Function ReadUpdated(lUpdated)
 
-   LOCAL oGetList := __GetListLast()
+   Local oGetList := __GetListLast()
 
    IF oGetList != NIL
       IF PCount() > 0
@@ -246,7 +246,7 @@ Function ReadUpdated(lUpdated)
 
 Function ReadKill(lKill)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
       IF PCount() > 0
@@ -260,7 +260,7 @@ Function ReadKill(lKill)
 
 Function ReadFormat(bFormat)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
       IF PCount() > 0
@@ -274,7 +274,7 @@ Function ReadFormat(bFormat)
 
 Procedure __SetFormat(bFormat)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
       IF hb_IsEvalItem(bFormat)
@@ -294,9 +294,9 @@ Procedure __SetFormat(bFormat)
 
 Function RangeCheck(oGet, xDummy, xLow, xHigh)
 
-   LOCAL xValue
-   LOCAL cMessage
-   LOCAL nKey
+   Local xValue
+   Local cMessage
+   Local nKey
 
    HB_SYMBOL_UNUSED(xDummy)
 

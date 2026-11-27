@@ -58,7 +58,7 @@ REQUEST hb_ZCompress
 
 Function __hbdoc_FromSource(cFile, aErrMsg)
 
-   LOCAL aEntry := {}
+   Local aEntry := {}
 
    IF hb_IsString(cFile)
       __hbdoc__read_stream(aEntry, cFile, "(stream)", NIL, aErrMsg)
@@ -68,11 +68,11 @@ Function __hbdoc_FromSource(cFile, aErrMsg)
 
 Function __hbdoc_DirLastModified(cDir)
 
-   LOCAL aFile
-   LOCAL cDocDir
-   LOCAL aDocFile
-   LOCAL tDoc
-   LOCAL tLast := 0d0
+   Local aFile
+   Local cDocDir
+   Local aDocFile
+   Local tDoc
+   Local tLast := 0d0
 
    IF hb_IsString(cDir)
 
@@ -99,10 +99,10 @@ Function __hbdoc_DirLastModified(cDir)
 
 Function __hbdoc_LoadDir(cDir, cName, aErrMsg)
 
-   LOCAL hMeta
-   LOCAL nCount
-   LOCAL aFile
-   LOCAL aEntry
+   Local hMeta
+   Local nCount
+   Local aFile
+   Local aEntry
 
    IF hb_IsString(cDir)
 
@@ -136,8 +136,8 @@ Function __hbdoc_LoadDir(cDir, cName, aErrMsg)
 
 Static Procedure __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
 
-   LOCAL aFile
-   LOCAL nCount
+   Local aFile
+   Local nCount
 
    hMeta["_LANG"] := hb_FNameName(hb_DirSepDel(cDir))
 
@@ -155,13 +155,13 @@ Static Procedure __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
 
 Static Procedure __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
 
-   LOCAL aFilenameTemplateMap := { ;
+   Local aFilenameTemplateMap := { ;
       "FUNCTION"   => "func_"  , ;
       "C FUNCTION" => "cfunc_" , ;
       "CLASS"      => "class_" , ;
       "COMMAND"    => "cmd_"   , ;
       "PP"         => "pp_"    }
-   LOCAL tmp
+   Local tmp
 
    IF "TEMPLATE" $ hMeta
       hb_HDel(hMeta, "TEMPLATE")
@@ -182,12 +182,12 @@ Static Procedure __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
 
 Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
 
-   LOCAL hEntry := NIL
-   LOCAL cLine
-   LOCAL cSection
-   LOCAL tmp
-   LOCAL nLine
-   LOCAL nStartCol
+   Local hEntry := NIL
+   Local cLine
+   Local cSection
+   Local tmp
+   Local nLine
+   Local nStartCol
 
    cFile := StrTran(cFile, Chr(13))
    cFile := StrTran(cFile, Chr(9), " ")
@@ -255,11 +255,11 @@ Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
 
 Function __hbdoc_ToSource(aEntry)
 
-   LOCAL cSource := ""
-   LOCAL hEntry
-   LOCAL item
-   LOCAL cLine
-   LOCAL cLineOut
+   Local cSource := ""
+   Local hEntry
+   Local item
+   Local cLine
+   Local cLineOut
 
    IF hb_IsArray(aEntry)
       For Each hEntry In aEntry
@@ -283,11 +283,11 @@ Function __hbdoc_ToSource(aEntry)
 
 Function __hbdoc_FilterOut(cFile)
 
-   LOCAL lEntry := False
-   LOCAL cLine
-   LOCAL cOK := ""
-   LOCAL nToSkip := 0
-   LOCAL nEmpty := 0
+   Local lEntry := False
+   Local cLine
+   Local cOK := ""
+   Local nToSkip := 0
+   Local nEmpty := 0
 
    cFile := StrTran(cFile, Chr(13))
    cFile := StrTran(cFile, Chr(9), " ")
@@ -342,7 +342,7 @@ Function __hbdoc_FilterOut(cFile)
 
 Function __hbdoc_SaveHBD(cFileName, aEntry)
 
-   LOCAL fhnd
+   Local fhnd
 
    IF hb_IsString(cFileName) .AND. hb_IsArray(aEntry)
 
@@ -362,9 +362,9 @@ Function __hbdoc_SaveHBD(cFileName, aEntry)
 
 Function __hbdoc_LoadHBD(cFileName)
 
-   LOCAL fhnd
-   LOCAL aEntry := NIL
-   LOCAL cBuffer
+   Local fhnd
+   Local aEntry := NIL
+   Local cBuffer
 
    IF hb_IsString(cFileName)
 

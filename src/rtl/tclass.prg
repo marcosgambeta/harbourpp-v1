@@ -70,7 +70,7 @@ Function HBClass()
 
    STATIC s_hClass  /* NOTE: Automatically defaults to NIL */
 
-   LOCAL hClass
+   Local hClass
 
    IF s_hClass == NIL .AND. __clsLockDef(@s_hClass)
 
@@ -155,8 +155,8 @@ Function HBClass()
 
 Static Function New(cClassName, xSuper, sClassFunc, lModuleFriendly)
 
-   LOCAL Self := QSelf()
-   LOCAL i
+   Local Self := QSelf()
+   Local i
 
    Do Case
    Case hb_IsSymbol(xSuper)
@@ -195,11 +195,11 @@ Static Function New(cClassName, xSuper, sClassFunc, lModuleFriendly)
 
 Static Procedure Create(/* MetaClass */)
 
-   LOCAL Self := QSelf()
-   LOCAL n
-   LOCAL nClassBegin
-   LOCAL hClass
-   LOCAL ahSuper := {}
+   Local Self := QSelf()
+   Local n
+   Local nClassBegin
+   Local hClass
+   Local ahSuper := {}
 
 #if 0
    ::Class := MetaClass
@@ -312,7 +312,7 @@ Static Procedure AddData(cData, xInit, cType, nScope, lNoinit)
 
 Static Procedure AddMultiData(cType, xInit, nScope, aData, lNoInit)
 
-   LOCAL cData
+   Local cData
 
    For Each cData In aData
       IF hb_IsString(cData)
@@ -355,7 +355,7 @@ Static Procedure AddClassData(cData, xInit, cType, nScope, lNoInit)
 
 Static Procedure AddMultiClsData(cType, xInit, nScope, aData, lNoInit)
 
-   LOCAL cData
+   Local cData
 
    For Each cData In aData
       IF hb_IsString(cData)
@@ -391,7 +391,7 @@ Static Procedure AddVirtual(cMethod)
 
 Static Procedure AddDelegate(xMethod, cDelegMsg, cObject, nScope)
 
-   LOCAL mth
+   Local mth
 
    Do Case
    Case hb_IsString(xMethod)
@@ -406,7 +406,7 @@ Static Procedure AddDelegate(xMethod, cDelegMsg, cObject, nScope)
 
 Static Procedure AddFriendClass(...)
 
-   LOCAL Self := QSelf()
+   Local Self := QSelf()
 
    AEval(hb_AParams(), {|sClass|AAdd(::asFriendClass, sClass)})
 
@@ -414,7 +414,7 @@ Static Procedure AddFriendClass(...)
 
 Static Procedure AddFriendFunc(...)
 
-   LOCAL Self := QSelf()
+   Local Self := QSelf()
 
    AEval(hb_AParams(), {|sFunc|AAdd(::asFriendFunc, sFunc)})
 

@@ -135,8 +135,8 @@ METHOD HBDbMenu:New()
 
 METHOD HBDbMenu:AddItem(oMenuItem)
 
-   LOCAL oLastMenu := ATail(::aMenus)
-   LOCAL oLastMenuItem
+   Local oLastMenu := ATail(::aMenus)
+   Local oLastMenuItem
 
    IF oLastMenu:lPopup
       oMenuItem:nRow := Len(oLastMenu:aItems)
@@ -158,8 +158,8 @@ METHOD HBDbMenu:AddItem(oMenuItem)
 
 METHOD PROCEDURE HBDbMenu:Build()
 
-   LOCAL nPos := 0
-   LOCAL oMenuItem
+   Local nPos := 0
+   Local oMenuItem
 
    IF Len(::aMenus) == 1           // pulldown menu
       For Each oMenuItem In ::aItems
@@ -192,7 +192,7 @@ METHOD PROCEDURE HBDbMenu:Build()
 
 METHOD PROCEDURE HBDbMenu:ClosePopup(nPopup)
 
-   LOCAL oPopup
+   Local oPopup
 
    IF nPopup != 0
       oPopup := ::aItems[nPopup]:bAction
@@ -207,7 +207,7 @@ METHOD PROCEDURE HBDbMenu:ClosePopup(nPopup)
 
 METHOD PROCEDURE HBDbMenu:DeHilite()
 
-   LOCAL oMenuItem := ::aItems[::nOpenPopup]
+   Local oMenuItem := ::aItems[::nOpenPopup]
 
    oMenuItem:Display(::cClrPopup, ::cClrHotKey)
 
@@ -215,7 +215,7 @@ METHOD PROCEDURE HBDbMenu:DeHilite()
 
 METHOD PROCEDURE HBDbMenu:Display()
 
-   LOCAL oMenuItem
+   Local oMenuItem
 
    IF ::lPopup
       ::cBackImage := __dbgSaveScreen(::nTop, ::nLeft, ::nBottom + 1, ::nRight + 2)
@@ -237,8 +237,8 @@ METHOD PROCEDURE HBDbMenu:Display()
 
 METHOD PROCEDURE HBDbMenu:EvalAction()
 
-   LOCAL oPopup := ::aItems[::nOpenPopup]:bAction
-   LOCAL oMenuItem := oPopup:aItems[oPopup:nOpenPopup]
+   Local oPopup := ::aItems[::nOpenPopup]:bAction
+   Local oMenuItem := oPopup:aItems[oPopup:nOpenPopup]
 
    IF oMenuItem:bAction != NIL
       ::Close()
@@ -249,7 +249,7 @@ METHOD PROCEDURE HBDbMenu:EvalAction()
 
 METHOD HBDbMenu:GetHotKeyPos(cKey)
 
-   LOCAL oMenuItem
+   Local oMenuItem
 
    For Each oMenuItem In ::aItems
       IF Upper(SubStr(oMenuItem:cPrompt, At("~", oMenuItem:cPrompt) + 1, 1)) == cKey
@@ -261,7 +261,7 @@ METHOD HBDbMenu:GetHotKeyPos(cKey)
 
 METHOD HBDbMenu:GetItemOrdByCoors(nRow, nCol)
 
-   LOCAL oMenuItem
+   Local oMenuItem
 
    For Each oMenuItem In ::aItems
       IF oMenuItem:nRow == nRow .AND. nCol >= oMenuItem:nCol .AND. ;
@@ -274,8 +274,8 @@ METHOD HBDbMenu:GetItemOrdByCoors(nRow, nCol)
 
 METHOD HBDbMenu:GetItemByIdent(uIdent)
 
-   LOCAL oMenuItem
-   LOCAL oItem
+   Local oMenuItem
+   Local oItem
 
    For Each oMenuItem In ::aItems
       IF hb_IsObject(oMenuItem:bAction)
@@ -292,7 +292,7 @@ METHOD HBDbMenu:GetItemByIdent(uIdent)
 
 METHOD PROCEDURE HBDbMenu:GoBottom()
 
-   LOCAL oPopup
+   Local oPopup
 
    IF ::IsOpen()
       oPopup := ::aItems[::nOpenPopup]:bAction
@@ -304,7 +304,7 @@ METHOD PROCEDURE HBDbMenu:GoBottom()
 
 METHOD PROCEDURE HBDbMenu:GoLeft()
 
-   LOCAL oMenuItem := ::aItems[::nOpenPopup]
+   Local oMenuItem := ::aItems[::nOpenPopup]
 
    IF ::nOpenPopup != 0
       IF ::lPopup
@@ -328,7 +328,7 @@ METHOD PROCEDURE HBDbMenu:GoLeft()
 
 METHOD PROCEDURE HBDbMenu:GoRight()
 
-   LOCAL oMenuItem := ::aItems[::nOpenPopup]
+   Local oMenuItem := ::aItems[::nOpenPopup]
 
    IF ::nOpenPopup != 0
       IF ::lPopup
@@ -352,7 +352,7 @@ METHOD PROCEDURE HBDbMenu:GoRight()
 
 METHOD PROCEDURE HBDbMenu:GoTop()
 
-   LOCAL oPopup
+   Local oPopup
 
    IF ::IsOpen()
       oPopup := ::aItems[::nOpenPopup]:bAction
@@ -364,8 +364,8 @@ METHOD PROCEDURE HBDbMenu:GoTop()
 
 METHOD PROCEDURE HBDbMenu:LoadColors()
 
-   LOCAL aColors := __dbgColors()
-   LOCAL oMenuItem
+   Local aColors := __dbgColors()
+   Local oMenuItem
 
    ::cClrPopup    := aColors[ 8]
    ::cClrHotKey   := aColors[ 9]
@@ -382,7 +382,7 @@ METHOD PROCEDURE HBDbMenu:LoadColors()
 
 METHOD PROCEDURE HBDbMenu:Refresh()
 
-   LOCAL oMenuItem
+   Local oMenuItem
 
    DispBegin()
 
@@ -412,8 +412,8 @@ METHOD PROCEDURE HBDbMenu:ShowPopup(nPopup)
 
 METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
 
-   LOCAL nPopup
-   LOCAL oPopup
+   Local nPopup
+   Local oPopup
 
    Switch nKey
    Case K_LBUTTONDOWN
@@ -493,7 +493,7 @@ METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
 
 Function __dbgAltToKey(nKey)
 
-   LOCAL nIndex := AScan({ ;
+   Local nIndex := AScan({ ;
       K_ALT_A, K_ALT_B, K_ALT_C, K_ALT_D, K_ALT_E, K_ALT_F, ;
       K_ALT_G, K_ALT_H, K_ALT_I, K_ALT_J, K_ALT_K, K_ALT_L, ;
       K_ALT_M, K_ALT_N, K_ALT_O, K_ALT_P, K_ALT_Q, K_ALT_R, ;

@@ -52,10 +52,10 @@ Function __dbCopyStruct(cFileName, aFieldList)
 
 Function __dbCopyXStruct(cFileName)
 
-   LOCAL nOldArea
-   LOCAL aStruct
-   LOCAL oError
-   LOCAL lError := False
+   Local nOldArea
+   Local aStruct
+   Local oError
+   Local lError := False
 
    IF Empty(aStruct := dbStruct())
       Return False
@@ -99,9 +99,9 @@ Function __dbCopyXStruct(cFileName)
 
 Function __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnection)
 
-   LOCAL nOldArea := Select()
-   LOCAL aStruct := {}
-   LOCAL oError
+   Local nOldArea := Select()
+   Local aStruct := {}
+   Local oError
 
    __defaultNIL(@lNew, False)
 
@@ -158,9 +158,9 @@ Function __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
 
 Function __dbStructFilter(aStruct, aFieldList)
 
-   LOCAL aStructFiltered
-   LOCAL bFindName
-   LOCAL cName
+   Local aStructFiltered
+   Local bFindName
+   Local cName
 
    IF Empty(aFieldList)
       RETURN aStruct

@@ -107,12 +107,12 @@ ENDCLASS
 
 METHOD ScrollBar:display()
 
-   LOCAL cColor
-   LOCAL cStyle
-   LOCAL nOffset
-   LOCAL nStart
-   LOCAL nEnd
-   LOCAL nPos
+   Local cColor
+   Local cStyle
+   Local nOffset
+   Local nStart
+   Local nEnd
+   Local nPos
 
    IF ::CalcThumbPos()
 
@@ -155,7 +155,7 @@ METHOD ScrollBar:display()
 
 METHOD ScrollBar:update()
 
-   LOCAL nOldThumbPos := ::nThumbPos
+   Local nOldThumbPos := ::nThumbPos
 
    IF hb_IsEvalItem(::bSBlock)
       Eval(::bSBlock)
@@ -355,8 +355,8 @@ METHOD ScrollBar:total(nTotal)
 
 METHOD ScrollBar:CalcThumbPos()
 
-   LOCAL nBarLength := ::nBarLength
-   LOCAL nTotal := ::nTotal
+   Local nBarLength := ::nBarLength
+   Local nTotal := ::nTotal
 
    IF nBarLength < 2 .OR. nTotal < 2
       Return False
@@ -380,7 +380,7 @@ METHOD ScrollBar:CalcThumbPos()
 
 METHOD ScrollBar:Init(nStart, nEnd, nOffset, bSBlock, nOrient)
 
-   LOCAL cColor
+   Local cColor
 
    __defaultNIL(@nOrient, SCROLL_VERTICAL)
 

@@ -63,15 +63,15 @@ ENDCLASS
 
 METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
 
-   LOCAL nPos
-   LOCAL cLine
-   LOCAL cProp
-   LOCAL cInd
-   LOCAL uValue
-   LOCAL aWords
-   LOCAL lStart := True
-   LOCAL aObjects := {Self}
-   LOCAL bError
+   Local nPos
+   Local cLine
+   Local cProp
+   Local cInd
+   Local uValue
+   Local aWords
+   Local lStart := True
+   Local aObjects := {Self}
+   Local bError
 
    IF Empty(cObjectText)
       Return False
@@ -142,13 +142,13 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
 
 METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
-   LOCAL oNew := &(::ClassName() + "()"):CreateNew()
-   LOCAL cProp
-   LOCAL uValue
-   LOCAL uNewValue
-   LOCAL cObject
-   LOCAL cType
-   LOCAL lSpacer := True
+   Local oNew := &(::ClassName() + "()"):CreateNew()
+   Local cProp
+   Local uValue
+   Local uNewValue
+   Local cObject
+   Local cType
+   Local lSpacer := True
 
    IF !hb_IsString(cObjectName)
       cObjectName := "o" + ::ClassName()
@@ -207,8 +207,8 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
 Static Function ArrayToText(aArray, cName, nIndent)
 
-   LOCAL cArray := hb_eol() + Space(nIndent) + "ARRAY ::" + cName + " LEN " + hb_ntos(Len(aArray)) + hb_eol()
-   LOCAL uValue
+   Local cArray := hb_eol() + Space(nIndent) + "ARRAY ::" + cName + " LEN " + hb_ntos(Len(aArray)) + hb_eol()
+   Local uValue
 
    For Each uValue In aArray
 

@@ -52,9 +52,9 @@
 
 Procedure __Dir(cFileMask)
 
-   LOCAL cPath
-   LOCAL cName
-   LOCAL cExt
+   Local cPath
+   Local cName
+   Local cExt
 
    IF Empty(cFileMask)
 
@@ -92,10 +92,10 @@ Procedure __Dir(cFileMask)
 
 Static Procedure PutDBF(aDirEntry)
 
-   LOCAL fhnd
-   LOCAL buffer
-   LOCAL nRecCount := 0
-   LOCAL dLastUpdate := hb_SToD()
+   Local fhnd
+   Local buffer
+   Local nRecCount := 0
+   Local dLastUpdate := hb_SToD()
 
    IF (fhnd := FOpen(aDirEntry[F_NAME])) != F_ERROR
 
@@ -116,8 +116,8 @@ Static Procedure PutDBF(aDirEntry)
 
 Static Procedure PutNormal(aDirEntry)
 
-   LOCAL cName
-   LOCAL cExt
+   Local cName
+   Local cExt
 
    hb_FNameSplit(aDirEntry[F_NAME], NIL, @cName, @cExt)
 

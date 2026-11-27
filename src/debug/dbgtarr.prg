@@ -81,11 +81,11 @@ METHOD HBDbArray:New(aArray, cVarName, lEditable)
 
 METHOD HBDbArray:addWindows(aArray, nRow)
 
-   LOCAL oBrwSets
-   LOCAL nSize := Len(aArray)
-   LOCAL oWndSets
-   LOCAL nColWidth
-   LOCAL oCol
+   Local oBrwSets
+   Local nSize := Len(aArray)
+   Local oWndSets
+   Local nColWidth
+   Local oCol
 
    IF nSize < MaxRow() - 2
       IF hb_IsNumeric(nRow)
@@ -131,8 +131,8 @@ METHOD HBDbArray:addWindows(aArray, nRow)
 
 METHOD PROCEDURE HBDbArray:doGet(oBrowse, pItem, nSet)
 
-   LOCAL oErr
-   LOCAL cValue
+   Local oErr
+   Local cValue
 
    // make sure browse is stable
    oBrowse:forceStable()
@@ -152,8 +152,8 @@ METHOD PROCEDURE HBDbArray:doGet(oBrowse, pItem, nSet)
 
 METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
 
-   LOCAL nSet := oBrwSets:cargo[1]
-   LOCAL cOldName := ::arrayName
+   Local nSet := oBrwSets:cargo[1]
+   Local cOldName := ::arrayName
 
    Switch nKey
    Case K_UP

@@ -47,7 +47,7 @@
 
 Function TBrowseDB(nTop, nLeft, nBottom, nRight)
 
-   LOCAL oBrowse := TBrowseNew(nTop, nLeft, nBottom, nRight)
+   Local oBrowse := TBrowseNew(nTop, nLeft, nBottom, nRight)
 
    oBrowse:SkipBlock     := {|nRecs|__dbSkipper(nRecs)}
    oBrowse:GoTopBlock    := {||dbGoTop()}
@@ -59,7 +59,7 @@ Function TBrowseDB(nTop, nLeft, nBottom, nRight)
 
 Function __dbSkipper(nRecs)
 
-   LOCAL nSkipped := 0
+   Local nSkipped := 0
 
    IF LastRec() != 0
       Do Case

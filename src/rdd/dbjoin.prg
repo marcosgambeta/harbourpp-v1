@@ -52,13 +52,13 @@
 
 Function __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
-   LOCAL nMaster := Select()
-   LOCAL nDetail := Select(cAlias)
-   LOCAL nResult
-   LOCAL aStruct
-   LOCAL aJoinList
-   LOCAL oError
-   LOCAL lError := False
+   Local nMaster := Select()
+   Local nDetail := Select(cAlias)
+   Local nResult
+   Local aStruct
+   Local aJoinList
+   Local oError
+   Local lError := False
 
    dbSelectArea(nMaster)
    IF Empty(aStruct := __FieldTwo(cAlias, aFields))
@@ -113,10 +113,10 @@ Function __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
 Static Function __FieldTwo(cAlias, aFields)
 
-   LOCAL aFldTemp
-   LOCAL bFind
-   LOCAL aStruct
-   LOCAL cField
+   Local aFldTemp
+   Local bFind
+   Local aStruct
+   Local cField
 
    IF Empty(aFields)
       RETURN dbStruct()
@@ -139,9 +139,9 @@ Static Function __FieldTwo(cAlias, aFields)
 
 Static Function __JoinList(nMaster, nDetail, nResult, aStruct)
 
-   LOCAL aList := {}
-   LOCAL nPos
-   LOCAL i
+   Local aList := {}
+   Local nPos
+   Local i
 
    FOR i := 1 TO Len(aStruct)
       Do Case
@@ -156,7 +156,7 @@ Static Function __JoinList(nMaster, nDetail, nResult, aStruct)
 
 Static Procedure __doJoinList(aList)
 
-   LOCAL aJoin
+   Local aJoin
 
    IF Len(aList) > 0
 

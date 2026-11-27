@@ -150,8 +150,8 @@ METHOD HBGetList:ReadModal()
 #endif
 
 #ifdef HB_COMPAT_C53
-   LOCAL lMsgFlag
-   LOCAL aMsg
+   Local lMsgFlag
+   Local aMsg
 #endif
 
 #ifdef HB_COMPAT_C53
@@ -232,12 +232,12 @@ METHOD HBGetList:SetFocus()
 
 METHOD HBGetList:Reader(oMenu, aMsg)
 
-   LOCAL oGet := ::oGet
-   LOCAL nRow
-   LOCAL nCol
+   Local oGet := ::oGet
+   Local nRow
+   Local nCol
 #ifdef HB_COMPAT_C53
-   LOCAL nOldCursor
-   LOCAL nKey
+   Local nOldCursor
+   Local nKey
 #endif
 
 #ifdef HB_COMPAT_C53
@@ -303,13 +303,13 @@ METHOD HBGetList:Reader(oMenu, aMsg)
 
 METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
 
-   LOCAL cKey
-   LOCAL bKeyBlock
+   Local cKey
+   Local bKeyBlock
 #ifdef HB_COMPAT_C53
-   LOCAL nMRow
-   LOCAL nMCol
-   LOCAL nButton
-   LOCAL nHotItem
+   Local nMRow
+   Local nMCol
+   Local nButton
+   Local nHotItem
 #endif
 
    hb_default(@oGet, ::oGet)
@@ -522,8 +522,8 @@ METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
 
 METHOD HBGetList:GetPreValidate(oGet, aMsg)
 
-   LOCAL lUpdated
-   LOCAL lWhen := True
+   Local lUpdated
+   Local lWhen := True
 
    hb_default(@oGet, ::oGet)
 
@@ -557,10 +557,10 @@ METHOD HBGetList:GetPreValidate(oGet, aMsg)
 
 METHOD HBGetList:GetPostValidate(oGet, aMsg)
 
-   LOCAL lUpdated
-   LOCAL lValid := True
+   Local lUpdated
+   Local lValid := True
 #ifdef HB_COMPAT_C53
-   LOCAL nOldCursor
+   Local nOldCursor
 #endif
 
    hb_default(@oGet, ::oGet)
@@ -620,8 +620,8 @@ METHOD HBGetList:GetPostValidate(oGet, aMsg)
 
 METHOD HBGetList:GetDoSetKey(bKeyBlock, oGet)
 
-   LOCAL lUpdated
-   LOCAL lSetKey
+   Local lUpdated
+   Local lSetKey
 
    hb_default(@oGet, ::oGet)
 
@@ -649,7 +649,7 @@ METHOD HBGetList:GetDoSetKey(bKeyBlock, oGet)
 
 METHOD HBGetList:Settle(nPos, lInit)
 
-   LOCAL nExitState
+   Local nExitState
 
    hb_default(@nPos, ::nPos)
 
@@ -751,7 +751,7 @@ METHOD HBGetList:GetReadVar()
 
 METHOD HBGetList:SetFormat(bFormat)
 
-   LOCAL bSavFormat := ::bFormat
+   Local bSavFormat := ::bFormat
 
    IF hb_IsEvalItem(bFormat)
       ::bFormat := bFormat
@@ -761,7 +761,7 @@ METHOD HBGetList:SetFormat(bFormat)
 
 METHOD HBGetList:KillRead(lKill)
 
-   LOCAL lSavKill := ::lKillRead
+   Local lSavKill := ::lKillRead
 
    IF PCount() > 0
       ::lKillRead := lKill
@@ -771,7 +771,7 @@ METHOD HBGetList:KillRead(lKill)
 
 METHOD HBGetList:GetActive(oGet)
 
-   LOCAL oOldGet := ::oActiveGet
+   Local oOldGet := ::oActiveGet
 
    IF PCount() > 0
       ::oActiveGet := oGet
@@ -795,7 +795,7 @@ METHOD HBGetList:ShowScoreboard()
 
 METHOD HBGetList:DateMsg()
 
-   LOCAL nKey
+   Local nKey
 
    IF Set(_SET_SCOREBOARD)
 
@@ -813,7 +813,7 @@ METHOD HBGetList:DateMsg()
 
 METHOD HBGetList:ReadVar(cNewVarName)
 
-   LOCAL cOldName := ::cVarName
+   Local cOldName := ::cVarName
 
    IF hb_IsString(cNewVarName)
       ::cVarName := cNewVarName
@@ -823,7 +823,7 @@ METHOD HBGetList:ReadVar(cNewVarName)
 
 METHOD HBGetList:ReadUpdated(lUpdated)
 
-   LOCAL lSavUpdated := ::lUpdated
+   Local lSavUpdated := ::lUpdated
 
    IF PCount() > 0
       ::lUpdated := lUpdated
@@ -835,7 +835,7 @@ METHOD HBGetList:ReadUpdated(lUpdated)
 
 METHOD HBGetList:GUIReader(oGet, oMenu, aMsg)
 
-   LOCAL oGUI
+   Local oGUI
 
    IF hb_IsObject(oGet:control) .AND. ::nLastExitState == GE_SHORTCUT .OR. ::nLastExitState == GE_MOUSEHIT .OR. ::GetPreValidate(oGet, aMsg)
 
@@ -911,14 +911,14 @@ METHOD HBGetList:GUIReader(oGet, oMenu, aMsg)
 
 METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
 
-   LOCAL bKeyBlock
-   LOCAL oTheClass
-   LOCAL nHotItem
-   LOCAL lClose
-   LOCAL nMRow
-   LOCAL nMCol
-   LOCAL nButton
-   LOCAL cKey
+   Local bKeyBlock
+   Local oTheClass
+   Local nHotItem
+   Local lClose
+   Local nMRow
+   Local nMCol
+   Local nButton
+   Local cKey
 
    // Check for SET KEY first
    IF (bKeyBlock := SetKey(nKey)) != NIL
@@ -1112,8 +1112,8 @@ METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
 
 METHOD HBGetList:GUIPreValidate(oGet, oGUI, aMsg)
 
-   LOCAL lUpdated
-   LOCAL lWhen := True
+   Local lUpdated
+   Local lWhen := True
 
    hb_default(@oGet, ::oGet)
 
@@ -1146,10 +1146,10 @@ METHOD HBGetList:GUIPreValidate(oGet, oGUI, aMsg)
 
 METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
 
-   LOCAL lUpdated
-   LOCAL lValid := True
-   LOCAL xOldValue
-   LOCAL xNewValue
+   Local lUpdated
+   Local lValid := True
+   Local xOldValue
+   Local xNewValue
 
    hb_default(@oGet, ::oGet)
 
@@ -1207,11 +1207,11 @@ METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
 
 METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
 
-   LOCAL bKeyBlock
-   LOCAL nMRow
-   LOCAL nMCol
-   LOCAL nButton
-   LOCAL nHotItem
+   Local bKeyBlock
+   Local nMRow
+   Local nMCol
+   Local nButton
+   Local nHotItem
 
    // Check for SET KEY first
    IF (bKeyBlock := SetKey(nKey)) != NIL
@@ -1304,12 +1304,12 @@ METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
 
 METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
 
-   LOCAL oTB
-   LOCAL nKey
-   LOCAL lAutoLite
-   LOCAL nSaveCursor
-   LOCAL nProcessed
-// LOCAL oGUI := oGet:control
+   Local oTB
+   Local nKey
+   Local lAutoLite
+   Local nSaveCursor
+   Local nProcessed
+// Local oGUI := oGet:control
 
    // Read the GET if the WHEN condition is satisfied
    IF hb_IsObject(oGet:control) .AND. ::nLastExitState == GE_SHORTCUT .OR. ::nLastExitState == GE_MOUSEHIT .OR. ::GetPreValidate(oGet, aMsg)
@@ -1387,15 +1387,15 @@ METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
 
 METHOD HBGetList:Accelerator(nKey, aMsg)
 
-   LOCAL nGet
-   LOCAL oGet
-   LOCAL nHotPos
-   LOCAL cKey
-   LOCAL cCaption
-   LOCAL nStart
-   LOCAL nEnd
-   LOCAL nIteration
-   LOCAL lGUI
+   Local nGet
+   Local oGet
+   Local nHotPos
+   Local cKey
+   Local cCaption
+   Local nStart
+   Local nEnd
+   Local nIteration
+   Local lGUI
 
    Do Case
    Case nKey >= K_ALT_Q .AND. nKey <= K_ALT_P ; cKey := SubStr("qwertyuiop", nKey - K_ALT_Q + 1, 1)
@@ -1461,8 +1461,8 @@ METHOD HBGetList:Accelerator(nKey, aMsg)
 
 METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
 
-   LOCAL oGet
-   LOCAL lGUI
+   Local oGet
+   Local lGUI
 
    ::nNextGet := 0
 
@@ -1542,7 +1542,7 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
 
 METHOD HBGetList:ReadStats(nElement, xNewValue)
 
-   LOCAL xRetVal
+   Local xRetVal
 
    Switch nElement
    Case SLUPDATED      ; xRetVal := ::lUpdated       ; EXIT
@@ -1593,8 +1593,8 @@ METHOD HBGetList:ReadStats(nElement, xNewValue)
 METHOD HBGetList:ShowGetMsg(oGet, aMsg)
 
 #ifdef HB_COMPAT_C53
-   LOCAL cMsg
-   LOCAL lMOldState
+   Local cMsg
+   Local lMOldState
 
    IF !Empty(aMsg) .AND. aMsg[MSGFLAG]
 
@@ -1618,9 +1618,9 @@ METHOD HBGetList:ShowGetMsg(oGet, aMsg)
 METHOD HBGetList:EraseGetMsg(aMsg)
 
 #ifdef HB_COMPAT_C53
-   LOCAL nRow := Row()
-   LOCAL nCol := Col()
-   LOCAL lMOldState
+   Local nRow := Row()
+   Local nCol := Col()
+   Local lMOldState
 
    IF !Empty(aMsg) .AND. aMsg[MSGFLAG]
       lMOldState := MSetCursor(False)

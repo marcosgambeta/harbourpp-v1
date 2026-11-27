@@ -145,7 +145,7 @@ METHOD HBDbBrowser:SetColorSpec(cColors)
 
 METHOD HBDbBrowser:MoveCursor(nSkip)
 
-   LOCAL nSkipped
+   Local nSkipped
 
    nSkipped := ::GoTo(::rowPos + ::nFirstVisible - 1 + nSkip)
    IF !::hitBottom .OR. nSkipped != 0
@@ -163,12 +163,12 @@ METHOD HBDbBrowser:MoveCursor(nSkip)
 
 METHOD HBDbBrowser:DispRow(nRow, lHiLite)
 
-   LOCAL nColX
-   LOCAL nWid
-   LOCAL aClr
-   LOCAL nClr
-   LOCAL xData
-   LOCAL oCol
+   Local nColX
+   Local nWid
+   Local aClr
+   Local nClr
+   Local xData
+   Local oCol
 
    ::GoTo(::nFirstVisible + nRow - 1)
    IF ::hitBottom
@@ -201,7 +201,7 @@ METHOD HBDbBrowser:DispRow(nRow, lHiLite)
 
 METHOD HBDbBrowser:ForceStable()
 
-   LOCAL nRow
+   Local nRow
 
    IF !::lConfigured
       ::Configure()
@@ -221,8 +221,8 @@ METHOD HBDbBrowser:ForceStable()
 
 METHOD HBDbBrowser:GoTo(nRow)
 
-   LOCAL nOldRow := ::nFirstVisible + ::rowPos - 1
-   LOCAL nSkipped := 0
+   Local nOldRow := ::nFirstVisible + ::rowPos - 1
+   Local nSkipped := 0
 
    Eval(::goTopBlock)
    IF nRow == 1
@@ -236,7 +236,7 @@ METHOD HBDbBrowser:GoTo(nRow)
 
 METHOD HBDbBrowser:GoBottom()
 
-   LOCAL nScroll
+   Local nScroll
 
    Do While !::hitBottom
       ::PageDown()
@@ -251,7 +251,7 @@ METHOD HBDbBrowser:GoBottom()
 
 METHOD HBDbBrowser:Resize(nTop, nLeft, nBottom, nRight)
 
-   LOCAL lResize := False
+   Local lResize := False
 
    IF hb_IsNumeric(nTop) .AND. nTop != ::nTop
       ::nTop := nTop

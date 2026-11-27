@@ -50,8 +50,8 @@
 // NOTE: Can hurt if there are symlinks on the way.
 Function hb_PathNormalize(cPath)
 
-   LOCAL aDir
-   LOCAL cDir
+   Local aDir
+   Local cDir
 
    IF !hb_IsString(cPath)
       RETURN ""
@@ -100,11 +100,11 @@ Function hb_PathNormalize(cPath)
 
 Function hb_PathJoin(cPathA, cPathR)
 
-   LOCAL cDirA
-   LOCAL cDirR
-   LOCAL cDriveR
-   LOCAL cNameR
-   LOCAL cExtR
+   Local cDirA
+   Local cDirR
+   Local cDriveR
+   Local cNameR
+   Local cExtR
 
    IF !hb_IsString(cPathR)
       RETURN ""
@@ -128,12 +128,12 @@ Function hb_PathJoin(cPathA, cPathR)
 
 Function hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
 
-   LOCAL tmp
-   LOCAL aPathBase
-   LOCAL aPathTarget
-   LOCAL cTestBase
-   LOCAL cTestTarget
-   LOCAL cTargetFileName
+   Local tmp
+   Local aPathBase
+   Local aPathTarget
+   Local cTestBase
+   Local cTestTarget
+   Local cTargetFileName
 
    IF !hb_IsString(cPathBase) .OR. !hb_IsString(cPathTarget)
       RETURN ""
@@ -185,9 +185,9 @@ Function hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
 
 Static Function s_FN_ToArray(cPath, /* @ */ cFileName)
 
-   LOCAL cDir
-   LOCAL cName
-   LOCAL cExt
+   Local cDir
+   Local cName
+   Local cExt
 
    hb_FNameSplit(cPath, @cDir, @cName, @cExt)
 
@@ -199,9 +199,9 @@ Static Function s_FN_ToArray(cPath, /* @ */ cFileName)
 
 Static Function s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
 
-   LOCAL nTo := Len(aPath)
-   LOCAL cDir
-   LOCAL tmp
+   Local nTo := Len(aPath)
+   Local cDir
+   Local tmp
 
    IF nFrom > Len(aPath) .OR. nTo < 1
       RETURN ""
@@ -269,9 +269,9 @@ Function hb_DirSepToOS(cFileName)
 
 Function hb_DirBuild(cDir)
 
-   LOCAL cDirTemp
-   LOCAL cDirItem
-   LOCAL tmp
+   Local cDirTemp
+   Local cDirItem
+   Local tmp
 
    IF !hb_IsString(cDir)
       Return False
@@ -320,7 +320,7 @@ Function hb_DirBuild(cDir)
 
 Function hb_DirUnbuild(cDir)
 
-   LOCAL tmp
+   Local tmp
 
    IF !hb_IsString(cDir)
       Return False

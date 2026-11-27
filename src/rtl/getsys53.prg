@@ -74,13 +74,13 @@ Procedure GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
 
 Function GUIPreValidate(oGet, oGUI, aMsg)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    RETURN IIf(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), False)
 
 Function GUIPostValidate(oGet, oGUI, aMsg)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    RETURN IIf(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), False)
 
@@ -126,7 +126,7 @@ Function HitTest(oGetList, nMRow, nMCol, aMsg)
 
 Procedure ShowGetMsg(oGet, aMsg)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
       oGetList:ShowGetMsg(oGet, aMsg)
@@ -136,7 +136,7 @@ Procedure ShowGetMsg(oGet, aMsg)
 
 Procedure EraseGetMsg(oGet, aMsg)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    HB_SYMBOL_UNUSED(oGet)
 
@@ -148,7 +148,7 @@ Procedure EraseGetMsg(oGet, aMsg)
 
 Function ReadStats(nElement, xNewValue)
 
-   LOCAL oGetList := __GetListActive()
+   Local oGetList := __GetListActive()
 
    IF oGetList != NIL
       IF PCount() > 1

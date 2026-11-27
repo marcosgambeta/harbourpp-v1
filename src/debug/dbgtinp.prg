@@ -139,7 +139,7 @@ METHOD HBDbInput:showCursor()
 
 METHOD HBDbInput:applyKey(nKey)
 
-   LOCAL lUpdate := True
+   Local lUpdate := True
 
    Switch nKey
    Case K_HOME

@@ -18,27 +18,27 @@
 
 Function AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos, nHiLiteRow)
 
-   LOCAL nNumCols           // Number of columns in the window
-   LOCAL nNumRows           // Number of rows in the window
-   LOCAL nRowsClr           // Number of rows to clear
-   LOCAL alSelect           // Select permission
-   LOCAL nNewPos   := 0     // The next item to be selected
-   LOCAL lFinished          // Is processing finished?
-   LOCAL nKey      := 0     // The keystroke to be processed
-   LOCAL nMode              // The current operating mode
-   LOCAL nAtTop             // The number of the item at the top
-   LOCAL nItems    := 0     // The number of items
-   LOCAL nGap               // The number of lines between top and current lines
+   Local nNumCols           // Number of columns in the window
+   Local nNumRows           // Number of rows in the window
+   Local nRowsClr           // Number of rows to clear
+   Local alSelect           // Select permission
+   Local nNewPos   := 0     // The next item to be selected
+   Local lFinished          // Is processing finished?
+   Local nKey      := 0     // The keystroke to be processed
+   Local nMode              // The current operating mode
+   Local nAtTop             // The number of the item at the top
+   Local nItems    := 0     // The number of items
+   Local nGap               // The number of lines between top and current lines
    // Block used to search for items
-   LOCAL lUserFunc          // Is a user function to be used?
-   LOCAL nUserFunc          // Return value from user function
-   LOCAL nSaveCsr
-   LOCAL nFrstItem := 0
-   LOCAL nLastItem := 0
+   Local lUserFunc          // Is a user function to be used?
+   Local nUserFunc          // Return value from user function
+   Local nSaveCsr
+   Local nFrstItem := 0
+   Local nLastItem := 0
    //
-   LOCAL bAction
-   LOCAL cKey
-   LOCAL nAux
+   Local bAction
+   Local cKey
+   Local nAux
 
    nTop := Int(hb_defaultValue(nTop, 0))
    nBottom := Int(hb_defaultValue(nBottom, 0))
@@ -567,9 +567,9 @@ Static Function HitTest(nTop, nLeft, nBottom, nRight, mRow, mCol)
 
 Static Procedure DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos, nAtTop, nArrLen, nRowsClr)
 
-   LOCAL nCntr
-   LOCAL nRow       // Screen row
-   LOCAL nIndex     // Array index
+   Local nCntr
+   Local nRow       // Screen row
+   Local nIndex     // Array index
 
    hb_default(@nRowsClr, nArrLen)
 
@@ -607,7 +607,7 @@ Static Procedure DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
 
 Static Function Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems, alSelect, acItems)
 
-   LOCAL nCntr
+   Local nCntr
 
    nFrstItem := nLastItem := nItems := 0
 
@@ -635,7 +635,7 @@ Static Function Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems,
 
 Static Function Ach_Select(alSelect, nPos)
 
-   LOCAL sel
+   Local sel
 
    IF nPos >= 1 .AND. nPos <= Len(alSelect)
       sel := alSelect[nPos]

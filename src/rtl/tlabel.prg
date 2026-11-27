@@ -111,14 +111,14 @@ ENDCLASS
 
 METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
-   LOCAL lPrintOn := False               // PRINTER status
-   LOCAL lConsoleOn                    // CONSOLE status
-   LOCAL cExtraFile
-   LOCAL lExtraState       // EXTRA file status
-   LOCAL xBreakVal
-   LOCAL lBroke := False
-   LOCAL err
-   LOCAL OldMargin
+   Local lPrintOn := False               // PRINTER status
+   Local lConsoleOn                    // CONSOLE status
+   Local cExtraFile
+   Local lExtraState       // EXTRA file status
+   Local xBreakVal
+   Local lBroke := False
+   Local err
+   Local OldMargin
 
    ::aBandToPrint := {}  // Array(5)
    ::nCurrentCol := 1
@@ -215,12 +215,12 @@ METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, 
 
 METHOD HBLabelForm:ExecuteLabel()
 
-   LOCAL nField
-   LOCAL aField
-   LOCAL nMoreLines
-   LOCAL aBuffer := {}
-   LOCAL cBuffer
-   LOCAL item
+   Local nField
+   Local aField
+   Local nMoreLines
+   Local aBuffer := {}
+   Local cBuffer
+   Local item
 
    // Load the current record into aBuffer
 
@@ -283,10 +283,10 @@ METHOD HBLabelForm:ExecuteLabel()
 
 METHOD HBLabelForm:SampleLabels()
 
-   LOCAL cKey
-   LOCAL lMoreSamples := True
-   LOCAL nField
-   LOCAL aBand := {}
+   Local cKey
+   Local lMoreSamples := True
+   Local nField
+   Local aBand := {}
 
    // Create the sample label row
 
@@ -325,15 +325,15 @@ METHOD HBLabelForm:SampleLabels()
 
 METHOD HBLabelForm:LoadLabel(cLblFile)
 
-   LOCAL i                              // Counters
-   LOCAL cBuff      := Space(BUFFSIZE)  // File buffer
-   LOCAL nHandle                        // File handle
-   LOCAL nOffset    := FILEOFFSET       // Offset into file
-   LOCAL cFieldText                     // Text expression container
-   LOCAL err                            // error object
-   LOCAL cPath             // iteration variable
+   Local i                              // Counters
+   Local cBuff      := Space(BUFFSIZE)  // File buffer
+   Local nHandle                        // File handle
+   Local nOffset    := FILEOFFSET       // Offset into file
+   Local cFieldText                     // Text expression container
+   Local err                            // error object
+   Local cPath             // iteration variable
    // Create and initialize default label array
-   LOCAL aLabel[LBL_COUNT]
+   Local aLabel[LBL_COUNT]
 
    aLabel[LBL_REMARK]  := Space(60)    // Label remark
    aLabel[LBL_HEIGHT]  := 5            // Label height

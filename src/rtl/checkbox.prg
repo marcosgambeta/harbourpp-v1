@@ -125,7 +125,7 @@ METHOD CheckBox:setFocus()
 
 METHOD CheckBox:select(lState)
 
-   LOCAL lOldState := ::lBuffer
+   Local lOldState := ::lBuffer
 
    ::lBuffer := IIf(hb_IsLogical(lState), lState, !::lBuffer)
 
@@ -156,8 +156,8 @@ METHOD CheckBox:killFocus()
 
 METHOD CheckBox:hitTest(nMRow, nMCol)
 
-   LOCAL nPosAccel
-   LOCAL nLenCaption
+   Local nPosAccel
+   Local nLenCaption
 
    IF nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + 3
       RETURN HTCLIENT
@@ -177,10 +177,10 @@ METHOD CheckBox:hitTest(nMRow, nMCol)
 
 METHOD CheckBox:display()
 
-   LOCAL cColor
-   LOCAL cStyle := ::cStyle
-   LOCAL cCaption
-   LOCAL nPos
+   Local cColor
+   Local cStyle := ::cStyle
+   Local cCaption
+   Local nPos
 
    DispBegin()
 
@@ -313,7 +313,7 @@ METHOD CheckBox:typeOut()
 
 METHOD CheckBox:Init(nRow, nCol, cCaption)
 
-   LOCAL cColor
+   Local cColor
 
    __defaultNIL(@cCaption, "")
 
@@ -338,7 +338,7 @@ METHOD CheckBox:Init(nRow, nCol, cCaption)
 
 Function _CheckBox_(lState, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, aBitmaps)
 
-   LOCAL o := HBCheckBox():New(Row(), Col(), cCaption)
+   Local o := HBCheckBox():New(Row(), Col(), cCaption)
 
    o:select(lState)
    o:caption   := cCaption

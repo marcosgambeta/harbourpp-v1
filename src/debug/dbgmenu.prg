@@ -58,7 +58,7 @@
 
 Function __dbgBuildMenu(oDebugger)  // Builds the debugger pulldown menu
 
-   LOCAL oMenu
+   Local oMenu
 
    MENU oMenu
       MENUITEM " ~File "

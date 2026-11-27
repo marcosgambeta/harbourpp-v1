@@ -102,18 +102,18 @@ ENDCLASS
 /* Standard Menu System Modal handling for Menu Items */
 METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
 
-   LOCAL oTopMenu := ::oMenu
-   LOCAL nReturn := 0
-   LOCAL nKey
-   LOCAL nNewItem
-   LOCAL lLeftDown
-   LOCAL oNewMenu
-   LOCAL nNewLevel
-   LOCAL oMenuItem
-   LOCAL nMenuItem
-   LOCAL nTemp
-   LOCAL bKeyBlock
-   LOCAL lSubMenu
+   Local oTopMenu := ::oMenu
+   Local nReturn := 0
+   Local nKey
+   Local nNewItem
+   Local lLeftDown
+   Local oNewMenu
+   Local nNewLevel
+   Local oMenuItem
+   Local nMenuItem
+   Local nTemp
+   Local bKeyBlock
+   Local lSubMenu
 
    ::nOldRow    := Row()
    ::nOldCol    := Col()
@@ -437,7 +437,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
    If selected MenuItem IsPopUp, assign ::oMenu. */
 METHOD HBMenuSys:PushMenu()
 
-   LOCAL oNewMenu := ::oMenu:getItem(::oMenu:current)
+   Local oNewMenu := ::oMenu:getItem(::oMenu:current)
 
    IF hb_IsObject(oNewMenu) .AND. oNewMenu:IsPopUp
 
@@ -469,8 +469,8 @@ METHOD HBMenuSys:PopMenu()
 /* Close PopUp Child MenuItem and Return to the upper MenuItem level. */
 METHOD HBMenuSys:PopChild(nNewLevel)
 
-   LOCAL oOldMenuItem
-   LOCAL nCurrent
+   Local oOldMenuItem
+   Local nCurrent
 
    IF (nCurrent := ::oMenu:current) != 0
       oOldMenuItem := ::oMenu:getItem(nCurrent)
@@ -498,8 +498,8 @@ METHOD HBMenuSys:PopAll()
 /* Eval() the Data block if selected MenuItem is !IsPopUp. */
 METHOD HBMenuSys:Execute()
 
-   LOCAL oNewMenu := ::oMenu:getItem(::oMenu:current)
-   LOCAL lPas := True
+   Local oNewMenu := ::oMenu:getItem(::oMenu:current)
+   Local lPas := True
 
    // Execute the Data block if selected MenuItem is !IsPopUp:
    IF hb_IsObject(oNewMenu) .AND. !oNewMenu:IsPopUp
@@ -560,8 +560,8 @@ METHOD HBMenuSys:MHitTest(oNewMenu, nNewLevel, nNewItem)
    Message area in both text or graphics mode. */
 METHOD HBMenuSys:ShowMsg(lMode)
 
-   LOCAL nCurrent
-   LOCAL cMsg
+   Local nCurrent
+   Local cMsg
 
    IF hb_defaultValue(::lOldMsgFlag, False)
       RestScreen(::nMsgRow, ::nMsgLeft, ::nMsgRow, ::nMsgRight, ::cMsgSaveS)

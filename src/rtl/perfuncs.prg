@@ -60,7 +60,7 @@ Function hb_SetObject(oSelf, bConstructor)
 
 Function hb_EndObject()
 
-   LOCAL oSelf
+   Local oSelf
 
    IF Len(t_aObjects) > 1
       ASize(t_aObjects, Len(t_aObjects) - 1)

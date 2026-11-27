@@ -55,7 +55,7 @@ Function HBObject()
 
    STATIC s_oClass
 
-   LOCAL oClass
+   Local oClass
 
    IF s_oClass == NIL .AND. __clsLockDef(@s_oClass)
 

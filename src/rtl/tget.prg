@@ -218,7 +218,7 @@ ENDCLASS
 
 METHOD Get:assign()
 
-   LOCAL xValue
+   Local xValue
 
    IF ::hasFocus
       xValue := ::unTransform()
@@ -244,14 +244,14 @@ METHOD Get:updateBuffer()
 
 METHOD Get:display()
 
-   LOCAL nOldCursor := SetCursor(SC_NONE)
-   LOCAL cBuffer
-   LOCAL nDispPos
-   LOCAL nRowPos
-   LOCAL nColPos
+   Local nOldCursor := SetCursor(SC_NONE)
+   Local cBuffer
+   Local nDispPos
+   Local nRowPos
+   Local nColPos
 #ifdef HB_COMPAT_C53
-   LOCAL nPos
-   LOCAL cCaption
+   Local nPos
+   Local cCaption
 #endif
 
    IF ::hasFocus
@@ -365,9 +365,9 @@ METHOD Get:colorDisp(cColorSpec)
 
 METHOD Get:end()
 
-   LOCAL nLastCharPos
-   LOCAL nPos
-   LOCAL nFor
+   Local nLastCharPos
+   Local nPos
+   Local nFor
 
    IF ::hasFocus
       nLastCharPos := Len(RTrim(::cBuffer)) + 1
@@ -446,7 +446,7 @@ METHOD Get:undo()
 
 METHOD Get:setFocus()
 
-   LOCAL xVarGet
+   Local xVarGet
 
    IF !::hasFocus
 
@@ -485,7 +485,7 @@ METHOD Get:setFocus()
 
 METHOD Get:killFocus()
 
-   LOCAL lHadFocus := ::hasFocus
+   Local lHadFocus := ::hasFocus
 
    ::hasFocus := False
    ::nPos     := 0
@@ -507,10 +507,10 @@ METHOD Get:killFocus()
 
 METHOD Get:varPut(xValue)
 
-   LOCAL aSubs
-   LOCAL nLen
-   LOCAL i
-   LOCAL aValue
+   Local aSubs
+   Local nLen
+   Local i
+   Local aValue
 
    IF hb_IsEvalItem(::bBlock) .AND. ValType(xValue) $ "CNDTLU"
       aSubs := ::xSubScript
@@ -538,10 +538,10 @@ METHOD Get:varPut(xValue)
 
 METHOD Get:varGet()
 
-   LOCAL aSubs
-   LOCAL nLen
-   LOCAL i
-   LOCAL xValue
+   Local aSubs
+   Local nLen
+   Local i
+   Local xValue
 
    IF hb_IsEvalItem(::bBlock)
       aSubs := ::xSubScript
@@ -620,8 +620,8 @@ METHOD Get:overStrike(cChar)
 
 METHOD Get:insert(cChar)
 
-   LOCAL nFor
-   LOCAL nMaxEdit
+   Local nFor
+   Local nMaxEdit
 
    IF ::hasFocus .AND. hb_IsString(cChar)
 
@@ -705,7 +705,7 @@ METHOD Get:left()
 
 METHOD Get:wordLeft()
 
-   LOCAL nPos
+   Local nPos
 
    IF ::hasFocus
 
@@ -736,7 +736,7 @@ METHOD Get:wordLeft()
 
 METHOD Get:wordRight()
 
-   LOCAL nPos
+   Local nPos
 
    IF ::hasFocus
 
@@ -807,7 +807,7 @@ METHOD Get:delete()
 
 METHOD Get:delEnd()
 
-   LOCAL nPos
+   Local nPos
 
    IF ::hasFocus
 
@@ -906,8 +906,8 @@ METHOD Get:getColorSpec()
 
 METHOD Get:setColorSpec(cColorSpec)
 
-   LOCAL nClrUns
-   LOCAL nClrOth
+   Local nClrUns
+   Local nClrOth
 
    IF hb_IsString(cColorSpec)
 
@@ -953,7 +953,7 @@ METHOD Get:getPos()
 
 METHOD Get:setPos(nPos)
 
-   LOCAL tmp
+   Local tmp
 
    IF hb_IsNumeric(nPos)
 
@@ -1006,10 +1006,10 @@ METHOD Get:setPos(nPos)
 
 METHOD Get:picture(cPicture)
 
-   LOCAL nAt
-   LOCAL nFor
-   LOCAL cNum
-   LOCAL cChar
+   Local nAt
+   Local nFor
+   Local cNum
+   Local cChar
 
    IF PCount() > 0
 
@@ -1150,11 +1150,11 @@ METHOD Get:picture(cPicture)
 
 METHOD Get:PutMask(xValue, lEdit)
 
-   LOCAL cChar
-   LOCAL cBuffer
-   LOCAL cPicFunc := ::cPicFunc
-   LOCAL cPicMask := ::cPicMask
-   LOCAL nFor
+   Local cChar
+   Local cBuffer
+   Local cPicFunc := ::cPicFunc
+   Local cPicMask := ::cPicMask
+   Local nFor
 
    hb_default(@lEdit, ::hasFocus)
 
@@ -1229,11 +1229,11 @@ METHOD Get:PutMask(xValue, lEdit)
 
 METHOD Get:unTransform()
 
-   LOCAL cBuffer
-   LOCAL xValue
-   LOCAL nFor
-   LOCAL lMinus
-   LOCAL lHasDec
+   Local cBuffer
+   Local xValue
+   Local nFor
+   Local lMinus
+   Local lHasDec
 
    IF ::hasFocus
 
@@ -1394,7 +1394,7 @@ METHOD Get:block(bBlock)
 
 METHOD Get:firstEditable()
 
-   LOCAL nFor
+   Local nFor
 
    IF ::nMaxLen != NIL
 
@@ -1413,7 +1413,7 @@ METHOD Get:firstEditable()
 
 METHOD Get:lastEditable()
 
-   LOCAL nFor
+   Local nFor
 
    IF ::nMaxLen != NIL
 
@@ -1428,7 +1428,7 @@ METHOD Get:lastEditable()
 
 METHOD Get:badDate()
 
-   LOCAL xValue
+   Local xValue
 
    IF ::hasFocus
       Switch ::type
@@ -1517,7 +1517,7 @@ METHOD Get:message(cMessage)
 
 METHOD Get:rightLow()
 
-   LOCAL nPos
+   Local nPos
 
    ::typeOut := False
    ::lClear  := False
@@ -1543,7 +1543,7 @@ METHOD Get:rightLow()
 
 METHOD Get:leftLow()
 
-   LOCAL nPos
+   Local nPos
 
    ::typeOut := False
    ::lClear  := False
@@ -1569,8 +1569,8 @@ METHOD Get:leftLow()
 
 METHOD Get:backSpaceLow()
 
-   LOCAL nMinus
-   LOCAL nPos := ::nPos
+   Local nMinus
+   Local nPos := ::nPos
 
    IF nPos > 1 .AND. nPos == ::FirstEditable() .AND. ::lMinus2
 
@@ -1598,8 +1598,8 @@ METHOD Get:backSpaceLow()
 
 METHOD Get:deleteLow()
 
-   LOCAL nMaxLen := ::nMaxLen
-   LOCAL n
+   Local nMaxLen := ::nMaxLen
+   Local n
 
    ::lClear := False
    ::lEdit := True
@@ -1626,7 +1626,7 @@ METHOD Get:deleteLow()
 
 METHOD Get:DeleteAll()
 
-   LOCAL xValue
+   Local xValue
 
    IF ::hasFocus
 
@@ -1659,7 +1659,7 @@ METHOD Get:DeleteAll()
 
 METHOD Get:IsEditable(nPos)
 
-   LOCAL cChar
+   Local cChar
 
    IF Empty(::cPicMask)
       Return True
@@ -1688,7 +1688,7 @@ METHOD Get:IsEditable(nPos)
 
 METHOD Get:Input(cChar)
 
-   LOCAL cPic
+   Local cPic
 
    IF ::cType != NIL
 

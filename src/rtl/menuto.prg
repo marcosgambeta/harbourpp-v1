@@ -48,30 +48,30 @@ Function __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
 
 Function __MenuTo(bBlock, cVariable)
 
-   LOCAL nKey
-   LOCAL cKey
-   LOCAL y
-   LOCAL q
-   LOCAL n
-   LOCAL lExit
-   LOCAL nArrLen
-   LOCAL xMsg
-   LOCAL nMsgCol
-   LOCAL nMsgRow
-   LOCAL lMsgCenter
-   LOCAL nSaveCursor
-   LOCAL cSaveReadVar
-   LOCAL lDeclared
-   LOCAL bAction
+   Local nKey
+   Local cKey
+   Local y
+   Local q
+   Local n
+   Local lExit
+   Local nArrLen
+   Local xMsg
+   Local nMsgCol
+   Local nMsgRow
+   Local lMsgCenter
+   Local nSaveCursor
+   Local cSaveReadVar
+   Local lDeclared
+   Local bAction
 #ifdef HB_COMPAT_C53
-   LOCAL nMouseClik
+   Local nMouseClik
 #endif
-   LOCAL nPointer
-   LOCAL cColor
-   LOCAL cColorSelect
-   LOCAL cColorNormal
+   Local nPointer
+   Local cColor
+   Local cColorSelect
+   Local cColorNormal
 #ifndef HB_CLP_STRICT
-   LOCAL nHiLited
+   Local nHiLited
 #endif
 
    // Detect if a memvar was passed
@@ -288,7 +288,7 @@ Function __MenuTo(bBlock, cVariable)
 
 Static Function HitTest(aMenu, nMRow, nMCol)
 
-   LOCAL aMenuItem
+   Local aMenuItem
 
    For Each aMenuItem In aMenu
       IF nMRow == aMenuItem[_ITM_ROW] .AND. nMCol >= aMenuItem[_ITM_COL] .AND. nMCol < aMenuItem[_ITM_COL] + Len(aMenuItem[_ITM_PROMPT])

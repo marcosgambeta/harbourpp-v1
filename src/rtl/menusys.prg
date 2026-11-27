@@ -71,11 +71,11 @@ Function ShowMsg(aMsg, lMode)
 // ShortCut processing for initial Get or Menu Item.
 Function IsShortcut(oMenu, nKey, /* @ */ nID)
 
-   LOCAL nItem
-   LOCAL nTotal
-   LOCAL nShortCut
-   LOCAL oItem
-   LOCAL i
+   Local nItem
+   Local nTotal
+   Local nShortCut
+   Local oItem
+   Local i
 
    Do Case
    // Test for top menu item not a TopBar Menu:
@@ -124,10 +124,10 @@ Function IsShortcut(oMenu, nKey, /* @ */ nID)
 // Current if more than one uses the same ShortCut.
 Function IsQuick(oMenu, nKey, /* @ */ nID)
 
-   LOCAL nItem
-   LOCAL nTotal
-   LOCAL nShortCut
-   LOCAL oItem
+   Local nItem
+   Local nTotal
+   Local nShortCut
+   Local oItem
 
    IF (nShortCut := oMenu:getShortCt(nKey)) == 0
 

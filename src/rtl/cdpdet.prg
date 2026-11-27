@@ -49,15 +49,15 @@
 
 Function hb_cdpTerm()
 
-   LOCAL cCP
-   LOCAL cLang
+   Local cCP
+   Local cLang
 
 #if defined(__PLATFORM__WINDOWS)
-   LOCAL tmp
+   Local tmp
    cCP := __CPWinToCPStd(IIf((tmp := __wapi_GetConsoleOutputCP()) == 0, __wapi_GetOEMCP(), tmp))
    cLang := hb_UserLang()
 #elif defined(__PLATFORM__UNIX)
-   LOCAL tmp
+   Local tmp
    cCP := __UnixParseLangCP(IIf(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
 #elif defined(__PLATFORM__DOS)
    // TODO
@@ -71,14 +71,14 @@ Function hb_cdpTerm()
 
 Function hb_cdpOS()
 
-   LOCAL cCP
-   LOCAL cLang
+   Local cCP
+   Local cLang
 
 #if defined(__PLATFORM__WINDOWS)
    cCP := __CPWinToCPStd(__wapi_GetACP())
    cLang := hb_UserLang()
 #elif defined(__PLATFORM__UNIX)
-   LOCAL tmp
+   Local tmp
    cCP := __UnixParseLangCP(IIf(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
 #elif defined(__PLATFORM__DOS)
    // TODO
@@ -149,8 +149,8 @@ Static Function __CPWinToCPStd(nCPWin)
 // TODO: handle "C"/"POSIX" values and values starting with "/"
 Static Function __UnixParseLangCP(cString, /* @ */ cLang)
 
-   LOCAL tmp
-   LOCAL cCP
+   Local tmp
+   Local cCP
 
    IF (tmp := At(".", cString)) > 0
       cLang := Left(cString, tmp - 1)
@@ -222,9 +222,9 @@ Static Function __UnixParseLangCP(cString, /* @ */ cLang)
 
 Static Function __CPStdToHb(cCPStd, cCtryStd)
 
-   LOCAL cCtryHb
-   LOCAL cdp
-   LOCAL aCP
+   Local cCtryHb
+   Local cdp
+   Local aCP
 
    IF cCPStd != NIL
       Switch cCPStd := Lower(cCPStd)

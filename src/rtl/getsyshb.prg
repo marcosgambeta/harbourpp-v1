@@ -47,8 +47,8 @@
 
 Function hb_GetReadVar(oGet)
 
-   LOCAL cName := hb_asciiUpper(oGet:name)
-   LOCAL xSubScript
+   Local cName := hb_asciiUpper(oGet:name)
+   Local xSubScript
 
    IF oGet:subScript != NIL
       For Each xSubScript In oGet:subScript

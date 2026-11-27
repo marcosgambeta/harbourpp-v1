@@ -57,9 +57,9 @@ REQUEST HB_CODEPAGE_EL737
 
 Function hb_langSelect(cLangID, cCP)
 
-   LOCAL tmp
-   LOCAL cCPDef
-   LOCAL cLangIDBase
+   Local tmp
+   Local cCPDef
+   Local cLangIDBase
 
    IF hb_IsString(cLangID)
 
@@ -177,7 +177,7 @@ Function hb_langSelect(cLangID, cCP)
 
 Static Function __LangStdToLangHb(cLangStd)
 
-   LOCAL cLangHb := ""
+   Local cLangHb := ""
 
    IF hb_IsString(cLangStd)
       Switch Lower(StrTran(cLangStd, "_", "-"))

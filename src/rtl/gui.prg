@@ -64,7 +64,7 @@ Function _SetVideoMode(nMode)
 
 Function _GetNumCol(cColor)
 
-   LOCAL nPos
+   Local nPos
 
    IF (nPos := At("/", cColor)) > 0
       cColor := Left(cColor, nPos - 1)
@@ -84,14 +84,14 @@ Function IsDefColor()
 // Removes the accelerator marker from a caption string
 Function __Caption(cCaption)
 
-   LOCAL nPos
+   Local nPos
 
    RETURN IIf((nPos := At("&", cCaption)) > 0, Stuff(cCaption, nPos, 1, ""), cCaption)
 
 Function __CapLength(cCaption)
 
-   LOCAL nCaptionLen := Len(cCaption)
-   LOCAL nPos
+   Local nCaptionLen := Len(cCaption)
+   Local nPos
 
    RETURN IIf((nPos := At("&", cCaption)) > 0 .AND. nPos < nCaptionLen, nCaptionLen - 1, nCaptionLen)
 

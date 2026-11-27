@@ -119,7 +119,7 @@ ENDCLASS
 
 METHOD HBBrwText:New(nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers)
 
-   LOCAL oCol
+   Local oCol
 
    ::nTop := nTop
    ::nLeft := nLeft
@@ -174,7 +174,7 @@ METHOD HBBrwText:GetLineText()
 
 METHOD HBBrwText:GetLineColor()
 
-   LOCAL aColor
+   Local aColor
 
    IF __dbgIsBreak(__dbg():pInfo, ::cFileName, ::nRow) >= 0
       aColor := IIf(::nRow == ::nActiveLine, {4, 4}, {3, 3})
@@ -186,8 +186,8 @@ METHOD HBBrwText:GetLineColor()
 
 METHOD PROCEDURE HBBrwText:LoadFile(cFileName)
 
-   LOCAL nMaxLineLen := 0
-   LOCAL cLine
+   Local nMaxLineLen := 0
+   Local cLine
 
    ::cFileName := cFileName
    ::aRows := __dbgTextToArray(MemoRead(cFileName))
@@ -204,7 +204,7 @@ METHOD PROCEDURE HBBrwText:LoadFile(cFileName)
 
 METHOD HBBrwText:Resize(nTop, nLeft, nBottom, nRight)
 
-   LOCAL lResize := False
+   Local lResize := False
 
    IF hb_IsNumeric(nTop) .AND. nTop != ::nTop
       ::nTop := nTop
@@ -231,9 +231,9 @@ METHOD HBBrwText:Resize(nTop, nLeft, nBottom, nRight)
 
 METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
 
-   LOCAL bMove
-   LOCAL lFound := False
-   LOCAL n
+   Local bMove
+   Local lFound := False
+   Local n
 
    IF !lCaseSensitive
       cString := Upper(cString)
@@ -279,7 +279,7 @@ METHOD HBBrwText:GoLast()
 
 METHOD HBBrwText:Skip(n)
 
-   LOCAL nSkipped := 0
+   Local nSkipped := 0
 
    IF n > 0
       IF ::nRow < ::nRows
@@ -297,7 +297,7 @@ METHOD HBBrwText:Skip(n)
 
 METHOD HBBrwText:GoPrev()
 
-   LOCAL lMoved := False
+   Local lMoved := False
 
    IF ::nRow > 1
       ::nRow--
@@ -308,7 +308,7 @@ METHOD HBBrwText:GoPrev()
 
 METHOD HBBrwText:GoNext()
 
-   LOCAL lMoved := False
+   Local lMoved := False
 
    IF ::nRow < ::nRows
       ::nRow++

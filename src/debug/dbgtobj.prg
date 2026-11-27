@@ -77,11 +77,11 @@ ENDCLASS
 
 METHOD HBDbObject:New(oObject, cVarName, lEditable)
 
-   LOCAL cMsg
-   LOCAL cMsgAcc
-   LOCAL aMessages
-   LOCAL aMethods
-   LOCAL xValue
+   Local cMsg
+   Local cMsgAcc
+   Local aMessages
+   Local aMethods
+   Local xValue
 
    __dbgSetGo(__dbg():pInfo)
 
@@ -112,11 +112,11 @@ METHOD HBDbObject:New(oObject, cVarName, lEditable)
 
 METHOD HBDbObject:addWindows(nRow)
 
-   LOCAL oBrwSets
-   LOCAL nSize := Len(::pItems)
-   LOCAL oWndSets
-   LOCAL oCol
-   LOCAL nMaxLen
+   Local oBrwSets
+   Local nSize := Len(::pItems)
+   Local oWndSets
+   Local oCol
+   Local nMaxLen
 
    IF nSize < MaxRow() - 2
       IF hb_IsNumeric(nRow)
@@ -167,10 +167,10 @@ METHOD HBDbObject:addWindows(nRow)
 
 METHOD PROCEDURE HBDbObject:doGet(oBrowse)
 
-   LOCAL oErr
-   LOCAL cValue
-   LOCAL lCanAcc
-   LOCAL aItemRef
+   Local oErr
+   Local cValue
+   Local lCanAcc
+   Local aItemRef
 
    // make sure browse is stable
    oBrowse:forceStable()
@@ -196,7 +196,7 @@ METHOD PROCEDURE HBDbObject:doGet(oBrowse)
 
 METHOD PROCEDURE HBDbObject:SetsKeyPressed(nKey, oBrwSets)
 
-   LOCAL aItemRef
+   Local aItemRef
 
    Switch nKey
    Case K_UP
@@ -264,9 +264,9 @@ Function __dbgObject(oObject, cVarName, lEditable)
 
 Static Function __dbgObjGetValue(oObject, cVar, lCanAcc)
 
-   LOCAL nProcLevel := __dbg():nProcLevel
-   LOCAL xResult
-   LOCAL oErr
+   Local nProcLevel := __dbg():nProcLevel
+   Local xResult
+   Local oErr
 
    BEGIN SEQUENCE WITH {|| Break() }
       xResult := __dbgSendMsg(nProcLevel, oObject, cVar)
@@ -286,8 +286,8 @@ Static Function __dbgObjGetValue(oObject, cVar, lCanAcc)
 
 Static Function __dbgObjSetValue(oObject, cVar, xValue)
 
-   LOCAL nProcLevel := __dbg():nProcLevel
-   LOCAL oErr
+   Local nProcLevel := __dbg():nProcLevel
+   Local oErr
 
    BEGIN SEQUENCE WITH {|| Break() }
       __dbgSendMsg(nProcLevel, oObject, "_" + cVar, xValue)

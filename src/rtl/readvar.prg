@@ -49,8 +49,8 @@ Function ReadVar(cVarName)
 
    THREAD STATIC t_cVarName := ""
 
-   LOCAL cOldVarName
-   LOCAL oGetList
+   Local cOldVarName
+   Local oGetList
 
    IF (oGetList := __GetListActive()) != NIL
       RETURN oGetList:ReadVar(cVarName)

@@ -52,7 +52,7 @@
 
 Function __eInstVar53(oVar, cMethod, xValue, cType, nSubCode, bValid)
 
-   LOCAL oError
+   Local oError
 
    IF !ValType(xValue) == cType .OR. (bValid != NIL .AND. !Eval(bValid, oVar, xValue))
       oError := ErrorNew()

@@ -57,11 +57,11 @@
 
 Procedure __dbgHelp(cTopic)
 
-   LOCAL cColor := IIf(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
-   LOCAL oBrw
-   LOCAL nTopic
-   LOCAL aTopics := GetTopics()
-   LOCAL oDlg := HBDbWindow():New(2, 2, MaxRow() - 2, MaxCol() - 2, "Help", cColor)
+   Local cColor := IIf(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
+   Local oBrw
+   Local nTopic
+   Local aTopics := GetTopics()
+   Local oDlg := HBDbWindow():New(2, 2, MaxRow() - 2, MaxCol() - 2, "Help", cColor)
 
    oBrw := HBDbBrowser():New(oDlg:nTop + 1, oDlg:nLeft + 1, oDlg:nBottom - 1, oDlg:nLeft + 12)
    oBrw:Cargo := 1
@@ -98,8 +98,8 @@ Static Procedure PaintWindow(oDlg, oBrw, aTopics)
 
 Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
 
-   LOCAL n
-   LOCAL nSkip
+   Local n
+   Local nSkip
 
    Switch nKey
    Case K_UP
@@ -178,11 +178,11 @@ Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
 
 Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
-   LOCAL oDebug := __dbg()
-   LOCAL nRows  := oDlg:nBottom - oDlg:nTop - 1
-   LOCAL nPages
-   LOCAL nRowsToPaint
-   LOCAL n
+   Local oDebug := __dbg()
+   Local nRows  := oDlg:nBottom - oDlg:nTop - 1
+   Local nPages
+   Local nRowsToPaint
+   Local n
 
    IF nTopic > Len(aTopics)
       nTopic := 1
@@ -237,8 +237,8 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
 Static Function GetTopics()
 
-   LOCAL aTopics := {}
-   LOCAL cLine
+   Local aTopics := {}
+   Local cLine
 
    For Each cLine In hb_ATokens(help_en(), True)
       IF hb_LeftEq(cLine, "--")

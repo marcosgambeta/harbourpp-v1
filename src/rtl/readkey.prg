@@ -49,7 +49,7 @@
 
 Function ReadKey()
 
-   LOCAL nKey
+   Local nKey
 
    Switch nKey := LastKey()
    Case K_UP        ; nKey :=  4 ; EXIT  // NOTE: NG says 5 incorrectly

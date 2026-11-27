@@ -47,10 +47,10 @@
 
 Function __dbUpdate(cAlias, bKey, lRandom, bAssign)
 
-   LOCAL nOldArea := Select()
-   LOCAL xKey
-   LOCAL oError
-   LOCAL lError := False
+   Local nOldArea := Select()
+   Local xKey
+   Local oError
+   Local lError := False
 
    __defaultNIL(@lRandom, False)
 

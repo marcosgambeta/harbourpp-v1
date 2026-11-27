@@ -50,11 +50,11 @@
 
 Function __dbSort(cToFileName, aFields, bFor, bWhile, nNext, nRecord, lRest, cRDD, nConnection, cCodePage)
 
-   LOCAL nOldArea
-   LOCAL nToArea
-   LOCAL aStruct
-   LOCAL oError
-   LOCAL lError := False
+   Local nOldArea
+   Local nToArea
+   Local aStruct
+   Local oError
+   Local lError := False
 
    IF Empty(aStruct := dbStruct())
       Return False

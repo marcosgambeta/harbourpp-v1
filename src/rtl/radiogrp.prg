@@ -156,10 +156,10 @@ METHOD RadioGroup:delItem(nPos)
 
 METHOD RadioGroup:display()
 
-   LOCAL cSelBox
-   LOCAL cUnSelBox
-   LOCAL cCaption
-   LOCAL nPos
+   Local cSelBox
+   Local cUnSelBox
+   Local cCaption
+   Local nPos
 
    DispBegin()
 
@@ -203,7 +203,7 @@ METHOD RadioGroup:display()
 
 METHOD RadioGroup:getAccel(xKey)
 
-   LOCAL cKey
+   Local cKey
 
    Do Case
    Case hb_IsString(xKey)
@@ -226,9 +226,9 @@ METHOD RadioGroup:getItem(nPos)
 
 METHOD RadioGroup:hitTest(nMRow, nMCol)
 
-   LOCAL nLen
-   LOCAL nPos
-   LOCAL item
+   Local nLen
+   Local nPos
+   Local item
 
    Do Case
    Case Empty(::cColdbox + ::cHotBox)
@@ -305,8 +305,8 @@ METHOD RadioGroup:insItem(nPos, oRadioButton)
 
 METHOD RadioGroup:killFocus()
 
-   LOCAL item
-   LOCAL nOldMCur
+   Local item
+   Local nOldMCur
 
    IF ::lHasFocus
 
@@ -336,8 +336,8 @@ METHOD RadioGroup:killFocus()
 
 METHOD RadioGroup:setFocus()
 
-   LOCAL item
-   LOCAL nOldMCur
+   Local item
+   Local nOldMCur
 
    IF !::lHasFocus
 
@@ -367,7 +367,7 @@ METHOD RadioGroup:setFocus()
 
 METHOD RadioGroup:nextItem()
 
-   LOCAL nValue
+   Local nValue
 
    IF ::lHasFocus .AND. ::nItemCount > 0
       ::changeButton(nValue := ::nValue, IIf(nValue == ::nItemCount, 1, nValue + 1))
@@ -377,8 +377,8 @@ METHOD RadioGroup:nextItem()
 
 METHOD RadioGroup:prevItem()
 
-   LOCAL nValue
-   LOCAL nPos
+   Local nValue
+   Local nPos
 
    IF ::lHasFocus .AND. ::nItemCount > 0
 
@@ -397,8 +397,8 @@ METHOD RadioGroup:prevItem()
 
 METHOD RadioGroup:select(xValue)
 
-   LOCAL nPos
-   LOCAL nLen
+   Local nPos
+   Local nLen
 
    Switch ValType(xValue)
    Case "C"
@@ -439,7 +439,7 @@ METHOD RadioGroup:select(xValue)
 
 METHOD RadioGroup:setColor(cColorSpec)
 
-   LOCAL item
+   Local item
 
    For Each item In ::aItems
       item:colorSpec := cColorSpec
@@ -449,7 +449,7 @@ METHOD RadioGroup:setColor(cColorSpec)
 
 METHOD RadioGroup:setStyle(cStyle)
 
-   LOCAL item
+   Local item
 
    For Each item In ::aItems
       item:style := cStyle
@@ -459,7 +459,7 @@ METHOD RadioGroup:setStyle(cStyle)
 
 METHOD RadioGroup:changeButton(nUnselect, nSelect)
 
-   LOCAL nOldMCur := MSetCursor(False)
+   Local nOldMCur := MSetCursor(False)
 
    IF nUnselect != nSelect
 
@@ -601,7 +601,7 @@ METHOD RadioGroup:value()
 
 METHOD RadioGroup:Init(nTop, nLeft, nBottom, nRight)
 
-   LOCAL cColor
+   Local cColor
 
    IF !hb_IsNumeric(nTop) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nBottom) .OR. !hb_IsNumeric(nRight)
       Return Nil
@@ -631,7 +631,7 @@ Function RadioGroup(nTop, nLeft, nBottom, nRight)
 
 Function _RadioGrp_(nTop, nLeft, nBottom, nRight, xValue, aItems, cCaption, cMessage, cColorSpec, bFBlock)
 
-   LOCAL o
+   Local o
 
    IF (o := RadioGroup(nTop, nLeft, nBottom, nRight)) != NIL
 

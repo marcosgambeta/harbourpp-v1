@@ -70,10 +70,10 @@ Function __objHasMethod(oObject, cSymbol)
 
 Function __objGetMsgList(oObject, lDataMethod, nClassType)
 
-   LOCAL aInfo
-   LOCAL aData
-   LOCAL cName
-   LOCAL nFirst
+   Local aInfo
+   Local aData
+   Local cName
+   Local nFirst
 
    IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -110,8 +110,8 @@ Function __objGetMethodList(oObject)
 
 Function __objGetValueList(oObject, aExcept)
 
-   LOCAL aData
-   LOCAL cSymbol
+   Local aData
+   Local cSymbol
 
    IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -160,8 +160,8 @@ Function __objAddInline(oObject, cSymbol, bInline)
 
 Function __objAddData(oObject, cSymbol)
 
-   LOCAL nSeq
-   LOCAL hClass
+   Local nSeq
+   Local hClass
 
    IF !hb_IsObject(oObject) .OR. !hb_IsString(cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -221,7 +221,7 @@ Function __objDelData(oObject, cSymbol)
 
 Function __objDerivedFrom(oObject, xSuper)
 
-   LOCAL cClassName
+   Local cClassName
 
    IF !hb_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
@@ -240,8 +240,8 @@ Function __objDerivedFrom(oObject, xSuper)
 
 Function __objGetProperties(oObject, lAllExported)
 
-   LOCAL msg
-   LOCAL aMsgList := __clsGetProperties(oObject:classH, lAllExported)
+   Local msg
+   Local aMsgList := __clsGetProperties(oObject:classH, lAllExported)
 
    For Each msg In aMsgList
       msg := {msg, __objSendMsg(oObject, msg)}

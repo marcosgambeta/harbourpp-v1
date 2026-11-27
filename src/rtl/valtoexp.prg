@@ -47,7 +47,7 @@
 
 Function hb_CStr(xVal)
 
-   LOCAL v := ValType(xVal)
+   Local v := ValType(xVal)
 
    Switch v
    Case "C"
@@ -76,11 +76,11 @@ Function hb_ValToExp(xVal, lRaw)
 
 Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
-   LOCAL cVal
-   LOCAL cKey
-   LOCAL cClass
-   LOCAL tmp
-   LOCAL v := ValType(xVal)
+   Local cVal
+   Local cKey
+   Local cClass
+   Local tmp
+   Local v := ValType(xVal)
 
    Switch v
    Case "C"
@@ -171,7 +171,7 @@ Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
 Function __itemSetRef(xVal, aRefs)
 
-   LOCAL aRef
+   Local aRef
 
    For Each aRef In aRefs
       xVal[hb_ArrayToParams(aRef[1])] := IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])])
@@ -181,7 +181,7 @@ Function __itemSetRef(xVal, aRefs)
 
 Function __itemSetObj(xVal, aObjs)
 
-   LOCAL aRef
+   Local aRef
 
    For Each aRef In aObjs
       __objRestoreIVars(IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])]), aRef[1])
@@ -191,7 +191,7 @@ Function __itemSetObj(xVal, aObjs)
 
 Function __itemSetObjRaw(xVal, aObjs)
 
-   LOCAL aRef
+   Local aRef
 
    For Each aRef In aObjs
       __objSetClass(IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])]), aRef[1])

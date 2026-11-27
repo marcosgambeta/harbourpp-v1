@@ -114,9 +114,9 @@ METHOD TopBarMenu:addItem(oItem)
 
 METHOD TopBarMenu:delItem(nPos)
 
-   LOCAL nLen
-   LOCAL nWidth
-   LOCAL item
+   Local nLen
+   Local nWidth
+   Local item
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
 
@@ -138,17 +138,17 @@ METHOD TopBarMenu:delItem(nPos)
 
 METHOD TopBarMenu:display()
 
-   LOCAL nRow := ::nRow
-   LOCAL nLeft := ::nLeft
-   LOCAL nRight := ::nRight
-   LOCAL nCurrent := ::nCurrent
-   LOCAL item
-   LOCAL cColor1 := hb_ColorIndex(::cColorSpec, 0)
-   LOCAL cColor2 := hb_ColorIndex(::cColorSpec, 1)
-   LOCAL oPopUp
-   LOCAL cCaption
-   LOCAL nCaptionLen
-   LOCAL nPos
+   Local nRow := ::nRow
+   Local nLeft := ::nLeft
+   Local nRight := ::nRight
+   Local nCurrent := ::nCurrent
+   Local item
+   Local cColor1 := hb_ColorIndex(::cColorSpec, 0)
+   Local cColor2 := hb_ColorIndex(::cColorSpec, 1)
+   Local oPopUp
+   Local cCaption
+   Local nCaptionLen
+   Local nPos
 
    DispBegin()
 
@@ -207,7 +207,7 @@ METHOD TopBarMenu:display()
 
 METHOD TopBarMenu:getFirst()
 
-   LOCAL item
+   Local item
 
    For Each item In ::aItems
       IF item:enabled
@@ -222,7 +222,7 @@ METHOD TopBarMenu:getItem(nPos)
 
 METHOD TopBarMenu:getLast()
 
-   LOCAL item
+   Local item
 
    For Each item In ::aItems DESCEND
       IF item:enabled
@@ -234,7 +234,7 @@ METHOD TopBarMenu:getLast()
 
 METHOD TopBarMenu:getNext()
 
-   LOCAL n
+   Local n
 
    FOR n := ::nCurrent + 1 TO ::nItemCount
       IF ::aItems[n]:enabled
@@ -246,7 +246,7 @@ METHOD TopBarMenu:getNext()
 
 METHOD TopBarMenu:getPrev()
 
-   LOCAL n
+   Local n
 
    FOR n := ::nCurrent - 1 TO 1 STEP -1
       IF ::aItems[n]:enabled
@@ -263,15 +263,15 @@ METHOD TopBarMenu:getPrev()
 
 METHOD TopBarMenu:getAccel(nKey)
 
-   LOCAL nIndex := AScan({ ;
+   Local nIndex := AScan({ ;
       K_ALT_A, K_ALT_B, K_ALT_C, K_ALT_D, K_ALT_E, K_ALT_F, ;
       K_ALT_G, K_ALT_H, K_ALT_I, K_ALT_J, K_ALT_K, K_ALT_L, ;
       K_ALT_M, K_ALT_N, K_ALT_O, K_ALT_P, K_ALT_Q, K_ALT_R, ;
       K_ALT_S, K_ALT_T, K_ALT_U, K_ALT_V, K_ALT_W, K_ALT_X, ;
       K_ALT_Y, K_ALT_Z, K_ALT_1, K_ALT_2, K_ALT_3, K_ALT_4, ;
       K_ALT_5, K_ALT_6, K_ALT_7, K_ALT_8, K_ALT_9, K_ALT_0}, nKey)
-   LOCAL cKey
-   LOCAL item
+   Local cKey
+   Local item
 
    IF nIndex > 0
       cKey := "&" + SubStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1)
@@ -286,7 +286,7 @@ METHOD TopBarMenu:getAccel(nKey)
 
 METHOD TopBarMenu:getShortCt(nKey)
 
-   LOCAL item
+   Local item
 
    For Each item In ::aItems
       IF item:shortcut == nKey
@@ -305,8 +305,8 @@ METHOD TopBarMenu:getShortCt(nKey)
 
 METHOD TopBarMenu:hitTest(nMRow, nMCol)
 
-   LOCAL nColumn
-   LOCAL item
+   Local nColumn
+   Local item
 
    IF nMRow == ::nRow
 
@@ -405,7 +405,7 @@ METHOD TopBarMenu:row(nRow)
 
 METHOD TopBarMenu:Init(nRow, nLeft, nRight)
 
-   LOCAL cColor
+   Local cColor
 
    IF !hb_IsNumeric(nRow) .OR. !hb_IsNumeric(nLeft) .OR. !hb_IsNumeric(nRight)
       Return Nil

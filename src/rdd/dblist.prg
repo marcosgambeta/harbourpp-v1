@@ -49,12 +49,12 @@
 
 Procedure __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToPrint, cToFileName)
 
-   LOCAL lOldPrinter
-   LOCAL lOldExtra
-   LOCAL cOldExtraFile
-   LOCAL oError
-   LOCAL lError := False
-   LOCAL bOutBlock
+   Local lOldPrinter
+   Local lOldExtra
+   Local cOldExtraFile
+   Local oError
+   Local lError := False
+   Local bOutBlock
 
    // Choose the output style
    IF lOff

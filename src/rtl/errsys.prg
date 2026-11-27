@@ -55,11 +55,11 @@ Procedure ErrorSys()
 
 Static Function DefError(oError)
 
-   LOCAL cMessage
-   LOCAL cOSError
-   LOCAL aOptions
-   LOCAL nChoice
-   LOCAL n
+   Local cMessage
+   Local cOSError
+   Local aOptions
+   Local nChoice
+   Local n
 
    // By default, division by zero results in zero
    IF oError:genCode == EG_ZERODIV .AND. oError:canSubstitute
@@ -142,7 +142,7 @@ Static Function DefError(oError)
 Static Function ErrorMessage(oError)
 
    // start error message
-   LOCAL cMessage := IIf(oError:severity > ES_WARNING, "Error", "Warning") + " "
+   Local cMessage := IIf(oError:severity > ES_WARNING, "Error", "Warning") + " "
 
    // add subsystem name if available
    IF hb_IsString(oError:subsystem)

@@ -153,9 +153,9 @@ METHOD PopupMenu:close(lCloseChild)
 
 METHOD PopupMenu:delItem(nPos)
 
-   LOCAL nLen
-   LOCAL nWidth
-   LOCAL item
+   Local nLen
+   Local nWidth
+   Local item
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
 
@@ -177,15 +177,15 @@ METHOD PopupMenu:delItem(nPos)
 
 METHOD PopupMenu:display()
 
-   LOCAL nTop
-   LOCAL nLeft
-   LOCAL nCurrent
-   LOCAL item
-   LOCAL nWidth
-   LOCAL oPopup
-   LOCAL nHotKeyPos
-   LOCAL cCaption
-   LOCAL nCharPos
+   Local nTop
+   Local nLeft
+   Local nCurrent
+   Local item
+   Local nWidth
+   Local oPopup
+   Local nHotKeyPos
+   Local cCaption
+   Local nCharPos
 
    IF ::isOpen()
 
@@ -267,8 +267,8 @@ METHOD PopupMenu:display()
 
 METHOD PopupMenu:getAccel(xKey)
 
-   LOCAL cKey
-   LOCAL item
+   Local cKey
+   Local item
 
    Do Case
    Case hb_IsString(xKey)
@@ -292,7 +292,7 @@ METHOD PopupMenu:getAccel(xKey)
 
 METHOD PopupMenu:getFirst()
 
-   LOCAL item
+   Local item
 
    For Each item In ::aItems
       IF item:enabled
@@ -307,7 +307,7 @@ METHOD PopupMenu:getItem(nPos)
 
 METHOD PopupMenu:getLast()
 
-   LOCAL item
+   Local item
 
    For Each item In ::aItems DESCEND
       IF item:enabled
@@ -319,7 +319,7 @@ METHOD PopupMenu:getLast()
 
 METHOD PopupMenu:getNext()
 
-   LOCAL nPos
+   Local nPos
 
    FOR nPos := ::nCurrent + 1 TO ::nItemCount
       IF ::aItems[nPos]:enabled
@@ -331,7 +331,7 @@ METHOD PopupMenu:getNext()
 
 METHOD PopupMenu:getPrev()
 
-   LOCAL nPos
+   Local nPos
 
    FOR nPos := ::nCurrent - 1 TO 1 STEP -1
       IF ::aItems[nPos]:enabled
@@ -346,7 +346,7 @@ METHOD PopupMenu:getPrev()
 
 METHOD PopupMenu:getShortCt(nKey)
 
-   LOCAL item
+   Local item
 
    For Each item In ::aItems
       IF item:shortcut == nKey
@@ -361,7 +361,7 @@ METHOD PopupMenu:getShortCt(nKey)
 
 METHOD PopupMenu:hitTest(nMRow, nMCol)
 
-   LOCAL nPos
+   Local nPos
 
    ::setMetrics()
 
@@ -424,10 +424,10 @@ METHOD PopupMenu:isOpen()
 
 METHOD PopupMenu:open()
 
-   LOCAL nTop
-   LOCAL nLeft
-   LOCAL nBottom
-   LOCAL nRight
+   Local nTop
+   Local nLeft
+   Local nBottom
+   Local nRight
 
    ::setMetrics()
 
@@ -591,7 +591,7 @@ METHOD PopupMenu:width()
 
 METHOD PopupMenu:Init(nTop, nLeft, nBottom, nRight)
 
-   LOCAL cColor
+   Local cColor
 
    IF hb_IsNumeric(nTop)
       ::nTop := nTop

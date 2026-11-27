@@ -51,16 +51,16 @@
 
 Function Browse(nTop, nLeft, nBottom, nRight)
 
-   LOCAL oBrw
-   LOCAL lContinue
-   LOCAL lAppend
-   LOCAL lKeyPressed
-   LOCAL lRefresh
-   LOCAL n
-   LOCAL nOldCursor
-   LOCAL nKey
-   LOCAL cOldScreen
-   LOCAL bAction
+   Local oBrw
+   Local lContinue
+   Local lAppend
+   Local lKeyPressed
+   Local lRefresh
+   Local n
+   Local nOldCursor
+   Local nKey
+   Local cOldScreen
+   Local bAction
 
    IF !Used()
       Return False
@@ -288,10 +288,10 @@ Function Browse(nTop, nLeft, nBottom, nRight)
 
 Static Procedure StatLine(oBrw, lAppend)
 
-   LOCAL nTop   := oBrw:nTop - 1
-   LOCAL nRight := oBrw:nRight
-   LOCAL nRecNo := RecNo()
-   LOCAL nLastRec := LastRec()
+   Local nTop   := oBrw:nTop - 1
+   Local nRight := oBrw:nRight
+   Local nRecNo := RecNo()
+   Local nLastRec := LastRec()
 
    hb_DispOutAt(nTop, nRight - 27, "Record ")
 
@@ -309,19 +309,19 @@ Static Procedure StatLine(oBrw, lAppend)
 
 Static Function DoGet(oBrw, lAppend)
 
-   LOCAL lScore
-   LOCAL lExit
-   LOCAL bIns
-   LOCAL nCursor
-   LOCAL oCol
-   LOCAL oGet
-   LOCAL cIndexKey
-   LOCAL cForExp
-   LOCAL xKeyValue
-   LOCAL bIndexKey
-   LOCAL lSuccess
-   LOCAL nKey
-   LOCAL xValue
+   Local lScore
+   Local lExit
+   Local bIns
+   Local nCursor
+   Local oCol
+   Local oGet
+   Local cIndexKey
+   Local cForExp
+   Local xKeyValue
+   Local bIndexKey
+   Local lSuccess
+   Local nKey
+   Local xValue
 
    oBrw:HitTop := False
    StatLine(oBrw, lAppend)
@@ -374,7 +374,7 @@ Static Function DoGet(oBrw, lAppend)
 
 Static Function ExitKey(lAppend)
 
-   LOCAL nKey
+   Local nKey
 
    Switch nKey := LastKey()
    Case K_PGDN
@@ -390,7 +390,7 @@ Static Function ExitKey(lAppend)
 
 Static Procedure FreshOrder(oBrw)
 
-   LOCAL nRec := RecNo()
+   Local nRec := RecNo()
 
    oBrw:RefreshAll()
    oBrw:ForceStable()
@@ -406,7 +406,7 @@ Static Procedure FreshOrder(oBrw)
 
 Static Function Skipped(nRecs, lAppend)
 
-   LOCAL nSkipped := 0
+   Local nSkipped := 0
 
    IF LastRec() != 0
       Do Case

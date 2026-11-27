@@ -197,18 +197,18 @@ METHOD Init(cFrmName AS STRING, ;
       lBEject AS LOGICAL, ;
       lSummary AS LOGICAL) CLASS HBReportForm
 
-   LOCAL lPrintOn // Status of PRINTER
-   LOCAL lConsoleOn // Status of CONSOLE
-   LOCAL cExtraFile // Status of EXTRA
-   LOCAL lExtraState // Status of EXTRA
-   LOCAL nCol
-   LOCAL aCol
-   LOCAL nGroup
-   LOCAL xBreakVal
-   LOCAL lBroke := False
-   LOCAL err
-   LOCAL lAnyTotals
-   LOCAL lAnySubTotals
+   Local lPrintOn // Status of PRINTER
+   Local lConsoleOn // Status of CONSOLE
+   Local cExtraFile // Status of EXTRA
+   Local lExtraState // Status of EXTRA
+   Local nCol
+   Local aCol
+   Local nGroup
+   Local xBreakVal
+   Local lBroke := False
+   Local err
+   Local lAnyTotals
+   Local lAnySubTotals
 
    // Resolve parameters
 
@@ -443,17 +443,17 @@ METHOD EjectPage() CLASS HBReportForm
 
 METHOD ReportHeader() CLASS HBReportForm
 
-   LOCAL nLinesInHeader
-   LOCAL aPageHeader    := {}
-   LOCAL nHeadingLength := ::aReportData[RPT_WIDTH] - ::aReportData[RPT_LMARGIN] - 30
-   LOCAL aCol
-   LOCAL nLine
-   LOCAL cLine
-   LOCAL nMaxColLength
-   LOCAL cHeader
-   LOCAL nHeadline
-   LOCAL nRPageSize
-   LOCAL aTempPgHeader
+   Local nLinesInHeader
+   Local aPageHeader    := {}
+   Local nHeadingLength := ::aReportData[RPT_WIDTH] - ::aReportData[RPT_LMARGIN] - 30
+   Local aCol
+   Local nLine
+   Local cLine
+   Local nMaxColLength
+   Local cHeader
+   Local nHeadline
+   Local nRPageSize
+   Local aTempPgHeader
 
    nRPageSize := ::aReportData[RPT_WIDTH] - ::aReportData[RPT_RMARGIN]
 
@@ -536,17 +536,17 @@ METHOD ReportHeader() CLASS HBReportForm
 
 METHOD ExecuteReport() CLASS HBReportForm
 
-   LOCAL aRecordHeader  := {}          // Header for the current record
-   LOCAL aRecordToPrint := {}          // Current record to print
-   LOCAL nCol                          // Counter for the column work
-   LOCAL aCol
-   LOCAL nGroup                        // Counter for the group work
-   LOCAL lGroupChanged  := False         // Has any group changed?
-   LOCAL lEjectGrp := False              // Group eject indicator
-   LOCAL nMaxLines                     // Number of lines needed by record
-   LOCAL nLine                         // Counter for each record line
-   LOCAL cLine                         // Current line of text for parsing
-   LOCAL lAnySubTotals
+   Local aRecordHeader  := {}          // Header for the current record
+   Local aRecordToPrint := {}          // Current record to print
+   Local nCol                          // Counter for the column work
+   Local aCol
+   Local nGroup                        // Counter for the group work
+   Local lGroupChanged  := False         // Has any group changed?
+   Local lEjectGrp := False              // Group eject indicator
+   Local nMaxLines                     // Number of lines needed by record
+   Local nLine                         // Counter for each record line
+   Local cLine                         // Current line of text for parsing
+   Local lAnySubTotals
 
    // Add to the main column totals
 
@@ -812,21 +812,21 @@ METHOD ExecuteReport() CLASS HBReportForm
 
 METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
 
-   LOCAL cFieldsBuff
-   LOCAL cParamsBuff
-   LOCAL nFieldOffset
-   LOCAL cFileBuff := Space(SIZE_FILE_BUFF)
-   LOCAL cGroupExp
-   LOCAL cSubGroupExp
-   LOCAL nColCount                  // Number of columns in report
-   LOCAL nCount
-   LOCAL nFrmHandle                 // (.frm) file handle
-   LOCAL nOptionByte                // Contains option byte
-   LOCAL aReport[RPT_COUNT]         // Create report array
-   LOCAL err                        // error object
-   LOCAL cPath                      // iteration variable
-   LOCAL aHeader                    // temporary storage for report form headings
-   LOCAL nHeaderIndex               // index into temporary header array
+   Local cFieldsBuff
+   Local cParamsBuff
+   Local nFieldOffset
+   Local cFileBuff := Space(SIZE_FILE_BUFF)
+   Local cGroupExp
+   Local cSubGroupExp
+   Local nColCount                  // Number of columns in report
+   Local nCount
+   Local nFrmHandle                 // (.frm) file handle
+   Local nOptionByte                // Contains option byte
+   Local aReport[RPT_COUNT]         // Create report array
+   Local err                        // error object
+   Local cPath                      // iteration variable
+   Local aHeader                    // temporary storage for report form headings
+   Local nHeaderIndex               // index into temporary header array
 
    // Initialize STATIC buffer values
 
@@ -1000,10 +1000,10 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
 //        b. Character following character pointed to by pointer is hb_BChar(0)
 METHOD GetExpr(nPointer AS NUMERIC) CLASS HBReportForm
 
-   LOCAL nExprOffset
-   LOCAL nExprLength
-   LOCAL nOffsetOffset := 0
-   LOCAL cString := ""
+   Local nExprOffset
+   Local nExprLength
+   Local nOffsetOffset := 0
+   Local cString := ""
 
    // Stuff for dBase compatibility.
 
@@ -1040,8 +1040,8 @@ METHOD GetExpr(nPointer AS NUMERIC) CLASS HBReportForm
 
 Static Function Occurs(cSearch, cTarget)
 
-   LOCAL nPos
-   LOCAL nCount := 0
+   Local nPos
+   Local nCount := 0
 
    Do While !Empty(cTarget)
       IF (nPos := At(cSearch, cTarget)) > 0
@@ -1079,11 +1079,11 @@ Static Function XMEMOLINE(cString, nLineLength, nLineNumber, nTabSize, lWrap)
 
 Static Function ParseHeader(cHeaderString, nFields)
 
-   LOCAL cItem
-   LOCAL nItemCount := 0
-   LOCAL aPageHeader := {}
-   LOCAL nHeaderLen := 254
-   LOCAL nPos
+   Local cItem
+   Local nItemCount := 0
+   Local aPageHeader := {}
+   Local nHeaderLen := 254
+   Local nPos
 
    Do While ++nItemCount <= nFields
 
@@ -1114,7 +1114,7 @@ Static Function ParseHeader(cHeaderString, nFields)
 //       b. Character following character pointed to by pointer is hb_BChar(0)
 METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBReportForm
 
-   LOCAL aColumn[RCT_COUNT]
+   Local aColumn[RCT_COUNT]
 
    // Column width
    aColumn[RCT_WIDTH] := Bin2W(hb_BSubStr(cFieldsBuffer, nOffset + FIELD_WIDTH_OFFSET, 2))
