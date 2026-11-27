@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasMENUBARINFO()
-RETURN was_MENUBARINFO():new()
+Return was_MENUBARINFO():new()
 
 CLASS WAS_MENUBARINFO
 
@@ -86,7 +86,7 @@ PROCEDURE destroyObject() CLASS WAS_MENUBARINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

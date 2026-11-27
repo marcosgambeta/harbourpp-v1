@@ -58,7 +58,7 @@
 
 // Standard Menu System Modal handling for Menu Items
 Function MenuModal(oTopMenu, nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
-   RETURN HBMenuSys():New(oTopMenu):modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
+   Return HBMenuSys():New(oTopMenu):modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
 
 // Dummy function
 Function ShowMsg(aMsg, lMode)
@@ -81,7 +81,7 @@ Function IsShortcut(oMenu, nKey, /* @ */ nID)
    // Test for top menu item not a TopBar Menu:
    Case !oMenu:ClassName() == "TOPBARMENU"
 
-      RETURN IsQuick(oMenu, nKey, @nID)
+      Return IsQuick(oMenu, nKey, @nID)
 
    // Test and assign top menu item shortCut, enabled, and !PopUp:
    // Changed by enclosing assignment before ':Enabled':

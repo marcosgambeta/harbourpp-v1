@@ -50,13 +50,13 @@
 #define LLG_VIDEO_TXT   3
 
 Function _IsGraphic()
-   RETURN Set(_SET_VIDEOMODE) != NIL .AND. Set(_SET_VIDEOMODE) != 0 .AND. Set(_SET_VIDEOMODE) != LLG_VIDEO_TXT
+   Return Set(_SET_VIDEOMODE) != NIL .AND. Set(_SET_VIDEOMODE) != 0 .AND. Set(_SET_VIDEOMODE) != LLG_VIDEO_TXT
 
 Function _SetVideoMode(nMode)
 
    HB_SYMBOL_UNUSED(nMode)
 
-   RETURN 0
+   Return 0
 
 // NOTE: Original _GetNumCol() will not recognize colors written
 //       in lowercase. We're replicating this behaviour in this
@@ -73,29 +73,29 @@ Function _GetNumCol(cColor)
       cColor := Left(cColor, nPos - 1)
    ENDIF
 
-   RETURN hb_AScan({"B", "G", "BG", "R", "RB", "GR", "W", "N+", "B+", "G+", "BG+", "R+", "RB+", "GR+", "W+"}, cColor, NIL, NIL, True)
+   Return hb_AScan({"B", "G", "BG", "R", "RB", "GR", "W", "N+", "B+", "G+", "BG+", "R+", "RB+", "GR+", "W+"}, cColor, NIL, NIL, True)
 
 Function __GUIColor(cColor, nPos)
-   RETURN hb_ColorIndex(cColor, nPos - 1)
+   Return hb_ColorIndex(cColor, nPos - 1)
 
 Function IsDefColor()
-   RETURN SetColor() == "W/N,N/W,N/N,N/N,N/W" // NOTE: Color must match with the one in set.c
+   Return SetColor() == "W/N,N/W,N/N,N/N,N/W" // NOTE: Color must match with the one in set.c
 
 // Removes the accelerator marker from a caption string
 Function __Caption(cCaption)
 
    Local nPos
 
-   RETURN IIf((nPos := At("&", cCaption)) > 0, Stuff(cCaption, nPos, 1, ""), cCaption)
+   Return IIf((nPos := At("&", cCaption)) > 0, Stuff(cCaption, nPos, 1, ""), cCaption)
 
 Function __CapLength(cCaption)
 
    Local nCaptionLen := Len(cCaption)
    Local nPos
 
-   RETURN IIf((nPos := At("&", cCaption)) > 0 .AND. nPos < nCaptionLen, nCaptionLen - 1, nCaptionLen)
+   Return IIf((nPos := At("&", cCaption)) > 0 .AND. nPos < nCaptionLen, nCaptionLen - 1, nCaptionLen)
 
 Function __CapMetrics(o)
-   RETURN __CapLength(o:caption) + IIf(o:isPopup(), 3, 2)
+   Return __CapLength(o:caption) + IIf(o:isPopup(), 3, 2)
 
 #endif

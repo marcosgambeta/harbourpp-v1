@@ -51,48 +51,48 @@
 #include "tbrowse.ch"
 
 Function TApplyKey(nKey, oBrowse)
-   RETURN oBrowse:applyKey(nKey)
+   Return oBrowse:applyKey(nKey)
 
 Procedure TBAddCol() /* TODO */
-   RETURN
+   Return
 
 Procedure TBBBlock() /* TODO */
-   RETURN
+   Return
 
 Procedure TBClose() /* TODO */
-   RETURN
+   Return
 
 Procedure TBCreate() /* TODO */
-   RETURN
+   Return
 
 Procedure TBDelCol() /* TODO */
-   RETURN
+   Return
 
 Procedure TBDisplay() /* TODO */
-   RETURN
+   Return
 
 Procedure TBEditCell() /* TODO */
-   RETURN
+   Return
 
 Procedure TBFBlock() /* TODO */
-   RETURN
+   Return
 
 Procedure TBGoBot() /* TODO */
-   RETURN
+   Return
 
 Procedure TBGoTop() /* TODO */
-   RETURN
+   Return
 
 Procedure TBInsCol() /* TODO */
-   RETURN
+   Return
 
 Procedure TBModal() /* TODO */
-   RETURN
+   Return
 
 Procedure TBSBlock() /* TODO */
-   RETURN
+   Return
 
 Procedure TBSkip() /* TODO */
-   RETURN
+   Return
 
 #endif

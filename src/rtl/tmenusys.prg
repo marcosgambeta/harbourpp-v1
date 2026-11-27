@@ -155,7 +155,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
          ELSEIF (nSelection := oTopMenu:getAccel(nKey)) != 0
 
          ELSEIF IsShortcut(oTopMenu, nKey, @nReturn)
-            RETURN nReturn
+            Return nReturn
          ELSE
             nSelection := 1
          ENDIF
@@ -166,7 +166,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
    ENDIF
 
    IF !oTopMenu:getItem(nSelection):enabled
-      RETURN 0
+      Return 0
    ENDIF
 
    ::aMenuList      := Array(16)
@@ -431,7 +431,7 @@ METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetL
    SetPos(::nOldRow, ::nOldCol)
    SetCursor(::nOldCursor)
 
-   RETURN nReturn
+   Return nReturn
 
 /* Increment ::nMenuLevel and optionally select first item.
    If selected MenuItem IsPopUp, assign ::oMenu. */
@@ -529,10 +529,10 @@ METHOD HBMenuSys:Execute()
          SetCursor(SC_NONE)
       ENDIF
 
-      RETURN oNewMenu:Id
+      Return oNewMenu:Id
    ENDIF
 
-   RETURN 0
+   Return 0
 
 /* Test to find the Mouse location.
    NOTE: Formal parameters received here were passed by reference. */
@@ -587,7 +587,7 @@ METHOD HBMenuSys:ShowMsg(lMode)
          This format contradicts the one in the official docs. */
 
 METHOD HBMenuSys:GetMsgArray()
-   RETURN {NIL, ::nMsgRow, ::nMsgLeft, ::nMsgRight, ::cMsgColor, NIL, NIL, NIL, NIL, NIL}
+   Return {NIL, ::nMsgRow, ::nMsgLeft, ::nMsgRight, ::cMsgColor, NIL, NIL, NIL, NIL, NIL}
 
 /* --- */
 

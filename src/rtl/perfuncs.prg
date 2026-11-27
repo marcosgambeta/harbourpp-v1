@@ -56,7 +56,7 @@ Function hb_SetObject(oSelf, bConstructor)
       AAdd(t_aObjects, oSelf := Eval(bConstructor))
    ENDIF
 
-   RETURN oSelf
+   Return oSelf
 
 Function hb_EndObject()
 
@@ -70,4 +70,4 @@ Function hb_EndObject()
       t_aObjects := NIL
    ENDIF
 
-   RETURN oSelf
+   Return oSelf

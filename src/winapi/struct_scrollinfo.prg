@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasSCROLLINFO()
-RETURN was_SCROLLINFO():new()
+Return was_SCROLLINFO():new()
 
 CLASS WAS_SCROLLINFO
 
@@ -93,7 +93,7 @@ PROCEDURE destroyObject() CLASS WAS_SCROLLINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

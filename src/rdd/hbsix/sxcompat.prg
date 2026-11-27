@@ -109,7 +109,7 @@ Function sxChar(nLen, /* @ */ xKeyVal)
       xKeyVal := PadR(LTrim(xKeyVal), nLen)
    ENDIF
 
-   RETURN xKeyVal
+   Return xKeyVal
 
 Function sxNum(/* @ */ xKeyVal)
 
@@ -132,7 +132,7 @@ Function sxNum(/* @ */ xKeyVal)
       Exit
    EndSwitch
 
-   RETURN xKeyVal
+   Return xKeyVal
 
 Function sxDate(/* @ */ xKeyVal)
 
@@ -154,7 +154,7 @@ Function sxDate(/* @ */ xKeyVal)
       Exit
    EndSwitch
 
-   RETURN xKeyVal
+   Return xKeyVal
 
 Function sxLog(/* @ */ xKeyVal)
 
@@ -181,7 +181,7 @@ Function sxLog(/* @ */ xKeyVal)
       Exit
    EndSwitch
 
-   RETURN xKeyVal
+   Return xKeyVal
 
 Function sx_Compress(xVal)
 
@@ -190,14 +190,14 @@ Function sx_Compress(xVal)
    Switch ValType(xVal)
    Case "C"
    Case "M"
-      RETURN _sx_StrCompress(xVal)
+      Return _sx_StrCompress(xVal)
    Case "A"
       xRetVal := Array(Len(xVal))
       AEval(xVal, {| x, i | xRetVal[i] := sx_Compress(x) })
-      RETURN xRetVal
+      Return xRetVal
    EndSwitch
 
-   RETURN xVal
+   Return xVal
 
 Function sx_Decompress(xVal)
 
@@ -206,14 +206,14 @@ Function sx_Decompress(xVal)
    Switch ValType(xVal)
    Case "C"
    Case "M"
-      RETURN _sx_StrDecompress(xVal)
+      Return _sx_StrDecompress(xVal)
    Case "A"
       xRetVal := Array(Len(xVal))
       AEval(xVal, {| x, i | xRetVal[i] := sx_Decompress(x) })
-      RETURN xRetVal
+      Return xRetVal
    EndSwitch
 
-   RETURN xVal
+   Return xVal
 
 Function sx_TagInfo(cIndex)
 
@@ -238,10 +238,10 @@ Function sx_TagInfo(cIndex)
          aInfo[i][5] := ordDescend(i)
          aInfo[i][6] := ordCustom(i)
       Next
-      RETURN aInfo
+      Return aInfo
    ENDIF
 
-   RETURN {}
+   Return {}
 
 Function sx_TagCount(xIndex)
 
@@ -265,7 +265,7 @@ Function sx_TagCount(xIndex)
       ENDIF
    ENDIF
 
-   RETURN nTags
+   Return nTags
 
 Function sx_Tags(xIndex)
 
@@ -290,7 +290,7 @@ Function sx_Tags(xIndex)
       ENDIF
    ENDIF
 
-   RETURN aTagNames
+   Return aTagNames
 
 Function sx_SetTag(xTag, xIndex)
 
@@ -340,7 +340,7 @@ Function sx_SetTag(xTag, xIndex)
       ENDIF
    ENDIF
 
-   RETURN lRet
+   Return lRet
 
 Function sx_KillTag(xTag, xIndex)
 
@@ -401,16 +401,16 @@ Function sx_KillTag(xTag, xIndex)
       ENDIF
    ENDIF
 
-   RETURN lRet
+   Return lRet
 
 Function sx_FileOrder()
-   RETURN dbOrderInfo(DBOI_BAGNUMBER)
+   Return dbOrderInfo(DBOI_BAGNUMBER)
 
 Function sx_SetFileOrd(nIndex)
-   RETURN IIf(hb_IsNumeric(nIndex), ordSetFocus(sx_TagOrder(1, nIndex)), ordSetFocus())
+   Return IIf(hb_IsNumeric(nIndex), ordSetFocus(sx_TagOrder(1, nIndex)), ordSetFocus())
 
 Function rdd_Count()
-   RETURN Len(rddList())
+   Return Len(rddList())
 
 Function rdd_Name(nRDD)
 
@@ -419,11 +419,11 @@ Function rdd_Name(nRDD)
    IF hb_IsNumeric(nRDD) .AND. nRDD >= 1
       aRDD := rddList()
       IF nRDD <= Len(aRDD)
-         RETURN aRDD[nRDD]
+         Return aRDD[nRDD]
       ENDIF
    ENDIF
 
-   RETURN ""
+   Return ""
 
 Function rdd_Info(xID)
 
@@ -444,10 +444,10 @@ Function rdd_Info(xID)
    EndCase
 
    IF Empty(cRDD)
-      RETURN {}
+      Return {}
    ENDIF
 
-   RETURN { ;
+   Return { ;
       cRDD, ;
       True, ;
       hb_rddInfo(RDDI_TABLEEXT, NIL, cRDD), ;
@@ -456,31 +456,31 @@ Function rdd_Info(xID)
       hb_rddInfo(RDDI_MEMOEXT, NIL, cRDD) }
 
 Function sx_IsDBT(cRDD)
-   RETURN hb_rddInfo(RDDI_MEMOTYPE, NIL, cRDD) == DB_MEMO_DBT
+   Return hb_rddInfo(RDDI_MEMOTYPE, NIL, cRDD) == DB_MEMO_DBT
 
 Function sx_MemoExt(cNewExt, cRDD)
-   RETURN hb_rddInfo(RDDI_MEMOEXT, cNewExt, cRDD)
+   Return hb_rddInfo(RDDI_MEMOEXT, cNewExt, cRDD)
 
 Function sx_MemoBlk(nNewBlock, cRDD)
-   RETURN hb_rddInfo(RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD)
+   Return hb_rddInfo(RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD)
 
 Function sx_SetMemoBlock(nNewBlock, cRDD)
-   RETURN hb_rddInfo(RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD)
+   Return hb_rddInfo(RDDI_MEMOBLOCKSIZE, nNewBlock, cRDD)
 
 Function sx_StrXCheck(lStrict, cRDD)
-   RETURN hb_rddInfo(RDDI_STRICTSTRUCT, lStrict, cRDD)
+   Return hb_rddInfo(RDDI_STRICTSTRUCT, lStrict, cRDD)
 
 Function sx_LockRetry(nRetry, cRDD)
-   RETURN hb_rddInfo(RDDI_LOCKRETRY, nRetry, cRDD)
+   Return hb_rddInfo(RDDI_LOCKRETRY, nRetry, cRDD)
 
 Function sx_AutoOpen(lAuto, cRDD)
-   RETURN hb_rddInfo(RDDI_AUTOOPEN, lAuto, cRDD)
+   Return hb_rddInfo(RDDI_AUTOOPEN, lAuto, cRDD)
 
 Function sx_AutoShare(lAuto, cRDD)
-   RETURN hb_rddInfo(RDDI_AUTOSHARE, lAuto, cRDD)
+   Return hb_rddInfo(RDDI_AUTOSHARE, lAuto, cRDD)
 
 Function sx_Blob2File(cFileName, cFldName)
-   RETURN dbFileGet(cFldName, cFileName, FILEGET_OVERWRITE)
+   Return dbFileGet(cFldName, cFileName, FILEGET_OVERWRITE)
 
 Function sx_File2Blob(cFileName, cFldName, nActionCode)
 
@@ -493,7 +493,7 @@ Function sx_File2Blob(cFileName, cFldName, nActionCode)
       nAction := hb_bitOr(nAction, FILEPUT_ENCRYPT)
    ENDIF
 
-   RETURN dbFilePut(cFldName, cFileName, nAction)
+   Return dbFilePut(cFldName, cFileName, nAction)
 
 Function sx_dbCreate(cFileName, aStruct, cRDD)
 
@@ -519,7 +519,7 @@ Function sx_dbCreate(cFileName, aStruct, cRDD)
       EndSwitch
    Next
 
-   RETURN dbCreate(cFileName, aDbStruct, cRDD)
+   Return dbCreate(cFileName, aDbStruct, cRDD)
 
 Function sx_VSigLen(xField)
 
@@ -541,7 +541,7 @@ Function sx_VSigLen(xField)
       ENDIF
    ENDIF
 
-   RETURN nResult
+   Return nResult
 
 Function sx_VFGet(cExpr, nLen)
 
@@ -549,7 +549,7 @@ Function sx_VFGet(cExpr, nLen)
       we can simply evaluate given expression */
 
    IF Used() .AND. PCount() == 2
-      RETURN PadR(&cExpr, nLen)  /* NOTE: Macro operator! */
+      Return PadR(&cExpr, nLen)  /* NOTE: Macro operator! */
    ENDIF
 
    Return Nil
@@ -602,4 +602,4 @@ Function sx_SetTrigger(nAction, cTriggerName, cRDD /* Harbour extensions */)
       ENDIF
    ENDIF
 
-   RETURN cPrevTrigger
+   Return cPrevTrigger

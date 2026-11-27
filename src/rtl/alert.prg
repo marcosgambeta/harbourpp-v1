@@ -72,7 +72,7 @@ Function Alert(cMessage, aOptions, cColorNorm)
 #endif
    EndCase
 
-   RETURN hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh)
+   Return hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh)
 
 // NOTE: xMessage can be of any type. This is a Harbour extension over Alert().
 // NOTE: nDelay parameter is a Harbour extension over Alert().
@@ -142,7 +142,7 @@ Function hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 #endif
    EndCase
 
-   RETURN hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh, nDelay)
+   Return hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh, nDelay)
 
 #ifdef HB_CLP_UNDOC
 
@@ -150,6 +150,6 @@ Procedure __NoNoAlert()
 
    s_lNoAlert := False
 
-   RETURN
+   Return
 
 #endif

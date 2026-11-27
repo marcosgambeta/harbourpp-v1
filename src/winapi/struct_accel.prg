@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasACCEL()
-RETURN was_ACCEL():new()
+Return was_ACCEL():new()
 
 CLASS WAS_ACCEL
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_ACCEL
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

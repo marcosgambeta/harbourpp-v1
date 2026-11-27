@@ -35,7 +35,7 @@
 #include "hbclass.ch"
 
 Function wasUPDATELAYEREDWINDOWINFO()
-RETURN was_UPDATELAYEREDWINDOWINFO():new()
+Return was_UPDATELAYEREDWINDOWINFO():new()
 
 CLASS WAS_UPDATELAYEREDWINDOWINFO
 
@@ -113,7 +113,7 @@ PROCEDURE destroyObject() CLASS WAS_UPDATELAYEREDWINDOWINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

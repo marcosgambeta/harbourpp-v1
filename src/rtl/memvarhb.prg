@@ -148,7 +148,7 @@ Procedure hb_mvSave(cFileName, cMask, lIncludeMask)
       Eval(ErrorBlock(), oError)
    ENDIF
 
-   RETURN
+   Return
 
 Function hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
 
@@ -237,7 +237,7 @@ Function hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
          FClose(fhnd)
       ENDIF
 
-      RETURN xValue
+      Return xValue
    ELSE
       oError := ErrorNew()
 

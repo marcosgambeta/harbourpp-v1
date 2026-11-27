@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasTIMECAPS()
-RETURN was_TIMECAPS():new()
+Return was_TIMECAPS():new()
 
 CLASS WAS_TIMECAPS
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_TIMECAPS
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

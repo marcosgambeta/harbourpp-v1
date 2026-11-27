@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasLOGBRUSH()
-RETURN was_LOGBRUSH():new()
+Return was_LOGBRUSH():new()
 
 CLASS WAS_LOGBRUSH
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_LOGBRUSH
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

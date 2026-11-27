@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasCOMSTAT()
-RETURN was_COMSTAT():new()
+Return was_COMSTAT():new()
 
 CLASS WAS_COMSTAT
 
@@ -111,7 +111,7 @@ PROCEDURE destroyObject() CLASS WAS_COMSTAT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

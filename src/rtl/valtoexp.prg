@@ -51,28 +51,28 @@ Function hb_CStr(xVal)
 
    Switch v
    Case "C"
-   Case "M" ; RETURN xVal
-   Case "N" ; RETURN Str(xVal)
-   Case "D" ; RETURN IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
-   Case "T" ; RETURN 't"' + hb_TSToStr(xVal, True) + '"'
-   Case "L" ; RETURN IIf(xVal, ".T.", ".F.")
-   Case "S" ; RETURN "@" + xVal:name + "()"
-   Case "B" ; RETURN "{|| ... }"
-   Case "O" ; RETURN "{ " + xVal:className() + " Object }"
-   Case "A" ; RETURN "{ Array of " + hb_ntos(Len(xVal)) + " Items }"
-   Case "H" ; RETURN "{ Hash of " + hb_ntos(Len(xVal)) + " Items }"
-   Case "P" ; RETURN "<pointer>"
+   Case "M" ; Return xVal
+   Case "N" ; Return Str(xVal)
+   Case "D" ; Return IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
+   Case "T" ; Return 't"' + hb_TSToStr(xVal, True) + '"'
+   Case "L" ; Return IIf(xVal, ".T.", ".F.")
+   Case "S" ; Return "@" + xVal:name + "()"
+   Case "B" ; Return "{|| ... }"
+   Case "O" ; Return "{ " + xVal:className() + " Object }"
+   Case "A" ; Return "{ Array of " + hb_ntos(Len(xVal)) + " Items }"
+   Case "H" ; Return "{ Hash of " + hb_ntos(Len(xVal)) + " Items }"
+   Case "P" ; Return "<pointer>"
    Otherwise
       IF xVal == NIL
-         RETURN "NIL"
+         Return "NIL"
       ENDIF
    EndSwitch
 
-   RETURN "???:" + v
+   Return "???:" + v
 
 Function hb_ValToExp(xVal, lRaw)
 
-   RETURN s_valToExp(xVal, hb_defaultValue(lRaw, False))
+   Return s_valToExp(xVal, hb_defaultValue(lRaw, False))
 
 Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
@@ -84,12 +84,12 @@ Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
 
    Switch v
    Case "C"
-   Case "M" ; RETURN hb_StrToExp(xVal)
-   Case "N" ; RETURN hb_ntos(xVal)
-   Case "D" ; RETURN IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
-   Case "T" ; RETURN 't"' + hb_TSToStr(xVal, True) + '"'
-   Case "L" ; RETURN IIf(xVal, ".T.", ".F.")
-   Case "S" ; RETURN "@" + xVal:name + "()"
+   Case "M" ; Return hb_StrToExp(xVal)
+   Case "N" ; Return hb_ntos(xVal)
+   Case "D" ; Return IIf(Empty(xVal), "0d00000000", "0d" + DToS(xVal))
+   Case "T" ; Return 't"' + hb_TSToStr(xVal, True) + '"'
+   Case "L" ; Return IIf(xVal, ".T.", ".F.")
+   Case "S" ; Return "@" + xVal:name + "()"
    Case "O"
       cClass := xVal:className()
    Case "A"
@@ -103,7 +103,7 @@ Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
             cRefs += ","
          ENDIF
          cRefs += "{{" + cInd + "}," + hRefs[tmp] + "}"
-         RETURN "NIL"
+         Return "NIL"
       ELSE
          hRefs[tmp] := "{" + cInd + "}"
          cInd += ","
@@ -157,8 +157,8 @@ Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
          ENDIF
       ENDIF
       Exit
-   Case "P" ; RETURN "<pointer>"
-   Case "B" ; RETURN "{|| ... }"
+   Case "P" ; Return "<pointer>"
+   Case "B" ; Return "{|| ... }"
    Otherwise
       IF xVal == NIL
          cVal := "NIL"
@@ -167,7 +167,7 @@ Static Function s_valToExp(xVal, lRaw, cInd, hRefs, cRefs, cObjs)
       ENDIF
    EndSwitch
 
-   RETURN cVal
+   Return cVal
 
 Function __itemSetRef(xVal, aRefs)
 
@@ -177,7 +177,7 @@ Function __itemSetRef(xVal, aRefs)
       xVal[hb_ArrayToParams(aRef[1])] := IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])])
    Next
 
-   RETURN xVal
+   Return xVal
 
 Function __itemSetObj(xVal, aObjs)
 
@@ -187,7 +187,7 @@ Function __itemSetObj(xVal, aObjs)
       __objRestoreIVars(IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])]), aRef[1])
    Next
 
-   RETURN xVal
+   Return xVal
 
 Function __itemSetObjRaw(xVal, aObjs)
 
@@ -197,4 +197,4 @@ Function __itemSetObjRaw(xVal, aObjs)
       __objSetClass(IIf(aRef[2] == NIL, xVal, xVal[hb_ArrayToParams(aRef[2])]), aRef[1])
    Next
 
-   RETURN xVal
+   Return xVal

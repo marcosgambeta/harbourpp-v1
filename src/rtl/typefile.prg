@@ -114,7 +114,7 @@ Procedure __TypeFile(cFile, lPrint)
       oErr:OsCode      := FError()
       oErr:tries       := ++nRetries
       IF !hb_defaultValue(Eval(ErrorBlock(), oErr), True)  // user select "Default"
-         RETURN
+         Return
       ENDIF
    EndDo
 
@@ -152,4 +152,4 @@ Procedure __TypeFile(cFile, lPrint)
       Set(_SET_PRINTER, aSaveSet[2])
    ENDIF
 
-   RETURN
+   Return

@@ -68,4 +68,4 @@ Function hb_GetReadVar(oGet)
       Next
    ENDIF
 
-   RETURN cName
+   Return cName

@@ -191,7 +191,7 @@ METHOD RadioButtn:isAccel(xKey)
       Return False
    EndCase
 
-   RETURN Len(cKey) > 0 .AND. hb_AtI("&" + cKey, ::cCaption) > 0
+   Return Len(cKey) > 0 .AND. hb_AtI("&" + cKey, ::cCaption) > 0
 
 METHOD RadioButtn:hitTest(nMRow, nMCol)
 
@@ -199,7 +199,7 @@ METHOD RadioButtn:hitTest(nMRow, nMCol)
    Local nLen
 
    IF nMRow == ::Row .AND. nMCol >= ::Col .AND. nMCol < ::Col + 3
-      RETURN HTCLIENT
+      Return HTCLIENT
    ENDIF
 
    nLen := Len(::cCaption)
@@ -209,10 +209,10 @@ METHOD RadioButtn:hitTest(nMRow, nMCol)
    ENDIF
 
    IF nMRow == ::CapRow .AND. nMCol >= ::CapCol .AND. nMCol < ::CapCol + nLen
-      RETURN HTCLIENT
+      Return HTCLIENT
    ENDIF
 
-   RETURN HTNOWHERE
+   Return HTNOWHERE
 
 METHOD RadioButtn:bitmaps(aBitmaps)
 
@@ -220,10 +220,10 @@ METHOD RadioButtn:bitmaps(aBitmaps)
       ::aBitmaps := __eInstVar53(Self, "BITMAPS", aBitmaps, "A", 1001, {||Len(aBitmaps) == 2})
    ENDIF
 
-   RETURN ::aBitmaps
+   Return ::aBitmaps
 
 METHOD RadioButtn:buffer()
-   RETURN ::lBuffer
+   Return ::lBuffer
 
 METHOD RadioButtn:data(cData)
 
@@ -231,7 +231,7 @@ METHOD RadioButtn:data(cData)
       ::cData := IIf(cData == NIL, NIL, __eInstVar53(Self, "DATA", cData, "C", 1001))
    ENDIF
 
-   RETURN IIf(::cData == NIL, __Caption(::Caption), ::cData)
+   Return IIf(::cData == NIL, __Caption(::Caption), ::cData)
 
 METHOD RadioButtn:capCol(nCapCol)
 
@@ -239,7 +239,7 @@ METHOD RadioButtn:capCol(nCapCol)
       ::nCapCol := __eInstVar53(Self, "CAPCOL", nCapCol, "N", 1001)
    ENDIF
 
-   RETURN ::nCapCol
+   Return ::nCapCol
 
 METHOD RadioButtn:capRow(nCapRow)
 
@@ -247,7 +247,7 @@ METHOD RadioButtn:capRow(nCapRow)
       ::nCapRow := __eInstVar53(Self, "CAPROW", nCapRow, "N", 1001)
    ENDIF
 
-   RETURN ::nCapRow
+   Return ::nCapRow
 
 METHOD RadioButtn:caption(cCaption)
 
@@ -255,7 +255,7 @@ METHOD RadioButtn:caption(cCaption)
       ::cCaption := __eInstVar53(Self, "CAPTION", cCaption, "C", 1001)
    ENDIF
 
-   RETURN ::cCaption
+   Return ::cCaption
 
 METHOD RadioButtn:col(nCol)
 
@@ -263,7 +263,7 @@ METHOD RadioButtn:col(nCol)
       ::nCol := __eInstVar53(Self, "COL", nCol, "N", 1001)
    ENDIF
 
-   RETURN ::nCol
+   Return ::nCol
 
 METHOD RadioButtn:colorSpec(cColorSpec)
 
@@ -271,7 +271,7 @@ METHOD RadioButtn:colorSpec(cColorSpec)
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, {||!Empty(hb_ColorIndex(cColorSpec, 6)) .AND. Empty(hb_ColorIndex(cColorSpec, 7))})
    ENDIF
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 METHOD RadioButtn:fBlock(bFBlock)
 
@@ -279,10 +279,10 @@ METHOD RadioButtn:fBlock(bFBlock)
       ::bFBlock := IIf(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
    ENDIF
 
-   RETURN ::bFBlock
+   Return ::bFBlock
 
 METHOD RadioButtn:hasFocus()
-   RETURN ::lHasFocus
+   Return ::lHasFocus
 
 METHOD RadioButtn:row(nRow)
 
@@ -290,7 +290,7 @@ METHOD RadioButtn:row(nRow)
       ::nRow := __eInstVar53(Self, "ROW", nRow, "N", 1001)
    ENDIF
 
-   RETURN ::nRow
+   Return ::nRow
 
 METHOD RadioButtn:sBlock(bSBlock)
 
@@ -298,7 +298,7 @@ METHOD RadioButtn:sBlock(bSBlock)
       ::bSBlock := IIf(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
    ENDIF
 
-   RETURN ::bSBlock
+   Return ::bSBlock
 
 METHOD RadioButtn:style(cStyle)
 
@@ -306,7 +306,7 @@ METHOD RadioButtn:style(cStyle)
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 0 .OR. Len(cStyle) == 4})
    ENDIF
 
-   RETURN ::cStyle
+   Return ::cStyle
 
 METHOD RadioButtn:Init(nRow, nCol, cCaption, cData)
 
@@ -340,6 +340,6 @@ METHOD RadioButtn:Init(nRow, nCol, cCaption, cData)
    Return Self
 
 Function RadioButto(nRow, nCol, cCaption, cData) // NOTE: cData argument is undocumented
-   RETURN HBRadioButton():New(nRow, nCol, cCaption, cData)
+   Return HBRadioButton():New(nRow, nCol, cCaption, cData)
 
 #endif

@@ -50,16 +50,16 @@
 // NOTE: The fifth parameters (cOrderName) is undocumented.
 
 Function dbCreateIndex(cOrderBagName, cKeyExpr, bKeyExpr, lUnique, cOrderName)
-   RETURN ordCreate(cOrderBagName, cOrderName, cKeyExpr, bKeyExpr, lUnique)
+   Return ordCreate(cOrderBagName, cOrderName, cKeyExpr, bKeyExpr, lUnique)
 
 Function dbSetIndex(cIndexName)
-   RETURN ordListAdd(cIndexName)
+   Return ordListAdd(cIndexName)
 
 Function dbClearIndex()
-   RETURN ordListClear()
+   Return ordListClear()
 
 Function dbReindex()
-   RETURN ordListRebuild()
+   Return ordListRebuild()
 
 Procedure dbSetOrder(nOrderNum)
 
@@ -69,22 +69,22 @@ Procedure dbSetOrder(nOrderNum)
 
    ordSetFocus(nOrderNum)
 
-   RETURN
+   Return
 
 Function IndexExt()
-   RETURN ordBagExt()
+   Return ordBagExt()
 
 Function IndexKey(nOrder)
 
    IF !hb_IsNumeric(nOrder)
-      RETURN ordKey(nOrder)
+      Return ordKey(nOrder)
    ENDIF
 
    IF Used()
-      RETURN ordKey(nOrder)
+      Return ordKey(nOrder)
    ENDIF
 
-   RETURN ""
+   Return ""
 
 Function ordSetRelation(xArea, bRelation, cRelation)
-   RETURN dbSetRelation(xArea, bRelation, cRelation, True)
+   Return dbSetRelation(xArea, bRelation, cRelation, True)

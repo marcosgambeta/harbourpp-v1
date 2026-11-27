@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasFILETIME()
-RETURN was_FILETIME():new()
+Return was_FILETIME():new()
 
 CLASS WAS_FILETIME
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_FILETIME
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

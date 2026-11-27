@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasPOINTF()
-RETURN was_POINTF():new()
+Return was_POINTF():new()
 
 CLASS WAS_POINTF
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_POINTF
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

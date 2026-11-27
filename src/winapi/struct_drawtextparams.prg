@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasDRAWTEXTPARAMS()
-RETURN was_DRAWTEXTPARAMS():new()
+Return was_DRAWTEXTPARAMS():new()
 
 CLASS WAS_DRAWTEXTPARAMS
 
@@ -81,7 +81,7 @@ PROCEDURE destroyObject() CLASS WAS_DRAWTEXTPARAMS
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

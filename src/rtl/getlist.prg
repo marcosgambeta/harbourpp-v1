@@ -61,12 +61,12 @@ Procedure __GetListSetActive(oGetList)
       t_oGetListActive:HasFocus := True
    ENDIF
 
-   RETURN
+   Return
 
 // NOTE: Using a separate function for maximum speed
 
 Function __GetListActive()
-   RETURN t_oGetListActive
+   Return t_oGetListActive
 
 Function __GetListLast(oGetListLast)
 
@@ -76,4 +76,4 @@ Function __GetListLast(oGetListLast)
       t_oGetListLast := oGetListLast
    ENDIF
 
-   RETURN t_oGetListLast
+   Return t_oGetListLast

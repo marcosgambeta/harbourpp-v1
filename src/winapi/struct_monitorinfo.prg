@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasMONITORINFO()
-RETURN was_MONITORINFO():new()
+Return was_MONITORINFO():new()
 
 CLASS WAS_MONITORINFO
 
@@ -67,7 +67,7 @@ PROCEDURE destroyObject() CLASS WAS_MONITORINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

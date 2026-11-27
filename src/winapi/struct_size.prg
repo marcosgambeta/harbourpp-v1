@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasSIZE()
-RETURN was_SIZE():new()
+Return was_SIZE():new()
 
 CLASS WAS_SIZE
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_SIZE
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasINITCOMMONCONTROLSEX()
-RETURN was_INITCOMMONCONTROLSEX():new()
+Return was_INITCOMMONCONTROLSEX():new()
 
 CLASS WAS_INITCOMMONCONTROLSEX
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_INITCOMMONCONTROLSEX
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

@@ -148,7 +148,7 @@ METHOD PROCEDURE HBDbArray:doGet(oBrowse, pItem, nSet)
       END SEQUENCE
    ENDIF
 
-   RETURN
+   Return
 
 METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
 
@@ -232,16 +232,16 @@ METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
    Return Self
 
 Function __dbgArrays(aArray, cVarName, lEditable)
-   RETURN HBDbArray():New(aArray, cVarName, lEditable)
+   Return HBDbArray():New(aArray, cVarName, lEditable)
 
 Static Function GetTopPos(nPos)
-   RETURN IIf((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
+   Return IIf((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
 
 Static Function GetBottomPos(nPos)
-   RETURN IIf(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
+   Return IIf(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
 
 Static Function ArrayBrowseSkip(nPos, oBrwSets)
-   RETURN ;
+   Return ;
       IIf(oBrwSets:cargo[1] + nPos < 1, -oBrwSets:cargo[1] + 1, ;
       IIf(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;
       Len(oBrwSets:cargo[2][1]) - oBrwSets:cargo[1], nPos))

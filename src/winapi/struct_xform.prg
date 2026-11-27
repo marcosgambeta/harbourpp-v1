@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasXFORM()
-RETURN was_XFORM():new()
+Return was_XFORM():new()
 
 CLASS WAS_XFORM
 
@@ -87,7 +87,7 @@ PROCEDURE destroyObject() CLASS WAS_XFORM
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

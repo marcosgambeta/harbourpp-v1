@@ -73,7 +73,7 @@ Procedure __dbgShowWorkAreas()
 
    IF Len(aAlias) == 0
       __dbgAlert("No workareas in use")
-      RETURN
+      Return
    ENDIF
 
    IF (cur_id := AScan(aAlias, {| x | x[1] == nOldArea })) == 0
@@ -153,7 +153,7 @@ Procedure __dbgShowWorkAreas()
 
    dbSelectArea(nOldArea)
 
-   RETURN
+   Return
 
 Static Procedure DlgWorkAreaPaint(oDlg, aBrw)
 
@@ -196,7 +196,7 @@ Static Procedure DlgWorkAreaPaint(oDlg, aBrw)
 
    UpdateInfo(oDlg, Alias())
 
-   RETURN
+   Return
 
 Static Procedure DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ */ aInfo)
 
@@ -213,7 +213,7 @@ Static Procedure DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ *
          oDebug:nWaFocus := 1
       ENDIF
       aBrw[oDebug:nWaFocus]:Hilite()
-      RETURN
+      Return
    ENDIF
 
    Switch oDebug:nWaFocus
@@ -250,7 +250,7 @@ Static Procedure DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ *
       Exit
    EndSwitch
 
-   RETURN
+   Return
 
 Static Procedure WorkAreasKeyPressed(nKey, oBrw, nTotal)
 
@@ -299,7 +299,7 @@ Static Procedure WorkAreasKeyPressed(nKey, oBrw, nTotal)
 
    EndSwitch
 
-   RETURN
+   Return
 
 Static Function DbfInfo()
 
@@ -340,14 +340,14 @@ Static Function DbfInfo()
 
    Next
 
-   RETURN aInfo
+   Return aInfo
 
 Static Procedure UpdateInfo(oDlg, cAlias)
 
    Local nOldArea
 
    IF Empty(cAlias)
-      RETURN
+      Return
    ENDIF
 
    nOldArea := Select()
@@ -366,7 +366,7 @@ Static Procedure UpdateInfo(oDlg, cAlias)
 
    dbSelectArea(nOldArea)
 
-   RETURN
+   Return
 
 Static Function dbFilterInfo()
-   RETURN IIf(Empty(dbFilter()), IIf(Empty(hb_dbGetFilter()), "", "{|| ... }"), dbFilter())
+   Return IIf(Empty(dbFilter()), IIf(Empty(hb_dbGetFilter()), "", "{|| ... }"), dbFilter())

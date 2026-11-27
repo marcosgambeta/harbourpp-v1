@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasABC()
-RETURN was_ABC():new()
+Return was_ABC():new()
 
 CLASS WAS_ABC
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_ABC
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

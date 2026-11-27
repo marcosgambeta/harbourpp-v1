@@ -151,7 +151,7 @@ Function sx_IniHeader(cHeaderName, nArea)
 
    IF nArea $ SxIniInfo .AND. ;
       cHeaderName $ SxIniInfo[nArea]
-      RETURN SxIniInfo[nArea][cHeaderName]
+      Return SxIniInfo[nArea][cHeaderName]
    ENDIF
 
-   RETURN {}
+   Return {}

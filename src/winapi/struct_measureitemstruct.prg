@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasMEASUREITEMSTRUCT()
-RETURN was_MEASUREITEMSTRUCT():new()
+Return was_MEASUREITEMSTRUCT():new()
 
 CLASS WAS_MEASUREITEMSTRUCT
 
@@ -87,7 +87,7 @@ PROCEDURE destroyObject() CLASS WAS_MEASUREITEMSTRUCT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

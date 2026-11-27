@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasCOLORADJUSTMENT()
-RETURN was_COLORADJUSTMENT():new()
+Return was_COLORADJUSTMENT():new()
 
 CLASS WAS_COLORADJUSTMENT
 
@@ -123,7 +123,7 @@ PROCEDURE destroyObject() CLASS WAS_COLORADJUSTMENT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

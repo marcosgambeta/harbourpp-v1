@@ -119,7 +119,7 @@ Static Function __FieldTwo(cAlias, aFields)
    Local cField
 
    IF Empty(aFields)
-      RETURN dbStruct()
+      Return dbStruct()
    ENDIF
 
    aFldTemp := {}
@@ -135,7 +135,7 @@ Static Function __FieldTwo(cAlias, aFields)
    bFind := {| cFld | "->" $ cFld .AND. SubStr(cFld, At("->", cFld) + 2) == cField }
    AEval(dbStruct(), {|aFld|cField := aFld[DBS_NAME], IIf(AScan(aFields, bFind) == 0, NIL, AAdd(aStruct, aFld))})
 
-   RETURN aStruct
+   Return aStruct
 
 Static Function __JoinList(nMaster, nDetail, nResult, aStruct)
 
@@ -152,7 +152,7 @@ Static Function __JoinList(nMaster, nDetail, nResult, aStruct)
       EndCase
    Next
 
-   RETURN aList
+   Return aList
 
 Static Procedure __doJoinList(aList)
 
@@ -167,4 +167,4 @@ Static Procedure __doJoinList(aList)
       Next
    ENDIF
 
-   RETURN
+   Return

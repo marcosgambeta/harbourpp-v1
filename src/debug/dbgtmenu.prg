@@ -110,7 +110,7 @@ METHOD HBDbMenu:aMenus(xNewVal)
       t_aMenus := xNewVal
    ENDIF
 
-   RETURN t_aMenus
+   Return t_aMenus
 
 METHOD HBDbMenu:New()
 
@@ -154,7 +154,7 @@ METHOD HBDbMenu:AddItem(oMenuItem)
 
    AAdd(ATail(::aMenus):aItems, oMenuItem)
 
-   RETURN oMenuItem
+   Return oMenuItem
 
 METHOD PROCEDURE HBDbMenu:Build()
 
@@ -188,7 +188,7 @@ METHOD PROCEDURE HBDbMenu:Build()
       ::aMenus := ASize(::aMenus, Len(::aMenus) - 1)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:ClosePopup(nPopup)
 
@@ -203,7 +203,7 @@ METHOD PROCEDURE HBDbMenu:ClosePopup(nPopup)
       ::aItems[nPopup]:Display(::cClrPopup, ::cClrHotKey)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:DeHilite()
 
@@ -211,7 +211,7 @@ METHOD PROCEDURE HBDbMenu:DeHilite()
 
    oMenuItem:Display(::cClrPopup, ::cClrHotKey)
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:Display()
 
@@ -233,7 +233,7 @@ METHOD PROCEDURE HBDbMenu:Display()
       ENDIF
    Next
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:EvalAction()
 
@@ -245,7 +245,7 @@ METHOD PROCEDURE HBDbMenu:EvalAction()
       Eval(oMenuItem:bAction, oMenuItem)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD HBDbMenu:GetHotKeyPos(cKey)
 
@@ -253,11 +253,11 @@ METHOD HBDbMenu:GetHotKeyPos(cKey)
 
    For Each oMenuItem In ::aItems
       IF Upper(SubStr(oMenuItem:cPrompt, At("~", oMenuItem:cPrompt) + 1, 1)) == cKey
-         RETURN oMenuItem:__enumIndex()
+         Return oMenuItem:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD HBDbMenu:GetItemOrdByCoors(nRow, nCol)
 
@@ -266,11 +266,11 @@ METHOD HBDbMenu:GetItemOrdByCoors(nRow, nCol)
    For Each oMenuItem In ::aItems
       IF oMenuItem:nRow == nRow .AND. nCol >= oMenuItem:nCol .AND. ;
          nCol <= oMenuItem:nCol + Len(oMenuItem:cPrompt) - 2
-         RETURN oMenuItem:__enumIndex()
+         Return oMenuItem:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD HBDbMenu:GetItemByIdent(uIdent)
 
@@ -280,11 +280,11 @@ METHOD HBDbMenu:GetItemByIdent(uIdent)
    For Each oMenuItem In ::aItems
       IF hb_IsObject(oMenuItem:bAction)
          IF (oItem := oMenuItem:bAction:GetItemByIdent(uIdent)) != NIL
-            RETURN oItem
+            Return oItem
          ENDIF
       ELSEIF ValType(oMenuItem:Ident) == ValType(uIdent) .AND. ;
          oMenuItem:Ident == uIdent
-         RETURN oMenuItem
+         Return oMenuItem
       ENDIF
    Next
 
@@ -300,7 +300,7 @@ METHOD PROCEDURE HBDbMenu:GoBottom()
       oPopup:ShowPopup(Len(oPopup:aItems))
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:GoLeft()
 
@@ -324,7 +324,7 @@ METHOD PROCEDURE HBDbMenu:GoLeft()
       ENDIF
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:GoRight()
 
@@ -348,7 +348,7 @@ METHOD PROCEDURE HBDbMenu:GoRight()
       ENDIF
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:GoTop()
 
@@ -360,7 +360,7 @@ METHOD PROCEDURE HBDbMenu:GoTop()
       oPopup:ShowPopup(1)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:LoadColors()
 
@@ -378,7 +378,7 @@ METHOD PROCEDURE HBDbMenu:LoadColors()
       ENDIF
    Next
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:Refresh()
 
@@ -396,7 +396,7 @@ METHOD PROCEDURE HBDbMenu:Refresh()
 
    DispEnd()
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:ShowPopup(nPopup)
 
@@ -408,7 +408,7 @@ METHOD PROCEDURE HBDbMenu:ShowPopup(nPopup)
       ::aItems[nPopup]:bAction:ShowPopup(1)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
 
@@ -489,7 +489,7 @@ METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
 
    EndSwitch
 
-   RETURN
+   Return
 
 Function __dbgAltToKey(nKey)
 
@@ -501,4 +501,4 @@ Function __dbgAltToKey(nKey)
       K_ALT_Y, K_ALT_Z, K_ALT_1, K_ALT_2, K_ALT_3, K_ALT_4, ;
       K_ALT_5, K_ALT_6, K_ALT_7, K_ALT_8, K_ALT_9, K_ALT_0 }, nKey)
 
-   RETURN IIf(nIndex > 0, SubStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1), "")
+   Return IIf(nIndex > 0, SubStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1), "")

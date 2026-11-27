@@ -276,19 +276,19 @@ METHOD PopupMenu:getAccel(xKey)
    Case hb_IsNumeric(xKey)
       cKey := hb_keyChar(xKey)
    Otherwise
-      RETURN 0
+      Return 0
    EndCase
 
    IF Len(cKey) > 0
       cKey := "&" + cKey
       For Each item In ::aItems
          IF hb_AtI(cKey, item:caption) > 0
-            RETURN item:__enumIndex()
+            Return item:__enumIndex()
          ENDIF
       Next
    ENDIF
 
-   RETURN 0
+   Return 0
 
 METHOD PopupMenu:getFirst()
 
@@ -296,14 +296,14 @@ METHOD PopupMenu:getFirst()
 
    For Each item In ::aItems
       IF item:enabled
-         RETURN item:__enumIndex()
+         Return item:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD PopupMenu:getItem(nPos)
-   RETURN IIf(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
+   Return IIf(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
 
 METHOD PopupMenu:getLast()
 
@@ -311,11 +311,11 @@ METHOD PopupMenu:getLast()
 
    For Each item In ::aItems DESCEND
       IF item:enabled
-         RETURN item:__enumIndex()
+         Return item:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD PopupMenu:getNext()
 
@@ -323,11 +323,11 @@ METHOD PopupMenu:getNext()
 
    For nPos := ::nCurrent + 1 To ::nItemCount
       IF ::aItems[nPos]:enabled
-         RETURN nPos
+         Return nPos
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD PopupMenu:getPrev()
 
@@ -335,11 +335,11 @@ METHOD PopupMenu:getPrev()
 
    For nPos := ::nCurrent - 1 To 1 Step -1
       IF ::aItems[nPos]:enabled
-         RETURN nPos
+         Return nPos
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 // NOTE: This method corrects a bug in Cl*pper:
 //       1) when a menuitem is disabled it will ignore the key [jlalin]
@@ -350,11 +350,11 @@ METHOD PopupMenu:getShortCt(nKey)
 
    For Each item In ::aItems
       IF item:shortcut == nKey
-         RETURN item:__enumIndex()
+         Return item:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 // NOTE: This method corrects one bug in CA-Cl*pper:
 //       1) when a menuitem is disabled it will ignore the click [jlalin]
@@ -368,44 +368,44 @@ METHOD PopupMenu:hitTest(nMRow, nMCol)
    Do Case
    Case nMRow == ::nTop
       IF nMCol == ::nLeft
-         RETURN HTTOPLEFT
+         Return HTTOPLEFT
       ELSEIF nMCol == ::nRight
-         RETURN HTTOPRIGHT
+         Return HTTOPRIGHT
       ELSEIF nMCol >= ::nLeft .AND. nMCol <= ::nRight
-         RETURN HTTOP
+         Return HTTOP
       ENDIF
    Case nMRow == ::nBottom
       IF nMCol == ::nLeft
-         RETURN HTBOTTOMLEFT
+         Return HTBOTTOMLEFT
       ELSEIF nMCol == ::nRight
-         RETURN HTBOTTOMRIGHT
+         Return HTBOTTOMRIGHT
       ELSEIF nMCol >= ::nLeft .AND. nMCol <= ::nRight
-         RETURN HTBOTTOM
+         Return HTBOTTOM
       ENDIF
    Case nMCol == ::nLeft
       IF nMRow >= ::nTop .AND. nMRow <= ::nBottom
-         RETURN HTLEFT
+         Return HTLEFT
       ELSE
-         RETURN HTNOWHERE
+         Return HTNOWHERE
       ENDIF
    Case nMCol == ::nRight
       IF nMRow >= ::nTop .AND. nMRow <= ::nBottom
-         RETURN HTRIGHT
+         Return HTRIGHT
       ELSE
-         RETURN HTNOWHERE
+         Return HTNOWHERE
       ENDIF
    Case nMRow > ::nTop .AND. nMRow < ::nBottom .AND. nMCol > ::nLeft .AND. nMCol < ::nRight
 
       nPos := nMRow - ::nTop
       Do Case
       Case ::aItems[nPos]:__issep
-         RETURN HTSEPARATOR
+         Return HTSEPARATOR
       Otherwise
-         RETURN nPos
+         Return nPos
       EndCase
    EndCase
 
-   RETURN HTNOWHERE
+   Return HTNOWHERE
 
 METHOD PopupMenu:insItem(nPos, oItem)
 
@@ -420,7 +420,7 @@ METHOD PopupMenu:insItem(nPos, oItem)
    Return Self
 
 METHOD PopupMenu:isOpen()
-   RETURN ::aSaveScr != NIL
+   Return ::aSaveScr != NIL
 
 METHOD PopupMenu:open()
 
@@ -513,7 +513,7 @@ METHOD PopupMenu:border(cBorder)
       ::cBorder := __eInstVar53(Self, "BORDER", cBorder, "C", 1001, {||Len(cBorder) == 0 .OR. Len(cBorder) == 11})
    ENDIF
 
-   RETURN ::cBorder
+   Return ::cBorder
 
 METHOD PopupMenu:bottom(nBottom)
 
@@ -527,7 +527,7 @@ METHOD PopupMenu:bottom(nBottom)
    ENDIF
 #endif
 
-   RETURN ::nBottom
+   Return ::nBottom
 
 METHOD PopupMenu:colorSpec(cColorSpec)
 
@@ -536,13 +536,13 @@ METHOD PopupMenu:colorSpec(cColorSpec)
          {||!Empty(hb_ColorIndex(cColorSpec, 5)) .AND. Empty(hb_ColorIndex(cColorSpec, 6))})
    ENDIF
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 METHOD PopupMenu:current()
-   RETURN ::nCurrent
+   Return ::nCurrent
 
 METHOD PopupMenu:itemCount()
-   RETURN ::nItemCount
+   Return ::nItemCount
 
 METHOD PopupMenu:left(nLeft)
 
@@ -556,7 +556,7 @@ METHOD PopupMenu:left(nLeft)
    ENDIF
 #endif
 
-   RETURN ::nLeft
+   Return ::nLeft
 
 METHOD PopupMenu:right(nRight)
 
@@ -570,7 +570,7 @@ METHOD PopupMenu:right(nRight)
    ENDIF
 #endif
 
-   RETURN ::nRight
+   Return ::nRight
 
 METHOD PopupMenu:top(nTop)
 
@@ -584,10 +584,10 @@ METHOD PopupMenu:top(nTop)
    ENDIF
 #endif
 
-   RETURN ::nTop
+   Return ::nTop
 
 METHOD PopupMenu:width()
-   RETURN ::nWidth
+   Return ::nWidth
 
 METHOD PopupMenu:Init(nTop, nLeft, nBottom, nRight)
 
@@ -622,6 +622,6 @@ METHOD PopupMenu:Init(nTop, nLeft, nBottom, nRight)
    Return Self
 
 Function Popup(nTop, nLeft, nBottom, nRight)
-   RETURN HBPopupMenu():New(nTop, nLeft, nBottom, nRight)
+   Return HBPopupMenu():New(nTop, nLeft, nBottom, nRight)
 
 #endif

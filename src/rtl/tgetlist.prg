@@ -217,10 +217,10 @@ METHOD HBGetList:ReadModal()
    Return Self
 
 METHOD HBGetList:Updated()
-   RETURN ::lUpdated
+   Return ::lUpdated
 
 METHOD HBGetList:Get()
-   RETURN ::oGet
+   Return ::oGet
 
 METHOD HBGetList:SetFocus()
 
@@ -553,7 +553,7 @@ METHOD HBGetList:GetPreValidate(oGet, aMsg)
       oGet:exitState := GE_NOEXIT
    ENDIF
 
-   RETURN lWhen
+   Return lWhen
 
 METHOD HBGetList:GetPostValidate(oGet, aMsg)
 
@@ -616,7 +616,7 @@ METHOD HBGetList:GetPostValidate(oGet, aMsg)
       ENDIF
    ENDIF
 
-   RETURN lValid
+   Return lValid
 
 METHOD HBGetList:GetDoSetKey(bKeyBlock, oGet)
 
@@ -645,7 +645,7 @@ METHOD HBGetList:GetDoSetKey(bKeyBlock, oGet)
       oGet:exitState := GE_ESCAPE
    ENDIF
 
-   RETURN hb_defaultValue(lSetKey, True)
+   Return hb_defaultValue(lSetKey, True)
 
 METHOD HBGetList:Settle(nPos, lInit)
 
@@ -662,7 +662,7 @@ METHOD HBGetList:Settle(nPos, lInit)
    ENDIF
 
    IF nExitState == GE_ESCAPE .OR. nExitState == GE_WRITE
-      RETURN 0
+      Return 0
    ENDIF
 
    IF nExitState != GE_WHEN
@@ -706,10 +706,10 @@ METHOD HBGetList:Settle(nPos, lInit)
       Exit
 
    Case GE_SHORTCUT
-      RETURN ::nNextGet
+      Return ::nNextGet
 
    Case GE_MOUSEHIT
-      RETURN ::nNextGet
+      Return ::nNextGet
 
    EndSwitch
 
@@ -736,7 +736,7 @@ METHOD HBGetList:Settle(nPos, lInit)
       ::aGetList[nPos]:exitState := nExitState
    ENDIF
 
-   RETURN nPos
+   Return nPos
 
 METHOD HBGetList:PostActiveGet()
 
@@ -747,7 +747,7 @@ METHOD HBGetList:PostActiveGet()
    Return Self
 
 METHOD HBGetList:GetReadVar()
-   RETURN hb_GetReadVar(::oGet)
+   Return hb_GetReadVar(::oGet)
 
 METHOD HBGetList:SetFormat(bFormat)
 
@@ -757,7 +757,7 @@ METHOD HBGetList:SetFormat(bFormat)
       ::bFormat := bFormat
    ENDIF
 
-   RETURN bSavFormat
+   Return bSavFormat
 
 METHOD HBGetList:KillRead(lKill)
 
@@ -767,7 +767,7 @@ METHOD HBGetList:KillRead(lKill)
       ::lKillRead := lKill
    ENDIF
 
-   RETURN lSavKill
+   Return lSavKill
 
 METHOD HBGetList:GetActive(oGet)
 
@@ -777,7 +777,7 @@ METHOD HBGetList:GetActive(oGet)
       ::oActiveGet := oGet
    ENDIF
 
-   RETURN oOldGet
+   Return oOldGet
 
 METHOD HBGetList:ShowScoreboard()
 
@@ -819,7 +819,7 @@ METHOD HBGetList:ReadVar(cNewVarName)
       ::cVarName := cNewVarName
    ENDIF
 
-   RETURN cOldName
+   Return cOldName
 
 METHOD HBGetList:ReadUpdated(lUpdated)
 
@@ -829,7 +829,7 @@ METHOD HBGetList:ReadUpdated(lUpdated)
       ::lUpdated := lUpdated
    ENDIF
 
-   RETURN lSavUpdated
+   Return lSavUpdated
 
 #ifdef HB_COMPAT_C53
 
@@ -1142,7 +1142,7 @@ METHOD HBGetList:GUIPreValidate(oGet, oGUI, aMsg)
       oGet:exitState := GE_NOEXIT
    ENDIF
 
-   RETURN lWhen
+   Return lWhen
 
 METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
 
@@ -1203,7 +1203,7 @@ METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
 
    ENDIF
 
-   RETURN lValid
+   Return lValid
 
 METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
 
@@ -1403,7 +1403,7 @@ METHOD HBGetList:Accelerator(nKey, aMsg)
    Case nKey >= K_ALT_Z .AND. nKey <= K_ALT_M ; cKey := SubStr("zxcvbnm", nKey - K_ALT_Z + 1, 1)
    Case nKey >= K_ALT_1 .AND. nKey <= K_ALT_0 ; cKey := SubStr("1234567890", nKey - K_ALT_1 + 1, 1)
    Otherwise
-      RETURN 0
+      Return 0
    EndCase
 
    nStart := ::nPos + 1
@@ -1429,10 +1429,10 @@ METHOD HBGetList:Accelerator(nKey, aMsg)
             lGUI := hb_IsObject(::aGetList[::nPos]:control)
 
             IF lGUI .AND. !::GUIPostValidate(::aGetList[::nPos], ::aGetList[::nPos]:control, aMsg)
-               RETURN 0
+               Return 0
 
             ELSEIF !lGUI .AND. !::GetPostValidate(::aGetList[::nPos], aMsg)
-               RETURN 0
+               Return 0
 
             ENDIF
 
@@ -1440,16 +1440,16 @@ METHOD HBGetList:Accelerator(nKey, aMsg)
             lGUI := hb_IsObject(oGet:control)
 
             IF lGUI .AND. !::GUIPreValidate(oGet, oGet:control, aMsg)
-               // RETURN 0  // Commented out.
-               RETURN nGet  // Changed.
+               // Return 0  // Commented out.
+               Return nGet  // Changed.
 
             ELSEIF !lGUI .AND. !::GetPreValidate(oGet, aMsg)
-               // RETURN 0  // Commented out.
-               RETURN nGet  // Changed.
+               // Return 0  // Commented out.
+               Return nGet  // Changed.
 
             ENDIF
 
-            RETURN nGet
+            Return nGet
          ENDIF
       Next
 
@@ -1457,7 +1457,7 @@ METHOD HBGetList:Accelerator(nKey, aMsg)
       nEnd   := ::nPos - 1
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
 
@@ -1484,13 +1484,13 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
 
          ::nNextGet := 0
          // Exit  // Commented out.
-         RETURN 0  // Changed.
+         Return 0  // Changed.
 
       ELSEIF !lGUI .AND. !::GetPostValidate(::aGetList[::nPos], aMsg)
 
          ::nNextGet := 0
          // Exit  // Commented out.
-         RETURN 0  // Changed.
+         Return 0  // Changed.
 
       ENDIF
 
@@ -1501,24 +1501,24 @@ METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
 
          ::nNextGet := 0
          // Exit  // Commented out.
-         RETURN ::nNextGet  // Changed.
+         Return ::nNextGet  // Changed.
 
       ELSEIF !lGUI .AND. !::GetPreValidate(::aGetList[::nNextGet], aMsg)
 
          ::nNextGet := 0
          // Exit  // Commented out.
-         RETURN ::nNextGet  // Changed.
+         Return ::nNextGet  // Changed.
 
       ENDIF
 
       // Exit  // Commented out.
-      RETURN ::nNextGet  // Changed.
+      Return ::nNextGet  // Changed.
    // EndDo  // Commented out.
 
    ENDIF
 
-   // RETURN ::nNextGet != 0  // Commented out.
-   RETURN 0
+   // Return ::nNextGet != 0  // Commented out.
+   Return 0
 
 #endif
 
@@ -1588,7 +1588,7 @@ METHOD HBGetList:ReadStats(nElement, xNewValue)
       EndSwitch
    ENDIF
 
-   RETURN xRetVal
+   Return xRetVal
 
 METHOD HBGetList:ShowGetMsg(oGet, aMsg)
 

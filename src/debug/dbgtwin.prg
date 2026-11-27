@@ -120,7 +120,7 @@ METHOD PROCEDURE HBDbWindow:Clear()
 
    hb_Scroll(::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1, NIL, NIL, ::cColor)
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:Hide()
 
@@ -128,23 +128,23 @@ METHOD PROCEDURE HBDbWindow:Hide()
    ::cBackImage := NIL
    ::lVisible := False
 
-   RETURN
+   Return
 
 METHOD HBDbWindow:IsOver(nRow, nCol)
 
-   RETURN nRow >= ::nTop .AND. nRow <= ::nBottom .AND. nCol >= ::nLeft .AND. nCol <= ::nRight
+   Return nRow >= ::nTop .AND. nRow <= ::nBottom .AND. nCol >= ::nLeft .AND. nCol <= ::nRight
 
 METHOD PROCEDURE HBDbWindow:ScrollUp(nLines)
 
    hb_Scroll(::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1, hb_defaultValue(nLines, 1), NIL, ::cColor)
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:SetCaption(cCaption)
 
    ::cCaption := cCaption
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:ShowCaption()
 
@@ -152,7 +152,7 @@ METHOD PROCEDURE HBDbWindow:ShowCaption()
       hb_DispOutAt(::nTop, ::nLeft + ((::nRight - ::nLeft) / 2) - ((Len(::cCaption) + 2) / 2), " " + ::cCaption + " ", ::cColor)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:SetFocus(lOnOff)
 
@@ -166,7 +166,7 @@ METHOD PROCEDURE HBDbWindow:SetFocus(lOnOff)
       Eval(::bGotFocus, Self)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:Refresh()
 
@@ -183,7 +183,7 @@ METHOD PROCEDURE HBDbWindow:Refresh()
 
    DispEnd()
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:Show(lFocused)
 
@@ -198,7 +198,7 @@ METHOD PROCEDURE HBDbWindow:Show(lFocused)
    ::Refresh()
    ::lVisible := True
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:ShowModal()
 
@@ -232,7 +232,7 @@ METHOD PROCEDURE HBDbWindow:ShowModal()
 
    ::Hide()
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:LButtonDown(nMRow, nMCol)
 
@@ -240,7 +240,7 @@ METHOD PROCEDURE HBDbWindow:LButtonDown(nMRow, nMCol)
       Eval(::bLButtonDown, nMRow, nMCol)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:LDblClick(nMRow, nMCol)
 
@@ -248,7 +248,7 @@ METHOD PROCEDURE HBDbWindow:LDblClick(nMRow, nMCol)
       Eval(::bLDblClick, nMRow, nMCol)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:Move()
 
@@ -314,7 +314,7 @@ METHOD PROCEDURE HBDbWindow:Move()
    hb_keySetLast(0)
 #endif
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:KeyPressed(nKey)
 
@@ -322,7 +322,7 @@ METHOD PROCEDURE HBDbWindow:KeyPressed(nKey)
       Eval(::bKeyPressed, nKey, Self)
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbWindow:LoadColors()
 
@@ -334,7 +334,7 @@ METHOD PROCEDURE HBDbWindow:LoadColors()
       ::Browser:ColorSpec := aClr[2] + "," + aClr[5] + "," + aClr[3] + "," + aClr[6]
    ENDIF
 
-   RETURN
+   Return
 
 METHOD HBDbWindow:Resize(nTop, nLeft, nBottom, nRight)
 

@@ -82,7 +82,7 @@ Procedure __Dir(cFileMask)
 
    QOut()
 
-   RETURN
+   Return
 
 #define _DBF_HEAD_MARK  hb_BChar(0x03) + hb_BChar(0x06) + ;
                         hb_BChar(0x30) + hb_BChar(0x31) + ;
@@ -112,7 +112,7 @@ Static Procedure PutDBF(aDirEntry)
 
    QOut(PadR(aDirEntry[F_NAME], 15) + Str(nRecCount, 12) + "    " + DToC(dLastUpdate) + Str(aDirEntry[F_SIZE], 12))
 
-   RETURN
+   Return
 
 Static Procedure PutNormal(aDirEntry)
 
@@ -126,4 +126,4 @@ Static Procedure PutNormal(aDirEntry)
 
    QOut(PadR(cName, 8), PadR(SubStr(cExt, 2), 3), Str(aDirEntry[F_SIZE], 8), "", aDirEntry[F_DATE])
 
-   RETURN
+   Return

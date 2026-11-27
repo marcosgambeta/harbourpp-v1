@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasICONINFO()
-RETURN was_ICONINFO():new()
+Return was_ICONINFO():new()
 
 CLASS WAS_ICONINFO
 
@@ -81,7 +81,7 @@ PROCEDURE destroyObject() CLASS WAS_ICONINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

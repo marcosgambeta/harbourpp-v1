@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasWINDOWPOS()
-RETURN was_WINDOWPOS():new()
+Return was_WINDOWPOS():new()
 
 CLASS WAS_WINDOWPOS
 
@@ -93,7 +93,7 @@ PROCEDURE destroyObject() CLASS WAS_WINDOWPOS
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

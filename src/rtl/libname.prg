@@ -62,7 +62,7 @@ Function hb_libName(cLibName, cLibDir)
          cExt := hb_libExt()
       ENDIF
 
-      RETURN hb_FNameMerge(cDir, hb_libPrefix() + cName, cExt)
+      Return hb_FNameMerge(cDir, hb_libPrefix() + cName, cExt)
    ENDIF
 
-   RETURN ""
+   Return ""

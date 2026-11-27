@@ -189,10 +189,10 @@ METHOD PushButton:hitTest(nMRow, nMCol)
    ENDIF
 
    IF nMRow >= ::Row .AND. nMCol >= ::Col .AND. nMRow < ::Row + nCurrentPos .AND. nMCol < ::Col + nLen
-      RETURN HTCLIENT
+      Return HTCLIENT
    ENDIF
 
-   RETURN HTNOWHERE
+   Return HTNOWHERE
 
 METHOD PushButton:display()
 
@@ -253,10 +253,10 @@ METHOD PushButton:bitmap(cBitmap)
       ::cBitmap := __eInstVar53(Self, "BITMAP", cBitmap, "C", 1001)
    ENDIF
 
-   RETURN ::cBitmap
+   Return ::cBitmap
 
 METHOD PushButton:buffer()
-   RETURN ::lBuffer
+   Return ::lBuffer
 
 METHOD PushButton:caption(cCaption)
 
@@ -264,7 +264,7 @@ METHOD PushButton:caption(cCaption)
       ::cCaption := __eInstVar53(Self, "CAPTION", cCaption, "C", 1001)
    ENDIF
 
-   RETURN ::cCaption
+   Return ::cCaption
 
 METHOD PushButton:col(nCol)
 
@@ -272,7 +272,7 @@ METHOD PushButton:col(nCol)
       ::nCol := __eInstVar53(Self, "COL", nCol, "N", 1001)
    ENDIF
 
-   RETURN ::nCol
+   Return ::nCol
 
 METHOD PushButton:colorSpec(cColorSpec)
 
@@ -280,7 +280,7 @@ METHOD PushButton:colorSpec(cColorSpec)
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, {||!Empty(hb_ColorIndex(cColorSpec, 3)) .AND. Empty(hb_ColorIndex(cColorSpec, 5))})
    ENDIF
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 METHOD PushButton:fBlock(bFBlock)
 
@@ -288,10 +288,10 @@ METHOD PushButton:fBlock(bFBlock)
       ::bFBlock := IIf(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
    ENDIF
 
-   RETURN ::bFBlock
+   Return ::bFBlock
 
 METHOD PushButton:hasFocus()
-   RETURN ::lHasFocus
+   Return ::lHasFocus
 
 METHOD PushButton:message(cMessage)
 
@@ -299,7 +299,7 @@ METHOD PushButton:message(cMessage)
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
    ENDIF
 
-   RETURN ::cMessage
+   Return ::cMessage
 
 METHOD PushButton:row(nRow)
 
@@ -307,7 +307,7 @@ METHOD PushButton:row(nRow)
       ::nRow := __eInstVar53(Self, "ROW", nRow, "N", 1001)
    ENDIF
 
-   RETURN ::nRow
+   Return ::nRow
 
 METHOD PushButton:sBlock(bSBlock)
 
@@ -315,7 +315,7 @@ METHOD PushButton:sBlock(bSBlock)
       ::bSBlock := IIf(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
    ENDIF
 
-   RETURN ::bSBlock
+   Return ::bSBlock
 
 METHOD PushButton:typeOut()
    Return False
@@ -326,7 +326,7 @@ METHOD PushButton:style(cStyle)
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 0 .OR. Len(cStyle) == 2 .OR. Len(cStyle) == 8})
    ENDIF
 
-   RETURN ::cStyle
+   Return ::cStyle
 
 METHOD PushButton:Init(nRow, nCol, cCaption)
 
@@ -356,7 +356,7 @@ METHOD PushButton:Init(nRow, nCol, cCaption)
    Return Self
 
 Function PushButton(nRow, nCol, cCaption)
-   RETURN HBPushButton():New(nRow, nCol, cCaption)
+   Return HBPushButton():New(nRow, nCol, cCaption)
 
 Function _PushButt_(cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, nSizeX, nSizeY, nCapXOff, nCapYOff, cBitmap, nBmpXOff, nBmpYOff)
 
@@ -375,6 +375,6 @@ Function _PushButt_(cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cStyle, nS
    o:bmpXOff   := nBmpXOff
    o:bmpYOff   := nBmpYOff
 
-   RETURN o
+   Return o
 
 #endif

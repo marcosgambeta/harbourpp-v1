@@ -211,14 +211,14 @@ METHOD TopBarMenu:getFirst()
 
    For Each item In ::aItems
       IF item:enabled
-         RETURN item:__enumIndex()
+         Return item:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD TopBarMenu:getItem(nPos)
-   RETURN IIf(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
+   Return IIf(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
 
 METHOD TopBarMenu:getLast()
 
@@ -226,11 +226,11 @@ METHOD TopBarMenu:getLast()
 
    For Each item In ::aItems DESCEND
       IF item:enabled
-         RETURN item:__enumIndex()
+         Return item:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD TopBarMenu:getNext()
 
@@ -238,11 +238,11 @@ METHOD TopBarMenu:getNext()
 
    For n := ::nCurrent + 1 To ::nItemCount
       IF ::aItems[n]:enabled
-         RETURN n
+         Return n
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 METHOD TopBarMenu:getPrev()
 
@@ -250,11 +250,11 @@ METHOD TopBarMenu:getPrev()
 
    For n := ::nCurrent - 1 To 1 Step -1
       IF ::aItems[n]:enabled
-         RETURN n
+         Return n
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 // NOTE: This method corrects two bugs in Cl*pper:
 //       1) when two menuitems have the same key and the
@@ -277,12 +277,12 @@ METHOD TopBarMenu:getAccel(nKey)
       cKey := "&" + SubStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1)
       For Each item In ::aItems
          IF hb_AtI(cKey, item:caption) > 0
-            RETURN item:__enumIndex()
+            Return item:__enumIndex()
          ENDIF
       Next
    ENDIF
 
-   RETURN 0
+   Return 0
 
 METHOD TopBarMenu:getShortCt(nKey)
 
@@ -290,11 +290,11 @@ METHOD TopBarMenu:getShortCt(nKey)
 
    For Each item In ::aItems
       IF item:shortcut == nKey
-         RETURN item:__enumIndex()
+         Return item:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 // NOTE: In my tests I can't get other values than HTNOWHERE or a value
 //       greather than 0 (selected item), althought the NG's says that
@@ -315,12 +315,12 @@ METHOD TopBarMenu:hitTest(nMRow, nMCol)
          nColumn := item:__col
 
          IF nMCol >= nColumn .AND. nMCol <= nColumn + Len(item:caption)
-            RETURN item:__enumIndex()
+            Return item:__enumIndex()
          ENDIF
       Next
    ENDIF
 
-   RETURN HTNOWHERE
+   Return HTNOWHERE
 
 METHOD TopBarMenu:insItem(nPos, oItem)
 
@@ -368,13 +368,13 @@ METHOD TopBarMenu:colorSpec(cColorSpec)
 
    ENDIF
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 METHOD TopBarMenu:current()
-   RETURN ::nCurrent
+   Return ::nCurrent
 
 METHOD TopBarMenu:itemCount()
-   RETURN ::nItemCount
+   Return ::nItemCount
 
 METHOD TopBarMenu:left(nLeft)
 
@@ -382,7 +382,7 @@ METHOD TopBarMenu:left(nLeft)
       ::nLeft := __eInstVar53(Self, "LEFT", nLeft, "N", 1001)
    ENDIF
 
-   RETURN ::nLeft
+   Return ::nLeft
 
 METHOD TopBarMenu:right(nRight)
 
@@ -390,7 +390,7 @@ METHOD TopBarMenu:right(nRight)
       ::nRight := __eInstVar53(Self, "RIGHT", nRight, "N", 1001)
    ENDIF
 
-   RETURN ::nRight
+   Return ::nRight
 
 METHOD TopBarMenu:row(nRow)
 
@@ -399,7 +399,7 @@ METHOD TopBarMenu:row(nRow)
       ::nRow := __eInstVar53(Self, "ROW", nRow, "N", 1001)
    ENDIF
 
-   RETURN ::nRow
+   Return ::nRow
 
 // --------------------------------------------
 
@@ -433,6 +433,6 @@ METHOD TopBarMenu:Init(nRow, nLeft, nRight)
 // --------------------------------------------
 
 Function TopBar(nRow, nLeft, nRight)
-   RETURN HBTopBarMenu():New(nRow, nLeft, nRight)
+   Return HBTopBarMenu():New(nRow, nLeft, nRight)
 
 #endif

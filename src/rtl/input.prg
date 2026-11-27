@@ -51,6 +51,6 @@ Function __Input(xPrompt)
 
    Local cString := __Accept(xPrompt)
 
-   RETURN IIf(Empty(cString), NIL, &cString)
+   Return IIf(Empty(cString), NIL, &cString)
 
 #endif

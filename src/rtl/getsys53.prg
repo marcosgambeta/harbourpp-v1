@@ -58,7 +58,7 @@ Procedure GUIReader(oGet, oGetlist, oMenu, aMsg)
       oGetlist:GUIReader(oGet, oMenu, aMsg)
    ENDIF
 
-   RETURN
+   Return
 
 Procedure GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
 
@@ -70,19 +70,19 @@ Procedure GUIApplyKey(oGet, oGUI, oGetList, nKey, oMenu, aMsg)
       oGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
    ENDIF
 
-   RETURN
+   Return
 
 Function GUIPreValidate(oGet, oGUI, aMsg)
 
    Local oGetList := __GetListActive()
 
-   RETURN IIf(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), False)
+   Return IIf(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), False)
 
 Function GUIPostValidate(oGet, oGUI, aMsg)
 
    Local oGetList := __GetListActive()
 
-   RETURN IIf(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), False)
+   Return IIf(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), False)
 
 Procedure TBReader(oGet, oGetList, oMenu, aMsg)
 
@@ -94,7 +94,7 @@ Procedure TBReader(oGet, oGetList, oMenu, aMsg)
       oGetlist:TBReader(oGet, oMenu, aMsg)
    ENDIF
 
-   RETURN
+   Return
 
 Procedure TBApplyKey(oGet, oTB, oGetList, nKey, aMsg)
 
@@ -106,7 +106,7 @@ Procedure TBApplyKey(oGet, oTB, oGetList, nKey, aMsg)
       oGetList:TBApplyKey(oGet, oTB, nKey, aMsg)
    ENDIF
 
-   RETURN
+   Return
 
 Function Accelerator(oGetList, nKey, aMsg)
 
@@ -114,7 +114,7 @@ Function Accelerator(oGetList, nKey, aMsg)
       oGetList := __GetListActive()
    ENDIF
 
-   RETURN IIf(oGetList != NIL, oGetlist:Accelerator(nKey, aMsg), 0)
+   Return IIf(oGetList != NIL, oGetlist:Accelerator(nKey, aMsg), 0)
 
 Function HitTest(oGetList, nMRow, nMCol, aMsg)
 
@@ -122,7 +122,7 @@ Function HitTest(oGetList, nMRow, nMCol, aMsg)
       oGetList := __GetListActive()
    ENDIF
 
-   RETURN IIf(oGetList != NIL, oGetlist:hitTest(nMRow, nMCol, aMsg), 0)
+   Return IIf(oGetList != NIL, oGetlist:hitTest(nMRow, nMCol, aMsg), 0)
 
 Procedure ShowGetMsg(oGet, aMsg)
 
@@ -132,7 +132,7 @@ Procedure ShowGetMsg(oGet, aMsg)
       oGetList:ShowGetMsg(oGet, aMsg)
    ENDIF
 
-   RETURN
+   Return
 
 Procedure EraseGetMsg(oGet, aMsg)
 
@@ -144,7 +144,7 @@ Procedure EraseGetMsg(oGet, aMsg)
       oGetList:EraseGetMsg(aMsg)
    ENDIF
 
-   RETURN
+   Return
 
 Function ReadStats(nElement, xNewValue)
 
@@ -152,9 +152,9 @@ Function ReadStats(nElement, xNewValue)
 
    IF oGetList != NIL
       IF PCount() > 1
-         RETURN oGetList:ReadStats(nElement, xNewValue)
+         Return oGetList:ReadStats(nElement, xNewValue)
       ELSE
-         RETURN oGetList:ReadStats(nElement)
+         Return oGetList:ReadStats(nElement)
       ENDIF
    ENDIF
 

@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasTRACKMOUSEEVENT()
-RETURN was_TRACKMOUSEEVENT():new()
+Return was_TRACKMOUSEEVENT():new()
 
 CLASS WAS_TRACKMOUSEEVENT
 
@@ -75,7 +75,7 @@ PROCEDURE destroyObject() CLASS WAS_TRACKMOUSEEVENT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

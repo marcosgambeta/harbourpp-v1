@@ -180,7 +180,7 @@ METHOD PROCEDURE HBDbObject:doGet(oBrowse)
    cValue := __dbgObjGetValue(::TheObj, aItemRef[OMSG_NAME], @lCanAcc)
    IF !lCanAcc
       __dbgAlert(cValue)
-      RETURN
+      Return
    ENDIF
    cValue := __dbgValToExp(cValue)
 
@@ -192,7 +192,7 @@ METHOD PROCEDURE HBDbObject:doGet(oBrowse)
       END SEQUENCE
    ENDIF
 
-   RETURN
+   Return
 
 METHOD PROCEDURE HBDbObject:SetsKeyPressed(nKey, oBrwSets)
 
@@ -257,10 +257,10 @@ METHOD PROCEDURE HBDbObject:SetsKeyPressed(nKey, oBrwSets)
 
    oBrwSets:ForceStable()
 
-   RETURN
+   Return
 
 Function __dbgObject(oObject, cVarName, lEditable)
-   RETURN HBDbObject():New(oObject, cVarName, lEditable)
+   Return HBDbObject():New(oObject, cVarName, lEditable)
 
 Static Function __dbgObjGetValue(oObject, cVar, lCanAcc)
 
@@ -282,7 +282,7 @@ Static Function __dbgObjGetValue(oObject, cVar, lCanAcc)
       END SEQUENCE
    END SEQUENCE
 
-   RETURN xResult
+   Return xResult
 
 Static Function __dbgObjSetValue(oObject, cVar, xValue)
 
@@ -300,4 +300,4 @@ Static Function __dbgObjSetValue(oObject, cVar, xValue)
       END SEQUENCE
    END SEQUENCE
 
-   RETURN xValue
+   Return xValue

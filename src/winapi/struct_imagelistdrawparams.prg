@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasIMAGELISTDRAWPARAMS()
-RETURN was_IMAGELISTDRAWPARAMS():new()
+Return was_IMAGELISTDRAWPARAMS():new()
 
 CLASS WAS_IMAGELISTDRAWPARAMS
 
@@ -153,7 +153,7 @@ PROCEDURE destroyObject() CLASS WAS_IMAGELISTDRAWPARAMS
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

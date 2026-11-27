@@ -51,7 +51,7 @@ Function ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
    // CA-Cl*pper would fail on this case.
    IF !hb_IsString(cFileMask)
-      RETURN 0
+      Return 0
    ENDIF
 
    // If no drive/dir specified, use the SET DEFAULT setting.
@@ -120,4 +120,4 @@ Function ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
    Next
 
-   RETURN nDirLen
+   Return nDirLen

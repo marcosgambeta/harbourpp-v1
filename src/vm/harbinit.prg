@@ -51,13 +51,13 @@ ANNOUNCE SYSINIT
 
 // NOTE: For complete compatibility
 Procedure CLIPPER520()
-   RETURN
+   Return
 
 #ifdef HB_COMPAT_C53
 
 // NOTE: For complete compatibility
 Procedure CLIPPER530()
-   RETURN
+   Return
 
 #endif
 
@@ -73,11 +73,11 @@ Procedure __HBVMInit()
 
    ErrorSys()
 
-   RETURN
+   Return
 
 
 Procedure __SetHelpK()
 
    SetKey(K_F1, {|p, l, v|__XHelp(p, l, v)})
 
-   RETURN
+   Return

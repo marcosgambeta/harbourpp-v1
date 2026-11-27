@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasMSG()
-RETURN was_MSG():new()
+Return was_MSG():new()
 
 CLASS WAS_MSG
 
@@ -89,7 +89,7 @@ PROCEDURE destroyObject() CLASS WAS_MSG
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

@@ -203,7 +203,7 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
    cObject += hb_eol() + Space(nIndent) + "ENDOBJECT" + hb_eol()
 
-   RETURN cObject
+   Return cObject
 
 Static Function ArrayToText(aArray, cName, nIndent)
 
@@ -238,4 +238,4 @@ Static Function ArrayToText(aArray, cName, nIndent)
 
    cArray += hb_eol() + Space(nIndent) + "ENDARRAY" + hb_eol()
 
-   RETURN cArray
+   Return cArray

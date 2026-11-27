@@ -68,7 +68,7 @@ METHOD hb_PopupMenu:shadowed(lShadowed)
       ::lShadowed := __eInstVar53(Self, "SHADOWED", lShadowed, "L", 1001)
    ENDIF
 
-   RETURN ::lShadowed
+   Return ::lShadowed
 
 METHOD hb_PopupMenu:setCoors(nRow, nCol, lTop)
 

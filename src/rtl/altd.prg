@@ -70,4 +70,4 @@ Procedure AltD(nAction)
 
    ENDIF
 
-   RETURN
+   Return

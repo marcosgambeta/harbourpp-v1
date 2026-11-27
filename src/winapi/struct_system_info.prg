@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasSYSTEM_INFO()
-RETURN was_SYSTEM_INFO():new()
+Return was_SYSTEM_INFO():new()
 
 CLASS WAS_SYSTEM_INFO
 
@@ -123,7 +123,7 @@ PROCEDURE destroyObject() CLASS WAS_SYSTEM_INFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

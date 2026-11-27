@@ -53,7 +53,7 @@ Function TBrowseDB(nTop, nLeft, nBottom, nRight)
    oBrowse:GoTopBlock    := {||dbGoTop()}
    oBrowse:GoBottomBlock := {||dbGoBottom()}
 
-   RETURN oBrowse
+   Return oBrowse
 
 #ifdef HB_CLP_STRICT
 
@@ -85,6 +85,6 @@ Function __dbSkipper(nRecs)
       EndCase
    ENDIF
 
-   RETURN nSkipped
+   Return nSkipped
 
 #endif

@@ -60,7 +60,7 @@ PROCEDURE destroyObject() CLASS WAGPPOINTF
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

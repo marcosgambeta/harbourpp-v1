@@ -198,21 +198,21 @@ METHOD HBEditor:Resize(nTop, nLeft, nBottom, nRight)
    ::nNumCols := ::nRight - ::nLeft + 1
    ::nNumRows := ::nBottom - ::nTop + 1
 
-   RETURN ::Goto(::nRow, ::nCol)
+   Return ::Goto(::nRow, ::nCol)
 
 METHOD HBEditor:LoadFile(cFileName)
-   RETURN ::LoadText(hb_MemoRead(::cFile := cFileName))
+   Return ::LoadText(hb_MemoRead(::cFile := cFileName))
 
 METHOD HBEditor:LoadText(cText)
 
    ::aText := Text2Array(cText, IIf(::lWordWrap, ::nWordWrapCol, NIL), ::nTabWidth)
    ::lDirty := False
 
-   RETURN IIf(::nNumCols > 0, ::GoTo(1, 1), Self)
+   Return IIf(::nNumCols > 0, ::GoTo(1, 1), Self)
 
 // Saves file being edited, if there is no file name does nothing, returns True if OK
 METHOD HBEditor:SaveFile()
-   RETURN !::cFile == "" .AND. !::lDirty := !hb_MemoWrit(::cFile, ::GetText())
+   Return !::cFile == "" .AND. !::lDirty := !hb_MemoWrit(::cFile, ::GetText())
 
 // Add a new Line of text at end of current text
 METHOD HBEditor:AddLine(cLine, lSoftCR)
@@ -237,11 +237,11 @@ METHOD HBEditor:RemoveLine(nRow)
 
 // Return line n of text
 METHOD HBEditor:GetLine(nRow)
-   RETURN IIf(nRow >= 1 .AND. nRow <= ::LineCount, ::aText[nRow]:cText, "")
+   Return IIf(nRow >= 1 .AND. nRow <= ::LineCount, ::aText[nRow]:cText, "")
 
 // Return text length of line n
 METHOD HBEditor:LineLen(nRow)
-   RETURN hb_ULen(::GetLine(nRow))
+   Return hb_ULen(::GetLine(nRow))
 
 // Converts an array of text lines to a String
 METHOD HBEditor:GetText(lSoftCR)
@@ -261,13 +261,13 @@ METHOD HBEditor:GetText(lSoftCR)
       ENDIF
    Next
 
-   RETURN cText
+   Return cText
 
 METHOD HBEditor:GotoLine(nRow)
-   RETURN ::Goto(nRow, ::nCol)
+   Return ::Goto(nRow, ::nCol)
 
 METHOD HBEditor:LineCount()
-   RETURN Len(::aText)
+   Return Len(::aText)
 
 METHOD HBEditor:Display()
 
@@ -297,7 +297,7 @@ METHOD HBEditor:LineColor(nRow)
 
    HB_SYMBOL_UNUSED(nRow)
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 // Set current column and row in edited text
 METHOD HBEditor:GoTo(nRow, nCol, nRefreshMode)
@@ -353,11 +353,11 @@ METHOD HBEditor:GoTo(nRow, nCol, nRefreshMode)
 
 // Returns current line position on the screen
 METHOD HBEditor:Row()
-   RETURN ::nTop + ::nRow - ::nFirstRow
+   Return ::nTop + ::nRow - ::nFirstRow
 
 // Returns current column position on the screen
 METHOD HBEditor:Col()
-   RETURN ::nLeft + ::nCol - ::nFirstCol
+   Return ::nLeft + ::nCol - ::nFirstCol
 
 // Handles cursor movements inside text array
 METHOD HBEditor:MoveCursor(nKey)
@@ -461,7 +461,7 @@ METHOD HBEditor:Edit(nPassedKey)
    Local oLine
 
    IF !::lEditAllow
-      RETURN ::BrowseText(nPassedKey)
+      Return ::BrowseText(nPassedKey)
    ENDIF
 
    Do While !::lExitEdit
@@ -661,7 +661,7 @@ METHOD HBEditor:ReformParagraph()
       ::nCol := nCol + 1
    ENDIF
 
-   RETURN ::GoTo(::nRow, ::nCol, _REFRESH_ALL)
+   Return ::GoTo(::nRow, ::nCol, _REFRESH_ALL)
 
 // Changes insert state and insertion / overstrike mode of editor
 METHOD HBEditor:InsertState(lInsState)
@@ -674,7 +674,7 @@ METHOD HBEditor:InsertState(lInsState)
    Return Self
 
 METHOD HBEditor:ExitState()
-   RETURN ::lExitEdit
+   Return ::lExitEdit
 
 METHOD HBEditor:SetColor(cColorString)
 
@@ -684,7 +684,7 @@ METHOD HBEditor:SetColor(cColorString)
       ::cColorSpec := cColorString
    ENDIF
 
-   RETURN cOldColor
+   Return cOldColor
 
 METHOD HBEditor:Hilite()
 
@@ -705,30 +705,30 @@ METHOD HBEditor:DeHilite()
    Return Self
 
 METHOD HBEditor:RowPos()
-   RETURN ::nRow
+   Return ::nRow
 
 METHOD HBEditor:ColPos()
-   RETURN ::nCol
+   Return ::nCol
 
 METHOD HBEditor:Saved()
-   RETURN ::lSaved
+   Return ::lSaved
 
 METHOD HBEditor:Changed()
-   RETURN ::lDirty
+   Return ::lDirty
 
 METHOD HBEditor:IsWordWrap()
-   RETURN ::lWordWrap
+   Return ::lWordWrap
 
 METHOD HBEditor:WordWrapCol()
-   RETURN ::nWordWrapCol
+   Return ::nWordWrapCol
 
 METHOD HBEditor:hitTest(nMRow, nMCol)
 
    IF nMRow >= ::nTop .AND. nMRow <= ::nBottom .AND. nMCol >= ::nLeft .AND. nMCol <= ::nRight
-      RETURN HTCLIENT
+      Return HTCLIENT
    ENDIF
 
-   RETURN HTNOWHERE
+   Return HTNOWHERE
 
 
 Static Function Text2Array(cText, nWordWrapCol, nTabWidth)
@@ -742,13 +742,13 @@ Static Function Text2Array(cText, nWordWrapCol, nTabWidth)
       AAdd(aArray, HBTextLine():New())
    ENDIF
 
-   RETURN aArray
+   Return aArray
 
 Static Function SubStrPad(cText, nFrom, nLen)
-   RETURN hb_UPadR(hb_USubStr(cText, nFrom, nLen), nLen)
+   Return hb_UPadR(hb_USubStr(cText, nFrom, nLen), nLen)
 
 Static Function TabCount(nTabWidth, nCol)
-   RETURN Int(nTabWidth - (nCol - 1) % nTabWidth)
+   Return Int(nTabWidth - (nCol - 1) % nTabWidth)
 
 Static Function SkipWord(cText, nPos)
 
@@ -759,7 +759,7 @@ Static Function SkipWord(cText, nPos)
       nPos := hb_ULen(cText) + 1
    ENDIF
 
-   RETURN nPos
+   Return nPos
 
 Static Function NextWord(cText, nPos)
 
@@ -770,7 +770,7 @@ Static Function NextWord(cText, nPos)
       EndDo
    ENDIF
 
-   RETURN nPos
+   Return nPos
 
 Static Function PrevWord(cText, nPos)
 
@@ -780,4 +780,4 @@ Static Function PrevWord(cText, nPos)
       --nPos
    EndDo
 
-   RETURN nPos
+   Return nPos

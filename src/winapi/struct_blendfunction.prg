@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasBLENDFUNCTION()
-RETURN was_BLENDFUNCTION():new()
+Return was_BLENDFUNCTION():new()
 
 CLASS WAS_BLENDFUNCTION
 
@@ -75,7 +75,7 @@ PROCEDURE destroyObject() CLASS WAS_BLENDFUNCTION
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

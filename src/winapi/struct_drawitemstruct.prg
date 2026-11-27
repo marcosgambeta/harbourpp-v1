@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasDRAWITEMSTRUCT()
-RETURN was_DRAWITEMSTRUCT():new()
+Return was_DRAWITEMSTRUCT():new()
 
 CLASS WAS_DRAWITEMSTRUCT
 
@@ -102,7 +102,7 @@ PROCEDURE destroyObject() CLASS WAS_DRAWITEMSTRUCT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

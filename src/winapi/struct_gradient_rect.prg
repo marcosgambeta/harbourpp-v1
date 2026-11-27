@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasGRADIENT_RECT()
-RETURN was_GRADIENT_RECT():new()
+Return was_GRADIENT_RECT():new()
 
 CLASS WAS_GRADIENT_RECT
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_GRADIENT_RECT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

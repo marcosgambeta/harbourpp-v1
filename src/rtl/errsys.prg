@@ -51,7 +51,7 @@ Procedure ErrorSys()
 
    ErrorBlock({|oError|DefError(oError)})
 
-   RETURN
+   Return
 
 Static Function DefError(oError)
 
@@ -63,7 +63,7 @@ Static Function DefError(oError)
 
    // By default, division by zero results in zero
    IF oError:genCode == EG_ZERODIV .AND. oError:canSubstitute
-      RETURN 0
+      Return 0
    ENDIF
 
    // By default, retry on RDD lock error failure
@@ -171,4 +171,4 @@ Static Function ErrorMessage(oError)
       cMessage += ": " + oError:operation
    EndCase
 
-   RETURN cMessage
+   Return cMessage

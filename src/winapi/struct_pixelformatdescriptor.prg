@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasPIXELFORMATDESCRIPTOR()
-RETURN was_PIXELFORMATDESCRIPTOR():new()
+Return was_PIXELFORMATDESCRIPTOR():new()
 
 CLASS WAS_PIXELFORMATDESCRIPTOR
 
@@ -207,7 +207,7 @@ PROCEDURE destroyObject() CLASS WAS_PIXELFORMATDESCRIPTOR
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

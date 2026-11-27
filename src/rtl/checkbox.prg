@@ -160,7 +160,7 @@ METHOD CheckBox:hitTest(nMRow, nMCol)
    Local nLenCaption
 
    IF nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + 3
-      RETURN HTCLIENT
+      Return HTCLIENT
    ENDIF
 
    nLenCaption := Len(::cCaption)
@@ -170,10 +170,10 @@ METHOD CheckBox:hitTest(nMRow, nMCol)
    ENDIF
 
    IF nMRow == ::nCapRow .AND. nMCol >= ::nCapCol .AND. nMCol < ::nCapCol + nLenCaption
-      RETURN HTCAPTION
+      Return HTCAPTION
    ENDIF
 
-   RETURN HTNOWHERE
+   Return HTNOWHERE
 
 METHOD CheckBox:display()
 
@@ -220,10 +220,10 @@ METHOD CheckBox:bitmaps(aBitmaps)
       ::aBitmaps := __eInstVar53(Self, "BITMAPS", aBitmaps, "A", 1001)
    ENDIF
 
-   RETURN ::aBitmaps
+   Return ::aBitmaps
 
 METHOD CheckBox:buffer()
-   RETURN ::lBuffer
+   Return ::lBuffer
 
 METHOD CheckBox:capCol(nCapCol)
 
@@ -231,7 +231,7 @@ METHOD CheckBox:capCol(nCapCol)
       ::nCapCol := __eInstVar53(Self, "CAPCOL", nCapCol, "N", 1001)
    ENDIF
 
-   RETURN ::nCapCol
+   Return ::nCapCol
 
 METHOD CheckBox:capRow(nCapRow)
 
@@ -239,7 +239,7 @@ METHOD CheckBox:capRow(nCapRow)
       ::nCapRow := __eInstVar53(Self, "CAPROW", nCapRow, "N", 1001)
    ENDIF
 
-   RETURN ::nCapRow
+   Return ::nCapRow
 
 METHOD CheckBox:caption(cCaption)
 
@@ -247,7 +247,7 @@ METHOD CheckBox:caption(cCaption)
       ::cCaption := __eInstVar53(Self, "CAPTION", cCaption, "C", 1001)
    ENDIF
 
-   RETURN ::cCaption
+   Return ::cCaption
 
 METHOD CheckBox:col(nCol)
 
@@ -255,7 +255,7 @@ METHOD CheckBox:col(nCol)
       ::nCol := __eInstVar53(Self, "COL", nCol, "N", 1001)
    ENDIF
 
-   RETURN ::nCol
+   Return ::nCol
 
 METHOD CheckBox:colorSpec(cColorSpec)
 
@@ -263,7 +263,7 @@ METHOD CheckBox:colorSpec(cColorSpec)
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, {||!Empty(hb_ColorIndex(cColorSpec, 3)) .AND. Empty(hb_ColorIndex(cColorSpec, 4))})
    ENDIF
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 METHOD CheckBox:fBlock(bFBlock)
 
@@ -271,10 +271,10 @@ METHOD CheckBox:fBlock(bFBlock)
       ::bFBlock := IIf(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
    ENDIF
 
-   RETURN ::bFBlock
+   Return ::bFBlock
 
 METHOD CheckBox:hasFocus()
-   RETURN ::lHasFocus
+   Return ::lHasFocus
 
 METHOD CheckBox:message(cMessage)
 
@@ -282,7 +282,7 @@ METHOD CheckBox:message(cMessage)
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
    ENDIF
 
-   RETURN ::cMessage
+   Return ::cMessage
 
 METHOD CheckBox:row(nRow)
 
@@ -290,7 +290,7 @@ METHOD CheckBox:row(nRow)
       ::nRow := __eInstVar53(Self, "ROW", nRow, "N", 1001)
    ENDIF
 
-   RETURN ::nRow
+   Return ::nRow
 
 METHOD CheckBox:sBlock(bSBlock)
 
@@ -298,7 +298,7 @@ METHOD CheckBox:sBlock(bSBlock)
       ::bSBlock := IIf(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
    ENDIF
 
-   RETURN ::bSBlock
+   Return ::bSBlock
 
 METHOD CheckBox:style(cStyle)
 
@@ -306,7 +306,7 @@ METHOD CheckBox:style(cStyle)
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 0 .OR. Len(cStyle) == 4})
    ENDIF
 
-   RETURN ::cStyle
+   Return ::cStyle
 
 METHOD CheckBox:typeOut()
    Return False
@@ -349,9 +349,9 @@ Function _CheckBox_(lState, cCaption, cMessage, cColorSpec, bFBlock, bSBlock, cS
    o:style     := cStyle
    o:bitmaps   := aBitmaps
 
-   RETURN o
+   Return o
 
 Function CheckBox(nRow, nCol, cCaption)
-   RETURN HBCheckBox():New(nRow, nCol, cCaption)
+   Return HBCheckBox():New(nRow, nCol, cCaption)
 
 #endif

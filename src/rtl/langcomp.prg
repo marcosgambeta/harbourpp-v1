@@ -173,7 +173,7 @@ Function hb_langSelect(cLangID, cCP)
       ENDIF
    ENDIF
 
-   RETURN __hb_langSelect(cLangID)
+   Return __hb_langSelect(cLangID)
 
 Static Function __LangStdToLangHb(cLangStd)
 
@@ -425,4 +425,4 @@ Static Function __LangStdToLangHb(cLangStd)
       EndSwitch
    ENDIF
 
-   RETURN cLangHb
+   Return cLangHb

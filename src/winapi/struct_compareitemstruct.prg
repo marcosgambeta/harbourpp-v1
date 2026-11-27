@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasCOMPAREITEMSTRUCT()
-RETURN was_COMPAREITEMSTRUCT():new()
+Return was_COMPAREITEMSTRUCT():new()
 
 CLASS WAS_COMPAREITEMSTRUCT
 
@@ -99,7 +99,7 @@ PROCEDURE destroyObject() CLASS WAS_COMPAREITEMSTRUCT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

@@ -52,6 +52,6 @@
 REQUEST SDF
 
 Function __dbSDF(lExport, cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, cCodePage)
-   RETURN IIf(lExport, ;
+   Return IIf(lExport, ;
       __dbCopy(cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "SDF", NIL, cCodePage), ;
       __dbApp(cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "SDF", NIL, cCodePage))

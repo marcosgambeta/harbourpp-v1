@@ -282,7 +282,7 @@ Function __MenuTo(bBlock, cVariable)
 
    SetPos(MaxRow() - 1, 0)
 
-   RETURN n
+   Return n
 
 #ifdef HB_COMPAT_C53
 
@@ -293,10 +293,10 @@ Static Function HitTest(aMenu, nMRow, nMCol)
    For Each aMenuItem In aMenu
       IF nMRow == aMenuItem[_ITM_ROW] .AND. nMCol >= aMenuItem[_ITM_COL] .AND. nMCol < aMenuItem[_ITM_COL] + Len(aMenuItem[_ITM_PROMPT])
 
-         RETURN aMenuItem:__enumIndex()
+         Return aMenuItem:__enumIndex()
       ENDIF
    Next
 
-   RETURN 0
+   Return 0
 
 #endif

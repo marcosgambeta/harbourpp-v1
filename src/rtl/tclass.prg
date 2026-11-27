@@ -146,7 +146,7 @@ Function HBClass()
 
    ENDIF
 
-   RETURN __clsInst(s_hClass)
+   Return __clsInst(s_hClass)
 
 /* xSuper is used here as the new preprocessor file (hbclass.ch) send here
    always an array (if no superclass, this will be an empty one)
@@ -191,7 +191,7 @@ Static Function New(cClassName, xSuper, sClassFunc, lModuleFriendly)
    ::asFriendClass := {}
    ::asFriendFunc  := {}
 
-   RETURN QSelf()
+   Return QSelf()
 
 Static Procedure Create(/* MetaClass */)
 
@@ -274,10 +274,10 @@ Static Procedure Create(/* MetaClass */)
       __clsAddFriend(::hClass, n)
    Next
 
-   RETURN
+   Return
 
 Static Function Instance()
-   RETURN __clsInst(QSelf():hClass)
+   Return __clsInst(QSelf():hClass)
 
 Static Procedure AddData(cData, xInit, cType, nScope, lNoinit)
 
@@ -308,7 +308,7 @@ Static Procedure AddData(cData, xInit, cType, nScope, lNoinit)
 
    AAdd(QSelf():aDatas, {cData, xInit, cType, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
 
-   RETURN
+   Return
 
 Static Procedure AddMultiData(cType, xInit, nScope, aData, lNoInit)
 
@@ -320,7 +320,7 @@ Static Procedure AddMultiData(cType, xInit, nScope, aData, lNoInit)
       ENDIF
    Next
 
-   RETURN
+   Return
 
 Static Procedure AddClassData(cData, xInit, cType, nScope, lNoInit)
 
@@ -351,7 +351,7 @@ Static Procedure AddClassData(cData, xInit, cType, nScope, lNoInit)
 
    AAdd(QSelf():aClsDatas, {cData, xInit, cType, hb_bitOr(hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED), HB_OO_CLSTP_CLASS)})
 
-   RETURN
+   Return
 
 Static Procedure AddMultiClsData(cType, xInit, nScope, aData, lNoInit)
 
@@ -363,31 +363,31 @@ Static Procedure AddMultiClsData(cType, xInit, nScope, aData, lNoInit)
       ENDIF
    Next
 
-   RETURN
+   Return
 
 Static Procedure AddInline(cMethod, bCode, nScope)
 
    AAdd(QSelf():aInlines, {cMethod, bCode, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
 
-   RETURN
+   Return
 
 Static Procedure AddMethod(cMethod, sFuncSym, nScope)
 
    AAdd(QSelf():aMethods, {cMethod, sFuncSym, hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED)})
 
-   RETURN
+   Return
 
 Static Procedure AddClsMethod(cMethod, sFuncSym, nScope)
 
    AAdd(QSelf():aClsMethods, {cMethod, sFuncSym, hb_bitOr(hb_defaultValue(nScope, HB_OO_CLSTP_EXPORTED), HB_OO_CLSTP_CLASS)})
 
-   RETURN
+   Return
 
 Static Procedure AddVirtual(cMethod)
 
    AAdd(QSelf():aVirtuals, cMethod)
 
-   RETURN
+   Return
 
 Static Procedure AddDelegate(xMethod, cDelegMsg, cObject, nScope)
 
@@ -402,7 +402,7 @@ Static Procedure AddDelegate(xMethod, cDelegMsg, cObject, nScope)
       Next
    EndCase
 
-   RETURN
+   Return
 
 Static Procedure AddFriendClass(...)
 
@@ -410,7 +410,7 @@ Static Procedure AddFriendClass(...)
 
    AEval(hb_AParams(), {|sClass|AAdd(::asFriendClass, sClass)})
 
-   RETURN
+   Return
 
 Static Procedure AddFriendFunc(...)
 
@@ -418,19 +418,19 @@ Static Procedure AddFriendFunc(...)
 
    AEval(hb_AParams(), {|sFunc|AAdd(::asFriendFunc, sFunc)})
 
-   RETURN
+   Return
 
 Static Procedure SetOnError(sFuncPtr)
 
    QSelf():sOnError := sFuncPtr
 
-   RETURN
+   Return
 
 Static Procedure SetDestructor(sFuncPtr)
 
    QSelf():sDestructor := sFuncPtr
 
-   RETURN
+   Return
 
 Static Function InitClass()
-   RETURN QSelf()
+   Return QSelf()

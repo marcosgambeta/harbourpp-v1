@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasCAPDRIVERCAPS()
-RETURN was_CAPDRIVERCAPS():new()
+Return was_CAPDRIVERCAPS():new()
 
 CLASS WAS_CAPDRIVERCAPS
 
@@ -117,7 +117,7 @@ PROCEDURE destroyObject() CLASS WAS_CAPDRIVERCAPS
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

@@ -65,10 +65,10 @@ Static Function __i18n_fileName(cFileName)
       cFileName := hb_FNameExtSetDef(cFileName, ".pot")
    ENDIF
 
-   RETURN cFileName
+   Return cFileName
 
 Static Function __i18n_strEncode(cStr)
-   RETURN SubStr(hb_StrToExp(cStr, True), 2)
+   Return SubStr(hb_StrToExp(cStr, True), 2)
 
 Static Function __i18n_strDecode(cLine, cValue, lCont)
 
@@ -85,7 +85,7 @@ Static Function __i18n_strDecode(cLine, cValue, lCont)
       ENDIF
    ENDIF
 
-   RETURN lRet
+   Return lRet
 
 #define _BOM_VALUE      0xFEFF
 #define _UTF8_BOM       hb_utf8Chr(_BOM_VALUE) // e"\xEF\xBB\xBF"
@@ -288,7 +288,7 @@ Function __i18n_potArrayLoad(cFile, /* @ */ cErrorMsg)
       aTrans := NIL
    ENDIF
 
-   RETURN aTrans
+   Return aTrans
 
 Static Function __i18n_IsBOM_UTF8(cFileName)
 
@@ -306,7 +306,7 @@ Static Function __i18n_IsBOM_UTF8(cFileName)
    Return False
 
 Function __i18n_potArraySort(aTrans)
-   RETURN ASort(aTrans, NIL, NIL, {|item1, item2|__i18n_ItemToStr(item1) < __i18n_ItemToStr(item2)})
+   Return ASort(aTrans, NIL, NIL, {|item1, item2|__i18n_ItemToStr(item1) < __i18n_ItemToStr(item2)})
 
 Static Function __i18n_ItemToStr(item)
 
@@ -324,7 +324,7 @@ Static Function __i18n_ItemToStr(item)
       cSource := "~" + Left(cSource, tmp - 1) + Str(Val(SubStr(cSource, tmp + 1)), 10, 0)
    ENDIF
 
-   RETURN cSource + item[_I18N_MSGID][1]
+   Return cSource + item[_I18N_MSGID][1]
 
 Function __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTransformTranslation)
 
@@ -366,7 +366,7 @@ Function __i18n_potArrayClean(aTrans, lKeepSource, lKeepVoidTranslations, bTrans
       Next
    ENDIF
 
-   RETURN aTrans
+   Return aTrans
 
 Function __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSourceRef)
 
@@ -439,7 +439,7 @@ Function __i18n_potArraySave(cFile, aTrans, /* @ */ cErrorMsg, lVersionNo, lSour
    ENDIF
    FClose(hFile)
 
-   RETURN lRet
+   Return lRet
 
 Function __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
 
@@ -472,7 +472,7 @@ Function __i18n_potArrayToHash(aTrans, lEmpty, hI18N)
       ENDIF
    Next
 
-   RETURN hI18N
+   Return hI18N
 
 Function __i18n_potArrayTrans(aTrans, hI18N)
 
@@ -501,7 +501,7 @@ Function __i18n_potArrayTrans(aTrans, hI18N)
       ENDIF
    Next
 
-   RETURN aTrans
+   Return aTrans
 
 Function __i18n_hashJoin(hTrans, hTrans2)
 
@@ -524,7 +524,7 @@ Function __i18n_hashJoin(hTrans, hTrans2)
       ENDIF
    Next
 
-   RETURN hTrans
+   Return hTrans
 
 Function __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
 
@@ -570,7 +570,7 @@ Function __i18n_potArrayJoin(aTrans, aTrans2, hIndex)
       ENDIF
    Next
 
-   RETURN aTrans
+   Return aTrans
 
 Function hb_i18n_LoadPOT(cFile, pI18N, cErrorMsg)
 
@@ -588,7 +588,7 @@ Function hb_i18n_LoadPOT(cFile, pI18N, cErrorMsg)
       ENDIF
    ENDIF
 
-   RETURN pI18N
+   Return pI18N
 
 Function hb_i18n_SavePOT(cFile, pI18N, /* @ */ cErrorMsg)
 
@@ -653,4 +653,4 @@ Function hb_i18n_SavePOT(cFile, pI18N, /* @ */ cErrorMsg)
 
    ENDIF
 
-   RETURN lRet
+   Return lRet

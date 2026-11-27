@@ -54,7 +54,7 @@ Function hb_PathNormalize(cPath)
    Local cDir
 
    IF !hb_IsString(cPath)
-      RETURN ""
+      Return ""
    ENDIF
 
    IF !Empty(cPath)
@@ -96,7 +96,7 @@ Function hb_PathNormalize(cPath)
       ENDIF
    ENDIF
 
-   RETURN cPath
+   Return cPath
 
 Function hb_PathJoin(cPathA, cPathR)
 
@@ -107,24 +107,24 @@ Function hb_PathJoin(cPathA, cPathR)
    Local cExtR
 
    IF !hb_IsString(cPathR)
-      RETURN ""
+      Return ""
    ENDIF
 
    IF !hb_IsString(cPathA) .OR. Empty(cPathA)
-      RETURN cPathR
+      Return cPathR
    ENDIF
 
    hb_FNameSplit(cPathR, @cDirR, @cNameR, @cExtR, @cDriveR)
 
    IF !Empty(cDriveR) .OR. (!Empty(cDirR) .AND. Left(cDirR, 1) $ hb_osPathDelimiters())
-      RETURN cPathR
+      Return cPathR
    ENDIF
 
    IF Empty(cDirA := hb_FNameDir(cPathA))
-      RETURN cPathR
+      Return cPathR
    ENDIF
 
-   RETURN hb_FNameMerge(cDirA + cDirR, cNameR, cExtR)
+   Return hb_FNameMerge(cDirA + cDirR, cNameR, cExtR)
 
 Function hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
 
@@ -136,7 +136,7 @@ Function hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
    Local cTargetFileName
 
    IF !hb_IsString(cPathBase) .OR. !hb_IsString(cPathTarget)
-      RETURN ""
+      Return ""
    ENDIF
 
    cPathBase   := hb_PathJoin(hb_DirBase(), hb_DirSepAdd(cPathBase))
@@ -164,7 +164,7 @@ Function hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
    ENDIF
 
    IF tmp == Len(aPathBase)
-      RETURN s_FN_FromArray(aPathTarget, tmp, cTargetFileName, "")
+      Return s_FN_FromArray(aPathTarget, tmp, cTargetFileName, "")
    ENDIF
 
    // Different drive spec. There is no way to solve that using relative dirs.
@@ -172,16 +172,16 @@ Function hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
       tmp == 1 .AND. ( ;
       Right(aPathBase[1]  , Len(hb_osDriveSeparator())) == hb_osDriveSeparator() .OR. ;
       Right(aPathTarget[1], Len(hb_osDriveSeparator())) == hb_osDriveSeparator())
-      RETURN cPathTarget
+      Return cPathTarget
    ENDIF
 
    // Force to return relative paths even when base is different.
    IF hb_defaultValue(lForceRelative, True) .AND. ;
       hb_DirExists(cPathBase + (cTestTarget := s_FN_FromArray(aPathTarget, tmp, cTargetFileName, Replicate(".." + hb_ps(), Len(aPathBase) - tmp))))
-      RETURN cTestTarget
+      Return cTestTarget
    ENDIF
 
-   RETURN cPathTarget
+   Return cPathTarget
 
 Static Function s_FN_ToArray(cPath, /* @ */ cFileName)
 
@@ -195,7 +195,7 @@ Static Function s_FN_ToArray(cPath, /* @ */ cFileName)
       cFileName := cName + cExt
    ENDIF
 
-   RETURN hb_ATokens(cDir, hb_ps())
+   Return hb_ATokens(cDir, hb_ps())
 
 Static Function s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
 
@@ -204,7 +204,7 @@ Static Function s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
    Local tmp
 
    IF nFrom > Len(aPath) .OR. nTo < 1
-      RETURN ""
+      Return ""
    ENDIF
 
    IF nFrom < 1
@@ -219,12 +219,12 @@ Static Function s_FN_FromArray(aPath, nFrom, cFileName, cDirPrefix)
       ENDIF
    Next
 
-   RETURN hb_FNameMerge(hb_DirSepDel(hb_DirSepAdd(cDirPrefix) + cDir), cFileName)
+   Return hb_FNameMerge(hb_DirSepDel(hb_DirSepAdd(cDirPrefix) + cDir), cFileName)
 
 Function hb_DirSepAdd(cDir)
 
    IF !hb_IsString(cDir)
-      RETURN ""
+      Return ""
    ENDIF
 
    IF !Empty(cDir) .AND. ;
@@ -234,12 +234,12 @@ Function hb_DirSepAdd(cDir)
       cDir += hb_ps()
    ENDIF
 
-   RETURN cDir
+   Return cDir
 
 Function hb_DirSepDel(cDir)
 
    IF !hb_IsString(cDir)
-      RETURN ""
+      Return ""
    ENDIF
 
    IF Empty(hb_osDriveSeparator())
@@ -257,15 +257,15 @@ Function hb_DirSepDel(cDir)
       EndDo
    ENDIF
 
-   RETURN cDir
+   Return cDir
 
 Function hb_DirSepToOS(cFileName)
 
    IF hb_IsString(cFileName)
-      RETURN StrTran(cFileName, IIf(hb_ps() == "\", "/", "\"), hb_ps())
+      Return StrTran(cFileName, IIf(hb_ps() == "\", "/", "\"), hb_ps())
    ENDIF
 
-   RETURN ""
+   Return ""
 
 Function hb_DirBuild(cDir)
 

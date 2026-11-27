@@ -109,4 +109,4 @@ Procedure __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
       Break(oError)
    ENDIF
 
-   RETURN
+   Return

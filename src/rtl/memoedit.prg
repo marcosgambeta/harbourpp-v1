@@ -78,9 +78,9 @@ ENDCLASS
 
 METHOD HBMemoEditor:UserFunctionIsValid()
 #ifdef HB_CLP_STRICT
-   RETURN hb_IsString(::xUserFunction)
+   Return hb_IsString(::xUserFunction)
 #else
-   RETURN hb_IsString(::xUserFunction) .OR. hb_IsEvalItem(::xUserFunction)
+   Return hb_IsString(::xUserFunction) .OR. hb_IsEvalItem(::xUserFunction)
 #endif
 
 METHOD HBMemoEditor:MemoInit(xUserFunction)
@@ -285,7 +285,7 @@ METHOD HBMemoEditor:xDo(nStatus)
    SetPos(nOldRow, nOldCol)
    SetCursor(nOldCur)
 
-   RETURN hb_defaultValue(xResult, ME_DEFAULT)
+   Return hb_defaultValue(xResult, ME_DEFAULT)
 
 METHOD HBMemoEditor:MoveCursor(nKey)
 
@@ -295,7 +295,7 @@ METHOD HBMemoEditor:MoveCursor(nKey)
       Return False
    ENDIF
 
-   RETURN ::super:MoveCursor(nKey)
+   Return ::super:MoveCursor(nKey)
 
 METHOD HBMemoEditor:InsertState(lInsState)
 
@@ -350,4 +350,4 @@ Function MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunctio
       SetCursor(nOldCursor)
    ENDIF
 
-   RETURN cString
+   Return cString

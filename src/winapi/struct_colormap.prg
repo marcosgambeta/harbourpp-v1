@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasCOLORMAP()
-RETURN was_COLORMAP():new()
+Return was_COLORMAP():new()
 
 CLASS WAS_COLORMAP
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_COLORMAP
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

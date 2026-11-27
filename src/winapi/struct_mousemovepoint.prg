@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasMOUSEMOVEPOINT()
-RETURN was_MOUSEMOVEPOINT():new()
+Return was_MOUSEMOVEPOINT():new()
 
 CLASS WAS_MOUSEMOVEPOINT
 
@@ -75,7 +75,7 @@ PROCEDURE destroyObject() CLASS WAS_MOUSEMOVEPOINT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

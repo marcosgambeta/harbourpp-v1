@@ -166,11 +166,11 @@ METHOD HBBrwText:SetActiveLine(n)
    Return Self
 
 METHOD HBBrwText:GetLine()
-   RETURN IIf(::lLineNumbers, PadR(hb_ntos(::nRow) + ":", ::nLineNoLen), "") + ;
+   Return IIf(::lLineNumbers, PadR(hb_ntos(::nRow) + ":", ::nLineNoLen), "") + ;
       MemoLine(::aRows[::nRow], ::nMaxLineLen, 1, ::nTabWidth, False)
 
 METHOD HBBrwText:GetLineText()
-   RETURN PadR(SubStr(::GetLine(), ::nLineOffset), ::nWidth)
+   Return PadR(SubStr(::GetLine(), ::nLineOffset), ::nWidth)
 
 METHOD HBBrwText:GetLineColor()
 
@@ -182,7 +182,7 @@ METHOD HBBrwText:GetLineColor()
       aColor := IIf(::nRow == ::nActiveLine, {2, 2}, {1, 1})
    ENDIF
 
-   RETURN aColor
+   Return aColor
 
 METHOD PROCEDURE HBBrwText:LoadFile(cFileName)
 
@@ -200,7 +200,7 @@ METHOD PROCEDURE HBBrwText:LoadFile(cFileName)
    ::nMaxLineLen := nMaxLineLen
    ::nLineOffset := 1
 
-   RETURN
+   Return
 
 METHOD HBBrwText:Resize(nTop, nLeft, nBottom, nRight)
 
@@ -263,7 +263,7 @@ METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
       ENDIF
    EndDo
 
-   RETURN lFound
+   Return lFound
 
 METHOD HBBrwText:GoFirst()
 
@@ -293,7 +293,7 @@ METHOD HBBrwText:Skip(n)
       ENDIF
    ENDIF
 
-   RETURN nSkipped
+   Return nSkipped
 
 METHOD HBBrwText:GoPrev()
 
@@ -304,7 +304,7 @@ METHOD HBBrwText:GoPrev()
       lMoved := True
    ENDIF
 
-   RETURN lMoved
+   Return lMoved
 
 METHOD HBBrwText:GoNext()
 
@@ -315,4 +315,4 @@ METHOD HBBrwText:GoNext()
       lMoved := True
    ENDIF
 
-   RETURN lMoved
+   Return lMoved

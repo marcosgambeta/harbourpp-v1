@@ -94,7 +94,7 @@ Function ReadModal(GetList)
 
    SetPos(MaxRow() - 1, 0)
 
-   RETURN oGetList:Updated()
+   Return oGetList:Updated()
 
 #ifdef HB_COMPAT_C53
 Procedure GetReader(oGet, oGetList, oMenu, aMsg)
@@ -103,13 +103,13 @@ Procedure GetReader(oGet, oGetList, oMenu, aMsg)
 
    oGet:Reader(oMenu, aMsg)
 
-   RETURN
+   Return
 #else
 Procedure GetReader(oGet)
 
    oGet:Reader()
 
-   RETURN
+   Return
 #endif
 
 Function GetActive(oGet)
@@ -127,15 +127,15 @@ Function GetActive(oGet)
       IF PCount() > 0
          oGetActiveOld := t_oGetActive
          t_oGetActive := oGet
-         RETURN oGetActiveOld
+         Return oGetActiveOld
       ELSE
-         RETURN t_oGetActive
+         Return t_oGetActive
       ENDIF
    ELSE
       IF PCount() > 0
-         RETURN oGetList:GetActive(oGet)
+         Return oGetList:GetActive(oGet)
       ELSE
-         RETURN oGetList:GetActive()
+         Return oGetList:GetActive()
       ENDIF
    ENDIF
 
@@ -149,7 +149,7 @@ Procedure GetDoSetKey(bKeyBlock, oGet)
       oGetList:GetDoSetKey(bKeyBlock, oGet)
    ENDIF
 
-   RETURN
+   Return
 
 #ifdef HB_COMPAT_C53
 Procedure GetApplyKey(oGet, nKey, oGetList, oMenu, aMsg)
@@ -171,7 +171,7 @@ Procedure GetApplyKey(oGet, nKey)
 #endif
    ENDIF
 
-   RETURN
+   Return
 
 #ifdef HB_COMPAT_C53
 Function GetPreValidate(oGet, aMsg)
@@ -182,9 +182,9 @@ Function GetPreValidate(oGet)
 
    IF oGetList != NIL
 #ifdef HB_COMPAT_C53
-      RETURN oGetList:GetPreValidate(oGet, aMsg)
+      Return oGetList:GetPreValidate(oGet, aMsg)
 #else
-      RETURN oGetList:GetPreValidate(oGet)
+      Return oGetList:GetPreValidate(oGet)
 #endif
    ENDIF
 
@@ -200,25 +200,25 @@ Function GetPostValidate(oGet)
 
    IF oGetList != NIL
 #ifdef HB_COMPAT_C53
-      RETURN oGetList:GetPostValidate(oGet, aMsg)
+      Return oGetList:GetPostValidate(oGet, aMsg)
 #else
-      RETURN oGetList:GetPostValidate(oGet)
+      Return oGetList:GetPostValidate(oGet)
 #endif
    ENDIF
 
    Return False
 
 Function ReadExit(lExit)
-   RETURN Set(_SET_EXIT, lExit)
+   Return Set(_SET_EXIT, lExit)
 
 Function ReadInsert(lInsert)
-   RETURN Set(_SET_INSERT, lInsert)
+   Return Set(_SET_INSERT, lInsert)
 
 Function Updated()
 
    Local oGetList := __GetListLast()
 
-   RETURN IIf(oGetList != NIL, oGetList:Updated(), False)
+   Return IIf(oGetList != NIL, oGetList:Updated(), False)
 
 Procedure __KillRead()
 
@@ -228,7 +228,7 @@ Procedure __KillRead()
       oGetList:KillRead(True)
    ENDIF
 
-   RETURN
+   Return
 
 Function ReadUpdated(lUpdated)
 
@@ -236,9 +236,9 @@ Function ReadUpdated(lUpdated)
 
    IF oGetList != NIL
       IF PCount() > 0
-         RETURN oGetList:ReadUpdated(lUpdated)
+         Return oGetList:ReadUpdated(lUpdated)
       ELSE
-         RETURN oGetList:ReadUpdated()
+         Return oGetList:ReadUpdated()
       ENDIF
    ENDIF
 
@@ -250,9 +250,9 @@ Function ReadKill(lKill)
 
    IF oGetList != NIL
       IF PCount() > 0
-         RETURN oGetList:KillRead(lKill)
+         Return oGetList:KillRead(lKill)
       ELSE
-         RETURN oGetList:KillRead()
+         Return oGetList:KillRead()
       ENDIF
    ENDIF
 
@@ -264,9 +264,9 @@ Function ReadFormat(bFormat)
 
    IF oGetList != NIL
       IF PCount() > 0
-         RETURN oGetList:SetFormat(bFormat)
+         Return oGetList:SetFormat(bFormat)
       ELSE
-         RETURN oGetList:SetFormat()
+         Return oGetList:SetFormat()
       ENDIF
    ENDIF
 
@@ -284,7 +284,7 @@ Procedure __SetFormat(bFormat)
       ENDIF
    ENDIF
 
-   RETURN
+   Return
 
 #define SCORE_ROW       0
 #define SCORE_COL       60

@@ -116,16 +116,16 @@ METHOD HBProfileEntity:init(cName, aInfo)
    Return Self
 
 ACCESS nSeconds CLASS HBProfileEntity
-   RETURN hb_Clocks2Secs(::nTicks)
+   Return hb_Clocks2Secs(::nTicks)
 
 ACCESS nMeanTicks CLASS HBProfileEntity
-   RETURN IIf(::nCalls == 0, 0, ::nTicks / ::nCalls)
+   Return IIf(::nCalls == 0, 0, ::nTicks / ::nCalls)
 
 ACCESS nMeanSeconds CLASS HBProfileEntity
-   RETURN IIf(::nCalls == 0, 0, ::nSeconds / ::nCalls)
+   Return IIf(::nCalls == 0, 0, ::nSeconds / ::nCalls)
 
 METHOD HBProfileEntity:describe()
-   RETURN "Base Entity"
+   Return "Base Entity"
 
 // ---
 
@@ -140,7 +140,7 @@ ENDCLASS
 //
 
 METHOD HBProfileFunction:describe()
-   RETURN "Function"
+   Return "Function"
 
 // ---
 
@@ -155,7 +155,7 @@ ENDCLASS
 //
 
 METHOD HBProfileMethod:describe()
-   RETURN "Method"
+   Return "Method"
 
 // ---
 
@@ -170,7 +170,7 @@ ENDCLASS
 //
 
 METHOD HBProfileOPCode:describe()
-   RETURN "OPCode"
+   Return "OPCode"
 
 // ---
 
@@ -219,7 +219,7 @@ METHOD HBProfile:reset()
    Return Self
 
 METHOD HBProfile:ignoreSymbol(cSymbol)
-   RETURN hb_LeftEq(cSymbol, "HBPROFILE") .OR. cSymbol == "__SETPROFILER"
+   Return hb_LeftEq(cSymbol, "HBPROFILE") .OR. cSymbol == "__SETPROFILER"
 
 METHOD HBProfile:gatherFunctions()
 
@@ -354,7 +354,7 @@ METHOD HBProfile:totalCalls()
 
    __SetProfiler(lProfile)
 
-   RETURN nCalls
+   Return nCalls
 
 METHOD HBProfile:totalTicks()
 
@@ -365,7 +365,7 @@ METHOD HBProfile:totalTicks()
 
    __SetProfiler(lProfile)
 
-   RETURN nTicks
+   Return nTicks
 
 METHOD HBProfile:totalSeconds()
 
@@ -376,7 +376,7 @@ METHOD HBProfile:totalSeconds()
 
    __SetProfiler(lProfile)
 
-   RETURN nSeconds
+   Return nSeconds
 
 // ---
 
@@ -465,7 +465,7 @@ METHOD HBProfileReport:writeLines(aLines)
    Return Self
 
 METHOD HBProfileReport:header()
-   RETURN { ;
+   Return { ;
       "Name                                Type       Calls    Ticks       Seconds", ;
       "=================================== ========== ======== =========== ==========="}
 
@@ -476,7 +476,7 @@ METHOD HBProfileReport:emitHeader()
    Return Self
 
 METHOD HBProfileReport:line(oEntity)
-   RETURN { ;
+   Return { ;
       PadR(oEntity:cName,      35) + " " + ;
       PadR(oEntity:describe(),  8) + " " + ;
       Str(oEntity:nCalls,      10) + " " + ;
@@ -571,7 +571,7 @@ METHOD HBProfileReportToArray:generate(bFilter)
    ::aReport := {}
    ::super:generate(bFilter)
 
-   RETURN ::aReport
+   Return ::aReport
 
 // ---
 
@@ -591,7 +591,7 @@ METHOD HBProfileReportToString:generate(bFilter)
 
    AEval(::super:generate(bFilter), {|c|cReport += c + hb_eol()})
 
-   RETURN cReport
+   Return cReport
 
 // ---
 
@@ -647,7 +647,7 @@ METHOD HBProfileReportToTBrowse:generate(bFilter, nTop, nLeft, nBottom, nRight)
 
    __SetProfiler(lProfile)
 
-   RETURN oBrowse
+   Return oBrowse
 
 METHOD HBProfileReportToTBrowse:addColumns(oBrowse)
 
@@ -662,4 +662,4 @@ METHOD HBProfileReportToTBrowse:addColumns(oBrowse)
    Return Self
 
 METHOD HBProfileReportToTBrowse:currentEntity()
-   RETURN ::aReport[::nEntity]
+   Return ::aReport[::nEntity]

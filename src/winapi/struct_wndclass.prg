@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasWNDCLASS()
-RETURN was_WNDCLASS():new()
+Return was_WNDCLASS():new()
 
 CLASS WAS_WNDCLASS
 
@@ -114,7 +114,7 @@ PROCEDURE destroyObject() CLASS WAS_WNDCLASS
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

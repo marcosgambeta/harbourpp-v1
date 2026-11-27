@@ -357,13 +357,13 @@ Static Function CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
       oBrowse:refreshCurrent()
    ENDIF
 
-   RETURN nAction != DE_ABORT
+   Return nAction != DE_ABORT
 
 
 // helper function to detect empty tables. It's not perfect but
 // it functionally uses the same conditions as CA-Cl*pper
 Static Function IsDbEmpty()
-   RETURN LastRec() == 0 .OR. (Bof() .AND. (Eof() .OR. RecNo() == LastRec() + 1))
+   Return LastRec() == 0 .OR. (Bof() .AND. (Eof() .OR. RecNo() == LastRec() + 1))
 
 // Helper function: TBrowse skipBlock
 Static Function Skipped(nRecs, lAppend)
@@ -403,4 +403,4 @@ Static Function Skipped(nRecs, lAppend)
       EndCase
    ENDIF
 
-   RETURN nSkipped
+   Return nSkipped

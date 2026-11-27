@@ -105,7 +105,7 @@ Function __dbDelim(lExport, cFile, cDelimArg, aFields, bFor, bWhile, nNext, nRec
 
 #else
 
-   RETURN IIf(lExport, ;
+   Return IIf(lExport, ;
       __dbCopy(cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "DELIM", NIL, cCodePage, cDelimArg), ;
       __dbApp(cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, "DELIM", NIL, cCodePage, cDelimArg))
 

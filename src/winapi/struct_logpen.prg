@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasLOGPEN()
-RETURN was_LOGPEN():new()
+Return was_LOGPEN():new()
 
 CLASS WAS_LOGPEN
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_LOGPEN
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

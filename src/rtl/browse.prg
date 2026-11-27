@@ -305,7 +305,7 @@ Static Procedure StatLine(oBrw, lAppend)
       hb_DispOutAt(nTop, nRight - 20, PadR(hb_ntos(nRecNo) + "/" + hb_ntos(nLastRec), 16) + IIf(oBrw:HitTop, "<bof>", "     "))
    ENDIF
 
-   RETURN
+   Return
 
 Static Function DoGet(oBrw, lAppend)
 
@@ -370,7 +370,7 @@ Static Function DoGet(oBrw, lAppend)
    Set(_SET_EXIT, lExit)
    Set(_SET_SCOREBOARD, lScore)
 
-   RETURN nKey
+   Return nKey
 
 Static Function ExitKey(lAppend)
 
@@ -378,15 +378,15 @@ Static Function ExitKey(lAppend)
 
    Switch nKey := LastKey()
    Case K_PGDN
-      RETURN IIf(lAppend, 0, K_DOWN)
+      Return IIf(lAppend, 0, K_DOWN)
    Case K_PGUP
-      RETURN IIf(lAppend, 0, K_UP)
+      Return IIf(lAppend, 0, K_UP)
    Case K_DOWN
    Case K_UP
-      RETURN nKey
+      Return nKey
    EndSwitch
 
-   RETURN IIf(nKey == K_ENTER .OR. !(hb_keyChar(nKey) == ""), K_RIGHT, 0)
+   Return IIf(nKey == K_ENTER .OR. !(hb_keyChar(nKey) == ""), K_RIGHT, 0)
 
 Static Procedure FreshOrder(oBrw)
 
@@ -402,7 +402,7 @@ Static Procedure FreshOrder(oBrw)
       EndDo
    ENDIF
 
-   RETURN
+   Return
 
 Static Function Skipped(nRecs, lAppend)
 
@@ -436,4 +436,4 @@ Static Function Skipped(nRecs, lAppend)
       EndCase
    ENDIF
 
-   RETURN nSkipped
+   Return nSkipped

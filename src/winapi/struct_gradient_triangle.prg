@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasGRADIENT_TRIANGLE()
-RETURN was_GRADIENT_TRIANGLE():new()
+Return was_GRADIENT_TRIANGLE():new()
 
 CLASS WAS_GRADIENT_TRIANGLE
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_GRADIENT_TRIANGLE
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

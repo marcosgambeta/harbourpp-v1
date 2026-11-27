@@ -70,10 +70,10 @@ Static Function hb_doScan(cPath, cMask, cAttr, cPathSep)
       ENDIF
    Next
 
-   RETURN aResult
+   Return aResult
 
 Function hb_DirScan(cPath, cFileMask, cAttr)
-   RETURN hb_DoScan(hb_DirSepAdd(hb_defaultValue(cPath, "")), ;
+   Return hb_DoScan(hb_DirSepAdd(hb_defaultValue(cPath, "")), ;
       IIf(hb_IsString(cFileMask), cFileMask, hb_osFileMask()), ;
       hb_defaultValue(cAttr, ""), ;
       hb_ps())
@@ -108,7 +108,7 @@ Function hb_DirRemoveAll(cDir)
             ENDIF
          ENDIF
       Next
-      RETURN hb_vfDirRemove(cDir) == 0
+      Return hb_vfDirRemove(cDir) == 0
    ENDIF
 
    Return True
@@ -136,4 +136,4 @@ Function hb_FileDelete(cFileMask, cAttr)
       Next
    ENDIF
 
-RETURN lAny
+Return lAny

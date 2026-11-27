@@ -72,7 +72,7 @@ PROCEDURE destroyObject() CLASS WAGPRECT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

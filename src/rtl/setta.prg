@@ -48,6 +48,6 @@
 #ifdef HB_CLP_UNDOC
 
 Function SetTypeahead(nSize)
-   RETURN Set(_SET_TYPEAHEAD, nSize)
+   Return Set(_SET_TYPEAHEAD, nSize)
 
 #endif

@@ -141,7 +141,7 @@ METHOD HBDbBrowser:SetColorSpec(cColors)
       ::aColorSpec := hb_ATokens(::cColorSpec, ",")
    ENDIF
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 METHOD HBDbBrowser:MoveCursor(nSkip)
 
@@ -232,7 +232,7 @@ METHOD HBDbBrowser:GoTo(nRow)
       ::hitBottom := (nSkipped != nRow - 1)
    ENDIF
 
-   RETURN nSkipped - nOldRow + 1
+   Return nSkipped - nOldRow + 1
 
 METHOD HBDbBrowser:GoBottom()
 
@@ -297,4 +297,4 @@ METHOD HBDbColumn:New(cHeading, bBlock)
    Return Self
 
 Function HBDbColumnNew(cHeading, bBlock)
-   RETURN HBDbColumn():New(cHeading, bBlock)
+   Return HBDbColumn():New(cHeading, bBlock)

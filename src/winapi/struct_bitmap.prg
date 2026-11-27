@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasBITMAP()
-RETURN was_BITMAP():new()
+Return was_BITMAP():new()
 
 CLASS WAS_BITMAP
 
@@ -95,7 +95,7 @@ PROCEDURE destroyObject() CLASS WAS_BITMAP
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

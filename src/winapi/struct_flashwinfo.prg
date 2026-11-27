@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasFLASHWINFO()
-RETURN was_FLASHWINFO():new()
+Return was_FLASHWINFO():new()
 
 CLASS WAS_FLASHWINFO
 
@@ -81,7 +81,7 @@ PROCEDURE destroyObject() CLASS WAS_FLASHWINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

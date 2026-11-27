@@ -989,7 +989,7 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
       FClose(nFrmHandle)
    ENDIF
 
-   RETURN aReport
+   Return aReport
 
 // Reads an expression from EXPR_BUFF via the OFFSETS_BUFF and returns
 // a pointer to offset contained in OFFSETS_BUFF that in turn points
@@ -1036,7 +1036,7 @@ METHOD GetExpr(nPointer AS NUMERIC) CLASS HBReportForm
       ENDIF
    ENDIF
 
-   RETURN cString
+   Return cString
 
 Static Function Occurs(cSearch, cTarget)
 
@@ -1053,7 +1053,7 @@ Static Function Occurs(cSearch, cTarget)
       ENDIF
    EndDo
 
-   RETURN nCount
+   Return nCount
 
 Static Function XMLCOUNT(cString, nLineLength, nTabSize, lWrap)
 
@@ -1064,7 +1064,7 @@ Static Function XMLCOUNT(cString, nLineLength, nTabSize, lWrap)
       nTabSize := nLineLength - 1
    ENDIF
 
-   RETURN MLCount(RTrim(cString), nLineLength, nTabSize, lWrap)
+   Return MLCount(RTrim(cString), nLineLength, nTabSize, lWrap)
 
 Static Function XMEMOLINE(cString, nLineLength, nLineNumber, nTabSize, lWrap)
 
@@ -1075,7 +1075,7 @@ Static Function XMEMOLINE(cString, nLineLength, nLineNumber, nTabSize, lWrap)
       nTabSize := nLineLength - 1
    ENDIF
 
-   RETURN MemoLine(cString, nLineLength, nLineNumber, nTabSize, lWrap)
+   Return MemoLine(cString, nLineLength, nLineNumber, nTabSize, lWrap)
 
 Static Function ParseHeader(cHeaderString, nFields)
 
@@ -1104,7 +1104,7 @@ Static Function ParseHeader(cHeaderString, nFields)
 
    EndDo
 
-   RETURN aPageHeader
+   Return aPageHeader
 
 // Get a COLUMN element from FIELDS_BUFF string using nOffset to point to
 // the current FIELDS_OFFSET block.
@@ -1167,26 +1167,26 @@ METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBRe
    // Update offset into ?_buffer
    nOffset += 12
 
-   RETURN aColumn
+   Return aColumn
 
 Static Function MakeAStr(uVar, cType)
 
    Switch Asc(cType)
    Case Asc("D")
-   Case Asc("d") ; RETURN DToC(uVar)
+   Case Asc("d") ; Return DToC(uVar)
    Case Asc("T")
-   Case Asc("t") ; RETURN hb_TToC(uVar)
+   Case Asc("t") ; Return hb_TToC(uVar)
    Case Asc("L")
-   Case Asc("l") ; RETURN IIf(uVar, "T", "F")
+   Case Asc("l") ; Return IIf(uVar, "T", "F")
    Case Asc("N")
-   Case Asc("n") ; RETURN Str(uVar)
+   Case Asc("n") ; Return Str(uVar)
    Case Asc("C")
    Case Asc("c")
    Case Asc("M")
-   Case Asc("m") ; RETURN uVar
+   Case Asc("m") ; Return uVar
    EndSwitch
 
-   RETURN "INVALID EXPRESSION"
+   Return "INVALID EXPRESSION"
 
 Function __ReportForm(cFRMName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lPlain, cHeading, lBEject, lSummary)
 

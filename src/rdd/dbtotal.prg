@@ -213,7 +213,7 @@ Static Function __GetField(cField)
       cField := SubStr(cField, nPos + 2)
    ENDIF
 
-   RETURN FieldBlock(cField)
+   Return FieldBlock(cField)
 
 Function __dbTransRec(nDstArea, aFieldsStru)
-   RETURN __dbTrans(nDstArea, aFieldsStru, NIL, NIL, 1)
+   Return __dbTrans(nDstArea, aFieldsStru, NIL, NIL, 1)

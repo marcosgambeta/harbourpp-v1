@@ -534,7 +534,7 @@ METHOD Get:varPut(xValue)
       xValue := NIL
    ENDIF
 
-   RETURN xValue
+   Return xValue
 
 METHOD Get:varGet()
 
@@ -562,7 +562,7 @@ METHOD Get:varGet()
       xValue := ::xVarGet
    ENDIF
 
-   RETURN xValue
+   Return xValue
 
 /* NOTE: CA-Cl*pper will corrupt memory if cChar contains
          multiple chars. [vszakats] */
@@ -902,7 +902,7 @@ METHOD Get:delWordRight()
  */
 
 METHOD Get:getColorSpec()
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 METHOD Get:setColorSpec(cColorSpec)
 
@@ -946,10 +946,10 @@ METHOD Get:setColorSpec(cColorSpec)
 #endif
    ENDIF
 
-   RETURN cColorSpec
+   Return cColorSpec
 
 METHOD Get:getPos()
-   RETURN ::nPos
+   Return ::nPos
 
 METHOD Get:setPos(nPos)
 
@@ -975,13 +975,13 @@ METHOD Get:setPos(nPos)
             For tmp := nPos To ::nMaxLen
                IF ::IsEditable(tmp)
                   ::nPos := tmp
-                  RETURN nPos
+                  Return nPos
                ENDIF
             Next
             For tmp := nPos - 1 To 1 Step -1
                IF ::IsEditable(tmp)
                   ::nPos := tmp
-                  RETURN nPos
+                  Return nPos
                ENDIF
             Next
 
@@ -991,10 +991,10 @@ METHOD Get:setPos(nPos)
          EndCase
       ENDIF
 
-      RETURN nPos
+      Return nPos
    ENDIF
 
-   RETURN 0
+   Return 0
 
 /* The METHOD Picture and VAR cPicture allow to replace the
  * property Picture for a function to control the content and
@@ -1146,7 +1146,7 @@ METHOD Get:picture(cPicture)
       ENDIF
    ENDIF
 
-   RETURN ::cPicture
+   Return ::cPicture
 
 METHOD Get:PutMask(xValue, lEdit)
 
@@ -1225,7 +1225,7 @@ METHOD Get:PutMask(xValue, lEdit)
 
    ::nMaxLen := Len(cBuffer)
 
-   RETURN cBuffer
+   Return cBuffer
 
 METHOD Get:unTransform()
 
@@ -1366,10 +1366,10 @@ METHOD Get:unTransform()
       ENDIF
    ENDIF
 
-   RETURN xValue
+   Return xValue
 
 METHOD Get:type()
-   RETURN ::cType := ValType(IIf(::hasFocus, ::xVarGet, ::varGet()))
+   Return ::cType := ValType(IIf(::hasFocus, ::xVarGet, ::varGet()))
 
 /* The METHOD Block and VAR bBlock allow to replace the
  * property Block for a function to control the content and
@@ -1383,14 +1383,14 @@ METHOD Get:type()
 METHOD Get:block(bBlock)
 
    IF PCount() == 0 .OR. bBlock == NIL
-      RETURN ::bBlock
+      Return ::bBlock
    ENDIF
 
    ::bBlock   := bBlock
    ::xVarGet  := ::original
    ::cType    := ValType(::xVarGet)
 
-   RETURN bBlock
+   Return bBlock
 
 METHOD Get:firstEditable()
 
@@ -1399,17 +1399,17 @@ METHOD Get:firstEditable()
    IF ::nMaxLen != NIL
 
       IF ::IsEditable(1)
-         RETURN 1
+         Return 1
       ENDIF
 
       For nFor := 2 To ::nMaxLen
          IF ::IsEditable(nFor)
-            RETURN nFor
+            Return nFor
          ENDIF
       Next
    ENDIF
 
-   RETURN 0
+   Return 0
 
 METHOD Get:lastEditable()
 
@@ -1419,12 +1419,12 @@ METHOD Get:lastEditable()
 
       For nFor := ::nMaxLen To 1 Step -1
          IF ::IsEditable(nFor)
-            RETURN nFor
+            Return nFor
          ENDIF
       Next
    ENDIF
 
-   RETURN 0
+   Return 0
 
 METHOD Get:badDate()
 
@@ -1433,9 +1433,9 @@ METHOD Get:badDate()
    IF ::hasFocus
       Switch ::type
       Case "D"
-         RETURN (xValue := ::unTransform()) == hb_SToD() .AND. !(::cBuffer == Transform(xValue, ::cPicture))
+         Return (xValue := ::unTransform()) == hb_SToD() .AND. !(::cBuffer == Transform(xValue, ::cPicture))
       Case "T"
-         RETURN (xValue := ::unTransform()) == hb_SToT() .AND. !(::cBuffer == Transform(xValue, ::cPicture))
+         Return (xValue := ::unTransform()) == hb_SToT() .AND. !(::cBuffer == Transform(xValue, ::cPicture))
       EndSwitch
    ENDIF
 
@@ -1459,17 +1459,17 @@ METHOD Get:reform()
 METHOD Get:hitTest(nMRow, nMCol)
 
    IF hb_IsObject(::oControl)
-      RETURN ::oControl:hitTest(nMRow, nMCol)
+      Return ::oControl:hitTest(nMRow, nMCol)
    ELSE
       Do Case
       Case nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + IIf(::nDispLen == NIL, 0, ::nDispLen)
-         RETURN HTCLIENT
+         Return HTCLIENT
       Case nMRow == ::nCapRow .AND. nMCol >= ::nCapCol .AND. nMCol < ::nCapCol + Len(::cCaption) /* NOTE: C5.3 doesn't care about the shortcut key. */
-         RETURN HTCAPTION
+         Return HTCAPTION
       EndCase
    ENDIF
 
-   RETURN HTNOWHERE
+   Return HTNOWHERE
 
 METHOD Get:control(oControl)
 
@@ -1477,7 +1477,7 @@ METHOD Get:control(oControl)
       ::oControl := oControl
    ENDIF
 
-   RETURN ::oControl
+   Return ::oControl
 
 METHOD Get:caption(cCaption)
 
@@ -1485,7 +1485,7 @@ METHOD Get:caption(cCaption)
       ::cCaption := cCaption
    ENDIF
 
-   RETURN ::cCaption
+   Return ::cCaption
 
 METHOD Get:capRow(nCapRow)
 
@@ -1493,7 +1493,7 @@ METHOD Get:capRow(nCapRow)
       ::nCapRow := Int(nCapRow)
    ENDIF
 
-   RETURN ::nCapRow
+   Return ::nCapRow
 
 METHOD Get:capCol(nCapCol)
 
@@ -1501,7 +1501,7 @@ METHOD Get:capCol(nCapCol)
       ::nCapCol := Int(nCapCol)
    ENDIF
 
-   RETURN ::nCapCol
+   Return ::nCapCol
 
 METHOD Get:message(cMessage)
 
@@ -1509,7 +1509,7 @@ METHOD Get:message(cMessage)
       ::cMessage := cMessage
    ENDIF
 
-   RETURN ::cMessage
+   Return ::cMessage
 
 #endif
 
@@ -1676,11 +1676,11 @@ METHOD Get:IsEditable(nPos)
    IF ::cType != NIL
       cChar := SubStr(::cPicMask, nPos, 1)
       Switch ::cType
-      Case "C" ; RETURN hb_asciiUpper(cChar) $ "!ANX9#LY"
-      Case "N" ; RETURN cChar $ "9#$*"
+      Case "C" ; Return hb_asciiUpper(cChar) $ "!ANX9#LY"
+      Case "N" ; Return cChar $ "9#$*"
       Case "D"
-      Case "T" ; RETURN cChar == "9"
-      Case "L" ; RETURN hb_asciiUpper(cChar) $ "LY#" /* CA-Cl*pper 5.2 undocumented: # allow T,F,Y,N for Logical [ckedem] */
+      Case "T" ; Return cChar == "9"
+      Case "L" ; Return hb_asciiUpper(cChar) $ "LY#" /* CA-Cl*pper 5.2 undocumented: # allow T,F,Y,N for Logical [ckedem] */
       EndSwitch
    ENDIF
 
@@ -1702,31 +1702,31 @@ METHOD Get:Input(cChar)
 
          Case cChar $ ".,"
             ::toDecPos()
-            RETURN ""
+            Return ""
 
          Case !(cChar $ "0123456789+")
-            RETURN ""
+            Return ""
          EndCase
          Exit
 
       Case "D"
 
          IF !(cChar $ "0123456789")
-            RETURN ""
+            Return ""
          ENDIF
          Exit
 
       Case "T"
 
          IF !(cChar $ "0123456789")
-            RETURN ""
+            Return ""
          ENDIF
          Exit
 
       Case "L"
 
          IF !(Upper(cChar) $ "YNTF")
-            RETURN ""
+            Return ""
          ENDIF
          Exit
 
@@ -1789,47 +1789,47 @@ METHOD Get:Input(cChar)
       EndCase
    ENDIF
 
-   RETURN cChar
+   Return cChar
 
 /* ------------------------------------------------------------------------- */
 
 METHOD Get:getBuffer()
-   RETURN ::cBuffer
+   Return ::cBuffer
 
 METHOD Get:setBuffer(cBuffer)
-   RETURN IIf(::hasFocus, ::cBuffer := cBuffer, cBuffer)
+   Return IIf(::hasFocus, ::cBuffer := cBuffer, cBuffer)
 
 /* NOTE: In contrary to CA-Cl*pper docs, this var is assignable. [vszakats] */
 
 METHOD Get:getChanged()
-   RETURN ::lChanged
+   Return ::lChanged
 
 METHOD Get:setChanged(lChanged)
 
    IF hb_IsLogical(lChanged)
-      RETURN IIf(::hasFocus, ::lChanged := lChanged, lChanged)
+      Return IIf(::hasFocus, ::lChanged := lChanged, lChanged)
    ENDIF
 
    Return False
 
 METHOD Get:getClear()
-   RETURN ::lClear
+   Return ::lClear
 
 METHOD Get:setClear(lClear)
 
    IF hb_IsLogical(lClear)
-      RETURN IIf(::hasFocus, ::lClear := lClear, lClear)
+      Return IIf(::hasFocus, ::lClear := lClear, lClear)
    ENDIF
 
    Return False
 
 METHOD Get:getMinus()
-   RETURN ::lMinus
+   Return ::lMinus
 
 METHOD Get:setMinus(lMinus)
 
    IF hb_IsLogical(lMinus)
-      RETURN IIf(::hasFocus, ::lMinus := lMinus, lMinus)
+      Return IIf(::hasFocus, ::lMinus := lMinus, lMinus)
    ENDIF
 
    Return False
@@ -1838,19 +1838,19 @@ METHOD Get:setMinus(lMinus)
          so the behaviour will be different in this case. [vszakats] */
 
 METHOD Get:getRow()
-   RETURN ::nRow
+   Return ::nRow
 
 METHOD Get:setRow(nRow)
-   RETURN ::nRow := IIf(hb_IsNumeric(nRow), Int(nRow), 0)
+   Return ::nRow := IIf(hb_IsNumeric(nRow), Int(nRow), 0)
 
 /* NOTE: CA-Cl*pper has a bug where negative nCol value will be translated to 16bit unsigned int,
          so the behaviour will be different in this case. [vszakats] */
 
 METHOD Get:getCol()
-   RETURN ::nCol
+   Return ::nCol
 
 METHOD Get:setCol(nCol)
-   RETURN ::nCol := IIf(hb_IsNumeric(nCol), Int(nCol), 0)
+   Return ::nCol := IIf(hb_IsNumeric(nCol), Int(nCol), 0)
 
 METHOD Get:name(cName)
 
@@ -1858,7 +1858,7 @@ METHOD Get:name(cName)
       ::cName := cName
    ENDIF
 
-   RETURN ::cName
+   Return ::cName
 
 METHOD Get:SubScript(xValue)
 
@@ -1866,7 +1866,7 @@ METHOD Get:SubScript(xValue)
       ::xSubScript := xValue
    ENDIF
 
-   RETURN ::xSubScript
+   Return ::xSubScript
 
 METHOD Get:PostBlock(xValue)
 
@@ -1874,7 +1874,7 @@ METHOD Get:PostBlock(xValue)
       ::bPostBlock := xValue
    ENDIF
 
-   RETURN ::bPostBlock
+   Return ::bPostBlock
 
 METHOD Get:PreBlock(xValue)
 
@@ -1882,7 +1882,7 @@ METHOD Get:PreBlock(xValue)
       ::bPreBlock := xValue
    ENDIF
 
-   RETURN ::bPreBlock
+   Return ::bPreBlock
 
 METHOD Get:Cargo(xValue)
 
@@ -1890,7 +1890,7 @@ METHOD Get:Cargo(xValue)
       ::xCargo := xValue
    ENDIF
 
-   RETURN ::xCargo
+   Return ::xCargo
 
 METHOD Get:ExitState(xValue)
 
@@ -1898,7 +1898,7 @@ METHOD Get:ExitState(xValue)
       ::xExitState := xValue
    ENDIF
 
-   RETURN ::xExitState
+   Return ::xExitState
 
 METHOD Get:Reader(xValue)
 
@@ -1906,7 +1906,7 @@ METHOD Get:Reader(xValue)
       ::bReader := xValue
    ENDIF
 
-   RETURN ::bReader
+   Return ::bReader
 
 /* ------------------------------------------------------------------------- */
 
@@ -1947,4 +1947,4 @@ METHOD Get:Init(nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec)
    Return Self
 
 Function GetNew(nRow, nCol, bVarBlock, cVarName, cPicture, cColor)
-   RETURN Get():New(nRow, nCol, bVarBlock, cVarName, cPicture, cColor)
+   Return Get():New(nRow, nCol, bVarBlock, cVarName, cPicture, cColor)

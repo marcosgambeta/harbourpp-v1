@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasWINDOWPLACEMENT()
-RETURN was_WINDOWPLACEMENT():new()
+Return was_WINDOWPLACEMENT():new()
 
 CLASS WAS_WINDOWPLACEMENT
 
@@ -77,7 +77,7 @@ PROCEDURE destroyObject() CLASS WAS_WINDOWPLACEMENT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

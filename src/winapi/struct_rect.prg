@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasRECT()
-RETURN was_RECT():new()
+Return was_RECT():new()
 
 CLASS WAS_RECT
 
@@ -75,7 +75,7 @@ PROCEDURE destroyObject() CLASS WAS_RECT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

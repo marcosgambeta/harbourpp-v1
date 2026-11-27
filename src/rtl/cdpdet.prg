@@ -67,7 +67,7 @@ Function hb_cdpTerm()
    cCP := cLang := NIL
 #endif
 
-   RETURN __CPStdToHb(cCP, cLang)
+   Return __CPStdToHb(cCP, cLang)
 
 Function hb_cdpOS()
 
@@ -88,14 +88,14 @@ Function hb_cdpOS()
    cCP := cLang := NIL
 #endif
 
-   RETURN __CPStdToHb(cCP, cLang)
+   Return __CPStdToHb(cCP, cLang)
 
 #if defined(__PLATFORM__WINDOWS)
 Static Function __CPWinToCPStd(nCPWin)
 
    Switch nCPWin
-   Case 65001 ; RETURN "utf8"
-   Case 1200  ; RETURN "utf16"
+   Case 65001 ; Return "utf8"
+   Case 1200  ; Return "utf16"
    Case 437
    Case 737
    Case 775
@@ -122,7 +122,7 @@ Static Function __CPWinToCPStd(nCPWin)
    Case 1255
    Case 1256
    Case 1257
-   Case 1258  ; RETURN "cp" + hb_ntos(nCPWin)
+   Case 1258  ; Return "cp" + hb_ntos(nCPWin)
    Case 28591
    Case 28592
    Case 28593
@@ -133,11 +133,11 @@ Static Function __CPWinToCPStd(nCPWin)
    Case 28598
    Case 28599
    Case 28603
-   Case 28605 ; RETURN "iso8859-" + hb_ntos(nCPWin - 28590)
-   Case 20866 ; RETURN "koi-8"
-   Case 21866 ; RETURN "koi-8u"
-   Case 936   ; RETURN "GBK"
-   Case 950   ; RETURN "CP950"
+   Case 28605 ; Return "iso8859-" + hb_ntos(nCPWin - 28590)
+   Case 20866 ; Return "koi-8"
+   Case 21866 ; Return "koi-8u"
+   Case 936   ; Return "GBK"
+   Case 950   ; Return "CP950"
    EndSwitch
 
    Return Nil
@@ -209,11 +209,11 @@ Static Function __UnixParseLangCP(cString, /* @ */ cLang)
    Case "iso8859-8"
    Case "iso8859-9"
    Case "iso8859-13"
-   Case "iso8859-15" ; RETURN cCP
-   Case "koi8r"      ; RETURN "koi-8"
-   Case "koi8u"      ; RETURN "koi-8u"
-   Case "gbk"        ; RETURN "GBK"
-   Case "big5"       ; RETURN "BIG5"
+   Case "iso8859-15" ; Return cCP
+   Case "koi8r"      ; Return "koi-8"
+   Case "koi8u"      ; Return "koi-8u"
+   Case "gbk"        ; Return "GBK"
+   Case "big5"       ; Return "BIG5"
    EndSwitch
 
    Return Nil
@@ -229,20 +229,20 @@ Static Function __CPStdToHb(cCPStd, cCtryStd)
    IF cCPStd != NIL
       Switch cCPStd := Lower(cCPStd)
       Case "utf8"
-         RETURN "UTF8"
+         Return "UTF8"
       Case "utf16"
-         RETURN "UTF16LE"
+         Return "UTF16LE"
       Otherwise
          aCP := hb_cdpList()
          cCtryHb := __LangStdToCPCtryHb(cCtryStd)
          For Each cdp In aCP
             IF hb_LeftEq(cdp, cCtryHb) .AND. cCPStd == hb_cdpUniID(cdp)
-               RETURN cdp
+               Return cdp
             ENDIF
          Next
          For Each cdp In aCP
             IF cCPStd == hb_cdpUniID(cdp)
-               RETURN hb_cdpUniID(cdp)
+               Return hb_cdpUniID(cdp)
             ENDIF
          Next
       EndSwitch
@@ -280,28 +280,28 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "be"         ; Exit
 #endif
    Case "bg-bg"
-   Case "bg"         ; RETURN "BG"
+   Case "bg"         ; Return "BG"
 #if 0
    Case "ca-es"      ; Exit
    Case "ca"         ; Exit
    Case "cy-gb"      ; Exit
 #endif
    Case "cs-cz"
-   Case "cs"         ; RETURN "CS"
+   Case "cs"         ; Return "CS"
    Case "da-dk"
-   Case "da"         ; RETURN "DK"
+   Case "da"         ; Return "DK"
    Case "de-at"
    Case "de-ch"
    Case "de-de"
    Case "de-li"
    Case "de-lu"
-   Case "de"         ; RETURN "DE"
+   Case "de"         ; Return "DE"
 #if 0
    Case "div-mv"     ; Exit
    Case "div"        ; Exit
 #endif
    Case "el-gr"
-   Case "el"         ; RETURN "EL"
+   Case "el"         ; Return "EL"
    Case "en-au"
    Case "en-bz"
    Case "en-ca"
@@ -315,7 +315,7 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "en-us"
    Case "en-za"
    Case "en-zw"
-   Case "en"         ; RETURN "EN"
+   Case "en"         ; Return "EN"
 #if 0
    Case "eo"         ; Exit
 #endif
@@ -339,7 +339,7 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "es-sv"
    Case "es-uy"
    Case "es-ve"
-   Case "es"         ; RETURN "ES"
+   Case "es"         ; Return "ES"
 #if 0
    Case "et-ee"      ; Exit
    Case "et"         ; Exit
@@ -349,7 +349,7 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "fa"         ; Exit
 #endif
    Case "fi-fi"
-   Case "fi"         ; RETURN "FI"
+   Case "fi"         ; Return "FI"
 #if 0
    Case "fo-fo"      ; Exit
    Case "fo"         ; Exit
@@ -360,7 +360,7 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "fr-fr"
    Case "fr-lu"
    Case "fr-mc"
-   Case "fr"         ; RETURN "FR"
+   Case "fr"         ; Return "FR"
 #if 0
    Case "gl-es"      ; Exit
    Case "gl"         ; Exit
@@ -368,15 +368,15 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "gu"         ; Exit
 #endif
    Case "he-il"
-   Case "he"         ; RETURN "HE"
+   Case "he"         ; Return "HE"
 #if 0
    Case "hi-in"      ; Exit
    Case "hi"         ; Exit
 #endif
    Case "hr-hr"
-   Case "hr"         ; RETURN "HR"
+   Case "hr"         ; Return "HR"
    Case "hu-hu"
-   Case "hu"         ; RETURN "HU"
+   Case "hu"         ; Return "HU"
 #if 0
    Case "hy-am"      ; Exit
    Case "hy"         ; Exit
@@ -384,10 +384,10 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "id"         ; Exit
 #endif
    Case "is-is"
-   Case "is"         ; RETURN "IS"
+   Case "is"         ; Return "IS"
    Case "it-ch"
    Case "it-it"
-   Case "it"         ; RETURN "IT"
+   Case "it"         ; Return "IT"
 #if 0
    Case "ja-jp"      ; Exit
    Case "ja"         ; Exit
@@ -405,7 +405,7 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "ky"         ; Exit
 #endif
    Case "lt-lt"
-   Case "lt"         ; RETURN "LT"
+   Case "lt"         ; Return "LT"
 #if 0
    Case "lv-lv"      ; Exit
    Case "lv"         ; Exit
@@ -422,41 +422,41 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
 #endif
    Case "nl-be"
    Case "nl-nl"
-   Case "nl"         ; RETURN "NL"
+   Case "nl"         ; Return "NL"
 #if 0
    Case "nn-no"      ; Exit
 #endif
-   Case "no"         ; RETURN "NO"
+   Case "no"         ; Return "NO"
 #if 0
    Case "pa-in"      ; Exit
    Case "pa"         ; Exit
 #endif
    Case "pl-pl"
-   Case "pl"         ; RETURN "PL"
+   Case "pl"         ; Return "PL"
    Case "pt-br"
    Case "pt-pt"
-   Case "pt"         ; RETURN "PT"
+   Case "pt"         ; Return "PT"
    Case "ro-ro"
-   Case "ro"         ; RETURN "RO"
+   Case "ro"         ; Return "RO"
    Case "ru-ru"
-   Case "ru"         ; RETURN "RU"
+   Case "ru"         ; Return "RU"
 #if 0
    Case "sa-in"      ; Exit
    Case "sa"         ; Exit
 #endif
    Case "sk-sk"
-   Case "sk"         ; RETURN "SK"
+   Case "sk"         ; Return "SK"
    Case "sl-si"
-   Case "sl"         ; RETURN "SL"
+   Case "sl"         ; Return "SL"
 #if 0
    Case "sq-al"      ; Exit
    Case "sq"         ; Exit
 #endif
    Case "sr-sp-cyrl"
-   Case "sr-sp-latn" ; RETURN "SR"
+   Case "sr-sp-latn" ; Return "SR"
    Case "sv-fi"
    Case "sv-se"
-   Case "sv"         ; RETURN "SV"
+   Case "sv"         ; Return "SV"
 #if 0
    Case "sw-ke"      ; Exit
    Case "sw"         ; Exit
@@ -470,13 +470,13 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
    Case "th"         ; Exit
 #endif
    Case "tr-tr"
-   Case "tr"         ; RETURN "TR"
+   Case "tr"         ; Return "TR"
 #if 0
    Case "tt-ru"      ; Exit
    Case "tt"         ; Exit
 #endif
    Case "uk-ua"
-   Case "uk"         ; RETURN "UA"
+   Case "uk"         ; Return "UA"
 #if 0
    Case "ur-pk"      ; Exit
    Case "ur"         ; Exit
@@ -496,4 +496,4 @@ Static Function __LangStdToCPCtryHb(cCtryStd)
 #endif
    EndSwitch
 
-   RETURN Left(hb_cdpSelect(), 2)  // Caller assumes this never returns strings shorter than two chars
+   Return Left(hb_cdpSelect(), 2)  // Caller assumes this never returns strings shorter than two chars

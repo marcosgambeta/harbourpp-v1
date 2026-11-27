@@ -77,7 +77,7 @@ Function __Get(bSetGet, cVarName, cPicture, bValid, bWhen)
    oGet:PreBlock := bWhen
    oGet:PostBlock := bValid
 
-   RETURN oGet
+   Return oGet
 
 Function __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
 
@@ -108,4 +108,4 @@ Function __GetA(bGetArray, cVarName, cPicture, bValid, bWhen, aIndex)
    oGet:PreBlock := bWhen
    oGet:PostBlock := bValid
 
-   RETURN oGet
+   Return oGet

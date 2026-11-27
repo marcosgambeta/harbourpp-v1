@@ -107,7 +107,7 @@ METHOD MenuItem:caption(cCaption)
       ENDIF
    ENDIF
 
-   RETURN ::cCaption
+   Return ::cCaption
 
 METHOD MenuItem:checked(lChecked)
 
@@ -115,7 +115,7 @@ METHOD MenuItem:checked(lChecked)
       ::lChecked := __eInstVar53(Self, "CHECKED", lChecked, "L", 1001)
    ENDIF
 
-   RETURN ::lChecked
+   Return ::lChecked
 
 METHOD MenuItem:data(boData)
 
@@ -127,7 +127,7 @@ METHOD MenuItem:data(boData)
       ENDIF
    ENDIF
 
-   RETURN ::boData
+   Return ::boData
 
 METHOD MenuItem:enabled(lEnabled)
 
@@ -135,7 +135,7 @@ METHOD MenuItem:enabled(lEnabled)
       ::lEnabled := __eInstVar53(Self, "ENABLED", lEnabled, "L", 1001)
    ENDIF
 
-   RETURN ::lEnabled
+   Return ::lEnabled
 
 METHOD MenuItem:id(nID)
 
@@ -143,7 +143,7 @@ METHOD MenuItem:id(nID)
       ::nID := __eInstVar53(Self, "ID", nID, "N", 1001)
    ENDIF
 
-   RETURN ::nID
+   Return ::nID
 
 METHOD MenuItem:message(cMessage)
 
@@ -151,7 +151,7 @@ METHOD MenuItem:message(cMessage)
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
    ENDIF
 
-   RETURN ::cMessage
+   Return ::cMessage
 
 METHOD MenuItem:shortcut(nShortcut)
 
@@ -159,7 +159,7 @@ METHOD MenuItem:shortcut(nShortcut)
       ::nShortcut := __eInstVar53(Self, "SHORTCUT", nShortcut, "N", 1001)
    ENDIF
 
-   RETURN ::nShortcut
+   Return ::nShortcut
 
 METHOD MenuItem:style(cStyle)
 
@@ -167,10 +167,10 @@ METHOD MenuItem:style(cStyle)
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 2})
    ENDIF
 
-   RETURN ::cStyle
+   Return ::cStyle
 
 METHOD MenuItem:isPopUp()
-   RETURN hb_IsObject(::data) .AND. IS_IN(::data:ClassName(), "POPUPMENU|HB_POPUPMENU")
+   Return hb_IsObject(::data) .AND. IS_IN(::data:ClassName(), "POPUPMENU|HB_POPUPMENU")
 
 METHOD MenuItem:Init(cCaption, boData, nShortcut, cMessage, nID)
 
@@ -183,7 +183,7 @@ METHOD MenuItem:Init(cCaption, boData, nShortcut, cMessage, nID)
    Return Self
 
 Function MenuItem(cCaption, boData, nShortcut, cMessage, nID)
-   RETURN HBMenuItem():New(cCaption, boData, nShortcut, cMessage, nID)
+   Return HBMenuItem():New(cCaption, boData, nShortcut, cMessage, nID)
 
 #ifdef HB_CLP_UNDOC
 
@@ -195,10 +195,10 @@ Function __MIColumn(o, nColumn)
          o:__col := nColumn
       ENDIF
 
-      RETURN o:__col
+      Return o:__col
    ENDIF
 
-   RETURN -1
+   Return -1
 
 Function __MIRow(o, nRow)
 
@@ -208,10 +208,10 @@ Function __MIRow(o, nRow)
          o:__row := nRow
       ENDIF
 
-      RETURN o:__row
+      Return o:__row
    ENDIF
 
-   RETURN -1
+   Return -1
 
 #endif
 

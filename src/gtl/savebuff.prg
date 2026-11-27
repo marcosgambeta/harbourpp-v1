@@ -48,10 +48,10 @@
 #include "hbgtinfo.ch"
 
 Function __XSaveGetChar(cSaveScreen, nPos)
-   RETURN IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), Chr(hb_BPeek(cSaveScreen, nPos * 2 + 1)), hb_UChar(hb_BPeek(cSaveScreen, nPos * 4 + 2) * 256 + hb_BPeek(cSaveScreen, nPos * 4 + 1)))
+   Return IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), Chr(hb_BPeek(cSaveScreen, nPos * 2 + 1)), hb_UChar(hb_BPeek(cSaveScreen, nPos * 4 + 2) * 256 + hb_BPeek(cSaveScreen, nPos * 4 + 1)))
 
 Function __XSaveGetColor(cSaveScreen, nPos)
-   RETURN IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), hb_BPeek(cSaveScreen, nPos * 2 + 2), hb_BPeek(cSaveScreen, nPos * 4 + 3))
+   Return IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), hb_BPeek(cSaveScreen, nPos * 2 + 2), hb_BPeek(cSaveScreen, nPos * 4 + 3))
 
 Function __XSaveGetAttr(cSaveScreen, nPos)
-   RETURN IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), 0, hb_BPeek(cSaveScreen, nPos * 4 + 4))
+   Return IIf(hb_gtInfo(HB_GTI_COMPATBUFFER), 0, hb_BPeek(cSaveScreen, nPos * 4 + 4))

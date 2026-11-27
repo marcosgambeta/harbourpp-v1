@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasMEMORYSTATUSEX()
-RETURN was_MEMORYSTATUSEX():new()
+Return was_MEMORYSTATUSEX():new()
 
 CLASS WAS_MEMORYSTATUSEX
 
@@ -109,7 +109,7 @@ PROCEDURE destroyObject() CLASS WAS_MEMORYSTATUSEX
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

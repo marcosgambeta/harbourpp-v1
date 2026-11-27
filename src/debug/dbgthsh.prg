@@ -152,7 +152,7 @@ METHOD PROCEDURE HBDbHash:doGet(oBrowse, pItem, nSet)
       END SEQUENCE
    ENDIF
 
-   RETURN
+   Return
 
 METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
 
@@ -240,19 +240,19 @@ METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
    Return Self
 
 Function __dbgHashes(hHash, cVarName, lEditable)
-   RETURN HBDbHash():New(hHash, cVarName, lEditable)
+   Return HBDbHash():New(hHash, cVarName, lEditable)
 
 Static Function GetTopPos(nPos)
-   RETURN IIf((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
+   Return IIf((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
 
 Static Function GetBottomPos(nPos)
-   RETURN IIf(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
+   Return IIf(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
 
 Static Function HashBrowseSkip(nPos, oBrwSets)
-   RETURN ;
+   Return ;
       IIf(oBrwSets:cargo[1] + nPos < 1, -oBrwSets:cargo[1] + 1, ;
       IIf(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;
       Len(oBrwSets:cargo[2][1]) - oBrwSets:cargo[1], nPos))
 
 Static Function HashKeyString(hHash, nAt)
-   RETURN __dbgValToExp(hb_HKeyAt(hHash, nAt))
+   Return __dbgValToExp(hb_HKeyAt(hHash, nAt))

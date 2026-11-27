@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasPAINTSTRUCT()
-RETURN was_PAINTSTRUCT():new()
+Return was_PAINTSTRUCT():new()
 
 CLASS WAS_PAINTSTRUCT
 
@@ -79,7 +79,7 @@ PROCEDURE destroyObject() CLASS WAS_PAINTSTRUCT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

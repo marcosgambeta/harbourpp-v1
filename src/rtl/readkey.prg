@@ -63,7 +63,7 @@ Function ReadKey()
    Case K_ENTER     ; nKey := 15 ; Exit
    Otherwise
       IF nKey >= K_SPACE ; nKey := 15
-      ELSE               ; RETURN 0
+      ELSE               ; Return 0
       ENDIF
    EndSwitch
 
@@ -71,4 +71,4 @@ Function ReadKey()
       nKey += 256
    ENDIF
 
-   RETURN nKey
+   Return nKey

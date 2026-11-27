@@ -89,4 +89,4 @@ Function __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
       ENDIF
    ENDIF
 
-   RETURN xValue
+   Return xValue

@@ -64,7 +64,7 @@ Function __hbdoc_FromSource(cFile, aErrMsg)
       __hbdoc__read_stream(aEntry, cFile, "(stream)", NIL, aErrMsg)
    ENDIF
 
-   RETURN aEntry
+   Return aEntry
 
 Function __hbdoc_DirLastModified(cDir)
 
@@ -95,7 +95,7 @@ Function __hbdoc_DirLastModified(cDir)
       ENDIF
    ENDIF
 
-   RETURN tLast
+   Return tLast
 
 Function __hbdoc_LoadDir(cDir, cName, aErrMsg)
 
@@ -132,7 +132,7 @@ Function __hbdoc_LoadDir(cDir, cName, aErrMsg)
       ENDIF
    ENDIF
 
-   RETURN aEntry
+   Return aEntry
 
 Static Procedure __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
 
@@ -151,7 +151,7 @@ Static Procedure __hbdoc__read_langdir(aEntry, cDir, hMeta, aErrMsg)
       _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: Component (%1$s) has no documentation files", cDir))
    ENDIF
 
-   RETURN
+   Return
 
 Static Procedure __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
 
@@ -178,7 +178,7 @@ Static Procedure __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
 
    __hbdoc__read_stream(aEntry, MemoRead(cFileName), cFileName, hMeta, aErrMsg)
 
-   RETURN
+   Return
 
 Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
 
@@ -251,7 +251,7 @@ Static Procedure __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
       _HBDOC_ADD_MSG(aErrMsg, hb_StrFormat("Warning: %1$s: %2$d: $DOC$ without $END$", cFileName, nLine))
    ENDIF
 
-   RETURN
+   Return
 
 Function __hbdoc_ToSource(aEntry)
 
@@ -279,7 +279,7 @@ Function __hbdoc_ToSource(aEntry)
       Next
    ENDIF
 
-   RETURN cSource
+   Return cSource
 
 Function __hbdoc_FilterOut(cFile)
 
@@ -323,7 +323,7 @@ Function __hbdoc_FilterOut(cFile)
       EndSwitch
    Next
 
-   RETURN cOK
+   Return cOK
 
 // 0xC0, 'H', 'B', 'D' followed two-byte version number in Little Endian order.
 // Corresponding magic(5) rule:
@@ -393,4 +393,4 @@ Function __hbdoc_LoadHBD(cFileName)
       ENDIF
    ENDIF
 
-   RETURN aEntry
+   Return aEntry

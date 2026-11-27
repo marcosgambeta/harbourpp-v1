@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasNMHDR()
-RETURN was_NMHDR():new()
+Return was_NMHDR():new()
 
 CLASS WAS_NMHDR
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_NMHDR
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

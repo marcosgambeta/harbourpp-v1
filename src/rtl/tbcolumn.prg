@@ -100,7 +100,7 @@ METHOD TBColumn:block(bBlock)
       ::bBlock := __eInstVar53(Self, "BLOCK", bBlock, "B", 1001)
    ENDIF
 
-   RETURN ::bBlock
+   Return ::bBlock
 
 METHOD TBColumn:colorBlock(bColorBlock)
 
@@ -108,7 +108,7 @@ METHOD TBColumn:colorBlock(bColorBlock)
       ::bColorBlock := __eInstVar53(Self, "COLORBLOCK", bColorBlock, "B", 1001)
    ENDIF
 
-   RETURN ::bColorBlock
+   Return ::bColorBlock
 
 METHOD TBColumn:defColor(aDefColor)
 
@@ -116,7 +116,7 @@ METHOD TBColumn:defColor(aDefColor)
       ::aDefColor := __eInstVar53(Self, "DEFCOLOR", aDefColor, "A", 1001)
    ENDIF
 
-   RETURN ::aDefColor
+   Return ::aDefColor
 
 METHOD TBColumn:colSep(cColSep)
 
@@ -124,7 +124,7 @@ METHOD TBColumn:colSep(cColSep)
       ::cColSep := __eInstVar53(Self, "COLSEP", cColSep, "C", 1001)
    ENDIF
 
-   RETURN ::cColSep
+   Return ::cColSep
 
 METHOD TBColumn:heading(cHeading)
 
@@ -132,7 +132,7 @@ METHOD TBColumn:heading(cHeading)
       ::cHeading := __eInstVar53(Self, "HEADING", cHeading, "C", 1001)
    ENDIF
 
-   RETURN ::cHeading
+   Return ::cHeading
 
 METHOD TBColumn:footing(cFooting)
 
@@ -140,7 +140,7 @@ METHOD TBColumn:footing(cFooting)
       ::cFooting := __eInstVar53(Self, "FOOTING", cFooting, "C", 1001)
    ENDIF
 
-   RETURN ::cFooting
+   Return ::cFooting
 
 METHOD TBColumn:headSep(cHeadSep)
 
@@ -148,7 +148,7 @@ METHOD TBColumn:headSep(cHeadSep)
       ::cHeadSep := __eInstVar53(Self, "HEADSEP", cHeadSep, "C", 1001)
    ENDIF
 
-   RETURN ::cHeadSep
+   Return ::cHeadSep
 
 METHOD TBColumn:footSep(cFootSep)
 
@@ -156,7 +156,7 @@ METHOD TBColumn:footSep(cFootSep)
       ::cFootSep := __eInstVar53(Self, "FOOTSEP", cFootSep, "C", 1001)
    ENDIF
 
-   RETURN ::cFootSep
+   Return ::cFootSep
 
 METHOD TBColumn:width(nWidth)
 
@@ -164,7 +164,7 @@ METHOD TBColumn:width(nWidth)
       ::nWidth := __eInstVar53(Self, "WIDTH", nWidth, "N", 1001)
    ENDIF
 
-   RETURN ::nWidth
+   Return ::nWidth
 
 #ifdef HB_COMPAT_C53
 
@@ -174,7 +174,7 @@ METHOD TBColumn:preBlock(bPreBlock)
       ::bPreBlock := __eInstVar53(Self, "PREBLOCK", bPreBlock, "B", 1001)
    ENDIF
 
-   RETURN ::bPreBlock
+   Return ::bPreBlock
 
 METHOD TBColumn:postBlock(bPostBlock)
 
@@ -182,7 +182,7 @@ METHOD TBColumn:postBlock(bPostBlock)
       ::bPostBlock := __eInstVar53(Self, "POSTBLOCK", bPostBlock, "B", 1001)
    ENDIF
 
-   RETURN ::bPostBlock
+   Return ::bPostBlock
 
 METHOD TBColumn:setStyle(nStyle, lNewValue)
 
@@ -197,7 +197,7 @@ METHOD TBColumn:setStyle(nStyle, lNewValue)
       ::aSetStyle[nStyle] := lNewValue
    ENDIF
 
-   RETURN ::aSetStyle[nStyle]
+   Return ::aSetStyle[nStyle]
 
 #endif
 
@@ -209,4 +209,4 @@ METHOD TBColumn:Init(cHeading, bBlock)
    Return Self
 
 Function TBColumnNew(cHeading, bBlock)
-   RETURN TBColumn():New(cHeading, bBlock)
+   Return TBColumn():New(cHeading, bBlock)

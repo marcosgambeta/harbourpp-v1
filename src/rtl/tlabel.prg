@@ -395,15 +395,15 @@ METHOD HBLabelForm:LoadLabel(cLblFile)
       FClose(nHandle) // Close file
    ENDIF
 
-   RETURN aLabel
+   Return aLabel
 
 Function __LabelForm(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
-   RETURN HBLabelForm():New(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
+   Return HBLabelForm():New(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
 Static Procedure PrintIt(cString)
 
    QQOut(hb_defaultValue(cString, ""))
    QOut()
 
-   RETURN
+   Return

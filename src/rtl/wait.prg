@@ -75,4 +75,4 @@ Function __Wait(xPrompt)
 
    EndDo
 
-   RETURN cKey
+   Return cKey

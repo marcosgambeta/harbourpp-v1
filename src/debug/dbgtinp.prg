@@ -110,7 +110,7 @@ METHOD HBDbInput:newPos(nRow, nCol)
    Return Self
 
 METHOD HBDbInput:getValue()
-   RETURN ::cValue
+   Return ::cValue
 
 METHOD HBDbInput:setValue(cValue)
 

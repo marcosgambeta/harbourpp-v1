@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasWNDCLASSEX()
-RETURN was_WNDCLASSEX():new()
+Return was_WNDCLASSEX():new()
 
 CLASS WAS_WNDCLASSEX
 
@@ -126,7 +126,7 @@ PROCEDURE destroyObject() CLASS WAS_WNDCLASSEX
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

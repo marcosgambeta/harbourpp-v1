@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasCOMBOBOXINFO()
-RETURN was_COMBOBOXINFO():new()
+Return was_COMBOBOXINFO():new()
 
 CLASS WAS_COMBOBOXINFO
 
@@ -87,7 +87,7 @@ PROCEDURE destroyObject() CLASS WAS_COMBOBOXINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

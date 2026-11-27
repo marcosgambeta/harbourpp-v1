@@ -53,6 +53,6 @@ Function _dtxCondSet(cFor, bFor, lAll, bWhile, bEval, nEvery, xDummy, nRecNo, nN
 
    HB_SYMBOL_UNUSED(xDummy)
 
-   RETURN ordCondSet(cFor, bFor, lAll, bWhile, bEval, nEvery, nRecNo, nNext, nRecord, lRest)
+   Return ordCondSet(cFor, bFor, lAll, bWhile, bEval, nEvery, nRecNo, nNext, nRecord, lRest)
 
 #endif

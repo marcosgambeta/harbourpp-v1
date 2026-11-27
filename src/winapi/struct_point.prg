@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasPOINT()
-RETURN was_POINT():new()
+Return was_POINT():new()
 
 CLASS WAS_POINT
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_POINT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

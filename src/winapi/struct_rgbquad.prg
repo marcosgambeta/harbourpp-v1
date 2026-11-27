@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasRGBQUAD()
-RETURN was_RGBQUAD():new()
+Return was_RGBQUAD():new()
 
 CLASS WAS_RGBQUAD
 
@@ -75,7 +75,7 @@ PROCEDURE destroyObject() CLASS WAS_RGBQUAD
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

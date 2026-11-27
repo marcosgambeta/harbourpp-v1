@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasPALETTEENTRY()
-RETURN was_PALETTEENTRY():new()
+Return was_PALETTEENTRY():new()
 
 CLASS WAS_PALETTEENTRY
 
@@ -79,7 +79,7 @@ PROCEDURE destroyObject() CLASS WAS_PALETTEENTRY
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

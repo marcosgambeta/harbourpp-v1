@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasABCFLOAT()
-RETURN was_ABCFLOAT():new()
+Return was_ABCFLOAT():new()
 
 CLASS WAS_ABCFLOAT
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_ABCFLOAT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

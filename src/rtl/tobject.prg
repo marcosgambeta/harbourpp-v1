@@ -126,25 +126,25 @@ Function HBObject()
    oInstance := s_oClass:Instance()
    oInstance:class := s_oClass
 
-   RETURN oInstance
+   Return oInstance
 #endif
 
-   RETURN s_oClass:Instance()
+   Return s_oClass:Instance()
 
 Static Function HBObject_New(...)
 
    QSelf():Init(...)
 
-   RETURN QSelf()
+   Return QSelf()
 
 Static Function HBObject_Init()
-   RETURN QSelf()
+   Return QSelf()
 
 Static Function HBObject_Dftonerror(...)
-   RETURN QSelf():MsgNotFound(__GetMessage(), ...)
+   Return QSelf():MsgNotFound(__GetMessage(), ...)
 
 Static Function HBObject_Error(cDesc, cClass, cMsg, nCode)
 
    hb_default(@nCode, 1004)
 
-   RETURN __errRT_SBASE(IIf(nCode == 1005, EG_NOVARMETHOD, EG_NOMETHOD), nCode, cDesc, cClass + ":" + cMsg, 1, QSelf())
+   Return __errRT_SBASE(IIf(nCode == 1005, EG_NOVARMETHOD, EG_NOMETHOD), nCode, cDesc, cClass + ":" + cMsg, 1, QSelf())

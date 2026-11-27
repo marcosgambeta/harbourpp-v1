@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasCURSORINFO()
-RETURN was_CURSORINFO():new()
+Return was_CURSORINFO():new()
 
 CLASS WAS_CURSORINFO
 
@@ -72,7 +72,7 @@ PROCEDURE destroyObject() CLASS WAS_CURSORINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

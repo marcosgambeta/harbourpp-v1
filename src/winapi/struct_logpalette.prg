@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasLOGPALETTE()
-RETURN was_LOGPALETTE():new()
+Return was_LOGPALETTE():new()
 
 CLASS WAS_LOGPALETTE
 
@@ -67,7 +67,7 @@ PROCEDURE destroyObject() CLASS WAS_LOGPALETTE
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasDELETEITEMSTRUCT()
-RETURN was_DELETEITEMSTRUCT():new()
+Return was_DELETEITEMSTRUCT():new()
 
 CLASS WAS_DELETEITEMSTRUCT
 
@@ -81,7 +81,7 @@ PROCEDURE destroyObject() CLASS WAS_DELETEITEMSTRUCT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

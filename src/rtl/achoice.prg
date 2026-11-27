@@ -56,7 +56,7 @@ Function AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
    IF !hb_IsArray(acItems) .OR. Len(acItems) == 0
       SetPos(nTop, nRight + 1)
-      RETURN 0
+      Return 0
    ENDIF
 
    nSaveCsr := SetCursor(SC_NONE)
@@ -555,15 +555,15 @@ Function AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
    SetCursor(nSaveCsr)
 
-   RETURN nPos
+   Return nPos
 
 Static Function HitTest(nTop, nLeft, nBottom, nRight, mRow, mCol)
 
    IF mCol >= nLeft .AND. mCol <= nRight .AND. mRow >= nTop .AND. mRow <= nBottom
-      RETURN mRow - nTop + 1
+      Return mRow - nTop + 1
    ENDIF
 
-   RETURN 0
+   Return 0
 
 Static Procedure DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos, nAtTop, nArrLen, nRowsClr)
 
@@ -590,7 +590,7 @@ Static Procedure DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
 
    DispEnd()
 
-   RETURN
+   Return
 
 Static Procedure DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
 
@@ -603,7 +603,7 @@ Static Procedure DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
 
    ColorSelect(CLR_STANDARD)
 
-   RETURN
+   Return
 
 Static Function Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems, alSelect, acItems)
 
@@ -628,10 +628,10 @@ Static Function Ach_Limits(/* @ */ nFrstItem, /* @ */ nLastItem, /* @ */ nItems,
 
    IF nFrstItem == 0
       nLastItem := nItems
-      RETURN AC_NOITEM
+      Return AC_NOITEM
    ENDIF
 
-   RETURN AC_IDLE
+   Return AC_IDLE
 
 Static Function Ach_Select(alSelect, nPos)
 
@@ -646,7 +646,7 @@ Static Function Ach_Select(alSelect, nPos)
          sel := Eval(hb_macroBlock(sel))
       EndCase
       IF hb_IsLogical(sel)
-         RETURN sel
+         Return sel
       ENDIF
    ENDIF
 

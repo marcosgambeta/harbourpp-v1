@@ -62,7 +62,7 @@ METHOD hb_Get:hideInput(lHideInput)
       ::lHideInput := __eInstVar53(Self, "HIDEINPUT", lHideInput, "L", 1001)
    ENDIF
 
-   RETURN ::lHideInput
+   Return ::lHideInput
 
 METHOD hb_Get:style(cStyle)
 
@@ -70,4 +70,4 @@ METHOD hb_Get:style(cStyle)
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 1})
    ENDIF
 
-   RETURN ::cStyle
+   Return ::cStyle

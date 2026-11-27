@@ -202,4 +202,4 @@ Function __dbgBuildMenu(oDebugger)  // Builds the debugger pulldown menu
 
    ENDMENU
 
-   RETURN oMenu
+   Return oMenu

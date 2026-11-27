@@ -74,4 +74,4 @@ Function __eInstVar53(oVar, cMethod, xValue, cType, nSubCode, bValid)
       ENDIF
    ENDIF
 
-   RETURN xValue
+   Return xValue

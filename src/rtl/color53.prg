@@ -52,20 +52,20 @@ Function GetClrPair(cColor, nColor)
    Local nPos
 
    IF (nPos := GetPairPos(cColor, nColor)) == 0
-      RETURN ""
+      Return ""
    ENDIF
 
-   RETURN SubStr(cColor, nPos, GetPairLen(cColor, nColor))
+   Return SubStr(cColor, nPos, GetPairLen(cColor, nColor))
 
 Function SetClrPair(cColor, nColor, cNewColor)
 
    Local nPos
 
    IF (nPos := GetPairPos(cColor, nColor)) == 0
-      RETURN ""
+      Return ""
    ENDIF
 
-   RETURN Stuff(cColor, nPos, GetPairLen(cColor, nColor), cNewColor)
+   Return Stuff(cColor, nPos, GetPairLen(cColor, nColor), cNewColor)
 
 Function GetPairPos(cColor, nColor)
 
@@ -75,12 +75,12 @@ Function GetPairPos(cColor, nColor)
 
    For n := 2 To nColor
       IF (nSep := At(",", SubStr(cColor, nPos))) == 0
-         RETURN 0
+         Return 0
       ENDIF
       nPos += nSep
    Next
 
-   RETURN nPos
+   Return nPos
 
 Function GetPairLen(cColor, nColor)
 
@@ -88,51 +88,51 @@ Function GetPairLen(cColor, nColor)
    Local nLen
 
    IF (nPos := GetPairPos(cColor, nColor)) == 0
-      RETURN 0
+      Return 0
    ENDIF
 
-   RETURN IIf((nLen := At(",", SubStr(cColor, nPos))) == 0, Len(cColor) - nPos + 1, nLen - 1)
+   Return IIf((nLen := At(",", SubStr(cColor, nPos))) == 0, Len(cColor) - nPos + 1, nLen - 1)
 
 Function GetClrFore(cColor)
 
    Local nPos
 
    IF (nPos := At("/", cColor)) == 0
-      RETURN ""
+      Return ""
    ENDIF
 
-   RETURN Left(cColor, nPos - 1)
+   Return Left(cColor, nPos - 1)
 
 Function GetClrBack(cColor)
 
    Local nPos
 
    IF (nPos := At("/", cColor)) == 0
-      RETURN ""
+      Return ""
    ENDIF
 
-   RETURN SubStr(cColor, nPos + 1)
+   Return SubStr(cColor, nPos + 1)
 
 Function RadGrDefCo(cColor)
-   RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 3, 1, 4))
+   Return IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 3, 1, 4))
 
 Function RadItDefCo(cColor)
-   RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 5, 2, 2, 1, 1, 4))
+   Return IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 5, 2, 2, 1, 1, 4))
 
 Function ListBDefCo(cColor)
-   RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 5, 5, 2, 3, 1, 4))
+   Return IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 5, 5, 2, 3, 1, 4))
 
 Function ComboDefCo(cColor)
-   RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N", "W/N"), ApplyDefau(cColor, 5, 5, 5, 2, 3, 1, 4, 1))
+   Return IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W+/N", "N/W", "W/N", "W/N", "W+/N", "W/N"), ApplyDefau(cColor, 5, 5, 5, 2, 3, 1, 4, 1))
 
 Function CheckDefCo(cColor)
-   RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 2, 1, 4))
+   Return IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "W+/N", "W/N", "W+/N"), ApplyDefau(cColor, 5, 2, 1, 4))
 
 Function ButtnDefCo(cColor)
-   RETURN IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "N/W", "W+/N", "W+/N"), ApplyDefau(cColor, 5, 2, 1, 4))
+   Return IIf(IsDefColor(), ApplyDefau(cColor, "W/N", "N/W", "W+/N", "W+/N"), ApplyDefau(cColor, 5, 2, 1, 4))
 
 Function MenuDefCol(cColor)
-   RETURN IIf(IsDefColor(), ApplyDefau(cColor, "N/W", "W/N", "W+/W", "W+/N", "N+/W", "W/N"), ApplyDefau(cColor, 5, 2, 4, 2, 1, 3))
+   Return IIf(IsDefColor(), ApplyDefau(cColor, "N/W", "W/N", "W+/W", "W+/N", "N+/W", "W/N"), ApplyDefau(cColor, 5, 2, 4, 2, 1, 3))
 
 Function ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xClr8)
 
@@ -149,9 +149,9 @@ Function ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xCl
 
    Switch PCount()
    Case 0
-      RETURN ""
+      Return ""
    Case 1
-      RETURN cColor
+      Return cColor
    EndSwitch
 
    cSetColor := SetColor()
@@ -183,6 +183,6 @@ Function ApplyDefau(cColor, xClr1, xClr2, xClr3, xClr4, xClr5, xClr6, xClr7, xCl
       ENDIF
    Next
 
-   RETURN cClrDefa
+   Return cClrDefa
 
 #endif

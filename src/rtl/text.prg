@@ -61,7 +61,7 @@ Procedure __TextSave(cFile)
       t_cOldExtraFile := Set(_SET_EXTRAFILE, cFile)
    ENDIF
 
-   RETURN
+   Return
 
 Procedure __TextRestore()
 
@@ -72,4 +72,4 @@ Procedure __TextRestore()
       Set(_SET_EXTRA, t_lOldExtra)
    ENDIF
 
-   RETURN
+   Return

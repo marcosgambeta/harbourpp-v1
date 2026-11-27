@@ -83,7 +83,7 @@ Procedure __dbgHelp(cTopic)
 
    oDlg:ShowModal()
 
-   RETURN
+   Return
 
 Static Procedure PaintWindow(oDlg, oBrw, aTopics)
 
@@ -94,7 +94,7 @@ Static Procedure PaintWindow(oDlg, oBrw, aTopics)
    oBrw:ForceStable()
    ShowTopic(oDlg, aTopics, oBrw:Cargo, 0)  // Start on page 1
 
-   RETURN
+   Return
 
 Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
 
@@ -174,7 +174,7 @@ Static Procedure ProcessKey(nKey, oDlg, oBrw, aTopics)
 
    EndSwitch
 
-   RETURN
+   Return
 
 Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
@@ -192,7 +192,7 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
    IF nPages <= 1
       IF nPageOp == -1 .OR. nPageOp == 1
-         RETURN
+         Return
       ENDIF
       oDebug:nHelpPage := 1
    ELSE
@@ -207,7 +207,7 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
          IF oDebug:nHelpPage < nPages
             oDebug:nHelpPage++
          ELSE
-            RETURN
+            Return
          ENDIF
          Exit
 
@@ -216,7 +216,7 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
          IF oDebug:nHelpPage > 1
             oDebug:nHelpPage--
          ELSE
-            RETURN
+            Return
          ENDIF
          Exit
 
@@ -233,7 +233,7 @@ Static PROCEDURE ShowTopic(oDlg, aTopics, nTopic, nPageOp)
 
    hb_DispOutAt(oDlg:nBottom, oDlg:nRight - 16, " Page " + Str(oDebug:nHelpPage, 1) + " of " + Str(nPages, 1) + " ", oDlg:cColor)
 
-   RETURN
+   Return
 
 Static Function GetTopics()
 
@@ -249,7 +249,7 @@ Static Function GetTopics()
       ENDIF
    Next
 
-   RETURN aTopics
+   Return aTopics
 
 Static Function help_en()
    #pragma __streaminclude "en.txt" | RETURN %s

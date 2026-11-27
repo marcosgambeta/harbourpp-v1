@@ -52,6 +52,6 @@
 #ifdef HB_COMPAT_C53
 
 Function RadioButton(nRow, nCol, cCaption, cData)  // NOTE: cData argument is undocumented
-   RETURN HBRadioButton():New(nRow, nCol, cCaption, cData)
+   Return HBRadioButton():New(nRow, nCol, cCaption, cData)
 
 #endif

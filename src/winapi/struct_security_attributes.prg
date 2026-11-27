@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasSECURITY_ATTRIBUTES()
-RETURN was_SECURITY_ATTRIBUTES():new()
+Return was_SECURITY_ATTRIBUTES():new()
 
 CLASS WAS_SECURITY_ATTRIBUTES
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_SECURITY_ATTRIBUTES
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

@@ -69,10 +69,10 @@ METHOD Symbol:Init(cSymName)
    Return Self
 
 METHOD Symbol:name()
-   RETURN ::nSym:Name
+   Return ::nSym:Name
 
 METHOD Symbol:isEqual(oSymbol)
-   RETURN ::ClassH == oSymbol:ClassH .AND. ::nSym:Name == oSymbol:nSym:Name
+   Return ::ClassH == oSymbol:ClassH .AND. ::nSym:Name == oSymbol:nSym:Name
 
 METHOD Symbol:exec(...)
-   RETURN ::nSym:exec(...)
+   Return ::nSym:exec(...)

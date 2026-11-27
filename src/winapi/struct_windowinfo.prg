@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasWINDOWINFO()
-RETURN was_WINDOWINFO():new()
+Return was_WINDOWINFO():new()
 
 CLASS WAS_WINDOWINFO
 
@@ -111,7 +111,7 @@ PROCEDURE destroyObject() CLASS WAS_WINDOWINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

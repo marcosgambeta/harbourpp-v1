@@ -189,15 +189,15 @@ METHOD ScrollBar:hitTest(nMRow, nMCol)
       Case nMRow < ::nStart
       Case nMRow > ::nEnd
       Case nMRow == ::nStart
-         RETURN HTSCROLLUNITDEC
+         Return HTSCROLLUNITDEC
       Case nMRow == ::nEnd
-         RETURN HTSCROLLUNITINC
+         Return HTSCROLLUNITINC
       Case nMRow < ::nThumbPos + ::nStart
-         RETURN HTSCROLLBLOCKDEC
+         Return HTSCROLLBLOCKDEC
       Case nMRow > ::nThumbPos + ::nStart
-         RETURN HTSCROLLBLOCKINC
+         Return HTSCROLLBLOCKINC
       Case nMRow == ::nThumbPos + ::nStart
-         RETURN HTSCROLLTHUMBDRAG
+         Return HTSCROLLTHUMBDRAG
       EndCase
 
       IF nMCol == ::nOffset + 1 .OR. nMCol == ::nOffset
@@ -207,15 +207,15 @@ METHOD ScrollBar:hitTest(nMRow, nMCol)
          Case nMRow < ::nStart
          Case nMRow > ::nEnd
          Case nMRow == ::nStart
-            RETURN HTSCROLLUNITDEC
+            Return HTSCROLLUNITDEC
          Case nMRow == ::nEnd
-            RETURN HTSCROLLUNITINC
+            Return HTSCROLLUNITINC
          Case nMRow < ::nThumbPos + ::nStart
-            RETURN HTSCROLLBLOCKDEC
+            Return HTSCROLLBLOCKDEC
          Case nMRow > ::nThumbPos + ::nStart
-            RETURN HTSCROLLBLOCKINC
+            Return HTSCROLLBLOCKINC
          Case nMRow == ::nThumbPos + ::nStart
-            RETURN HTSCROLLTHUMBDRAG
+            Return HTSCROLLTHUMBDRAG
          EndCase
       ENDIF
    ELSE
@@ -225,22 +225,22 @@ METHOD ScrollBar:hitTest(nMRow, nMCol)
       Case nMCol < ::nStart
       Case nMCol > ::nEnd
       Case nMCol == ::nStart
-         RETURN HTSCROLLUNITDEC
+         Return HTSCROLLUNITDEC
       Case nMCol == ::nEnd
-         RETURN HTSCROLLUNITINC
+         Return HTSCROLLUNITINC
       Case nMCol < ::nThumbPos + ::nStart
-         RETURN HTSCROLLBLOCKDEC
+         Return HTSCROLLBLOCKDEC
       Case nMCol > ::nThumbPos + ::nStart
-         RETURN HTSCROLLBLOCKINC
+         Return HTSCROLLBLOCKINC
       Case nMCol == ::nThumbPos + ::nStart
-         RETURN HTSCROLLTHUMBDRAG
+         Return HTSCROLLTHUMBDRAG
       EndCase
    ENDIF
 
-   RETURN HTNOWHERE
+   Return HTNOWHERE
 
 METHOD ScrollBar:barLength()
-   RETURN ::nBarLength
+   Return ::nBarLength
 
 METHOD ScrollBar:bitmaps(aBitmaps)
 
@@ -249,7 +249,7 @@ METHOD ScrollBar:bitmaps(aBitmaps)
       ::aBitmaps := aBitmaps
    ENDIF
 
-   RETURN ::aBitmaps
+   Return ::aBitmaps
 
 METHOD ScrollBar:colorSpec(cColorSpec)
 
@@ -258,7 +258,7 @@ METHOD ScrollBar:colorSpec(cColorSpec)
       ::cColorSpec := cColorSpec
    ENDIF
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 METHOD ScrollBar:current(nCurrent)
 
@@ -267,7 +267,7 @@ METHOD ScrollBar:current(nCurrent)
       ::nCurrent := nCurrent
    ENDIF
 
-   RETURN ::nCurrent
+   Return ::nCurrent
 
 METHOD ScrollBar:end(nEnd)
 
@@ -277,7 +277,7 @@ METHOD ScrollBar:end(nEnd)
       ::nBarLength := nEnd - ::nStart - 1
    ENDIF
 
-   RETURN ::nEnd
+   Return ::nEnd
 
 METHOD ScrollBar:offset(nOffset)
 
@@ -286,7 +286,7 @@ METHOD ScrollBar:offset(nOffset)
       ::nOffset := nOffset
    ENDIF
 
-   RETURN ::nOffset
+   Return ::nOffset
 
 METHOD ScrollBar:orient(nOrient)
 
@@ -295,7 +295,7 @@ METHOD ScrollBar:orient(nOrient)
       ::nOrient := nOrient
    ENDIF
 
-   RETURN ::nOrient
+   Return ::nOrient
 
 METHOD ScrollBar:sBlock(bSBlock)
 
@@ -303,7 +303,7 @@ METHOD ScrollBar:sBlock(bSBlock)
       ::bSBlock := bSBlock
    ENDIF
 
-   RETURN ::bSBlock
+   Return ::bSBlock
 
 METHOD ScrollBar:start(nStart)
 
@@ -313,7 +313,7 @@ METHOD ScrollBar:start(nStart)
       ::nBarLength := ::nEnd - nStart - 1
    ENDIF
 
-   RETURN ::nStart
+   Return ::nStart
 
 METHOD ScrollBar:style(cStyle)
 
@@ -322,7 +322,7 @@ METHOD ScrollBar:style(cStyle)
       ::cStyle := cStyle
    ENDIF
 
-   RETURN ::cStyle
+   Return ::cStyle
 
 METHOD ScrollBar:thumbPos(nThumbPos)
 
@@ -342,7 +342,7 @@ METHOD ScrollBar:thumbPos(nThumbPos)
       ::lOverride := (nThumbPos != 0)
    ENDIF
 
-   RETURN ::nThumbPos
+   Return ::nThumbPos
 
 METHOD ScrollBar:total(nTotal)
 
@@ -351,7 +351,7 @@ METHOD ScrollBar:total(nTotal)
       ::nTotal := nTotal
    ENDIF
 
-   RETURN ::nTotal
+   Return ::nTotal
 
 METHOD ScrollBar:CalcThumbPos()
 
@@ -417,6 +417,6 @@ METHOD ScrollBar:Init(nStart, nEnd, nOffset, bSBlock, nOrient)
    Return Self
 
 Function ScrollBar(nStart, nEnd, nOffset, bSBlock, nOrient)
-   RETURN HBScrollBar():New(nStart, nEnd, nOffset, bSBlock, nOrient)
+   Return HBScrollBar():New(nStart, nEnd, nOffset, bSBlock, nOrient)
 
 #endif

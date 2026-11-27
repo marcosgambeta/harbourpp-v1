@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasTITLEBARINFO()
-RETURN was_TITLEBARINFO():new()
+Return was_TITLEBARINFO():new()
 
 CLASS WAS_TITLEBARINFO
 
@@ -66,7 +66,7 @@ PROCEDURE destroyObject() CLASS WAS_TITLEBARINFO
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

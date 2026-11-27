@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasPOINTFLOAT()
-RETURN was_POINTFLOAT():new()
+Return was_POINTFLOAT():new()
 
 CLASS WAS_POINTFLOAT
 
@@ -63,7 +63,7 @@ PROCEDURE destroyObject() CLASS WAS_POINTFLOAT
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

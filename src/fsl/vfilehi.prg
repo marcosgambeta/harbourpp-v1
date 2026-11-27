@@ -127,6 +127,6 @@ Function hb_vfDirUnbuild(cDir)
    Return True
 
 Function hb_vfNameExists(cName)
-   RETURN ;
+   Return ;
       hb_vfExists(cName) .OR. ;
       hb_vfDirExists(cName)

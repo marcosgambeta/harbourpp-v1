@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasSYSTEMTIME()
-RETURN was_SYSTEMTIME():new()
+Return was_SYSTEMTIME():new()
 
 CLASS WAS_SYSTEMTIME
 
@@ -99,7 +99,7 @@ PROCEDURE destroyObject() CLASS WAS_SYSTEMTIME
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

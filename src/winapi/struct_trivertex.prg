@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasTRIVERTEX()
-RETURN was_TRIVERTEX():new()
+Return was_TRIVERTEX():new()
 
 CLASS WAS_TRIVERTEX
 
@@ -87,7 +87,7 @@ PROCEDURE destroyObject() CLASS WAS_TRIVERTEX
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

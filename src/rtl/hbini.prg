@@ -82,7 +82,7 @@ Procedure hb_iniSetComment(cLc, cHlc)
       s_cHalfLineComment := cHlc
    ENDIF
 
-   RETURN
+   Return
 
 Function hb_iniNew(lAutoMain)
 
@@ -92,10 +92,10 @@ Function hb_iniNew(lAutoMain)
       hIni["MAIN"] := {=>}
    ENDIF
 
-   RETURN hIni
+   Return hIni
 
 Function hb_iniRead(cFileSpec, lKeyCaseSens, cSplitters, lAutoMain)
-   RETURN hb_iniReadStr(IIf(hb_IsString(cFileSpec), hb_iniFileLow(cFileSpec), ""), lKeyCaseSens, cSplitters, lAutoMain)
+   Return hb_iniReadStr(IIf(hb_IsString(cFileSpec), hb_iniFileLow(cFileSpec), ""), lKeyCaseSens, cSplitters, lAutoMain)
 
 Function hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
@@ -111,7 +111,7 @@ Function hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
       hIni["MAIN"] := {=>}
    ENDIF
 
-   RETURN hb_iniStringLow(hIni, hb_defaultValue(cData, ""), lKeyCaseSens, hb_defaultValue(cSplitters, "="), lAutoMain)
+   Return hb_iniStringLow(hIni, hb_defaultValue(cData, ""), lKeyCaseSens, hb_defaultValue(cSplitters, "="), lAutoMain)
 
 Static Function hb_iniFileLow(cFileSpec)
 
@@ -135,7 +135,7 @@ Static Function hb_iniFileLow(cFileSpec)
    Next
 
    IF hFile == F_ERROR
-      RETURN ""
+      Return ""
    ENDIF
 
    // we'll read the whole file, then we'll break it in lines.
@@ -145,7 +145,7 @@ Static Function hb_iniFileLow(cFileSpec)
    cData := hb_BLeft(cData, nLen)
    FClose(hFile)
 
-   RETURN cData
+   Return cData
 
 Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain)
 
@@ -223,7 +223,7 @@ Static Function hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
       cLine := ""
    Next
 
-   RETURN hIni
+   Return hIni
 
 Function hb_iniWrite(xFileName, hIni, cCommentBegin, cCommentEnd, lAutoMain)
 
@@ -318,4 +318,4 @@ Function hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       cBuffer += cCommentEnd + cNewLine
    ENDIF
 
-   RETURN IIf(Empty(cBuffer), NIL, cBuffer)
+   Return IIf(Empty(cBuffer), NIL, cBuffer)

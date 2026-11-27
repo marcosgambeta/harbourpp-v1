@@ -56,7 +56,7 @@ Function __objHasData(oObject, cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
-   RETURN ;
+   Return ;
       __objHasMsg(oObject, cSymbol) .AND. __objHasMsg(oObject, "_" + cSymbol)
 
 Function __objHasMethod(oObject, cSymbol)
@@ -65,7 +65,7 @@ Function __objHasMethod(oObject, cSymbol)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
-   RETURN ;
+   Return ;
       __objHasMsg(oObject, cSymbol) .AND. !__objHasMsg(oObject, "_" + cSymbol)
 
 Function __objGetMsgList(oObject, lDataMethod, nClassType)
@@ -98,7 +98,7 @@ Function __objGetMsgList(oObject, lDataMethod, nClassType)
       ENDIF
    Next
 
-   RETURN aData
+   Return aData
 
 Function __objGetMethodList(oObject)
 
@@ -106,7 +106,7 @@ Function __objGetMethodList(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
-   RETURN __objGetMsgList(oObject, False)
+   Return __objGetMsgList(oObject, False)
 
 Function __objGetValueList(oObject, aExcept)
 
@@ -126,7 +126,7 @@ Function __objGetValueList(oObject, aExcept)
       ENDIF
    Next
 
-   RETURN aData
+   Return aData
 
 Function __objSetValueList(oObject, aData)
 
@@ -136,7 +136,7 @@ Function __objSetValueList(oObject, aData)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 
-   RETURN oObject
+   Return oObject
 
 Function __objAddMethod(oObject, cSymbol, nFuncPtr)
 
@@ -146,7 +146,7 @@ Function __objAddMethod(oObject, cSymbol, nFuncPtr)
       __clsAddMsg(oObject:ClassH, cSymbol, nFuncPtr, HB_OO_MSG_METHOD, NIL, 1)
    ENDIF
 
-   RETURN oObject
+   Return oObject
 
 Function __objAddInline(oObject, cSymbol, bInline)
 
@@ -156,7 +156,7 @@ Function __objAddInline(oObject, cSymbol, bInline)
       __clsAddMsg(oObject:ClassH, cSymbol, bInline, HB_OO_MSG_INLINE, NIL, 1)
    ENDIF
 
-   RETURN oObject
+   Return oObject
 
 Function __objAddData(oObject, cSymbol)
 
@@ -172,7 +172,7 @@ Function __objAddData(oObject, cSymbol)
       __clsAddMsg(hClass, "_" + cSymbol, nSeq, HB_OO_MSG_ASSIGN, NIL, 1)
    ENDIF
 
-   RETURN oObject
+   Return oObject
 
 Function __objModMethod(oObject, cSymbol, nFuncPtr)
 
@@ -182,7 +182,7 @@ Function __objModMethod(oObject, cSymbol, nFuncPtr)
       __clsModMsg(oObject:ClassH, cSymbol, nFuncPtr)
    ENDIF
 
-   RETURN oObject
+   Return oObject
 
 Function __objModInline(oObject, cSymbol, bInline)
 
@@ -192,7 +192,7 @@ Function __objModInline(oObject, cSymbol, bInline)
       __clsModMsg(oObject:ClassH, cSymbol, bInline)
    ENDIF
 
-   RETURN oObject
+   Return oObject
 
 Function __objDelMethod(oObject, cSymbol)
 
@@ -202,10 +202,10 @@ Function __objDelMethod(oObject, cSymbol)
       __clsDelMsg(oObject:ClassH, cSymbol)
    ENDIF
 
-   RETURN oObject
+   Return oObject
 
 Function __objDelInline(oObject, cSymbol)
-   RETURN __objDelMethod(oObject, cSymbol)
+   Return __objDelMethod(oObject, cSymbol)
 
 Function __objDelData(oObject, cSymbol)
 
@@ -217,7 +217,7 @@ Function __objDelData(oObject, cSymbol)
       __cls_DecData(oObject:ClassH)         // Decrease wData
    ENDIF
 
-   RETURN oObject
+   Return oObject
 
 Function __objDerivedFrom(oObject, xSuper)
 
@@ -236,7 +236,7 @@ Function __objDerivedFrom(oObject, xSuper)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    EndCase
 
-   RETURN __clsParent(oObject:ClassH, cClassName)
+   Return __clsParent(oObject:ClassH, cClassName)
 
 Function __objGetProperties(oObject, lAllExported)
 
@@ -247,4 +247,4 @@ Function __objGetProperties(oObject, lAllExported)
       msg := {msg, __objSendMsg(oObject, msg)}
    Next
 
-   RETURN aMsgList
+   Return aMsgList

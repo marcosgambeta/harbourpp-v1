@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasKERNINGPAIR()
-RETURN was_KERNINGPAIR():new()
+Return was_KERNINGPAIR():new()
 
 CLASS WAS_KERNINGPAIR
 
@@ -69,7 +69,7 @@ PROCEDURE destroyObject() CLASS WAS_KERNINGPAIR
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 

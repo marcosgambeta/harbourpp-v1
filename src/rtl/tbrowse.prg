@@ -300,7 +300,7 @@ ENDCLASS
 
 
 Function TBrowseNew(nTop, nLeft, nBottom, nRight)
-   RETURN TBrowse():new(nTop, nLeft, nBottom, nRight)
+   Return TBrowse():new(nTop, nLeft, nBottom, nRight)
 
 
 METHOD TBrowse:init(nTop, nLeft, nBottom, nRight)
@@ -325,7 +325,7 @@ METHOD TBrowse:init(nTop, nLeft, nBottom, nRight)
    Return Self
 
 Static Function _SKIP_RESULT(xResult)
-   RETURN IIf(hb_IsNumeric(xResult), Int(xResult), 0)
+   Return IIf(hb_IsNumeric(xResult), Int(xResult), 0)
 
 
 Static Procedure _DISP_FHSEP(nRow, nType, cColor, aColData)
@@ -387,7 +387,7 @@ Static Procedure _DISP_FHSEP(nRow, nType, cColor, aColData)
       ENDIF
    Next
 
-   RETURN
+   Return
 
 
 Static Procedure _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColors, aColData)
@@ -422,7 +422,7 @@ Static Procedure _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColo
       ENDIF
    Next
 
-   RETURN
+   Return
 
 
 METHOD TBrowse:dispFrames()
@@ -650,7 +650,7 @@ METHOD TBrowse:readRecord(nRow)
 
    ENDIF
 
-   RETURN lRead
+   Return lRead
 
 
 METHOD TBrowse:setPosition()
@@ -858,21 +858,21 @@ METHOD TBrowse:colorValue(nColorIndex)
 
    IF hb_IsNumeric(nColorIndex)
       IF nColorIndex >= 1 .AND. nColorIndex <= Len(::aColors)
-         RETURN ::aColors[nColorIndex]
+         Return ::aColors[nColorIndex]
       /* In CA-Cl*pper index 0 has special meaning - it's always N/N color */
       ELSEIF nColorIndex == 0
-         RETURN "N/N"
+         Return "N/N"
       ENDIF
    ENDIF
 
-   RETURN ::aColors[_TBC_CLR_STANDARD]
+   Return ::aColors[_TBC_CLR_STANDARD]
 
 
 METHOD TBrowse:cellValue(nRow, nCol)
 
    IF nRow >= 1 .AND. nRow <= ::rowCount .AND. nCol >= 1 .AND. nCol <= ::colCount .AND. ::aCellStatus[nRow]
 
-      RETURN ::aCellValues[nRow][nCol]
+      Return ::aCellValues[nRow][nCol]
    ENDIF
 
    Return Nil
@@ -882,7 +882,7 @@ METHOD TBrowse:cellColor(nRow, nCol)
 
    IF nRow >= 1 .AND. nRow <= ::rowCount .AND. nCol >= 1 .AND. nCol <= ::colCount .AND. ::aCellStatus[nRow]
 
-      RETURN ::aCellColors[nRow][nCol]
+      Return ::aCellColors[nRow][nCol]
    ENDIF
 
    Return Nil
@@ -922,7 +922,7 @@ Static Function _DECODECOLORS(cColorSpec)
       AAdd(aColors, aColors[_TBC_CLR_STANDARD])
    EndDo
 
-   RETURN aColors
+   Return aColors
 
 
 /* Color indexes returned by oCol:defColor are adopted to existing
@@ -952,7 +952,7 @@ Static Function _COLDEFCOLORS(aDefColorsIdx, nMaxColorIndex)
       Next
    ENDIF
 
-   RETURN aColorsIdx
+   Return aColorsIdx
 
 
 /* If oCol:colorBlock does not return array length enough then colors
@@ -981,7 +981,7 @@ Static Function _CELLCOLORS(aCol, xValue, nMaxColorIndex)
       Next
    ENDIF
 
-   RETURN aColors
+   Return aColors
 
 
 METHOD TBrowse:setCursorPos()
@@ -1480,7 +1480,7 @@ Static Procedure _GENLIMITRTE()
    Eval(ErrorBlock(), oError)
    __errInHandler()
 
-   RETURN
+   Return
 
 
 /* helper function to take headings and footing data */
@@ -1512,7 +1512,7 @@ Static Function _DECODE_FH(cName, nHeight, nWidth)
       cName := ""
    ENDIF
 
-   RETURN nHeight != 0
+   Return nHeight != 0
 
 
 Static Function _MAXFREEZE(nColumns, aColData, nWidth)
@@ -1524,7 +1524,7 @@ Static Function _MAXFREEZE(nColumns, aColData, nWidth)
    Local nTot
 
    IF nColumns > Len(aColData) .OR. nColumns < 1
-      RETURN 0
+      Return 0
    ENDIF
 
    nTot := nWidth
@@ -1550,12 +1550,12 @@ Static Function _MAXFREEZE(nColumns, aColData, nWidth)
     */
    IF nWidth > 0 .OR. nWidth == 0 .AND. _NEXTCOLUMN(aColData, nColumns + 1) == 0
 
-      RETURN nColumns
+      Return nColumns
    ENDIF
 
    nWidth := nTot
 
-   RETURN 0
+   Return 0
 
 
 Static Function _NEXTCOLUMN(aColData, nCol)
@@ -1565,12 +1565,12 @@ Static Function _NEXTCOLUMN(aColData, nCol)
    Do While nCol <= Len(aColData)
       aCol := aColData[nCol]
       IF aCol[_TBCI_CELLWIDTH] > 0
-         RETURN nCol
+         Return nCol
       ENDIF
       ++nCol
    EndDo
 
-   RETURN 0
+   Return 0
 
 
 Static Function _PREVCOLUMN(aColData, nCol)
@@ -1580,12 +1580,12 @@ Static Function _PREVCOLUMN(aColData, nCol)
    Do While nCol >= 1
       aCol := aColData[nCol]
       IF aCol[_TBCI_CELLWIDTH] > 0
-         RETURN nCol
+         Return nCol
       ENDIF
       --nCol
    EndDo
 
-   RETURN 0
+   Return 0
 
 
 Static Function _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
@@ -1625,7 +1625,7 @@ Static Function _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
       Next
    ENDIF
 
-   RETURN IIf(nLast == 0, nFrom - nStep, nLast)
+   Return IIf(nLast == 0, nFrom - nStep, nLast)
 
 
 Static Procedure _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
@@ -1692,7 +1692,7 @@ Static Procedure _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
       ENDIF
    ENDIF
 
-   RETURN
+   Return
 
 
 /* set visible columns */
@@ -1871,10 +1871,10 @@ METHOD TBrowse:colWidth(nColumn)
    ENDIF
 
    IF hb_IsNumeric(nColumn) .AND. nColumn >= 1 .AND. nColumn <= ::colCount
-      RETURN ::aColData[nColumn][_TBCI_COLWIDTH]
+      Return ::aColData[nColumn][_TBCI_COLWIDTH]
    ENDIF
 
-   RETURN 0
+   Return 0
 
 
 /* get number of frozen columns */
@@ -1884,7 +1884,7 @@ METHOD TBrowse:getFrozen()
       ::doConfigure()
    ENDIF
 
-   RETURN ::nFrozen
+   Return ::nFrozen
 
 
 /* set number of columns to freeze */
@@ -1910,10 +1910,10 @@ METHOD TBrowse:freeze(nColumns)
          _SETVISIBLE(::aColData, _TBR_COORD(::n_Right) - _TBR_COORD(::n_Left) + 1, @::nFrozen, @::nLeftVisible, @::nRightVisible)
       ENDIF
       /* NOTE: CA-Cl*pper compatible behaviour. [vszakats] */
-      RETURN nCols
+      Return nCols
    ENDIF
 
-   RETURN ::nFrozen
+   Return ::nFrozen
 
 
 /* get/set string value with color table for the TBrowse display */
@@ -1924,11 +1924,11 @@ METHOD TBrowse:colorSpec(cColorSpec)
       ::configure(_TBR_CONF_COLORS)
    ENDIF
 
-   RETURN ::cColorSpec
+   Return ::cColorSpec
 
 
 METHOD TBrowse:colCount()
-   RETURN Len(::columns)
+   Return Len(::columns)
 
 
 METHOD TBrowse:rowCount()
@@ -1943,7 +1943,7 @@ METHOD TBrowse:rowCount()
             ::nHeadHeight - IIf(::lHeadSep, 1, 0) - ;
             ::nFootHeight - IIf(::lFootSep, 1, 0)
 
-   RETURN IIf(nRows > 0, nRows, 0)
+   Return IIf(nRows > 0, nRows, 0)
 
 
 /* NOTE: CA-Cl*pper has a bug where negative nRowPos value will be translated
@@ -1957,13 +1957,13 @@ METHOD TBrowse:setRowPos(nRowPos)
    IF hb_IsNumeric(nRowPos)
       nRow := Int(nRowPos)
       ::nRowPos := IIf(nRow > nRowCount, nRowCount, IIf(nRow < 1, 1, nRow))
-      RETURN nRow
+      Return nRow
    ELSE
       ::nRowPos := Min(nRowCount, 1)
-      RETURN 0
+      Return 0
    ENDIF
 
-   RETURN ::nRowPos
+   Return ::nRowPos
 
 
 METHOD TBrowse:getRowPos()
@@ -1972,7 +1972,7 @@ METHOD TBrowse:getRowPos()
       ::doConfigure()
    ENDIF
 
-   RETURN ::nRowPos
+   Return ::nRowPos
 
 
 /* NOTE: CA-Cl*pper has a bug where negative nRowPos value will be translated
@@ -1990,7 +1990,7 @@ METHOD TBrowse:setColPos(nColPos)
       ::nColPos := 0
    ENDIF
 
-   RETURN ::nColPos
+   Return ::nColPos
 
 
 METHOD TBrowse:getColPos()
@@ -1999,7 +1999,7 @@ METHOD TBrowse:getColPos()
       ::doConfigure()
    ENDIF
 
-   RETURN ::nColPos
+   Return ::nColPos
 
 
 METHOD TBrowse:getTopFlag()
@@ -2008,7 +2008,7 @@ METHOD TBrowse:getTopFlag()
       ::doConfigure()
    ENDIF
 
-   RETURN ::lHitTop
+   Return ::lHitTop
 
 
 METHOD TBrowse:setTopFlag(lTop)
@@ -2023,7 +2023,7 @@ METHOD TBrowse:setTopFlag(lTop)
 
    ::lHitTop := lTop
 
-   RETURN lTop
+   Return lTop
 
 
 METHOD TBrowse:getBottomFlag()
@@ -2032,7 +2032,7 @@ METHOD TBrowse:getBottomFlag()
       ::doConfigure()
    ENDIF
 
-   RETURN ::lHitBottom
+   Return ::lHitBottom
 
 
 METHOD TBrowse:setBottomFlag(lBottom)
@@ -2047,7 +2047,7 @@ METHOD TBrowse:setBottomFlag(lBottom)
 
    ::lHitBottom := lBottom
 
-   RETURN lBottom
+   Return lBottom
 
 
 METHOD TBrowse:getAutoLite()
@@ -2056,7 +2056,7 @@ METHOD TBrowse:getAutoLite()
       ::doConfigure()
    ENDIF
 
-   RETURN ::lAutoLite
+   Return ::lAutoLite
 
 
 METHOD TBrowse:setAutoLite(lAutoLite)
@@ -2071,7 +2071,7 @@ METHOD TBrowse:setAutoLite(lAutoLite)
 
    ::lAutoLite := lAutoLite
 
-   RETURN lAutoLite
+   Return lAutoLite
 
 
 METHOD TBrowse:getStableFlag()
@@ -2080,7 +2080,7 @@ METHOD TBrowse:getStableFlag()
       ::doConfigure()
    ENDIF
 
-   RETURN ::lStable
+   Return ::lStable
 
 
 METHOD TBrowse:setStableFlag(lStable)
@@ -2095,7 +2095,7 @@ METHOD TBrowse:setStableFlag(lStable)
 
    ::lStable := lStable
 
-   RETURN lStable
+   Return lStable
 
 
 METHOD TBrowse:leftVisible()
@@ -2104,7 +2104,7 @@ METHOD TBrowse:leftVisible()
       ::doConfigure()
    ENDIF
 
-   RETURN ::nLeftVisible
+   Return ::nLeftVisible
 
 
 METHOD TBrowse:rightVisible()
@@ -2113,7 +2113,7 @@ METHOD TBrowse:rightVisible()
       ::doConfigure()
    ENDIF
 
-   RETURN ::nRightVisible
+   Return ::nRightVisible
 
 
 /* Adds a TBColumn object to the TBrowse object */
@@ -2143,7 +2143,7 @@ METHOD TBrowse:delColumn(nColumn)
    ENDIF
 #endif
 
-   RETURN oCol
+   Return oCol
 
 
 /* Insert a column object in a browse */
@@ -2159,7 +2159,7 @@ METHOD TBrowse:insColumn(nColumn, oCol)
    ENDIF
 #endif
 
-   RETURN oCol
+   Return oCol
 
 
 /* Replaces one TBColumn object with another */
@@ -2193,16 +2193,16 @@ METHOD TBrowse:setColumn(nColumn, oCol)
 #ifdef HB_CLP_STRICT
    Return Self
 #else
-   RETURN oPrevCol
+   Return oPrevCol
 #endif
 
 
 /* Gets a specific TBColumn object */
 METHOD TBrowse:getColumn(nColumn)
 #ifdef HB_CLP_STRICT
-   RETURN ::columns[nColumn]
+   Return ::columns[nColumn]
 #else
-   RETURN IIf(nColumn >= 1 .AND. nColumn <= ::colCount, ::columns[nColumn], NIL)
+   Return IIf(nColumn >= 1 .AND. nColumn <= ::colCount, ::columns[nColumn], NIL)
 #endif
 
 
@@ -2212,7 +2212,7 @@ METHOD TBrowse:footSep(cFootSep)
       ::cFootSep := __eInstVar53(Self, "FOOTSEP", cFootSep, "C", 1001)
    ENDIF
 
-   RETURN ::cFootSep
+   Return ::cFootSep
 
 
 METHOD TBrowse:colSep(cColSep)
@@ -2221,7 +2221,7 @@ METHOD TBrowse:colSep(cColSep)
       ::cColSep := __eInstVar53(Self, "COLSEP", cColSep, "C", 1001)
    ENDIF
 
-   RETURN ::cColSep
+   Return ::cColSep
 
 
 METHOD TBrowse:headSep(cHeadSep)
@@ -2230,7 +2230,7 @@ METHOD TBrowse:headSep(cHeadSep)
       ::cHeadSep := __eInstVar53(Self, "HEADSEP", cHeadSep, "C", 1001)
    ENDIF
 
-   RETURN ::cHeadSep
+   Return ::cHeadSep
 
 
 METHOD TBrowse:skipBlock(bSkipBlock)
@@ -2239,7 +2239,7 @@ METHOD TBrowse:skipBlock(bSkipBlock)
       ::bSkipBlock := __eInstVar53(Self, "SKIPBLOCK", bSkipBlock, "B", 1001)
    ENDIF
 
-   RETURN ::bSkipBlock
+   Return ::bSkipBlock
 
 
 METHOD TBrowse:goTopBlock(bBlock)
@@ -2248,7 +2248,7 @@ METHOD TBrowse:goTopBlock(bBlock)
       ::bGoTopBlock := __eInstVar53(Self, "GOTOPBLOCK", bBlock, "B", 1001)
    ENDIF
 
-   RETURN ::bGoTopBlock
+   Return ::bGoTopBlock
 
 
 METHOD TBrowse:goBottomBlock(bBlock)
@@ -2258,7 +2258,7 @@ METHOD TBrowse:goBottomBlock(bBlock)
       ::bGoBottomBlock := __eInstVar53(Self, "GOBOTTOMBLOCK", bBlock, "B", 1001)
    ENDIF
 
-   RETURN ::bGoBottomBlock
+   Return ::bGoBottomBlock
 
 
 METHOD TBrowse:nTop(nTop)
@@ -2277,11 +2277,11 @@ METHOD TBrowse:nTop(nTop)
 
 #ifdef HB_COMPAT_C53
    IF !Empty(::cBorder)
-      RETURN ::n_Top - 1
+      Return ::n_Top - 1
    ENDIF
 #endif
 
-   RETURN ::n_Top
+   Return ::n_Top
 
 
 METHOD TBrowse:nLeft(nLeft)
@@ -2300,11 +2300,11 @@ METHOD TBrowse:nLeft(nLeft)
 
 #ifdef HB_COMPAT_C53
    IF !Empty(::cBorder)
-      RETURN ::n_Left - 1
+      Return ::n_Left - 1
    ENDIF
 #endif
 
-   RETURN ::n_Left
+   Return ::n_Left
 
 
 METHOD TBrowse:nBottom(nBottom)
@@ -2321,11 +2321,11 @@ METHOD TBrowse:nBottom(nBottom)
 
 #ifdef HB_COMPAT_C53
    IF !Empty(::cBorder)
-      RETURN ::n_Bottom + 1
+      Return ::n_Bottom + 1
    ENDIF
 #endif
 
-   RETURN ::n_Bottom
+   Return ::n_Bottom
 
 
 METHOD TBrowse:nRight(nRight)
@@ -2342,11 +2342,11 @@ METHOD TBrowse:nRight(nRight)
 
 #ifdef HB_COMPAT_C53
    IF !Empty(::cBorder)
-      RETURN ::n_Right + 1
+      Return ::n_Right + 1
    ENDIF
 #endif
 
-   RETURN ::n_Right
+   Return ::n_Right
 
 #ifdef HB_COMPAT_C53
 METHOD TBrowse:nRow()
@@ -2355,7 +2355,7 @@ METHOD TBrowse:nRow()
       ::doConfigure()
    ENDIF
 
-   RETURN ::n_Row
+   Return ::n_Row
 
 
 METHOD TBrowse:nCol()
@@ -2364,7 +2364,7 @@ METHOD TBrowse:nCol()
       ::doConfigure()
    ENDIF
 
-   RETURN ::n_Col
+   Return ::n_Col
 
 
 METHOD TBrowse:hitTest(mRow, mCol)
@@ -2394,7 +2394,7 @@ METHOD TBrowse:hitTest(mRow, mCol)
       mRow > (nBottom := _TBR_COORD(::n_Bottom)) .OR. ;
       mCol < (nLeft   := _TBR_COORD(::n_Left)) .OR. ;
       mCol > (nRight  := _TBR_COORD(::n_Right))
-      RETURN HTNOWHERE
+      Return HTNOWHERE
    ENDIF
 
    nRet := HTNOWHERE
@@ -2469,7 +2469,7 @@ METHOD TBrowse:hitTest(mRow, mCol)
       ENDIF
    ENDIF
 
-   RETURN nRet
+   Return nRet
 
 
 #ifndef HB_BRW_STATICMOUSE
@@ -2525,7 +2525,7 @@ Static Procedure _mBrwPos(oBrw, mRow, mCol)
       mRow := mCol := 0
    ENDIF
 
-   RETURN
+   Return
 
 
 METHOD TBrowse:mRowPos()
@@ -2539,7 +2539,7 @@ METHOD TBrowse:mRowPos()
 
    _mBrwPos(Self, @mRow, @mCol)
 
-   RETURN mRow
+   Return mRow
 
 
 METHOD TBrowse:mColPos()
@@ -2553,7 +2553,7 @@ METHOD TBrowse:mColPos()
 
    _mBrwPos(Self, @mRow, @mCol)
 
-   RETURN mCol
+   Return mCol
 #endif
 
 
@@ -2583,7 +2583,7 @@ METHOD TBrowse:border(cBorder)
       ENDIF
    ENDIF
 
-   RETURN ::cBorder
+   Return ::cBorder
 
 
 METHOD TBrowse:message(cMessage)
@@ -2592,7 +2592,7 @@ METHOD TBrowse:message(cMessage)
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
    ENDIF
 
-   RETURN ::cMessage
+   Return ::cMessage
 
 
 METHOD TBrowse:applyKey(nKey)
@@ -2603,11 +2603,11 @@ METHOD TBrowse:applyKey(nKey)
       bBlock := ::SetKey(0)
 
       IF bBlock == NIL
-         RETURN TBR_EXCEPTION
+         Return TBR_EXCEPTION
       ENDIF
    ENDIF
 
-   RETURN Eval(bBlock, Self, nKey)
+   Return Eval(bBlock, Self, nKey)
 
 
 METHOD TBrowse:setKey(nKey, bBlock)
@@ -2660,7 +2660,7 @@ METHOD TBrowse:setKey(nKey, bBlock)
       ENDIF
    ENDIF
 
-   RETURN bReturn
+   Return bReturn
 
 
 METHOD TBrowse:setStyle(nStyle, lNewValue)
@@ -2681,7 +2681,7 @@ METHOD TBrowse:setStyle(nStyle, lNewValue)
       ::styles[nStyle] := lNewValue
    ENDIF
 
-   RETURN ::styles[nStyle]
+   Return ::styles[nStyle]
 
 
 Function TBMouse(oBrw, nMRow, nMCol)
@@ -2712,8 +2712,8 @@ Function TBMouse(oBrw, nMRow, nMCol)
          EndDo
       EndCase
 
-      RETURN TBR_CONTINUE
+      Return TBR_CONTINUE
    ENDIF
 
-   RETURN TBR_EXCEPTION
+   Return TBR_EXCEPTION
 #endif

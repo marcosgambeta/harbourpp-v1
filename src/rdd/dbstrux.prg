@@ -48,7 +48,7 @@
 #include "dbstruct.ch"
 
 Function __dbCopyStruct(cFileName, aFieldList)
-   RETURN dbCreate(cFileName, __dbStructFilter(dbStruct(), aFieldList))
+   Return dbCreate(cFileName, __dbStructFilter(dbStruct(), aFieldList))
 
 Function __dbCopyXStruct(cFileName)
 
@@ -152,7 +152,7 @@ Function __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
       Break(oError)
    END SEQUENCE
 
-   RETURN Used()
+   Return Used()
 
 // NOTE: Internal helper function, CA-Cl*pper name is: __FLedit()
 
@@ -163,7 +163,7 @@ Function __dbStructFilter(aStruct, aFieldList)
    Local cName
 
    IF Empty(aFieldList)
-      RETURN aStruct
+      Return aStruct
    ENDIF
 
    // Build a filtered list of the requested fields.
@@ -176,4 +176,4 @@ Function __dbStructFilter(aStruct, aFieldList)
       nIndex := AScan(aStruct, bFindName), ;
       IIf(nIndex == 0, NIL, AAdd(aStructFiltered, aStruct[nIndex])) })
 
-   RETURN aStructFiltered
+   Return aStructFiltered

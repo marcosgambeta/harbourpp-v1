@@ -33,7 +33,7 @@
 #include "hbclass.ch"
 
 Function wasDCB()
-RETURN was_DCB():new()
+Return was_DCB():new()
 
 CLASS WAS_DCB
 
@@ -219,7 +219,7 @@ PROCEDURE destroyObject() CLASS WAS_DCB
    IF ::self_destruction
       ::delete()
    ENDIF
-RETURN
+Return
 
 // clang-format on
 
